@@ -1,0 +1,128 @@
+﻿@model EwoQ.Models.RegisterViewModel
+@{
+   
+    ViewBag.Title = "Registrarse";
+    Layout = null;
+}
+
+@Scripts.Render("~/bundles/modernizr")
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<!-- Custom Css -->
+<link href="../../Content/Site.css" rel="stylesheet">
+<title>@ViewBag.Title - INCIDENTES QA</title>
+
+<section class="login-block">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 login-sec">
+
+                @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <h3 class="text-center">Cree una cuenta nueva.</h3>
+
+                    @Html.ValidationSummary("", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Nombres, new { @class = "control-label" })
+                        <div>
+                            @Html.TextBoxFor(m => m.Nombres, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Apellidos, new { @class = "control-label" })
+                        <div>
+                            @Html.TextBoxFor(m => m.Apellidos, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Role, new { @class = "control-label" })
+                        <div>
+                            @Html.DropDownListFor(m => m.Role, Model.RoleList, new { @class = "form-control selectpicker" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+                        <div>
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+                        <div>
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "control-label" })
+                        <div>
+                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                        </div>
+                    </div>                   
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-login btn-block">Crear cuenta</button>
+                    </div>
+                }
+                <div class="copy-text">
+                    Developed
+                    <i class="fa fa-laptop"></i> by <a href="http://develop.com">Jeison Perlaza</a>
+                </div>
+            </div>
+            <div class="col-md-8 banner-sec">
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+                    </ol>
+                    <div class="carousel-inner" role="listbox">
+                        <div class="carousel-item active">
+                            <img class="d-block img-fluid" src="~/Content/Images/pexels-photo.jpg" alt="First slide">
+                            <div class="carousel-caption d-block d-md-block">
+                                <div class="banner-text">
+                                    <h2>Unilever</h2>
+                                    <p>Registro de investigación de no conformidades de planta / incidentes de QA</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block img-fluid" src="~/Content/Images/jpeg.jpg" alt="First slide">
+                            <div class="carousel-caption d-none d-md-block">
+                                <div class="banner-text">
+                                    <h2>Tecnología</h2>
+                                    <p>La tecnología y la robótica están avanzando y reducirán la necesidad de trabajadores en el futuro</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block img-fluid" src="~/Content/Images/IMAGEN PLANTA 1.png" alt="First slide">
+                            <div class="carousel-caption d-none d-md-block">
+                                <div class="banner-text">
+                                    <h2>Tecnología</h2>
+                                    <p>La tecnología se alimenta a si misma. La tecnología hace posible más tecnología</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block img-fluid" src="~/Content/Images/maxresdefault.jpg" alt="First slide">
+                            <div class="carousel-caption d-none d-md-block">
+                                <div class="banner-text">
+                                    <h2>Tecnología</h2>
+                                    <p>Se ha vuelto terriblemente obvio que nuestra tecnología ha superado nuestra humanidad</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

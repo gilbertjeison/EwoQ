@@ -1,0 +1,160 @@
+﻿/*body {
+    padding-top: 0px;
+    padding-bottom: 20px;
+}*/
+
+/* Set padding to keep content from hitting the edges */
+/*.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}*/
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+/*.dl-horizontal dt {
+    white-space: normal;
+}*/
+
+/* Set width on the form input elements since they're 100% wide by default */
+/*input,
+select,
+textarea {
+    max-width: 280px;
+}*/
+
+@import url("https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css");
+
+.login-block {    
+    background: url('Images/html5_achtergrond.jpg') no-repeat;
+    background-size: 100%;
+    float: left;
+    width: 100%;
+    padding: 50px 0;
+}
+
+
+
+.banner-sec {
+    /*background: url('Images/pexels-photo.jpg') no-repeat left bottom;*/
+    background-size: cover;
+    min-height: 500px;
+    border-radius: 0 10px 10px 0;
+    padding: 0;
+}
+
+.login-block .container {
+    background: #fff;
+    border-radius: 10px;
+    border-style: solid;
+    border-width: 0.5px;
+
+    box-shadow: 15px 20px 0px rgba(0,0,0,0.1);
+}
+
+.carousel-inner {
+    border-radius: 0 10px 10px 0;
+    padding-top:15%;
+}
+
+.carousel-caption {
+    text-align: left;
+    left: 5%;
+}
+
+.login-sec {
+    padding: 50px 30px;
+    position: relative;
+}
+
+
+.login-sec .copy-text {
+    position: center;
+    width: 80%;
+    bottom: 50px;
+    margin-top:10px;
+    font-size: 13px;
+    text-align: center;
+}
+
+.login-sec h3 {
+    text-shadow: 2px 5px 0px rgba(0,0,0,0.1);
+}
+
+.login-sec .copy-text i {
+    color: #0094ff;
+}
+
+.login-sec .copy-text a {
+    color: #0094ff;
+}
+
+.login-sec h2 {
+    margin-bottom: 30px;
+    font-weight: 800;
+    font-size: 30px;
+    color: #DE6262;
+}
+
+.login-sec h2:after {
+    content: " ";
+    width: 100px;
+    height: 5px;
+    background: #FEB58A;
+    display: block;
+    margin-top: 20px;
+    border-radius: 3px;
+    margin-left: auto;
+    margin-right: auto
+}
+
+.btn-login {
+    background: #DE6262;
+    color: #fff;
+    font-weight: 600;
+}
+
+.btn-register {
+    background: #0e94bf;
+    color: #fff;
+    font-weight: 600;
+}
+
+.banner-text {
+    width: 70%;
+    position: center;
+    bottom: 40px;
+    padding-left: 20px;
+
+    display: inline-block;
+    padding: 10px;
+    background: #000;
+    border-radius: 3px 3px 3px 3px;
+    -moz-border-radius: 3px 3px 3px 3px;
+    -webkit-border-radius: 3px 3px 3px 3px;
+    opacity: 0.7;
+}
+
+.banner-text h2 {
+    color: #fff;
+    font-weight: 500;
+}
+
+.banner-text h2:after {
+    content: " ";
+    width: 100%;
+    height: 3px;
+    background: #FFF;
+    display: block;
+    margin-top: 10px;
+    border-radius: 3px;
+}
+
+.banner-text p {
+    color: #fff;
+}
+
+.carousel-inner > .carousel-item > img {
+    width: 800px;
+    height: 480px;
+}

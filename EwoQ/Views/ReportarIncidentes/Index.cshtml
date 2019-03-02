@@ -1,0 +1,333 @@
+﻿@model IEnumerable<EwoQ.Database.ewo>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.consecutivo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fecha_apertura_investigacion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.hora_apertura_investigacion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.hora_evento)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fecha_entrega_investigacion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.hora_entrega_investigacion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.recurrente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.etapa)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.codigo_sap_producto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.lote_producto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.toneladas_producto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.numero_cajas)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.numero_pallet)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.unidades)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tamano_formato)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.costo_incidente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tiempo_linea_parada)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.descripcion_general_problema)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tiempo_inspeccion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.numero_airsweb)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tiempo_ingresado_airsweb)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.cantidad_toneladas)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.gemba)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.gembutsu)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.genjitsu)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.five_g_image)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.descripcion_problema)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.que)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.donde)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.cuando)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.quien)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.cual)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.como)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.descripcion_fenomeno)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.images_path)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.comentarios_resoluciones)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.arbol_perdidas.nvl_1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AspNetUsers.Nombres)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AspNetUsers1.Nombres)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AspNetUsers2.Nombres)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AspNetUsers3.Nombres)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AspNetUsers4.Nombres)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AspNetUsers5.Nombres)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AspNetUsers6.Nombres)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AspNetUsers7.Nombres)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.productos.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tipos_data.descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tipos_data1.descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tipos_data2.descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tipos_data3.descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tipos_data4.descripcion)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.consecutivo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fecha_apertura_investigacion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.hora_apertura_investigacion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.hora_evento)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fecha_entrega_investigacion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.hora_entrega_investigacion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.recurrente)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.etapa)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.codigo_sap_producto)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.lote_producto)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.toneladas_producto)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.numero_cajas)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.numero_pallet)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.unidades)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tamano_formato)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.costo_incidente)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tiempo_linea_parada)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.descripcion_general_problema)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tiempo_inspeccion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.numero_airsweb)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tiempo_ingresado_airsweb)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.cantidad_toneladas)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.gemba)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.gembutsu)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.genjitsu)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.five_g_image)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.descripcion_problema)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.que)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.donde)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.cuando)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.quien)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.cual)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.como)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.descripcion_fenomeno)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.images_path)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.comentarios_resoluciones)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.arbol_perdidas.nvl_1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AspNetUsers.Nombres)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AspNetUsers1.Nombres)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AspNetUsers2.Nombres)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AspNetUsers3.Nombres)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AspNetUsers4.Nombres)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AspNetUsers5.Nombres)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AspNetUsers6.Nombres)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AspNetUsers7.Nombres)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.productos.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tipos_data.descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tipos_data1.descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tipos_data2.descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tipos_data3.descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tipos_data4.descripcion)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,2153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="EwoQModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="acciones_inmediatas">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="codigo_ewo" Type="bigint" />
+          <Property Name="accion" Type="varchar" MaxLength="200" />
+          <Property Name="codigo_responsable" Type="nvarchar" MaxLength="128" />
+          <Property Name="fecha_compromiso" Type="datetime" />
+          <Property Name="evidencia_efectividad" Type="int" />
+        </EntityType>
+        <EntityType Name="arbol_perdidas">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nvl_1" Type="varchar" MaxLength="50" />
+          <Property Name="nvl_2" Type="varchar" MaxLength="50" />
+          <Property Name="nvl_3" Type="varchar" MaxLength="50" />
+          <Property Name="nvl_4" Type="varchar" MaxLength="50" />
+          <Property Name="nvl_5" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Nombres" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Apellidos" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="IdRol" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Registrado" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="equipo_trabajo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="codigo_ewo" Type="bigint" />
+          <Property Name="codigo_usuario" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="ewo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="consecutivo" Type="bigint" />
+          <Property Name="codigo_estado" Type="bigint" />
+          <Property Name="fecha_apertura_investigacion" Type="date" />
+          <Property Name="hora_apertura_investigacion" Type="time" Precision="7" />
+          <Property Name="hora_evento" Type="time" Precision="7" />
+          <Property Name="fecha_entrega_investigacion" Type="date" />
+          <Property Name="hora_entrega_investigacion" Type="time" Precision="7" />
+          <Property Name="tipo_incidente" Type="bigint" />
+          <Property Name="recurrente" Type="bit" Nullable="false" />
+          <Property Name="codigo_area" Type="bigint" />
+          <Property Name="codigo_linea" Type="bigint" />
+          <Property Name="etapa" Type="varchar" MaxLength="100" />
+          <Property Name="codigo_coordinador_turno" Type="nvarchar" MaxLength="128" />
+          <Property Name="codigo_responsable_area" Type="nvarchar" MaxLength="128" />
+          <Property Name="codigo_operario_responsable" Type="nvarchar" MaxLength="128" />
+          <Property Name="codigo_lider_investigacion" Type="nvarchar" MaxLength="128" />
+          <Property Name="codigo_producto" Type="bigint" />
+          <Property Name="codigo_sap_producto" Type="varchar" MaxLength="50" />
+          <Property Name="lote_producto" Type="varchar" MaxLength="50" />
+          <Property Name="toneladas_producto" Type="int" />
+          <Property Name="numero_cajas" Type="int" />
+          <Property Name="numero_pallet" Type="varchar" MaxLength="50" />
+          <Property Name="unidades" Type="int" />
+          <Property Name="tamano_formato" Type="varchar" MaxLength="50" />
+          <Property Name="costo_incidente" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="tiempo_linea_parada" Type="varchar" MaxLength="10" />
+          <Property Name="descripcion_general_problema" Type="text" />
+          <Property Name="tiempo_inspeccion" Type="varchar" MaxLength="10" />
+          <Property Name="codigo_arbol_perdidas" Type="bigint" />
+          <Property Name="numero_airsweb" Type="int" />
+          <Property Name="tiempo_ingresado_airsweb" Type="varchar" MaxLength="10" />
+          <Property Name="codigo_disposicion_final_prod" Type="bigint" />
+          <Property Name="cantidad_toneladas" Type="int" />
+          <Property Name="gemba" Type="bit" />
+          <Property Name="gembutsu" Type="bit" />
+          <Property Name="genjitsu" Type="bit" />
+          <Property Name="five_g_image" Type="text" />
+          <Property Name="descripcion_problema" Type="text" />
+          <Property Name="que" Type="varchar" MaxLength="200" />
+          <Property Name="donde" Type="varchar" MaxLength="200" />
+          <Property Name="cuando" Type="varchar" MaxLength="200" />
+          <Property Name="quien" Type="varchar" MaxLength="200" />
+          <Property Name="cual" Type="varchar" MaxLength="200" />
+          <Property Name="como" Type="varchar" MaxLength="200" />
+          <Property Name="descripcion_fenomeno" Type="text" />
+          <Property Name="images_path" Type="text" />
+          <Property Name="comentarios_resoluciones" Type="text" />
+          <Property Name="pa_codigo_coordinador_prod" Type="nvarchar" MaxLength="128" />
+          <Property Name="pa_codigo_gerente_prod" Type="nvarchar" MaxLength="128" />
+          <Property Name="pa_codigo_jefe_calidad" Type="nvarchar" MaxLength="128" />
+          <Property Name="pa_codigo_gerente_calidad" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="fiveg_resultados">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="codigo_ewo" Type="bigint" />
+          <Property Name="codigo_5fv_opcion" Type="bigint" />
+          <Property Name="condicion" Type="varchar" MaxLength="100" />
+          <Property Name="condicion_ideal" Type="varchar" MaxLength="100" />
+          <Property Name="checkk" Type="varchar" MaxLength="100" />
+          <Property Name="como" Type="varchar" MaxLength="100" />
+          <Property Name="ok" Type="bit" />
+        </EntityType>
+        <EntityType Name="plan_accion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="codigo_ewo" Type="bigint" />
+          <Property Name="codigo_tipo" Type="bigint" />
+          <Property Name="contramedida" Type="varchar" MaxLength="300" />
+          <Property Name="requiere_capex" Type="bit" />
+          <Property Name="antes" Type="int" />
+          <Property Name="despues" Type="int" />
+          <Property Name="pokayoke" Type="bit" />
+          <Property Name="codigo_responsable" Type="nvarchar" MaxLength="128" />
+          <Property Name="codigo_area" Type="bigint" />
+          <Property Name="fecha_compromiso" Type="datetime" />
+        </EntityType>
+        <EntityType Name="porque_porque">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="codigo_ewo" Type="bigint" />
+          <Property Name="porque1" Type="varchar" MaxLength="300" />
+          <Property Name="porque2" Type="varchar" MaxLength="300" />
+          <Property Name="porque3" Type="varchar" MaxLength="300" />
+          <Property Name="porque4" Type="varchar" MaxLength="300" />
+          <Property Name="porque5" Type="varchar" MaxLength="300" />
+          <Property Name="contramedidas" Type="varchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="preguntas_4m">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="codigo_tipo4m" Type="bigint" />
+          <Property Name="descripcion" Type="varchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="productos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="respuestas4m">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="codigo_pregunta" Type="bigint" />
+          <Property Name="codigo_ewo" Type="bigint" />
+          <Property Name="verificado" Type="varchar" MaxLength="3" />
+        </EntityType>
+        <EntityType Name="revisiones">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="codigo_ewo" Type="bigint" />
+          <Property Name="codigo_usuario" Type="nvarchar" MaxLength="128" />
+          <Property Name="fecha" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tipos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tipos_data">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="codigo_tipo" Type="bigint" />
+          <Property Name="descripcion" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="zero_questions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="codigo_ewo" Type="bigint" />
+          <Property Name="codigo_tipom" Type="bigint" />
+          <Property Name="pregunta" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="zero_responses">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="codigo_pregunta" Type="bigint" />
+          <Property Name="respuesta" Type="varchar" MaxLength="300" />
+          <Property Name="puntaje" Type="int" />
+        </EntityType>
+        <Association Name="FK_acciones_inmediatas_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="acciones_inmediatas" Type="Self.acciones_inmediatas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="acciones_inmediatas">
+              <PropertyRef Name="codigo_responsable" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_acciones_inmediatas_ewo">
+          <End Role="ewo" Type="Self.ewo" Multiplicity="0..1" />
+          <End Role="acciones_inmediatas" Type="Self.acciones_inmediatas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ewo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="acciones_inmediatas">
+              <PropertyRef Name="codigo_ewo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_equipo_trabajo_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="equipo_trabajo" Type="Self.equipo_trabajo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="equipo_trabajo">
+              <PropertyRef Name="codigo_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_equipo_trabajo_ewo">
+          <End Role="ewo" Type="Self.ewo" Multiplicity="0..1" />
+          <End Role="equipo_trabajo" Type="Self.equipo_trabajo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ewo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="equipo_trabajo">
+              <PropertyRef Name="codigo_ewo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ewo_arbol_perdidas">
+          <End Role="arbol_perdidas" Type="Self.arbol_perdidas" Multiplicity="0..1" />
+          <End Role="ewo" Type="Self.ewo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="arbol_perdidas">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ewo">
+              <PropertyRef Name="codigo_arbol_perdidas" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ewo_AspNetUsers_coordinador_turno">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="ewo" Type="Self.ewo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ewo">
+              <PropertyRef Name="codigo_coordinador_turno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ewo_AspNetUsers_lider_investigacion">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="ewo" Type="Self.ewo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ewo">
+              <PropertyRef Name="codigo_lider_investigacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ewo_AspNetUsers_operario_responsable">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="ewo" Type="Self.ewo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ewo">
+              <PropertyRef Name="codigo_operario_responsable" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ewo_AspNetUsers_pa_coord_pro">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="ewo" Type="Self.ewo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ewo">
+              <PropertyRef Name="pa_codigo_coordinador_prod" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ewo_AspNetUsers_pa_gere_prod">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="ewo" Type="Self.ewo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ewo">
+              <PropertyRef Name="pa_codigo_gerente_prod" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ewo_AspNetUsers_pa_geren_ca">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="ewo" Type="Self.ewo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ewo">
+              <PropertyRef Name="pa_codigo_gerente_calidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ewo_AspNetUsers_pa_jefe_cal">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="ewo" Type="Self.ewo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ewo">
+              <PropertyRef Name="pa_codigo_jefe_calidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ewo_AspNetUsers_responsable_area">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="ewo" Type="Self.ewo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ewo">
+              <PropertyRef Name="codigo_responsable_area" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ewo_productos">
+          <End Role="productos" Type="Self.productos" Multiplicity="0..1" />
+          <End Role="ewo" Type="Self.ewo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="productos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ewo">
+              <PropertyRef Name="codigo_producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ewo_tipos_data">
+          <End Role="tipos_data" Type="Self.tipos_data" Multiplicity="0..1" />
+          <End Role="ewo" Type="Self.ewo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipos_data">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ewo">
+              <PropertyRef Name="tipo_incidente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ewo_tipos_data_area">
+          <End Role="tipos_data" Type="Self.tipos_data" Multiplicity="0..1" />
+          <End Role="ewo" Type="Self.ewo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipos_data">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ewo">
+              <PropertyRef Name="codigo_area" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ewo_tipos_data_disposicion_final">
+          <End Role="tipos_data" Type="Self.tipos_data" Multiplicity="0..1" />
+          <End Role="ewo" Type="Self.ewo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipos_data">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ewo">
+              <PropertyRef Name="codigo_disposicion_final_prod" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ewo_tipos_data_estado">
+          <End Role="tipos_data" Type="Self.tipos_data" Multiplicity="0..1" />
+          <End Role="ewo" Type="Self.ewo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipos_data">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ewo">
+              <PropertyRef Name="codigo_estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ewo_tipos_data_linea">
+          <End Role="tipos_data" Type="Self.tipos_data" Multiplicity="0..1" />
+          <End Role="ewo" Type="Self.ewo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipos_data">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ewo">
+              <PropertyRef Name="codigo_linea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_fiveg_resultados_ewo">
+          <End Role="ewo" Type="Self.ewo" Multiplicity="0..1" />
+          <End Role="fiveg_resultados" Type="Self.fiveg_resultados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ewo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="fiveg_resultados">
+              <PropertyRef Name="codigo_ewo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_accion_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="plan_accion" Type="Self.plan_accion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="plan_accion">
+              <PropertyRef Name="codigo_responsable" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_accion_ewo">
+          <End Role="ewo" Type="Self.ewo" Multiplicity="0..1" />
+          <End Role="plan_accion" Type="Self.plan_accion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ewo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_accion">
+              <PropertyRef Name="codigo_ewo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_accion_tipos_data">
+          <End Role="tipos_data" Type="Self.tipos_data" Multiplicity="0..1" />
+          <End Role="plan_accion" Type="Self.plan_accion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipos_data">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_accion">
+              <PropertyRef Name="codigo_area" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_accion_tipos_data_tipo">
+          <End Role="tipos_data" Type="Self.tipos_data" Multiplicity="0..1" />
+          <End Role="plan_accion" Type="Self.plan_accion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipos_data">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_accion">
+              <PropertyRef Name="codigo_tipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_porque_porque_ewo">
+          <End Role="ewo" Type="Self.ewo" Multiplicity="0..1" />
+          <End Role="porque_porque" Type="Self.porque_porque" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ewo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="porque_porque">
+              <PropertyRef Name="codigo_ewo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_preguntas_4m_tipos_data">
+          <End Role="tipos_data" Type="Self.tipos_data" Multiplicity="0..1" />
+          <End Role="preguntas_4m" Type="Self.preguntas_4m" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipos_data">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="preguntas_4m">
+              <PropertyRef Name="codigo_tipo4m" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_respuestas4m_ewo">
+          <End Role="ewo" Type="Self.ewo" Multiplicity="0..1" />
+          <End Role="respuestas4m" Type="Self.respuestas4m" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ewo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="respuestas4m">
+              <PropertyRef Name="codigo_ewo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_respuestas4m_preguntas_4m">
+          <End Role="preguntas_4m" Type="Self.preguntas_4m" Multiplicity="0..1" />
+          <End Role="respuestas4m" Type="Self.respuestas4m" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="preguntas_4m">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="respuestas4m">
+              <PropertyRef Name="codigo_pregunta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_revisiones_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="revisiones" Type="Self.revisiones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="revisiones">
+              <PropertyRef Name="codigo_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_revisiones_ewo">
+          <End Role="ewo" Type="Self.ewo" Multiplicity="0..1" />
+          <End Role="revisiones" Type="Self.revisiones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ewo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="revisiones">
+              <PropertyRef Name="codigo_ewo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tipos_data_tipos">
+          <End Role="tipos" Type="Self.tipos" Multiplicity="0..1" />
+          <End Role="tipos_data" Type="Self.tipos_data" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tipos_data">
+              <PropertyRef Name="codigo_tipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_zero_questions_ewo">
+          <End Role="ewo" Type="Self.ewo" Multiplicity="0..1" />
+          <End Role="zero_questions" Type="Self.zero_questions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ewo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="zero_questions">
+              <PropertyRef Name="codigo_ewo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_zero_questions_tipos_data">
+          <End Role="tipos_data" Type="Self.tipos_data" Multiplicity="0..1" />
+          <End Role="zero_questions" Type="Self.zero_questions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipos_data">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="zero_questions">
+              <PropertyRef Name="codigo_tipom" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_zero_responses_zero_questions">
+          <End Role="zero_questions" Type="Self.zero_questions" Multiplicity="0..1" />
+          <End Role="zero_responses" Type="Self.zero_responses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="zero_questions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="zero_responses">
+              <PropertyRef Name="codigo_pregunta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EwoQModelStoreContainer">
+          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="acciones_inmediatas" EntityType="Self.acciones_inmediatas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="arbol_perdidas" EntityType="Self.arbol_perdidas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="equipo_trabajo" EntityType="Self.equipo_trabajo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ewo" EntityType="Self.ewo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="fiveg_resultados" EntityType="Self.fiveg_resultados" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="plan_accion" EntityType="Self.plan_accion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="porque_porque" EntityType="Self.porque_porque" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="preguntas_4m" EntityType="Self.preguntas_4m" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="productos" EntityType="Self.productos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="respuestas4m" EntityType="Self.respuestas4m" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="revisiones" EntityType="Self.revisiones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tipos" EntityType="Self.tipos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tipos_data" EntityType="Self.tipos_data" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="zero_questions" EntityType="Self.zero_questions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="zero_responses" EntityType="Self.zero_responses" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_acciones_inmediatas_AspNetUsers" Association="Self.FK_acciones_inmediatas_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="acciones_inmediatas" EntitySet="acciones_inmediatas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_acciones_inmediatas_ewo" Association="Self.FK_acciones_inmediatas_ewo">
+            <End Role="ewo" EntitySet="ewo" />
+            <End Role="acciones_inmediatas" EntitySet="acciones_inmediatas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_equipo_trabajo_AspNetUsers" Association="Self.FK_equipo_trabajo_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="equipo_trabajo" EntitySet="equipo_trabajo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_equipo_trabajo_ewo" Association="Self.FK_equipo_trabajo_ewo">
+            <End Role="ewo" EntitySet="ewo" />
+            <End Role="equipo_trabajo" EntitySet="equipo_trabajo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ewo_arbol_perdidas" Association="Self.FK_ewo_arbol_perdidas">
+            <End Role="arbol_perdidas" EntitySet="arbol_perdidas" />
+            <End Role="ewo" EntitySet="ewo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ewo_AspNetUsers_coordinador_turno" Association="Self.FK_ewo_AspNetUsers_coordinador_turno">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ewo" EntitySet="ewo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ewo_AspNetUsers_lider_investigacion" Association="Self.FK_ewo_AspNetUsers_lider_investigacion">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ewo" EntitySet="ewo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ewo_AspNetUsers_operario_responsable" Association="Self.FK_ewo_AspNetUsers_operario_responsable">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ewo" EntitySet="ewo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ewo_AspNetUsers_pa_coord_pro" Association="Self.FK_ewo_AspNetUsers_pa_coord_pro">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ewo" EntitySet="ewo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ewo_AspNetUsers_pa_gere_prod" Association="Self.FK_ewo_AspNetUsers_pa_gere_prod">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ewo" EntitySet="ewo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ewo_AspNetUsers_pa_geren_ca" Association="Self.FK_ewo_AspNetUsers_pa_geren_ca">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ewo" EntitySet="ewo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ewo_AspNetUsers_pa_jefe_cal" Association="Self.FK_ewo_AspNetUsers_pa_jefe_cal">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ewo" EntitySet="ewo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ewo_AspNetUsers_responsable_area" Association="Self.FK_ewo_AspNetUsers_responsable_area">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ewo" EntitySet="ewo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ewo_productos" Association="Self.FK_ewo_productos">
+            <End Role="productos" EntitySet="productos" />
+            <End Role="ewo" EntitySet="ewo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ewo_tipos_data" Association="Self.FK_ewo_tipos_data">
+            <End Role="tipos_data" EntitySet="tipos_data" />
+            <End Role="ewo" EntitySet="ewo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ewo_tipos_data_area" Association="Self.FK_ewo_tipos_data_area">
+            <End Role="tipos_data" EntitySet="tipos_data" />
+            <End Role="ewo" EntitySet="ewo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ewo_tipos_data_disposicion_final" Association="Self.FK_ewo_tipos_data_disposicion_final">
+            <End Role="tipos_data" EntitySet="tipos_data" />
+            <End Role="ewo" EntitySet="ewo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ewo_tipos_data_estado" Association="Self.FK_ewo_tipos_data_estado">
+            <End Role="tipos_data" EntitySet="tipos_data" />
+            <End Role="ewo" EntitySet="ewo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ewo_tipos_data_linea" Association="Self.FK_ewo_tipos_data_linea">
+            <End Role="tipos_data" EntitySet="tipos_data" />
+            <End Role="ewo" EntitySet="ewo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_fiveg_resultados_ewo" Association="Self.FK_fiveg_resultados_ewo">
+            <End Role="ewo" EntitySet="ewo" />
+            <End Role="fiveg_resultados" EntitySet="fiveg_resultados" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_accion_AspNetUsers" Association="Self.FK_plan_accion_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="plan_accion" EntitySet="plan_accion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_accion_ewo" Association="Self.FK_plan_accion_ewo">
+            <End Role="ewo" EntitySet="ewo" />
+            <End Role="plan_accion" EntitySet="plan_accion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_accion_tipos_data" Association="Self.FK_plan_accion_tipos_data">
+            <End Role="tipos_data" EntitySet="tipos_data" />
+            <End Role="plan_accion" EntitySet="plan_accion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_accion_tipos_data_tipo" Association="Self.FK_plan_accion_tipos_data_tipo">
+            <End Role="tipos_data" EntitySet="tipos_data" />
+            <End Role="plan_accion" EntitySet="plan_accion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_porque_porque_ewo" Association="Self.FK_porque_porque_ewo">
+            <End Role="ewo" EntitySet="ewo" />
+            <End Role="porque_porque" EntitySet="porque_porque" />
+          </AssociationSet>
+          <AssociationSet Name="FK_preguntas_4m_tipos_data" Association="Self.FK_preguntas_4m_tipos_data">
+            <End Role="tipos_data" EntitySet="tipos_data" />
+            <End Role="preguntas_4m" EntitySet="preguntas_4m" />
+          </AssociationSet>
+          <AssociationSet Name="FK_respuestas4m_ewo" Association="Self.FK_respuestas4m_ewo">
+            <End Role="ewo" EntitySet="ewo" />
+            <End Role="respuestas4m" EntitySet="respuestas4m" />
+          </AssociationSet>
+          <AssociationSet Name="FK_respuestas4m_preguntas_4m" Association="Self.FK_respuestas4m_preguntas_4m">
+            <End Role="preguntas_4m" EntitySet="preguntas_4m" />
+            <End Role="respuestas4m" EntitySet="respuestas4m" />
+          </AssociationSet>
+          <AssociationSet Name="FK_revisiones_AspNetUsers" Association="Self.FK_revisiones_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="revisiones" EntitySet="revisiones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_revisiones_ewo" Association="Self.FK_revisiones_ewo">
+            <End Role="ewo" EntitySet="ewo" />
+            <End Role="revisiones" EntitySet="revisiones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tipos_data_tipos" Association="Self.FK_tipos_data_tipos">
+            <End Role="tipos" EntitySet="tipos" />
+            <End Role="tipos_data" EntitySet="tipos_data" />
+          </AssociationSet>
+          <AssociationSet Name="FK_zero_questions_ewo" Association="Self.FK_zero_questions_ewo">
+            <End Role="ewo" EntitySet="ewo" />
+            <End Role="zero_questions" EntitySet="zero_questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_zero_questions_tipos_data" Association="Self.FK_zero_questions_tipos_data">
+            <End Role="tipos_data" EntitySet="tipos_data" />
+            <End Role="zero_questions" EntitySet="zero_questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_zero_responses_zero_questions" Association="Self.FK_zero_responses_zero_questions">
+            <End Role="zero_questions" EntitySet="zero_questions" />
+            <End Role="zero_responses" EntitySet="zero_responses" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EwoQModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="acciones_inmediatas">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="codigo_ewo" Type="Int64" />
+          <Property Name="accion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="codigo_responsable" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="fecha_compromiso" Type="DateTime" Precision="3" />
+          <Property Name="evidencia_efectividad" Type="Int32" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_acciones_inmediatas_AspNetUsers" FromRole="acciones_inmediatas" ToRole="AspNetUsers" />
+          <NavigationProperty Name="ewo" Relationship="EwoQModel.FK_acciones_inmediatas_ewo" FromRole="acciones_inmediatas" ToRole="ewo" />
+        </EntityType>
+        <EntityType Name="arbol_perdidas">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nvl_1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="nvl_2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="nvl_3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="nvl_4" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="nvl_5" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ewo" Relationship="EwoQModel.FK_ewo_arbol_perdidas" FromRole="arbol_perdidas" ToRole="ewo" />
+        </EntityType>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Nombres" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Apellidos" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdRol" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Registrado" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="acciones_inmediatas" Relationship="Self.FK_acciones_inmediatas_AspNetUsers" FromRole="AspNetUsers" ToRole="acciones_inmediatas" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="equipo_trabajo" Relationship="Self.FK_equipo_trabajo_AspNetUsers" FromRole="AspNetUsers" ToRole="equipo_trabajo" />
+          <NavigationProperty Name="plan_accion" Relationship="Self.FK_plan_accion_AspNetUsers" FromRole="AspNetUsers" ToRole="plan_accion" />
+          <NavigationProperty Name="revisiones" Relationship="Self.FK_revisiones_AspNetUsers" FromRole="AspNetUsers" ToRole="revisiones" />
+          <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+          <NavigationProperty Name="ewo" Relationship="EwoQModel.FK_ewo_AspNetUsers_coordinador_turno" FromRole="AspNetUsers" ToRole="ewo" />
+          <NavigationProperty Name="ewo1" Relationship="EwoQModel.FK_ewo_AspNetUsers_lider_investigacion" FromRole="AspNetUsers" ToRole="ewo" />
+          <NavigationProperty Name="ewo2" Relationship="EwoQModel.FK_ewo_AspNetUsers_operario_responsable" FromRole="AspNetUsers" ToRole="ewo" />
+          <NavigationProperty Name="ewo3" Relationship="EwoQModel.FK_ewo_AspNetUsers_pa_coord_pro" FromRole="AspNetUsers" ToRole="ewo" />
+          <NavigationProperty Name="ewo4" Relationship="EwoQModel.FK_ewo_AspNetUsers_pa_gere_prod" FromRole="AspNetUsers" ToRole="ewo" />
+          <NavigationProperty Name="ewo5" Relationship="EwoQModel.FK_ewo_AspNetUsers_pa_geren_ca" FromRole="AspNetUsers" ToRole="ewo" />
+          <NavigationProperty Name="ewo6" Relationship="EwoQModel.FK_ewo_AspNetUsers_pa_jefe_cal" FromRole="AspNetUsers" ToRole="ewo" />
+          <NavigationProperty Name="ewo7" Relationship="EwoQModel.FK_ewo_AspNetUsers_responsable_area" FromRole="AspNetUsers" ToRole="ewo" />
+        </EntityType>
+        <EntityType Name="equipo_trabajo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="codigo_ewo" Type="Int64" />
+          <Property Name="codigo_usuario" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_equipo_trabajo_AspNetUsers" FromRole="equipo_trabajo" ToRole="AspNetUsers" />
+          <NavigationProperty Name="ewo" Relationship="EwoQModel.FK_equipo_trabajo_ewo" FromRole="equipo_trabajo" ToRole="ewo" />
+        </EntityType>
+        <EntityType Name="fiveg_resultados">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="codigo_ewo" Type="Int64" />
+          <Property Name="codigo_5fv_opcion" Type="Int64" />
+          <Property Name="condicion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="condicion_ideal" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="checkk" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="como" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ok" Type="Boolean" />
+          <NavigationProperty Name="ewo" Relationship="EwoQModel.FK_fiveg_resultados_ewo" FromRole="fiveg_resultados" ToRole="ewo" />
+        </EntityType>
+        <EntityType Name="plan_accion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="codigo_ewo" Type="Int64" />
+          <Property Name="codigo_tipo" Type="Int64" />
+          <Property Name="contramedida" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="requiere_capex" Type="Boolean" />
+          <Property Name="antes" Type="Int32" />
+          <Property Name="despues" Type="Int32" />
+          <Property Name="pokayoke" Type="Boolean" />
+          <Property Name="codigo_responsable" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="codigo_area" Type="Int64" />
+          <Property Name="fecha_compromiso" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_plan_accion_AspNetUsers" FromRole="plan_accion" ToRole="AspNetUsers" />
+          <NavigationProperty Name="tipos_data" Relationship="Self.FK_plan_accion_tipos_data" FromRole="plan_accion" ToRole="tipos_data" />
+          <NavigationProperty Name="tipos_data1" Relationship="Self.FK_plan_accion_tipos_data_tipo" FromRole="plan_accion" ToRole="tipos_data" />
+          <NavigationProperty Name="ewo" Relationship="EwoQModel.FK_plan_accion_ewo" FromRole="plan_accion" ToRole="ewo" />
+        </EntityType>
+        <EntityType Name="porque_porque">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="codigo_ewo" Type="Int64" />
+          <Property Name="porque1" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="porque2" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="porque3" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="porque4" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="porque5" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="contramedidas" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ewo" Relationship="EwoQModel.FK_porque_porque_ewo" FromRole="porque_porque" ToRole="ewo" />
+        </EntityType>
+        <EntityType Name="preguntas_4m">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="codigo_tipo4m" Type="Int64" />
+          <Property Name="descripcion" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tipos_data" Relationship="Self.FK_preguntas_4m_tipos_data" FromRole="preguntas_4m" ToRole="tipos_data" />
+          <NavigationProperty Name="respuestas4m" Relationship="Self.FK_respuestas4m_preguntas_4m" FromRole="preguntas_4m" ToRole="respuestas4m" />
+        </EntityType>
+        <EntityType Name="productos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ewo" Relationship="EwoQModel.FK_ewo_productos" FromRole="productos" ToRole="ewo" />
+        </EntityType>
+        <EntityType Name="respuestas4m">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="codigo_pregunta" Type="Int64" />
+          <Property Name="codigo_ewo" Type="Int64" />
+          <Property Name="verificado" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="preguntas_4m" Relationship="Self.FK_respuestas4m_preguntas_4m" FromRole="respuestas4m" ToRole="preguntas_4m" />
+          <NavigationProperty Name="ewo" Relationship="EwoQModel.FK_respuestas4m_ewo" FromRole="respuestas4m" ToRole="ewo" />
+        </EntityType>
+        <EntityType Name="revisiones">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="codigo_ewo" Type="Int64" />
+          <Property Name="codigo_usuario" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="fecha" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_revisiones_AspNetUsers" FromRole="revisiones" ToRole="AspNetUsers" />
+          <NavigationProperty Name="ewo" Relationship="EwoQModel.FK_revisiones_ewo" FromRole="revisiones" ToRole="ewo" />
+        </EntityType>
+        <EntityType Name="tipos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tipos_data" Relationship="Self.FK_tipos_data_tipos" FromRole="tipos" ToRole="tipos_data" />
+        </EntityType>
+        <EntityType Name="tipos_data">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="codigo_tipo" Type="Int64" />
+          <Property Name="descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="plan_accion" Relationship="Self.FK_plan_accion_tipos_data" FromRole="tipos_data" ToRole="plan_accion" />
+          <NavigationProperty Name="plan_accion1" Relationship="Self.FK_plan_accion_tipos_data_tipo" FromRole="tipos_data" ToRole="plan_accion" />
+          <NavigationProperty Name="preguntas_4m" Relationship="Self.FK_preguntas_4m_tipos_data" FromRole="tipos_data" ToRole="preguntas_4m" />
+          <NavigationProperty Name="tipos" Relationship="Self.FK_tipos_data_tipos" FromRole="tipos_data" ToRole="tipos" />
+          <NavigationProperty Name="zero_questions" Relationship="Self.FK_zero_questions_tipos_data" FromRole="tipos_data" ToRole="zero_questions" />
+          <NavigationProperty Name="ewo" Relationship="EwoQModel.FK_ewo_tipos_data" FromRole="tipos_data" ToRole="ewo" />
+          <NavigationProperty Name="ewo1" Relationship="EwoQModel.FK_ewo_tipos_data_area" FromRole="tipos_data" ToRole="ewo" />
+          <NavigationProperty Name="ewo2" Relationship="EwoQModel.FK_ewo_tipos_data_disposicion_final" FromRole="tipos_data" ToRole="ewo" />
+          <NavigationProperty Name="ewo3" Relationship="EwoQModel.FK_ewo_tipos_data_estado" FromRole="tipos_data" ToRole="ewo" />
+          <NavigationProperty Name="ewo4" Relationship="EwoQModel.FK_ewo_tipos_data_linea" FromRole="tipos_data" ToRole="ewo" />
+        </EntityType>
+        <EntityType Name="zero_questions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="codigo_ewo" Type="Int64" />
+          <Property Name="codigo_tipom" Type="Int64" />
+          <Property Name="pregunta" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tipos_data" Relationship="Self.FK_zero_questions_tipos_data" FromRole="zero_questions" ToRole="tipos_data" />
+          <NavigationProperty Name="zero_responses" Relationship="Self.FK_zero_responses_zero_questions" FromRole="zero_questions" ToRole="zero_responses" />
+          <NavigationProperty Name="ewo" Relationship="EwoQModel.FK_zero_questions_ewo" FromRole="zero_questions" ToRole="ewo" />
+        </EntityType>
+        <EntityType Name="zero_responses">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="codigo_pregunta" Type="Int64" />
+          <Property Name="respuesta" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="puntaje" Type="Int32" />
+          <NavigationProperty Name="zero_questions" Relationship="Self.FK_zero_responses_zero_questions" FromRole="zero_responses" ToRole="zero_questions" />
+        </EntityType>
+        <Association Name="FK_acciones_inmediatas_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="acciones_inmediatas" Type="Self.acciones_inmediatas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="acciones_inmediatas">
+              <PropertyRef Name="codigo_responsable" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_equipo_trabajo_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="equipo_trabajo" Type="Self.equipo_trabajo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="equipo_trabajo">
+              <PropertyRef Name="codigo_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_accion_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="plan_accion" Type="Self.plan_accion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="plan_accion">
+              <PropertyRef Name="codigo_responsable" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_revisiones_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="revisiones" Type="Self.revisiones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="revisiones">
+              <PropertyRef Name="codigo_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_accion_tipos_data">
+          <End Role="tipos_data" Type="Self.tipos_data" Multiplicity="0..1" />
+          <End Role="plan_accion" Type="Self.plan_accion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipos_data">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_accion">
+              <PropertyRef Name="codigo_area" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_accion_tipos_data_tipo">
+          <End Role="tipos_data" Type="Self.tipos_data" Multiplicity="0..1" />
+          <End Role="plan_accion" Type="Self.plan_accion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipos_data">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_accion">
+              <PropertyRef Name="codigo_tipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_preguntas_4m_tipos_data">
+          <End Role="tipos_data" Type="Self.tipos_data" Multiplicity="0..1" />
+          <End Role="preguntas_4m" Type="Self.preguntas_4m" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipos_data">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="preguntas_4m">
+              <PropertyRef Name="codigo_tipo4m" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_respuestas4m_preguntas_4m">
+          <End Role="preguntas_4m" Type="Self.preguntas_4m" Multiplicity="0..1" />
+          <End Role="respuestas4m" Type="Self.respuestas4m" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="preguntas_4m">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="respuestas4m">
+              <PropertyRef Name="codigo_pregunta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tipos_data_tipos">
+          <End Role="tipos" Type="Self.tipos" Multiplicity="0..1" />
+          <End Role="tipos_data" Type="Self.tipos_data" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tipos_data">
+              <PropertyRef Name="codigo_tipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_zero_questions_tipos_data">
+          <End Role="tipos_data" Type="Self.tipos_data" Multiplicity="0..1" />
+          <End Role="zero_questions" Type="Self.zero_questions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipos_data">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="zero_questions">
+              <PropertyRef Name="codigo_tipom" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_zero_responses_zero_questions">
+          <End Role="zero_questions" Type="Self.zero_questions" Multiplicity="0..1" />
+          <End Role="zero_responses" Type="Self.zero_responses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="zero_questions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="zero_responses">
+              <PropertyRef Name="codigo_pregunta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="*" />
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="EwoQEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+          <EntitySet Name="acciones_inmediatas" EntityType="Self.acciones_inmediatas" />
+          <EntitySet Name="arbol_perdidas" EntityType="Self.arbol_perdidas" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" />
+          <EntitySet Name="equipo_trabajo" EntityType="Self.equipo_trabajo" />
+          <EntitySet Name="fiveg_resultados" EntityType="Self.fiveg_resultados" />
+          <EntitySet Name="plan_accion" EntityType="Self.plan_accion" />
+          <EntitySet Name="porque_porque" EntityType="Self.porque_porque" />
+          <EntitySet Name="preguntas_4m" EntityType="Self.preguntas_4m" />
+          <EntitySet Name="productos" EntityType="Self.productos" />
+          <EntitySet Name="respuestas4m" EntityType="Self.respuestas4m" />
+          <EntitySet Name="revisiones" EntityType="Self.revisiones" />
+          <EntitySet Name="tipos" EntityType="Self.tipos" />
+          <EntitySet Name="tipos_data" EntityType="Self.tipos_data" />
+          <EntitySet Name="zero_questions" EntityType="Self.zero_questions" />
+          <EntitySet Name="zero_responses" EntityType="Self.zero_responses" />
+          <AssociationSet Name="FK_acciones_inmediatas_AspNetUsers" Association="Self.FK_acciones_inmediatas_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="acciones_inmediatas" EntitySet="acciones_inmediatas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_equipo_trabajo_AspNetUsers" Association="Self.FK_equipo_trabajo_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="equipo_trabajo" EntitySet="equipo_trabajo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_accion_AspNetUsers" Association="Self.FK_plan_accion_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="plan_accion" EntitySet="plan_accion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_revisiones_AspNetUsers" Association="Self.FK_revisiones_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="revisiones" EntitySet="revisiones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_accion_tipos_data" Association="Self.FK_plan_accion_tipos_data">
+            <End Role="tipos_data" EntitySet="tipos_data" />
+            <End Role="plan_accion" EntitySet="plan_accion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_accion_tipos_data_tipo" Association="Self.FK_plan_accion_tipos_data_tipo">
+            <End Role="tipos_data" EntitySet="tipos_data" />
+            <End Role="plan_accion" EntitySet="plan_accion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_preguntas_4m_tipos_data" Association="Self.FK_preguntas_4m_tipos_data">
+            <End Role="tipos_data" EntitySet="tipos_data" />
+            <End Role="preguntas_4m" EntitySet="preguntas_4m" />
+          </AssociationSet>
+          <AssociationSet Name="FK_respuestas4m_preguntas_4m" Association="Self.FK_respuestas4m_preguntas_4m">
+            <End Role="preguntas_4m" EntitySet="preguntas_4m" />
+            <End Role="respuestas4m" EntitySet="respuestas4m" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tipos_data_tipos" Association="Self.FK_tipos_data_tipos">
+            <End Role="tipos" EntitySet="tipos" />
+            <End Role="tipos_data" EntitySet="tipos_data" />
+          </AssociationSet>
+          <AssociationSet Name="FK_zero_questions_tipos_data" Association="Self.FK_zero_questions_tipos_data">
+            <End Role="tipos_data" EntitySet="tipos_data" />
+            <End Role="zero_questions" EntitySet="zero_questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_zero_responses_zero_questions" Association="Self.FK_zero_responses_zero_questions">
+            <End Role="zero_questions" EntitySet="zero_questions" />
+            <End Role="zero_responses" EntitySet="zero_responses" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <EntitySet Name="ewo" EntityType="EwoQModel.ewo" />
+          <AssociationSet Name="FK_acciones_inmediatas_ewo" Association="EwoQModel.FK_acciones_inmediatas_ewo">
+            <End Role="ewo" EntitySet="ewo" />
+            <End Role="acciones_inmediatas" EntitySet="acciones_inmediatas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ewo_arbol_perdidas" Association="EwoQModel.FK_ewo_arbol_perdidas">
+            <End Role="arbol_perdidas" EntitySet="arbol_perdidas" />
+            <End Role="ewo" EntitySet="ewo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ewo_AspNetUsers_coordinador_turno" Association="EwoQModel.FK_ewo_AspNetUsers_coordinador_turno">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ewo" EntitySet="ewo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ewo_AspNetUsers_lider_investigacion" Association="EwoQModel.FK_ewo_AspNetUsers_lider_investigacion">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ewo" EntitySet="ewo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ewo_AspNetUsers_operario_responsable" Association="EwoQModel.FK_ewo_AspNetUsers_operario_responsable">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ewo" EntitySet="ewo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ewo_AspNetUsers_pa_coord_pro" Association="EwoQModel.FK_ewo_AspNetUsers_pa_coord_pro">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ewo" EntitySet="ewo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ewo_AspNetUsers_pa_gere_prod" Association="EwoQModel.FK_ewo_AspNetUsers_pa_gere_prod">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ewo" EntitySet="ewo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ewo_AspNetUsers_pa_geren_ca" Association="EwoQModel.FK_ewo_AspNetUsers_pa_geren_ca">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ewo" EntitySet="ewo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ewo_AspNetUsers_pa_jefe_cal" Association="EwoQModel.FK_ewo_AspNetUsers_pa_jefe_cal">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ewo" EntitySet="ewo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ewo_AspNetUsers_responsable_area" Association="EwoQModel.FK_ewo_AspNetUsers_responsable_area">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ewo" EntitySet="ewo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_equipo_trabajo_ewo" Association="EwoQModel.FK_equipo_trabajo_ewo">
+            <End Role="ewo" EntitySet="ewo" />
+            <End Role="equipo_trabajo" EntitySet="equipo_trabajo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ewo_productos" Association="EwoQModel.FK_ewo_productos">
+            <End Role="productos" EntitySet="productos" />
+            <End Role="ewo" EntitySet="ewo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ewo_tipos_data" Association="EwoQModel.FK_ewo_tipos_data">
+            <End Role="tipos_data" EntitySet="tipos_data" />
+            <End Role="ewo" EntitySet="ewo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ewo_tipos_data_area" Association="EwoQModel.FK_ewo_tipos_data_area">
+            <End Role="tipos_data" EntitySet="tipos_data" />
+            <End Role="ewo" EntitySet="ewo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ewo_tipos_data_disposicion_final" Association="EwoQModel.FK_ewo_tipos_data_disposicion_final">
+            <End Role="tipos_data" EntitySet="tipos_data" />
+            <End Role="ewo" EntitySet="ewo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ewo_tipos_data_estado" Association="EwoQModel.FK_ewo_tipos_data_estado">
+            <End Role="tipos_data" EntitySet="tipos_data" />
+            <End Role="ewo" EntitySet="ewo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ewo_tipos_data_linea" Association="EwoQModel.FK_ewo_tipos_data_linea">
+            <End Role="tipos_data" EntitySet="tipos_data" />
+            <End Role="ewo" EntitySet="ewo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_fiveg_resultados_ewo" Association="EwoQModel.FK_fiveg_resultados_ewo">
+            <End Role="ewo" EntitySet="ewo" />
+            <End Role="fiveg_resultados" EntitySet="fiveg_resultados" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_accion_ewo" Association="EwoQModel.FK_plan_accion_ewo">
+            <End Role="ewo" EntitySet="ewo" />
+            <End Role="plan_accion" EntitySet="plan_accion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_porque_porque_ewo" Association="EwoQModel.FK_porque_porque_ewo">
+            <End Role="ewo" EntitySet="ewo" />
+            <End Role="porque_porque" EntitySet="porque_porque" />
+          </AssociationSet>
+          <AssociationSet Name="FK_respuestas4m_ewo" Association="EwoQModel.FK_respuestas4m_ewo">
+            <End Role="ewo" EntitySet="ewo" />
+            <End Role="respuestas4m" EntitySet="respuestas4m" />
+          </AssociationSet>
+          <AssociationSet Name="FK_revisiones_ewo" Association="EwoQModel.FK_revisiones_ewo">
+            <End Role="ewo" EntitySet="ewo" />
+            <End Role="revisiones" EntitySet="revisiones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_zero_questions_ewo" Association="EwoQModel.FK_zero_questions_ewo">
+            <End Role="ewo" EntitySet="ewo" />
+            <End Role="zero_questions" EntitySet="zero_questions" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="ewo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="consecutivo" Type="Int64" />
+          <Property Name="codigo_estado" Type="Int64" />
+          <Property Name="fecha_apertura_investigacion" Type="DateTime" Precision="0" />
+          <Property Name="hora_apertura_investigacion" Type="Time" Precision="7" />
+          <Property Name="hora_evento" Type="Time" Precision="7" />
+          <Property Name="fecha_entrega_investigacion" Type="DateTime" Precision="0" />
+          <Property Name="hora_entrega_investigacion" Type="Time" Precision="7" />
+          <Property Name="tipo_incidente" Type="Int64" />
+          <Property Name="recurrente" Type="Boolean" Nullable="false" />
+          <Property Name="codigo_area" Type="Int64" />
+          <Property Name="codigo_linea" Type="Int64" />
+          <Property Name="etapa" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="codigo_coordinador_turno" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="codigo_responsable_area" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="codigo_operario_responsable" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="codigo_lider_investigacion" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="codigo_producto" Type="Int64" />
+          <Property Name="codigo_sap_producto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="lote_producto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="toneladas_producto" Type="Int32" />
+          <Property Name="numero_cajas" Type="Int32" />
+          <Property Name="numero_pallet" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="unidades" Type="Int32" />
+          <Property Name="tamano_formato" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="costo_incidente" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="tiempo_linea_parada" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion_general_problema" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="tiempo_inspeccion" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="codigo_arbol_perdidas" Type="Int64" />
+          <Property Name="numero_airsweb" Type="Int32" />
+          <Property Name="tiempo_ingresado_airsweb" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="codigo_disposicion_final_prod" Type="Int64" />
+          <Property Name="cantidad_toneladas" Type="Int32" />
+          <Property Name="gemba" Type="Boolean" />
+          <Property Name="gembutsu" Type="Boolean" />
+          <Property Name="genjitsu" Type="Boolean" />
+          <Property Name="five_g_image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion_problema" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="que" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="donde" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="cuando" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="quien" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="cual" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="como" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion_fenomeno" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="images_path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="comentarios_resoluciones" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="pa_codigo_coordinador_prod" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="pa_codigo_gerente_prod" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="pa_codigo_jefe_calidad" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="pa_codigo_gerente_calidad" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="acciones_inmediatas" Relationship="EwoQModel.FK_acciones_inmediatas_ewo" FromRole="ewo" ToRole="acciones_inmediatas" />
+          <NavigationProperty Name="arbol_perdidas" Relationship="EwoQModel.FK_ewo_arbol_perdidas" FromRole="ewo" ToRole="arbol_perdidas" />
+          <NavigationProperty Name="AspNetUsers" Relationship="EwoQModel.FK_ewo_AspNetUsers_coordinador_turno" FromRole="ewo" ToRole="AspNetUsers" />
+          <NavigationProperty Name="AspNetUsers1" Relationship="EwoQModel.FK_ewo_AspNetUsers_lider_investigacion" FromRole="ewo" ToRole="AspNetUsers" />
+          <NavigationProperty Name="AspNetUsers2" Relationship="EwoQModel.FK_ewo_AspNetUsers_operario_responsable" FromRole="ewo" ToRole="AspNetUsers" />
+          <NavigationProperty Name="AspNetUsers3" Relationship="EwoQModel.FK_ewo_AspNetUsers_pa_coord_pro" FromRole="ewo" ToRole="AspNetUsers" />
+          <NavigationProperty Name="AspNetUsers4" Relationship="EwoQModel.FK_ewo_AspNetUsers_pa_gere_prod" FromRole="ewo" ToRole="AspNetUsers" />
+          <NavigationProperty Name="AspNetUsers5" Relationship="EwoQModel.FK_ewo_AspNetUsers_pa_geren_ca" FromRole="ewo" ToRole="AspNetUsers" />
+          <NavigationProperty Name="AspNetUsers6" Relationship="EwoQModel.FK_ewo_AspNetUsers_pa_jefe_cal" FromRole="ewo" ToRole="AspNetUsers" />
+          <NavigationProperty Name="AspNetUsers7" Relationship="EwoQModel.FK_ewo_AspNetUsers_responsable_area" FromRole="ewo" ToRole="AspNetUsers" />
+          <NavigationProperty Name="equipo_trabajo" Relationship="EwoQModel.FK_equipo_trabajo_ewo" FromRole="ewo" ToRole="equipo_trabajo" />
+          <NavigationProperty Name="productos" Relationship="EwoQModel.FK_ewo_productos" FromRole="ewo" ToRole="productos" />
+          <NavigationProperty Name="tipos_data" Relationship="EwoQModel.FK_ewo_tipos_data" FromRole="ewo" ToRole="tipos_data" />
+          <NavigationProperty Name="tipos_data1" Relationship="EwoQModel.FK_ewo_tipos_data_area" FromRole="ewo" ToRole="tipos_data" />
+          <NavigationProperty Name="tipos_data2" Relationship="EwoQModel.FK_ewo_tipos_data_disposicion_final" FromRole="ewo" ToRole="tipos_data" />
+          <NavigationProperty Name="tipos_data3" Relationship="EwoQModel.FK_ewo_tipos_data_estado" FromRole="ewo" ToRole="tipos_data" />
+          <NavigationProperty Name="tipos_data4" Relationship="EwoQModel.FK_ewo_tipos_data_linea" FromRole="ewo" ToRole="tipos_data" />
+          <NavigationProperty Name="fiveg_resultados" Relationship="EwoQModel.FK_fiveg_resultados_ewo" FromRole="ewo" ToRole="fiveg_resultados" />
+          <NavigationProperty Name="plan_accion" Relationship="EwoQModel.FK_plan_accion_ewo" FromRole="ewo" ToRole="plan_accion" />
+          <NavigationProperty Name="porque_porque" Relationship="EwoQModel.FK_porque_porque_ewo" FromRole="ewo" ToRole="porque_porque" />
+          <NavigationProperty Name="respuestas4m" Relationship="EwoQModel.FK_respuestas4m_ewo" FromRole="ewo" ToRole="respuestas4m" />
+          <NavigationProperty Name="revisiones" Relationship="EwoQModel.FK_revisiones_ewo" FromRole="ewo" ToRole="revisiones" />
+          <NavigationProperty Name="zero_questions" Relationship="EwoQModel.FK_zero_questions_ewo" FromRole="ewo" ToRole="zero_questions" />
+        </EntityType>
+        <Association Name="FK_acciones_inmediatas_ewo">
+          <End Type="EwoQModel.ewo" Role="ewo" Multiplicity="0..1" />
+          <End Type="EwoQModel.acciones_inmediatas" Role="acciones_inmediatas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ewo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="acciones_inmediatas">
+              <PropertyRef Name="codigo_ewo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ewo_arbol_perdidas">
+          <End Type="EwoQModel.arbol_perdidas" Role="arbol_perdidas" Multiplicity="0..1" />
+          <End Type="EwoQModel.ewo" Role="ewo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="arbol_perdidas">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ewo">
+              <PropertyRef Name="codigo_arbol_perdidas" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ewo_AspNetUsers_coordinador_turno">
+          <End Type="EwoQModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+          <End Type="EwoQModel.ewo" Role="ewo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ewo">
+              <PropertyRef Name="codigo_coordinador_turno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ewo_AspNetUsers_lider_investigacion">
+          <End Type="EwoQModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+          <End Type="EwoQModel.ewo" Role="ewo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ewo">
+              <PropertyRef Name="codigo_lider_investigacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ewo_AspNetUsers_operario_responsable">
+          <End Type="EwoQModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+          <End Type="EwoQModel.ewo" Role="ewo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ewo">
+              <PropertyRef Name="codigo_operario_responsable" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ewo_AspNetUsers_pa_coord_pro">
+          <End Type="EwoQModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+          <End Type="EwoQModel.ewo" Role="ewo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ewo">
+              <PropertyRef Name="pa_codigo_coordinador_prod" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ewo_AspNetUsers_pa_gere_prod">
+          <End Type="EwoQModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+          <End Type="EwoQModel.ewo" Role="ewo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ewo">
+              <PropertyRef Name="pa_codigo_gerente_prod" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ewo_AspNetUsers_pa_geren_ca">
+          <End Type="EwoQModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+          <End Type="EwoQModel.ewo" Role="ewo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ewo">
+              <PropertyRef Name="pa_codigo_gerente_calidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ewo_AspNetUsers_pa_jefe_cal">
+          <End Type="EwoQModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+          <End Type="EwoQModel.ewo" Role="ewo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ewo">
+              <PropertyRef Name="pa_codigo_jefe_calidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ewo_AspNetUsers_responsable_area">
+          <End Type="EwoQModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+          <End Type="EwoQModel.ewo" Role="ewo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ewo">
+              <PropertyRef Name="codigo_responsable_area" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_equipo_trabajo_ewo">
+          <End Type="EwoQModel.ewo" Role="ewo" Multiplicity="0..1" />
+          <End Type="EwoQModel.equipo_trabajo" Role="equipo_trabajo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ewo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="equipo_trabajo">
+              <PropertyRef Name="codigo_ewo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ewo_productos">
+          <End Type="EwoQModel.productos" Role="productos" Multiplicity="0..1" />
+          <End Type="EwoQModel.ewo" Role="ewo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="productos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ewo">
+              <PropertyRef Name="codigo_producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ewo_tipos_data">
+          <End Type="EwoQModel.tipos_data" Role="tipos_data" Multiplicity="0..1" />
+          <End Type="EwoQModel.ewo" Role="ewo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipos_data">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ewo">
+              <PropertyRef Name="tipo_incidente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ewo_tipos_data_area">
+          <End Type="EwoQModel.tipos_data" Role="tipos_data" Multiplicity="0..1" />
+          <End Type="EwoQModel.ewo" Role="ewo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipos_data">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ewo">
+              <PropertyRef Name="codigo_area" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ewo_tipos_data_disposicion_final">
+          <End Type="EwoQModel.tipos_data" Role="tipos_data" Multiplicity="0..1" />
+          <End Type="EwoQModel.ewo" Role="ewo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipos_data">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ewo">
+              <PropertyRef Name="codigo_disposicion_final_prod" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ewo_tipos_data_estado">
+          <End Type="EwoQModel.tipos_data" Role="tipos_data" Multiplicity="0..1" />
+          <End Type="EwoQModel.ewo" Role="ewo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipos_data">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ewo">
+              <PropertyRef Name="codigo_estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ewo_tipos_data_linea">
+          <End Type="EwoQModel.tipos_data" Role="tipos_data" Multiplicity="0..1" />
+          <End Type="EwoQModel.ewo" Role="ewo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipos_data">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ewo">
+              <PropertyRef Name="codigo_linea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_fiveg_resultados_ewo">
+          <End Type="EwoQModel.ewo" Role="ewo" Multiplicity="0..1" />
+          <End Type="EwoQModel.fiveg_resultados" Role="fiveg_resultados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ewo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="fiveg_resultados">
+              <PropertyRef Name="codigo_ewo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_accion_ewo">
+          <End Type="EwoQModel.ewo" Role="ewo" Multiplicity="0..1" />
+          <End Type="EwoQModel.plan_accion" Role="plan_accion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ewo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_accion">
+              <PropertyRef Name="codigo_ewo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_porque_porque_ewo">
+          <End Type="EwoQModel.ewo" Role="ewo" Multiplicity="0..1" />
+          <End Type="EwoQModel.porque_porque" Role="porque_porque" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ewo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="porque_porque">
+              <PropertyRef Name="codigo_ewo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_respuestas4m_ewo">
+          <End Type="EwoQModel.ewo" Role="ewo" Multiplicity="0..1" />
+          <End Type="EwoQModel.respuestas4m" Role="respuestas4m" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ewo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="respuestas4m">
+              <PropertyRef Name="codigo_ewo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_revisiones_ewo">
+          <End Type="EwoQModel.ewo" Role="ewo" Multiplicity="0..1" />
+          <End Type="EwoQModel.revisiones" Role="revisiones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ewo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="revisiones">
+              <PropertyRef Name="codigo_ewo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_zero_questions_ewo">
+          <End Type="EwoQModel.ewo" Role="ewo" Multiplicity="0..1" />
+          <End Type="EwoQModel.zero_questions" Role="zero_questions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ewo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="zero_questions">
+              <PropertyRef Name="codigo_ewo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EwoQModelStoreContainer" CdmEntityContainer="EwoQEntities">
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="EwoQModel.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="__MigrationHistory">
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="acciones_inmediatas">
+            <EntityTypeMapping TypeName="EwoQModel.acciones_inmediatas">
+              <MappingFragment StoreEntitySet="acciones_inmediatas">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="codigo_ewo" ColumnName="codigo_ewo" />
+                <ScalarProperty Name="accion" ColumnName="accion" />
+                <ScalarProperty Name="codigo_responsable" ColumnName="codigo_responsable" />
+                <ScalarProperty Name="fecha_compromiso" ColumnName="fecha_compromiso" />
+                <ScalarProperty Name="evidencia_efectividad" ColumnName="evidencia_efectividad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="arbol_perdidas">
+            <EntityTypeMapping TypeName="EwoQModel.arbol_perdidas">
+              <MappingFragment StoreEntitySet="arbol_perdidas">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nvl_1" ColumnName="nvl_1" />
+                <ScalarProperty Name="nvl_2" ColumnName="nvl_2" />
+                <ScalarProperty Name="nvl_3" ColumnName="nvl_3" />
+                <ScalarProperty Name="nvl_4" ColumnName="nvl_4" />
+                <ScalarProperty Name="nvl_5" ColumnName="nvl_5" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="EwoQModel.AspNetRoles">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserClaims">
+            <EntityTypeMapping TypeName="EwoQModel.AspNetUserClaims">
+              <MappingFragment StoreEntitySet="AspNetUserClaims">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserLogins">
+            <EntityTypeMapping TypeName="EwoQModel.AspNetUserLogins">
+              <MappingFragment StoreEntitySet="AspNetUserLogins">
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="EwoQModel.AspNetUsers">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+                <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Registrado" ColumnName="Registrado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="equipo_trabajo">
+            <EntityTypeMapping TypeName="EwoQModel.equipo_trabajo">
+              <MappingFragment StoreEntitySet="equipo_trabajo">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="codigo_ewo" ColumnName="codigo_ewo" />
+                <ScalarProperty Name="codigo_usuario" ColumnName="codigo_usuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fiveg_resultados">
+            <EntityTypeMapping TypeName="EwoQModel.fiveg_resultados">
+              <MappingFragment StoreEntitySet="fiveg_resultados">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="codigo_ewo" ColumnName="codigo_ewo" />
+                <ScalarProperty Name="codigo_5fv_opcion" ColumnName="codigo_5fv_opcion" />
+                <ScalarProperty Name="condicion" ColumnName="condicion" />
+                <ScalarProperty Name="condicion_ideal" ColumnName="condicion_ideal" />
+                <ScalarProperty Name="checkk" ColumnName="checkk" />
+                <ScalarProperty Name="como" ColumnName="como" />
+                <ScalarProperty Name="ok" ColumnName="ok" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plan_accion">
+            <EntityTypeMapping TypeName="EwoQModel.plan_accion">
+              <MappingFragment StoreEntitySet="plan_accion">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="codigo_ewo" ColumnName="codigo_ewo" />
+                <ScalarProperty Name="codigo_tipo" ColumnName="codigo_tipo" />
+                <ScalarProperty Name="contramedida" ColumnName="contramedida" />
+                <ScalarProperty Name="requiere_capex" ColumnName="requiere_capex" />
+                <ScalarProperty Name="antes" ColumnName="antes" />
+                <ScalarProperty Name="despues" ColumnName="despues" />
+                <ScalarProperty Name="pokayoke" ColumnName="pokayoke" />
+                <ScalarProperty Name="codigo_responsable" ColumnName="codigo_responsable" />
+                <ScalarProperty Name="codigo_area" ColumnName="codigo_area" />
+                <ScalarProperty Name="fecha_compromiso" ColumnName="fecha_compromiso" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="porque_porque">
+            <EntityTypeMapping TypeName="EwoQModel.porque_porque">
+              <MappingFragment StoreEntitySet="porque_porque">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="codigo_ewo" ColumnName="codigo_ewo" />
+                <ScalarProperty Name="porque1" ColumnName="porque1" />
+                <ScalarProperty Name="porque2" ColumnName="porque2" />
+                <ScalarProperty Name="porque3" ColumnName="porque3" />
+                <ScalarProperty Name="porque4" ColumnName="porque4" />
+                <ScalarProperty Name="porque5" ColumnName="porque5" />
+                <ScalarProperty Name="contramedidas" ColumnName="contramedidas" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="preguntas_4m">
+            <EntityTypeMapping TypeName="EwoQModel.preguntas_4m">
+              <MappingFragment StoreEntitySet="preguntas_4m">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="codigo_tipo4m" ColumnName="codigo_tipo4m" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="productos">
+            <EntityTypeMapping TypeName="EwoQModel.productos">
+              <MappingFragment StoreEntitySet="productos">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="respuestas4m">
+            <EntityTypeMapping TypeName="EwoQModel.respuestas4m">
+              <MappingFragment StoreEntitySet="respuestas4m">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="codigo_pregunta" ColumnName="codigo_pregunta" />
+                <ScalarProperty Name="codigo_ewo" ColumnName="codigo_ewo" />
+                <ScalarProperty Name="verificado" ColumnName="verificado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="revisiones">
+            <EntityTypeMapping TypeName="EwoQModel.revisiones">
+              <MappingFragment StoreEntitySet="revisiones">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="codigo_ewo" ColumnName="codigo_ewo" />
+                <ScalarProperty Name="codigo_usuario" ColumnName="codigo_usuario" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tipos">
+            <EntityTypeMapping TypeName="EwoQModel.tipos">
+              <MappingFragment StoreEntitySet="tipos">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tipos_data">
+            <EntityTypeMapping TypeName="EwoQModel.tipos_data">
+              <MappingFragment StoreEntitySet="tipos_data">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="codigo_tipo" ColumnName="codigo_tipo" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="zero_questions">
+            <EntityTypeMapping TypeName="EwoQModel.zero_questions">
+              <MappingFragment StoreEntitySet="zero_questions">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="codigo_ewo" ColumnName="codigo_ewo" />
+                <ScalarProperty Name="codigo_tipom" ColumnName="codigo_tipom" />
+                <ScalarProperty Name="pregunta" ColumnName="pregunta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="zero_responses">
+            <EntityTypeMapping TypeName="EwoQModel.zero_responses">
+              <MappingFragment StoreEntitySet="zero_responses">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="codigo_pregunta" ColumnName="codigo_pregunta" />
+                <ScalarProperty Name="respuesta" ColumnName="respuesta" />
+                <ScalarProperty Name="puntaje" ColumnName="puntaje" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="EwoQModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetRoles">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="ewo">
+            <EntityTypeMapping TypeName="EwoQModel.ewo">
+              <MappingFragment StoreEntitySet="ewo">
+                <ScalarProperty Name="pa_codigo_gerente_calidad" ColumnName="pa_codigo_gerente_calidad" />
+                <ScalarProperty Name="pa_codigo_jefe_calidad" ColumnName="pa_codigo_jefe_calidad" />
+                <ScalarProperty Name="pa_codigo_gerente_prod" ColumnName="pa_codigo_gerente_prod" />
+                <ScalarProperty Name="pa_codigo_coordinador_prod" ColumnName="pa_codigo_coordinador_prod" />
+                <ScalarProperty Name="comentarios_resoluciones" ColumnName="comentarios_resoluciones" />
+                <ScalarProperty Name="images_path" ColumnName="images_path" />
+                <ScalarProperty Name="descripcion_fenomeno" ColumnName="descripcion_fenomeno" />
+                <ScalarProperty Name="como" ColumnName="como" />
+                <ScalarProperty Name="cual" ColumnName="cual" />
+                <ScalarProperty Name="quien" ColumnName="quien" />
+                <ScalarProperty Name="cuando" ColumnName="cuando" />
+                <ScalarProperty Name="donde" ColumnName="donde" />
+                <ScalarProperty Name="que" ColumnName="que" />
+                <ScalarProperty Name="descripcion_problema" ColumnName="descripcion_problema" />
+                <ScalarProperty Name="five_g_image" ColumnName="five_g_image" />
+                <ScalarProperty Name="genjitsu" ColumnName="genjitsu" />
+                <ScalarProperty Name="gembutsu" ColumnName="gembutsu" />
+                <ScalarProperty Name="gemba" ColumnName="gemba" />
+                <ScalarProperty Name="cantidad_toneladas" ColumnName="cantidad_toneladas" />
+                <ScalarProperty Name="codigo_disposicion_final_prod" ColumnName="codigo_disposicion_final_prod" />
+                <ScalarProperty Name="tiempo_ingresado_airsweb" ColumnName="tiempo_ingresado_airsweb" />
+                <ScalarProperty Name="numero_airsweb" ColumnName="numero_airsweb" />
+                <ScalarProperty Name="codigo_arbol_perdidas" ColumnName="codigo_arbol_perdidas" />
+                <ScalarProperty Name="tiempo_inspeccion" ColumnName="tiempo_inspeccion" />
+                <ScalarProperty Name="descripcion_general_problema" ColumnName="descripcion_general_problema" />
+                <ScalarProperty Name="tiempo_linea_parada" ColumnName="tiempo_linea_parada" />
+                <ScalarProperty Name="costo_incidente" ColumnName="costo_incidente" />
+                <ScalarProperty Name="tamano_formato" ColumnName="tamano_formato" />
+                <ScalarProperty Name="unidades" ColumnName="unidades" />
+                <ScalarProperty Name="numero_pallet" ColumnName="numero_pallet" />
+                <ScalarProperty Name="numero_cajas" ColumnName="numero_cajas" />
+                <ScalarProperty Name="toneladas_producto" ColumnName="toneladas_producto" />
+                <ScalarProperty Name="lote_producto" ColumnName="lote_producto" />
+                <ScalarProperty Name="codigo_sap_producto" ColumnName="codigo_sap_producto" />
+                <ScalarProperty Name="codigo_producto" ColumnName="codigo_producto" />
+                <ScalarProperty Name="codigo_lider_investigacion" ColumnName="codigo_lider_investigacion" />
+                <ScalarProperty Name="codigo_operario_responsable" ColumnName="codigo_operario_responsable" />
+                <ScalarProperty Name="codigo_responsable_area" ColumnName="codigo_responsable_area" />
+                <ScalarProperty Name="codigo_coordinador_turno" ColumnName="codigo_coordinador_turno" />
+                <ScalarProperty Name="etapa" ColumnName="etapa" />
+                <ScalarProperty Name="codigo_linea" ColumnName="codigo_linea" />
+                <ScalarProperty Name="codigo_area" ColumnName="codigo_area" />
+                <ScalarProperty Name="recurrente" ColumnName="recurrente" />
+                <ScalarProperty Name="tipo_incidente" ColumnName="tipo_incidente" />
+                <ScalarProperty Name="hora_entrega_investigacion" ColumnName="hora_entrega_investigacion" />
+                <ScalarProperty Name="fecha_entrega_investigacion" ColumnName="fecha_entrega_investigacion" />
+                <ScalarProperty Name="hora_evento" ColumnName="hora_evento" />
+                <ScalarProperty Name="hora_apertura_investigacion" ColumnName="hora_apertura_investigacion" />
+                <ScalarProperty Name="fecha_apertura_investigacion" ColumnName="fecha_apertura_investigacion" />
+                <ScalarProperty Name="codigo_estado" ColumnName="codigo_estado" />
+                <ScalarProperty Name="consecutivo" ColumnName="consecutivo" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

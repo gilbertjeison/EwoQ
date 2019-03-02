@@ -1,0 +1,432 @@
+﻿@model EwoQ.Database.ewo
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>ewo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.consecutivo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.consecutivo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fecha_apertura_investigacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fecha_apertura_investigacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.hora_apertura_investigacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.hora_apertura_investigacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.hora_evento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.hora_evento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fecha_entrega_investigacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fecha_entrega_investigacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.hora_entrega_investigacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.hora_entrega_investigacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.recurrente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.recurrente)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.etapa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.etapa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.codigo_sap_producto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.codigo_sap_producto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.lote_producto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.lote_producto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.toneladas_producto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.toneladas_producto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.numero_cajas)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.numero_cajas)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.numero_pallet)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.numero_pallet)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.unidades)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.unidades)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tamano_formato)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tamano_formato)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.costo_incidente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.costo_incidente)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tiempo_linea_parada)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tiempo_linea_parada)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.descripcion_general_problema)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.descripcion_general_problema)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tiempo_inspeccion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tiempo_inspeccion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.numero_airsweb)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.numero_airsweb)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tiempo_ingresado_airsweb)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tiempo_ingresado_airsweb)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cantidad_toneladas)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cantidad_toneladas)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.gemba)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.gemba)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.gembutsu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.gembutsu)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.genjitsu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.genjitsu)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.five_g_image)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.five_g_image)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.descripcion_problema)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.descripcion_problema)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.que)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.que)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.donde)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.donde)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cuando)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cuando)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.quien)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.quien)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cual)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cual)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.como)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.como)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.descripcion_fenomeno)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.descripcion_fenomeno)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.images_path)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.images_path)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.comentarios_resoluciones)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.comentarios_resoluciones)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.arbol_perdidas.nvl_1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.arbol_perdidas.nvl_1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AspNetUsers.Nombres)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AspNetUsers.Nombres)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AspNetUsers1.Nombres)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AspNetUsers1.Nombres)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AspNetUsers2.Nombres)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AspNetUsers2.Nombres)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AspNetUsers3.Nombres)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AspNetUsers3.Nombres)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AspNetUsers4.Nombres)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AspNetUsers4.Nombres)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AspNetUsers5.Nombres)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AspNetUsers5.Nombres)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AspNetUsers6.Nombres)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AspNetUsers6.Nombres)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AspNetUsers7.Nombres)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AspNetUsers7.Nombres)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.productos.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.productos.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tipos_data.descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tipos_data.descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tipos_data1.descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tipos_data1.descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tipos_data2.descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tipos_data2.descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tipos_data3.descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tipos_data3.descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tipos_data4.descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tipos_data4.descripcion)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
