@@ -14,16 +14,7 @@ namespace EwoQ.Database
     
     public partial class productos
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public productos()
-        {
-            this.ewo = new HashSet<ewo>();
-        }
-    
         public long id { get; set; }
         public string nombre { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ewo> ewo { get; set; }
     }
 }

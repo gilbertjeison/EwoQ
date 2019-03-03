@@ -121,7 +121,7 @@
           <Property Name="codigo_responsable_area" Type="nvarchar" MaxLength="128" />
           <Property Name="codigo_operario_responsable" Type="nvarchar" MaxLength="128" />
           <Property Name="codigo_lider_investigacion" Type="nvarchar" MaxLength="128" />
-          <Property Name="codigo_producto" Type="bigint" />
+          <Property Name="producto" Type="varchar" MaxLength="50" />
           <Property Name="codigo_sap_producto" Type="varchar" MaxLength="50" />
           <Property Name="lote_producto" Type="varchar" MaxLength="50" />
           <Property Name="toneladas_producto" Type="int" />
@@ -129,6 +129,7 @@
           <Property Name="numero_pallet" Type="varchar" MaxLength="50" />
           <Property Name="unidades" Type="int" />
           <Property Name="tamano_formato" Type="varchar" MaxLength="50" />
+          <Property Name="codigo_unidad_medida_tamfor" Type="bigint" />
           <Property Name="costo_incidente" Type="decimal" Precision="18" Scale="0" />
           <Property Name="tiempo_linea_parada" Type="varchar" MaxLength="10" />
           <Property Name="descripcion_general_problema" Type="text" />
@@ -477,18 +478,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ewo_productos">
-          <End Role="productos" Type="Self.productos" Multiplicity="0..1" />
-          <End Role="ewo" Type="Self.ewo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="productos">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="ewo">
-              <PropertyRef Name="codigo_producto" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ewo_tipos_data">
           <End Role="tipos_data" Type="Self.tipos_data" Multiplicity="0..1" />
           <End Role="ewo" Type="Self.ewo" Multiplicity="*" />
@@ -546,6 +535,18 @@
             </Principal>
             <Dependent Role="ewo">
               <PropertyRef Name="codigo_linea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ewo_tipos_data_unimed_tamfor">
+          <End Role="tipos_data" Type="Self.tipos_data" Multiplicity="0..1" />
+          <End Role="ewo" Type="Self.ewo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipos_data">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ewo">
+              <PropertyRef Name="codigo_unidad_medida_tamfor" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -819,10 +820,6 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="ewo" EntitySet="ewo" />
           </AssociationSet>
-          <AssociationSet Name="FK_ewo_productos" Association="Self.FK_ewo_productos">
-            <End Role="productos" EntitySet="productos" />
-            <End Role="ewo" EntitySet="ewo" />
-          </AssociationSet>
           <AssociationSet Name="FK_ewo_tipos_data" Association="Self.FK_ewo_tipos_data">
             <End Role="tipos_data" EntitySet="tipos_data" />
             <End Role="ewo" EntitySet="ewo" />
@@ -840,6 +837,10 @@
             <End Role="ewo" EntitySet="ewo" />
           </AssociationSet>
           <AssociationSet Name="FK_ewo_tipos_data_linea" Association="Self.FK_ewo_tipos_data_linea">
+            <End Role="tipos_data" EntitySet="tipos_data" />
+            <End Role="ewo" EntitySet="ewo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ewo_tipos_data_unimed_tamfor" Association="Self.FK_ewo_tipos_data_unimed_tamfor">
             <End Role="tipos_data" EntitySet="tipos_data" />
             <End Role="ewo" EntitySet="ewo" />
           </AssociationSet>
@@ -1007,7 +1008,7 @@
           <NavigationProperty Name="ewo5" Relationship="EwoQModel.FK_ewo_AspNetUsers_pa_geren_ca" FromRole="AspNetUsers" ToRole="ewo" />
           <NavigationProperty Name="ewo6" Relationship="EwoQModel.FK_ewo_AspNetUsers_pa_jefe_cal" FromRole="AspNetUsers" ToRole="ewo" />
           <NavigationProperty Name="ewo7" Relationship="EwoQModel.FK_ewo_AspNetUsers_responsable_area" FromRole="AspNetUsers" ToRole="ewo" />
-        </EntityType>
+          </EntityType>
         <EntityType Name="equipo_trabajo">
           <Key>
             <PropertyRef Name="id" />
@@ -1082,7 +1083,6 @@
           </Key>
           <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="ewo" Relationship="EwoQModel.FK_ewo_productos" FromRole="productos" ToRole="ewo" />
         </EntityType>
         <EntityType Name="respuestas4m">
           <Key>
@@ -1131,6 +1131,7 @@
           <NavigationProperty Name="ewo2" Relationship="EwoQModel.FK_ewo_tipos_data_disposicion_final" FromRole="tipos_data" ToRole="ewo" />
           <NavigationProperty Name="ewo3" Relationship="EwoQModel.FK_ewo_tipos_data_estado" FromRole="tipos_data" ToRole="ewo" />
           <NavigationProperty Name="ewo4" Relationship="EwoQModel.FK_ewo_tipos_data_linea" FromRole="tipos_data" ToRole="ewo" />
+          <NavigationProperty Name="ewo5" Relationship="EwoQModel.FK_ewo_tipos_data_unimed_tamfor" FromRole="tipos_data" ToRole="ewo" />
         </EntityType>
         <EntityType Name="zero_questions">
           <Key>
@@ -1439,10 +1440,6 @@
             <End Role="ewo" EntitySet="ewo" />
             <End Role="equipo_trabajo" EntitySet="equipo_trabajo" />
           </AssociationSet>
-          <AssociationSet Name="FK_ewo_productos" Association="EwoQModel.FK_ewo_productos">
-            <End Role="productos" EntitySet="productos" />
-            <End Role="ewo" EntitySet="ewo" />
-          </AssociationSet>
           <AssociationSet Name="FK_ewo_tipos_data" Association="EwoQModel.FK_ewo_tipos_data">
             <End Role="tipos_data" EntitySet="tipos_data" />
             <End Role="ewo" EntitySet="ewo" />
@@ -1460,6 +1457,10 @@
             <End Role="ewo" EntitySet="ewo" />
           </AssociationSet>
           <AssociationSet Name="FK_ewo_tipos_data_linea" Association="EwoQModel.FK_ewo_tipos_data_linea">
+            <End Role="tipos_data" EntitySet="tipos_data" />
+            <End Role="ewo" EntitySet="ewo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ewo_tipos_data_unimed_tamfor" Association="EwoQModel.FK_ewo_tipos_data_unimed_tamfor">
             <End Role="tipos_data" EntitySet="tipos_data" />
             <End Role="ewo" EntitySet="ewo" />
           </AssociationSet>
@@ -1487,7 +1488,7 @@
             <End Role="ewo" EntitySet="ewo" />
             <End Role="zero_questions" EntitySet="zero_questions" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="ewo">
           <Key>
             <PropertyRef Name="id" />
@@ -1509,7 +1510,7 @@
           <Property Name="codigo_responsable_area" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="codigo_operario_responsable" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="codigo_lider_investigacion" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="codigo_producto" Type="Int64" />
+          <Property Name="producto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="codigo_sap_producto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="lote_producto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="toneladas_producto" Type="Int32" />
@@ -1517,6 +1518,7 @@
           <Property Name="numero_pallet" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="unidades" Type="Int32" />
           <Property Name="tamano_formato" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="codigo_unidad_medida_tamfor" Type="Int64" />
           <Property Name="costo_incidente" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="tiempo_linea_parada" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="descripcion_general_problema" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
@@ -1555,12 +1557,12 @@
           <NavigationProperty Name="AspNetUsers6" Relationship="EwoQModel.FK_ewo_AspNetUsers_pa_jefe_cal" FromRole="ewo" ToRole="AspNetUsers" />
           <NavigationProperty Name="AspNetUsers7" Relationship="EwoQModel.FK_ewo_AspNetUsers_responsable_area" FromRole="ewo" ToRole="AspNetUsers" />
           <NavigationProperty Name="equipo_trabajo" Relationship="EwoQModel.FK_equipo_trabajo_ewo" FromRole="ewo" ToRole="equipo_trabajo" />
-          <NavigationProperty Name="productos" Relationship="EwoQModel.FK_ewo_productos" FromRole="ewo" ToRole="productos" />
           <NavigationProperty Name="tipos_data" Relationship="EwoQModel.FK_ewo_tipos_data" FromRole="ewo" ToRole="tipos_data" />
           <NavigationProperty Name="tipos_data1" Relationship="EwoQModel.FK_ewo_tipos_data_area" FromRole="ewo" ToRole="tipos_data" />
           <NavigationProperty Name="tipos_data2" Relationship="EwoQModel.FK_ewo_tipos_data_disposicion_final" FromRole="ewo" ToRole="tipos_data" />
           <NavigationProperty Name="tipos_data3" Relationship="EwoQModel.FK_ewo_tipos_data_estado" FromRole="ewo" ToRole="tipos_data" />
           <NavigationProperty Name="tipos_data4" Relationship="EwoQModel.FK_ewo_tipos_data_linea" FromRole="ewo" ToRole="tipos_data" />
+          <NavigationProperty Name="tipos_data5" Relationship="EwoQModel.FK_ewo_tipos_data_unimed_tamfor" FromRole="ewo" ToRole="tipos_data" />
           <NavigationProperty Name="fiveg_resultados" Relationship="EwoQModel.FK_fiveg_resultados_ewo" FromRole="ewo" ToRole="fiveg_resultados" />
           <NavigationProperty Name="plan_accion" Relationship="EwoQModel.FK_plan_accion_ewo" FromRole="ewo" ToRole="plan_accion" />
           <NavigationProperty Name="porque_porque" Relationship="EwoQModel.FK_porque_porque_ewo" FromRole="ewo" ToRole="porque_porque" />
@@ -1700,18 +1702,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ewo_productos">
-          <End Type="EwoQModel.productos" Role="productos" Multiplicity="0..1" />
-          <End Type="EwoQModel.ewo" Role="ewo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="productos">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="ewo">
-              <PropertyRef Name="codigo_producto" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ewo_tipos_data">
           <End Type="EwoQModel.tipos_data" Role="tipos_data" Multiplicity="0..1" />
           <End Type="EwoQModel.ewo" Role="ewo" Multiplicity="*" />
@@ -1769,6 +1759,18 @@
             </Principal>
             <Dependent Role="ewo">
               <PropertyRef Name="codigo_linea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ewo_tipos_data_unimed_tamfor">
+          <End Type="EwoQModel.tipos_data" Role="tipos_data" Multiplicity="0..1" />
+          <End Type="EwoQModel.ewo" Role="ewo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipos_data">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ewo">
+              <PropertyRef Name="codigo_unidad_medida_tamfor" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1844,7 +1846,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -2099,6 +2101,7 @@
                 <ScalarProperty Name="descripcion_general_problema" ColumnName="descripcion_general_problema" />
                 <ScalarProperty Name="tiempo_linea_parada" ColumnName="tiempo_linea_parada" />
                 <ScalarProperty Name="costo_incidente" ColumnName="costo_incidente" />
+                <ScalarProperty Name="codigo_unidad_medida_tamfor" ColumnName="codigo_unidad_medida_tamfor" />
                 <ScalarProperty Name="tamano_formato" ColumnName="tamano_formato" />
                 <ScalarProperty Name="unidades" ColumnName="unidades" />
                 <ScalarProperty Name="numero_pallet" ColumnName="numero_pallet" />
@@ -2106,7 +2109,7 @@
                 <ScalarProperty Name="toneladas_producto" ColumnName="toneladas_producto" />
                 <ScalarProperty Name="lote_producto" ColumnName="lote_producto" />
                 <ScalarProperty Name="codigo_sap_producto" ColumnName="codigo_sap_producto" />
-                <ScalarProperty Name="codigo_producto" ColumnName="codigo_producto" />
+                <ScalarProperty Name="producto" ColumnName="producto" />
                 <ScalarProperty Name="codigo_lider_investigacion" ColumnName="codigo_lider_investigacion" />
                 <ScalarProperty Name="codigo_operario_responsable" ColumnName="codigo_operario_responsable" />
                 <ScalarProperty Name="codigo_responsable_area" ColumnName="codigo_responsable_area" />

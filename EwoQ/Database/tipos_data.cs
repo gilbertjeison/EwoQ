@@ -26,6 +26,7 @@ namespace EwoQ.Database
             this.ewo2 = new HashSet<ewo>();
             this.ewo3 = new HashSet<ewo>();
             this.ewo4 = new HashSet<ewo>();
+            this.ewo5 = new HashSet<ewo>();
         }
     
         public long id { get; set; }
@@ -51,5 +52,7 @@ namespace EwoQ.Database
         public virtual ICollection<ewo> ewo3 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ewo> ewo4 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ewo> ewo5 { get; set; }
     }
 }

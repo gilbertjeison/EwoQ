@@ -44,7 +44,7 @@ namespace EwoQ.Database
         public string codigo_responsable_area { get; set; }
         public string codigo_operario_responsable { get; set; }
         public string codigo_lider_investigacion { get; set; }
-        public Nullable<long> codigo_producto { get; set; }
+        public string producto { get; set; }
         public string codigo_sap_producto { get; set; }
         public string lote_producto { get; set; }
         public Nullable<int> toneladas_producto { get; set; }
@@ -52,6 +52,7 @@ namespace EwoQ.Database
         public string numero_pallet { get; set; }
         public Nullable<int> unidades { get; set; }
         public string tamano_formato { get; set; }
+        public Nullable<long> codigo_unidad_medida_tamfor { get; set; }
         public Nullable<decimal> costo_incidente { get; set; }
         public string tiempo_linea_parada { get; set; }
         public string descripcion_general_problema { get; set; }
@@ -93,12 +94,12 @@ namespace EwoQ.Database
         public virtual AspNetUsers AspNetUsers7 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<equipo_trabajo> equipo_trabajo { get; set; }
-        public virtual productos productos { get; set; }
         public virtual tipos_data tipos_data { get; set; }
         public virtual tipos_data tipos_data1 { get; set; }
         public virtual tipos_data tipos_data2 { get; set; }
         public virtual tipos_data tipos_data3 { get; set; }
         public virtual tipos_data tipos_data4 { get; set; }
+        public virtual tipos_data tipos_data5 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<fiveg_resultados> fiveg_resultados { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

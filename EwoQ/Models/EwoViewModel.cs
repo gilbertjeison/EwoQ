@@ -39,7 +39,7 @@ namespace EwoQ.Models
 
 
         [DisplayName("Recurrente")]
-        public bool Recurrente { get; set; }
+        public string Recurrente { get; set; }
 
 
         [Display(Name = "Area donde ocurrió el evento")]
@@ -109,6 +109,8 @@ namespace EwoQ.Models
 
         [Display(Name = "Acciones Inmediatas una vez detectada la desviación")]
         public ArrayList AccionesList { get; set; }
+
+        public string Cmd { get; set; }
         #endregion
     }
 }

@@ -50,12 +50,12 @@
         <AssociationConnector Association="EwoQModel.FK_ewo_AspNetUsers_pa_jefe_cal" />
         <AssociationConnector Association="EwoQModel.FK_ewo_AspNetUsers_responsable_area" />
         <AssociationConnector Association="EwoQModel.FK_equipo_trabajo_ewo" />
-        <AssociationConnector Association="EwoQModel.FK_ewo_productos" />
         <AssociationConnector Association="EwoQModel.FK_ewo_tipos_data" />
         <AssociationConnector Association="EwoQModel.FK_ewo_tipos_data_area" />
         <AssociationConnector Association="EwoQModel.FK_ewo_tipos_data_disposicion_final" />
         <AssociationConnector Association="EwoQModel.FK_ewo_tipos_data_estado" />
         <AssociationConnector Association="EwoQModel.FK_ewo_tipos_data_linea" />
+        <AssociationConnector Association="EwoQModel.FK_ewo_tipos_data_unimed_tamfor" />
         <AssociationConnector Association="EwoQModel.FK_fiveg_resultados_ewo" />
         <AssociationConnector Association="EwoQModel.FK_plan_accion_ewo" />
         <AssociationConnector Association="EwoQModel.FK_porque_porque_ewo" />

@@ -10,6 +10,9 @@ using System.Web.Mvc;
 using EwoQ.Database;
 using EwoQ.Models;
 using EwoQ.Dao;
+using System.Web.Script.Serialization;
+using System.Globalization;
+using System.Diagnostics;
 
 namespace EwoQ.Controllers
 {
@@ -49,8 +52,7 @@ namespace EwoQ.Controllers
 
             return Json(new SelectList(List, "Value", "Text"));
         }
-
-
+        
         [HttpPost]
         public async Task<JsonResult> GetAllUsersJsonAsync()
         {
@@ -131,12 +133,51 @@ namespace EwoQ.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //public async Task<ActionResult> Create([Bind(Include = "id,consecutivo,codigo_estado,fecha_apertura_investigacion,hora_apertura_investigacion,hora_evento,fecha_entrega_investigacion,hora_entrega_investigacion,recurrente,codigo_area,codigo_linea,etapa,codigo_coordinador_turno,codigo_responsable_area,codigo_operario_responsable,codigo_lider_investigacion,codigo_producto,codigo_sap_producto,lote_producto,toneladas_producto,numero_cajas,numero_pallet,unidades,tamano_formato,codigo_unidad_medida_tamfor,costo_incidente,tiempo_linea_parada,descripcion_general_problema,tiempo_inspeccion,codigo_arbol_perdidas,numero_airsweb,tiempo_ingresado_airsweb,codigo_disposicion_final_prod,cantidad_toneladas,gemba,gembutsu,genjitsu,five_g_image,descripcion_problema,que,donde,cuando,quien,cual,como,descripcion_fenomeno,images_path,comentarios_resoluciones,pa_codigo_coordinador_prod,pa_codigo_gerente_prod,pa_codigo_jefe_calidad,pa_codigo_gerente_calidad")] ewo ewo)
-        public int Create(ReporteIncidentesViewModel ewo)
+        public async Task<int> CreateAsync(ReporteIncidentesViewModel ewr)
         {
+            try
+            {
+                var ewo1 = ewr;
 
-            var ewo1 = ewo;
+                JavaScriptSerializer ser = new JavaScriptSerializer();
+                List<acciones_inmediatas> accInm = ser.Deserialize<List<acciones_inmediatas>>(ewr.Cmd);
 
+                ewo ewo = new ewo();
+                ewo.consecutivo = await daoEwo.GetLastConsecutive();
+                ewo.codigo_estado = 1; //ABIERTO - TIPOS DATA
+                ewo.fecha_apertura_investigacion = DateTime.ParseExact(ewr.FchApertInvestigacion, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                ewo.hora_apertura_investigacion = TimeSpan.Parse(ewr.HrApertInvestigacion);
+                ewo.hora_evento = TimeSpan.Parse(ewr.HrEvento);
+                ewo.fecha_entrega_investigacion = DateTime.ParseExact(ewr.FchEntregaInvestigacion, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                ewo.hora_entrega_investigacion = TimeSpan.Parse(ewr.HrEntregaInvestigacion);
+                ewo.tipo_incidente = ewr.TipoIncidente;
+                ewo.codigo_area = ewr.IdArea;
+                ewo.codigo_linea = ewr.IdLinea;
+                ewo.etapa = ewr.EtapaProceso;
+                ewo.codigo_coordinador_turno = ewr.IdCoorSup;
+                ewo.recurrente = ewr.Recurrente != null ? true : false;
+                ewo.codigo_responsable_area = ewr.IdRespArea;
+                ewo.codigo_operario_responsable = ewr.IdOpeRes;
+                ewo.codigo_lider_investigacion = ewr.IdLidInv;
+                ewo.producto = ewr.NombreProducto;
+                ewo.codigo_sap_producto = ewr.CodigoSAP;
+                ewo.lote_producto = ewr.Lote;
+                ewo.toneladas_producto = ewr.Toneladas;
+                ewo.numero_cajas = ewr.NumCajas;
+                ewo.numero_pallet = ewr.NumPallet;
+                ewo.unidades = ewr.Unidades;
+                ewo.tamano_formato = ewr.TamanoFormato;
+                ewo.tiempo_linea_parada = ewr.TiempoLineaParada;
+                ewo.descripcion_general_problema = ewr.DescripcionProblema;
+
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Error en CreateAsync "+e.ToString());
+            }
             
+            
+
             return 1;
         }
 

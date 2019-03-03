@@ -331,7 +331,7 @@
                                 <i class="material-icons">play_for_work</i>
                             </span>
                             <div class="form-line">
-                                @Html.EditorFor(model => model.NumCajas, new { htmlAttributes = new { @class = "form-control", required="required" } })
+                                @Html.EditorFor(model => model.NumCajas, new { htmlAttributes = new { @class = "form-control", required="required"} })
                             </div>
                         </div>
                     </div>
@@ -405,14 +405,7 @@
             </div>
         </div>
     </div>
-<div >
-    <div class="alert alert-warning alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <strong>Warning!</strong> Better check yourself, you're not looking too good.
-    </div>
-</div>
-
-    @*<input type="submit" value="Reportar" class="btn btn-default center-block waves-effect" style="width:50%" />*@
+        
 }
 
 <!-- Select Plugin Js -->
@@ -537,10 +530,10 @@
     function initGrid() {
         var columns =
             [
-                { id: "titulo", name: "Acción", field: "titulo", minWidth: 300, editable: true, editor: Slick.Editors.Text },
-                { id: "id_responsable", name: "Responsable", field: "NombresCommpletos", minWidth: 200, formatter: select2Formatter, editor: SelectEditor, dataSource: user_data },
+                { id: "titulo", name: "Acción", field: "accion", minWidth: 300, editable: true, editor: Slick.Editors.Text },
+                { id: "id_responsable", name: "Responsable", field: "codigo_responsable", minWidth: 200, formatter: select2Formatter, editor: SelectEditor, dataSource: user_data },
                 { id: "fecha_compromiso", name: "Fecha de compromiso", field: "fecha_compromiso", minWidth: 130, editor: Slick.Editors.Date },
-                { id: "evi_efe", name: "Evidencia/Efectividad", field: "evi_efe", minWidth: 120, resizable: false, formatter: Slick.Formatters.PercentCompleteBar, editor: Slick.Editors.PercentComplete },
+                { id: "evi_efe", name: "Evidencia/Efectividad", field: "evidencia_efectividad", minWidth: 120, resizable: false, formatter: Slick.Formatters.PercentCompleteBar, editor: Slick.Editors.PercentComplete },
                 {
                     id: 'id', name: '#', field: 'id', formatter: function (index, c, id, def, datactx) {
                         return '<a id="deleteSG" class="btn btn-primary" style="padding:2px;" onclick="RemoveClick(' + index + ')">Eliminar</a>';
@@ -585,7 +578,7 @@
                 if (Slick.GlobalEditorLock.isActive())
                     Slick.GlobalEditorLock.commitCurrentEdit();
 
-            }, 500);
+            }, 5000);
         });
     }
 
@@ -697,23 +690,53 @@
         //            scrollTop: $(validator.errorList[0].element).offset().top
         //        }, 1000);
 
-        //    }
+        //    },
+        //    ignore: ':disabled,.ignore'
         //});
 
         cmd = [];
         cmd = grid.getData();
 
-        if (cmd.length == 0) {
-            swal("Acciones Inmediatas", "Las acciones deben estar diligenciadas", "error");            
-            return false;
-        };
-
+        //if (cmd.length == 0) {
+        //    swal("Acciones Inmediatas", "Las acciones deben estar diligenciadas", "error");            
+        //    return false;
+        //};
+                
         //if (!validate.form()) {
         //    return false;
         //}
-        //else {
-        //    alert('validado');
-        //}
+
+        //MOSTRAR LOADER
+        $('.page-loader-wrapper').fadeIn();
+
+        var form = $('#formReporte')[0];
+        var dataString = new FormData(form);
+
+        //ADJUNTAR LISTA DE ACCIONES
+        dataString.append('Cmd', JSON.stringify(cmd));
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("CreateAsync", "ReportarIncidentes")',
+            data: dataString,
+            success: function (response) {
+
+                //MENSAJE DE CONFIRMACIÓN O ERROR
+                //if (response == "OK") {
+                //    swal("Machine Ledger", "Línea editada correctamente", "success");
+                //    $('#EditLinModal').modal('hide');
+                //    GotoLines();
+                //}
+                //else {
+                //    swal("Machine Ledger", response, "warning");
+                //}
+            },
+            cache: false,
+            contentType: false,
+            processData:false
+        });
+        
+        $('.page-loader-wrapper').fadeOut();
     }
 </script>
 
