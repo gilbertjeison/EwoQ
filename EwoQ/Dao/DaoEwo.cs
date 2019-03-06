@@ -39,5 +39,26 @@ namespace EwoQ.Dao
 
             return max;
         }
+
+        public async Task<long> AddEwo(ewo ewo)
+        {
+            long regs = 0;
+
+            try
+            {
+                using (var context = new EwoQEntities())
+                {
+                    context.ewo.Add(ewo);
+                    await context.SaveChangesAsync();
+                    regs = ewo.id;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Error al agregar ewo: "+e.ToString());
+                regs = -1;
+            }
+            return regs;
+        }
     }
 }

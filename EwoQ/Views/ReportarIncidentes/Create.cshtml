@@ -722,14 +722,14 @@
             success: function (response) {
 
                 //MENSAJE DE CONFIRMACIÓN O ERROR
-                //if (response == "OK") {
-                //    swal("Machine Ledger", "Línea editada correctamente", "success");
-                //    $('#EditLinModal').modal('hide');
-                //    GotoLines();
-                //}
-                //else {
-                //    swal("Machine Ledger", response, "warning");
-                //}
+                if (response == 1) {
+                    swal("Reporte de incidentes", "Línea editada correctamente", "success");
+                    $.post('/Home/index/', function () {
+                    });
+                }
+                else {
+                    swal("Reporte de incidentes", "Error al reportar incidente, vuelta a intentarlo", "error");
+                }
             },
             cache: false,
             contentType: false,

@@ -204,6 +204,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ReportarIncidentesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Dao\DaoAcciones.cs" />
     <Compile Include="Dao\DaoEwo.cs" />
     <Compile Include="Dao\DaoProductos.cs" />
     <Compile Include="Dao\DaoRoles.cs" />

@@ -20,6 +20,7 @@ namespace EwoQ.Controllers
     public class ReportarIncidentesController : Controller
     {
         private EwoQEntities db = new EwoQEntities();
+        DaoAcciones daoAcc = new DaoAcciones();
         DaoTiposData daoTD = new DaoTiposData();
         DaoUsuarios daoUser = new DaoUsuarios();
         DaoProductos daoPro = new DaoProductos();
@@ -36,7 +37,7 @@ namespace EwoQ.Controllers
         // GET: ReportarIncidentes
         public async Task<ActionResult> Index()
         {
-            var ewo = db.ewo.Include(e => e.arbol_perdidas).Include(e => e.AspNetUsers).Include(e => e.AspNetUsers1).Include(e => e.AspNetUsers2).Include(e => e.AspNetUsers3).Include(e => e.AspNetUsers4).Include(e => e.AspNetUsers5).Include(e => e.AspNetUsers6).Include(e => e.AspNetUsers7).Include(e => e.productos).Include(e => e.tipos_data).Include(e => e.tipos_data1).Include(e => e.tipos_data2).Include(e => e.tipos_data3).Include(e => e.tipos_data4);
+            var ewo = db.ewo.Include(e => e.arbol_perdidas).Include(e => e.AspNetUsers).Include(e => e.AspNetUsers1).Include(e => e.AspNetUsers2).Include(e => e.AspNetUsers3).Include(e => e.AspNetUsers4).Include(e => e.AspNetUsers5).Include(e => e.AspNetUsers6).Include(e => e.AspNetUsers7).Include(e => e.tipos_data).Include(e => e.tipos_data1).Include(e => e.tipos_data2).Include(e => e.tipos_data3).Include(e => e.tipos_data4);
             
             return View(await ewo.ToListAsync());
         }
@@ -133,8 +134,9 @@ namespace EwoQ.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //public async Task<ActionResult> Create([Bind(Include = "id,consecutivo,codigo_estado,fecha_apertura_investigacion,hora_apertura_investigacion,hora_evento,fecha_entrega_investigacion,hora_entrega_investigacion,recurrente,codigo_area,codigo_linea,etapa,codigo_coordinador_turno,codigo_responsable_area,codigo_operario_responsable,codigo_lider_investigacion,codigo_producto,codigo_sap_producto,lote_producto,toneladas_producto,numero_cajas,numero_pallet,unidades,tamano_formato,codigo_unidad_medida_tamfor,costo_incidente,tiempo_linea_parada,descripcion_general_problema,tiempo_inspeccion,codigo_arbol_perdidas,numero_airsweb,tiempo_ingresado_airsweb,codigo_disposicion_final_prod,cantidad_toneladas,gemba,gembutsu,genjitsu,five_g_image,descripcion_problema,que,donde,cuando,quien,cual,como,descripcion_fenomeno,images_path,comentarios_resoluciones,pa_codigo_coordinador_prod,pa_codigo_gerente_prod,pa_codigo_jefe_calidad,pa_codigo_gerente_calidad")] ewo ewo)
-        public async Task<int> CreateAsync(ReporteIncidentesViewModel ewr)
+        public async Task<JsonResult> CreateAsync(ReporteIncidentesViewModel ewr)
         {
+            int res = 0;
             try
             {
                 var ewo1 = ewr;
@@ -170,15 +172,28 @@ namespace EwoQ.Controllers
                 ewo.tiempo_linea_parada = ewr.TiempoLineaParada;
                 ewo.descripcion_general_problema = ewr.DescripcionProblema;
 
+                long reg = await daoEwo.AddEwo(ewo);
+
+                if (reg > 0)
+                {
+                    foreach (var item in accInm)
+                    {
+                        item.codigo_ewo = reg;
+                    }
+
+                    await daoAcc.AddAcciones(accInm);
+
+                    res = 1;
+                }
             }
             catch (Exception e)
             {
                 Debug.WriteLine("Error en CreateAsync "+e.ToString());
+                res = -1;
             }
             
-            
 
-            return 1;
+            return Json(new { response= res });
         }
 
         // GET: ReportarIncidentes/Edit/5
@@ -202,7 +217,7 @@ namespace EwoQ.Controllers
             ViewBag.pa_codigo_gerente_calidad = new SelectList(db.AspNetUsers, "Id", "Nombres", ewo.pa_codigo_gerente_calidad);
             ViewBag.pa_codigo_jefe_calidad = new SelectList(db.AspNetUsers, "Id", "Nombres", ewo.pa_codigo_jefe_calidad);
             ViewBag.codigo_responsable_area = new SelectList(db.AspNetUsers, "Id", "Nombres", ewo.codigo_responsable_area);
-            ViewBag.codigo_producto = new SelectList(db.productos, "id", "nombre", ewo.codigo_producto);
+            ViewBag.codigo_producto = new SelectList(db.productos, "id", "nombre", ewo.producto);
             ViewBag.codigo_area = new SelectList(db.tipos_data, "id", "descripcion", ewo.codigo_area);
             ViewBag.codigo_disposicion_final_prod = new SelectList(db.tipos_data, "id", "descripcion", ewo.codigo_disposicion_final_prod);
             ViewBag.codigo_estado = new SelectList(db.tipos_data, "id", "descripcion", ewo.codigo_estado);
@@ -234,7 +249,7 @@ namespace EwoQ.Controllers
             ViewBag.pa_codigo_gerente_calidad = new SelectList(db.AspNetUsers, "Id", "Nombres", ewo.pa_codigo_gerente_calidad);
             ViewBag.pa_codigo_jefe_calidad = new SelectList(db.AspNetUsers, "Id", "Nombres", ewo.pa_codigo_jefe_calidad);
             ViewBag.codigo_responsable_area = new SelectList(db.AspNetUsers, "Id", "Nombres", ewo.codigo_responsable_area);
-            ViewBag.codigo_producto = new SelectList(db.productos, "id", "nombre", ewo.codigo_producto);
+            ViewBag.codigo_producto = new SelectList(db.productos, "id", "nombre", ewo.producto);
             ViewBag.codigo_area = new SelectList(db.tipos_data, "id", "descripcion", ewo.codigo_area);
             ViewBag.codigo_disposicion_final_prod = new SelectList(db.tipos_data, "id", "descripcion", ewo.codigo_disposicion_final_prod);
             ViewBag.codigo_estado = new SelectList(db.tipos_data, "id", "descripcion", ewo.codigo_estado);
