@@ -18,6 +18,8 @@
 <link href="~/Scripts/Adminbsb/plugins/slickgrid/css/jquery-ui.css" rel="stylesheet" />
 <link href="~/Scripts/Adminbsb/plugins/slickgrid/examples.css" rel="stylesheet" />
 <link href="~/Scripts/Adminbsb/plugins/slickgrid/css/select2.css" rel="stylesheet" />
+<!-- SWEETALERT Css -->
+<link href="~/Scripts/Adminbsb/plugins/sweetalert/sweetalert.css" rel="stylesheet">
 
 
 <style>
@@ -182,7 +184,7 @@
                                 <i class="material-icons">rotate_90_degrees_ccw</i>
                             </span>
                             <div class="form-line">
-                                @Html.EditorFor(model => model.EtapaProceso, new { htmlAttributes = new { @class = "form-control", placeholder = "Escriba etapa del proceso...", required="required" } })
+                                @Html.EditorFor(model => model.EtapaProceso, new { htmlAttributes = new { @class = "form-control", placeholder = "Escriba etapa del proceso...", required = "required" } })
                             </div>
                         </div>
                     </div>
@@ -273,8 +275,8 @@
                                 <i class="material-icons">text_format</i>
                             </span>
                             <div class="form-line">
-                                @Html.EditorFor(model => model.NombreProducto, new { htmlAttributes = new { @class = "form-control", placeholder = "ingrese nombre producto...", required="required" } })
-                              
+                                @Html.EditorFor(model => model.NombreProducto, new { htmlAttributes = new { @class = "form-control", placeholder = "ingrese nombre producto...", required = "required" } })
+
                             </div>
                         </div>
                     </div>
@@ -285,7 +287,7 @@
                                 <i class="material-icons">format_list_numbered</i>
                             </span>
                             <div class="form-line">
-                                @Html.EditorFor(model => model.CodigoSAP, new { htmlAttributes = new { @class = "form-control", placeholder = "Ingrese código sap...", required="required" } })                                
+                                @Html.EditorFor(model => model.CodigoSAP, new { htmlAttributes = new { @class = "form-control", placeholder = "Ingrese código sap...", required = "required" } })
                             </div>
                         </div>
                     </div>
@@ -296,7 +298,7 @@
                                 <i class="material-icons">pages</i>
                             </span>
                             <div class="form-line">
-                                @Html.EditorFor(model => model.Lote, new { htmlAttributes = new { @class = "form-control", placeholder = "Ingrese lote...", required="required" } })
+                                @Html.EditorFor(model => model.Lote, new { htmlAttributes = new { @class = "form-control", placeholder = "Ingrese lote...", required = "required" } })
                             </div>
                         </div>
                     </div>
@@ -307,7 +309,7 @@
                                 <i class="material-icons">access_time</i>
                             </span>
                             <div class="form-line">
-                                @Html.EditorFor(model => model.TiempoLineaParada, new { htmlAttributes = new { @class = "form-control", required="required" } })
+                                @Html.EditorFor(model => model.TiempoLineaParada, new { htmlAttributes = new { @class = "form-control", required = "required" } })
                             </div>
                         </div>
                     </div>
@@ -320,7 +322,7 @@
                                 <i class="material-icons">play_for_work</i>
                             </span>
                             <div class="form-line">
-                                @Html.EditorFor(model => model.Toneladas, new { htmlAttributes = new { @class = "form-control align-center", required="required" } })
+                                @Html.EditorFor(model => model.Toneladas, new { htmlAttributes = new { @class = "form-control align-center", required = "required" } })
                             </div>
                         </div>
                     </div>
@@ -331,7 +333,7 @@
                                 <i class="material-icons">play_for_work</i>
                             </span>
                             <div class="form-line">
-                                @Html.EditorFor(model => model.NumCajas, new { htmlAttributes = new { @class = "form-control", required="required"} })
+                                @Html.EditorFor(model => model.NumCajas, new { htmlAttributes = new { @class = "form-control", required = "required" } })
                             </div>
                         </div>
                     </div>
@@ -342,7 +344,7 @@
                                 <i class="material-icons">layers</i>
                             </span>
                             <div class="form-line">
-                                @Html.EditorFor(model => model.NumPallet, new { htmlAttributes = new { @class = "form-control", required="required" } })
+                                @Html.EditorFor(model => model.NumPallet, new { htmlAttributes = new { @class = "form-control", required = "required" } })
                             </div>
                         </div>
                     </div>
@@ -353,7 +355,7 @@
                                 <i class="material-icons">layers</i>
                             </span>
                             <div class="form-line">
-                                @Html.EditorFor(model => model.Unidades, new { htmlAttributes = new { @class = "form-control", required="required" } })
+                                @Html.EditorFor(model => model.Unidades, new { htmlAttributes = new { @class = "form-control", required = "required" } })
                             </div>
                         </div>
                     </div>
@@ -364,7 +366,7 @@
                                 <i class="material-icons">layers</i>
                             </span>
                             <div class="form-line">
-                                @Html.EditorFor(model => model.TamanoFormato, new { htmlAttributes = new { @class = "form-control", required="required" } })
+                                @Html.EditorFor(model => model.TamanoFormato, new { htmlAttributes = new { @class = "form-control", required = "required" } })
                             </div>
                         </div>
                     </div>
@@ -385,7 +387,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             @Html.LabelFor(model => model.DescripcionProblema)
-                            @Html.TextAreaFor(model => model.DescripcionProblema, 4, 0, new { @class = "form-control rounded-10", placeholder = "Escriba aquí la descripción del problema...", required="required" })
+                            @Html.TextAreaFor(model => model.DescripcionProblema, 4, 0, new { @class = "form-control rounded-10", placeholder = "Escriba aquí la descripción del problema...", required = "required" })
                         </div>
                     </div>
                 </div>
@@ -405,26 +407,26 @@
             </div>
         </div>
     </div>
-        
+
 }
 
-    <div class="modal fade" id="mdlExito" tabindex="-1" role="dialog" aria-labelledby="mdlExito-label">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="mdlExito-label">Reporte de incidentes</h4>
-                </div>
-                <div class="modal-body">
-                    <p id="modalMsg"> </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" onclick="location.href='/Home/Index'">Aceptar</button>
-                </div>
+<div class="modal fade" id="mdlExito" tabindex="-1" role="dialog" aria-labelledby="mdlExito-label">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="mdlExito-label">Reporte de incidentes</h4>
+            </div>
+            <div class="modal-body">
+                <p id="modalMsg"> </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="location.href='/Home/Index'">Aceptar</button>
             </div>
         </div>
     </div>
+</div>
 
 <!-- Select Plugin Js -->
 <script src="~/Scripts/Adminbsb/plugins/bootstrap-select/js/bootstrap-select.min.js"></script>
@@ -458,6 +460,9 @@
 <script src="~/Scripts/Adminbsb/plugins/slickgrid/plugins/slick.cellrangeselector.js"></script>
 <script src="~/Scripts/Adminbsb/plugins/slickgrid/plugins/slick.cellselectionmodel.js"></script>
 <script src="~/Scripts/Adminbsb/plugins/slickgrid/plugins/slick.cellrangedecorator.js"></script>
+
+<!-- SweetAlert Plugin Js -->
+<script src="~/Scripts/Adminbsb/plugins/sweetalert/sweetalert.min.js"></script>
 
 <script>
     var cmd = new Array();
@@ -720,7 +725,7 @@
             console.log('error contraedidas!');
             return false;
         };
-                
+
         if (!validate.form()) {
             return false;
         }
@@ -744,17 +749,17 @@
 
                 //MENSAJE DE CONFIRMACIÓN O ERROR
                 if (response.code == 1) {
-                    $('#modalMsg').text("Incidente reportado correctamente!");                   
+                    $('#modalMsg').text("Incidente reportado correctamente!");
                 }
                 else {
-                    $('#modalMsg').text("Error al reportar incidente, inténte de nuevo!");     
+                    $('#modalMsg').text("Error al reportar incidente, inténte de nuevo!");
                 }
             },
             cache: false,
             contentType: false,
             processData:false
         });
-        
+
         $('.page-loader-wrapper').fadeOut();
     }
 

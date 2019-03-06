@@ -33,7 +33,7 @@ namespace EwoQ.Dao
             }
             catch (Exception e)
             {
-                Debug.WriteLine("Error al cinsultar consecutivo de línea: " + e.ToString());
+                Debug.WriteLine("Error al consultar consecutivo de línea: " + e.ToString());
                 max = -1;
             }
 
