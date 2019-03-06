@@ -408,6 +408,24 @@
         
 }
 
+    <div class="modal fade" id="mdlExito" tabindex="-1" role="dialog" aria-labelledby="mdlExito-label">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="mdlExito-label">Reporte de incidentes</h4>
+                </div>
+                <div class="modal-body">
+                    <p id="modalMsg"> </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" onclick="location.href='/Home/Index'">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 <!-- Select Plugin Js -->
 <script src="~/Scripts/Adminbsb/plugins/bootstrap-select/js/bootstrap-select.min.js"></script>
 
@@ -661,50 +679,51 @@
 </script>
 <script>
     function AddReporte() {
-        //var validate = $('#formReporte').validate({
-        //    highlight: function (input) {
-        //        $(input).parents('.form-line').addClass('error');
-        //    },
-        //    unhighlight: function (element, errorClass, validClass) {
-        //        $(element).parents('.form-line').removeClass('error');
-        //    },
-        //    rules: {
-        //        'TipoIncidente': { valueNotEquals: "0" },
-        //        'IdArea': { valueNotEquals: "0" },
-        //        'IdLinea': { valueNotEquals: "0" },
-        //        'IdCoorSup': { valueNotEquals: "0" },
-        //        'IdRespArea': { valueNotEquals: "0" },
-        //        'IdOpeRes': { valueNotEquals: "0" },
-        //        'IdLidInv': { valueNotEquals: "0" }
-        //    },
-        //    success: function (label, element) {
-        //        label.parent().removeClass('error');
-        //        label.remove();
-        //    },
-        //    invalidHandler: function (form, validator) {
+        var validate = $('#formReporte').validate({
+            highlight: function (input) {
+                $(input).parents('.form-line').addClass('error');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).parents('.form-line').removeClass('error');
+            },
+            rules: {
+                'TipoIncidente': { valueNotEquals: "0" },
+                'IdArea': { valueNotEquals: "0" },
+                'IdLinea': { valueNotEquals: "0" },
+                'IdCoorSup': { valueNotEquals: "0" },
+                'IdRespArea': { valueNotEquals: "0" },
+                'IdOpeRes': { valueNotEquals: "0" },
+                'IdLidInv': { valueNotEquals: "0" }
+            },
+            success: function (label, element) {
+                label.parent().removeClass('error');
+                label.remove();
+            },
+            invalidHandler: function (form, validator) {
 
-        //        if (!validator.numberOfInvalids())
-        //            return;
+                if (!validator.numberOfInvalids())
+                    return;
 
-        //        $('html, body').animate({
-        //            scrollTop: $(validator.errorList[0].element).offset().top
-        //        }, 1000);
+                $('html, body').animate({
+                    scrollTop: $(validator.errorList[0].element).offset().top
+                }, 1000);
 
-        //    },
-        //    ignore: ':disabled,.ignore'
-        //});
+            },
+            ignore: ':disabled,.ignore'
+        });
 
         cmd = [];
         cmd = grid.getData();
 
-        //if (cmd.length == 0) {
-        //    swal("Acciones Inmediatas", "Las acciones deben estar diligenciadas", "error");            
-        //    return false;
-        //};
+        if (cmd.length == 0) {
+            swal("Acciones Inmediatas", "Las acciones deben estar diligenciadas", "error");
+            console.log('error contraedidas!');
+            return false;
+        };
                 
-        //if (!validate.form()) {
-        //    return false;
-        //}
+        if (!validate.form()) {
+            return false;
+        }
 
         //MOSTRAR LOADER
         $('.page-loader-wrapper').fadeIn();
@@ -721,14 +740,14 @@
             data: dataString,
             success: function (response) {
 
+                $('#mdlExito').modal('toggle');
+
                 //MENSAJE DE CONFIRMACIÓN O ERROR
-                if (response == 1) {
-                    swal("Reporte de incidentes", "Línea editada correctamente", "success");
-                    $.post('/Home/index/', function () {
-                    });
+                if (response.code == 1) {
+                    $('#modalMsg').text("Incidente reportado correctamente!");                   
                 }
                 else {
-                    swal("Reporte de incidentes", "Error al reportar incidente, vuelta a intentarlo", "error");
+                    $('#modalMsg').text("Error al reportar incidente, inténte de nuevo!");     
                 }
             },
             cache: false,
@@ -738,6 +757,8 @@
         
         $('.page-loader-wrapper').fadeOut();
     }
+
+
 </script>
 
 

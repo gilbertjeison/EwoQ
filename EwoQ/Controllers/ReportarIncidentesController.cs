@@ -193,7 +193,7 @@ namespace EwoQ.Controllers
             }
             
 
-            return Json(new { response= res });
+            return Json(new { code= res });
         }
 
         // GET: ReportarIncidentes/Edit/5
