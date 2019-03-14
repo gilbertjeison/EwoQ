@@ -27,6 +27,21 @@ namespace EwoQ.Controllers
             return View();
         }
 
+        public ActionResult IndexAdmin()
+        {
+            //using (ApplicationDbContext adc = new ApplicationDbContext())
+            //{
+            //    var UserMan = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(adc));
+
+
+            //    var RoleMan = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(adc));
+
+            //}
+
+
+            return View();
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

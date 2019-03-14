@@ -100,7 +100,7 @@ namespace EwoQ.Controllers
                     {
                         if (user.EmailConfirmed)
                         {
-                            return RedirectToLocal(returnUrl);
+                            return RedirectToLocal(returnUrl,user.IdRol);
                         }
                         else
                         {
@@ -157,7 +157,7 @@ namespace EwoQ.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(model.ReturnUrl);
+                    return RedirectToLocal(model.ReturnUrl,"none");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.Failure:
@@ -431,7 +431,7 @@ namespace EwoQ.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    return RedirectToLocal(returnUrl,"");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -473,7 +473,7 @@ namespace EwoQ.Controllers
                     if (result.Succeeded)
                     {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                        return RedirectToLocal(returnUrl);
+                        return RedirectToLocal(returnUrl,"");
                     }
                 }
                 AddErrors(result);
@@ -490,7 +490,7 @@ namespace EwoQ.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         //
@@ -541,13 +541,26 @@ namespace EwoQ.Controllers
             }
         }
 
-        private ActionResult RedirectToLocal(string returnUrl)
+        private ActionResult RedirectToLocal(string returnUrl, string role)
         {
             if (Url.IsLocalUrl(returnUrl))
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+
+            string action = "";
+
+            if (role.Equals("d908787a-642b-480f-ba5c-f46df6fc8713")
+                || role.Equals("612d016e-8e29-4b11-9927-2f4a52495257"))
+            {
+                action = "IndexAdmin";
+            }
+            else
+            {
+                action = "Index";
+            }
+
+            return RedirectToAction(action, "Home");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult
