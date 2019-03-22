@@ -14,15 +14,7 @@ namespace EwoQ.Controllers
     {
         public ActionResult Index()
         {
-            //using (ApplicationDbContext adc = new ApplicationDbContext())
-            //{
-            //    var UserMan = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(adc));
-
-               
-            //    var RoleMan = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(adc));
-                                
-            //}
-            
+                       
             
             return View();
         }
@@ -37,9 +29,11 @@ namespace EwoQ.Controllers
             //    var RoleMan = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(adc));
 
             //}
+            IndexAdminViewModel ivm = new IndexAdminViewModel();
+            ivm.IncidentesReportados = 47;
 
 
-            return View();
+            return View(ivm);
         }
 
         public ActionResult About()

@@ -1,12 +1,123 @@
-﻿
-@*<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">*@
-    <div class="info-box bg-pink hover-expand-effect">
-        <div class="icon">
-            <i class="material-icons">playlist_add_check</i>
+﻿@model EwoQ.Models.IndexAdminViewModel
+
+<!-- Morris Chart Css-->
+<link href="~/Scripts/Adminbsb/plugins/morrisjs/morris.css" rel="stylesheet" />
+<style>
+    .info-box .content .text {
+        //font-weight: bold;
+        //font-size:13px;
+    }
+
+    .card {
+        border-radius: 10px;
+        margin-top: 25px;
+    }
+
+    svg:not(:root) {
+        left: 50% !important;
+        transform: translateX(-50%);       
+    }
+</style>
+<div class="row clearfix">
+    <div class="col-md-6">
+        <div class="col-md-12">
+            <div class="info-box bg-light-green hover-expand-effect">
+                <div class="icon">
+                    <i class="material-icons">playlist_add_check</i>
+                </div>
+                <div class="content">
+                    <div class="text">INCIDENTES REPORTADOS</div>
+                    <div class="number count-to" data-from="0" data-to="@Model.IncidentesReportados" data-speed="2000" data-fresh-interval="20"></div>
+                </div>
+            </div>
         </div>
-        <div class="content">
-            <div class="text">NEW TASKS</div>
-            <div class="number count-to" data-from="0" data-to="125" data-speed="15" data-fresh-interval="20"></div>
+        <div class="col-md-12">
+            <div class="info-box bg-light-green hover-expand-effect">
+                <div class="icon">
+                    <i class="material-icons">playlist_play</i>
+                </div>
+                <div class="content">
+                    <div class="text">Incidentes en proceso</div>
+                    <div class="number count-to" data-from="0" data-to="257" data-speed="2000" data-fresh-interval="20"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="info-box bg-light-green hover-expand-effect">
+                <div class="icon">
+                    <i class="material-icons">timer_off</i>
+                </div>
+                <div class="content">
+                    <div class="text">Tiempo líneas paradas</div>
+                    <div class="number count-to" data-from="0" data-to="243" data-speed="2000" data-fresh-interval="20"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="info-box bg-light-green hover-expand-effect">
+                <div class="icon">
+                    <i class="material-icons">person_add</i>
+                </div>
+                <div class="content">
+                    <div class="text">Usuarios registrados</div>
+                    <div class="number count-to" data-from="0" data-to="1225" data-speed="2000" data-fresh-interval="20"></div>
+                </div>
+            </div>
         </div>
     </div>
-@*</div>*@
+    <div class="col-md-6">
+        <div class="card">
+            <div class="header">
+                <h2>BROWSER USAGE</h2>                
+            </div>
+            <div class="body">
+                <div id="donut_chart" class="dashboard-donut-chart"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    $(function () {
+        //Widgets count
+        $('.count-to').countTo();
+
+        initDonutChart();
+    });
+
+    function initDonutChart() {
+        Morris.Donut({
+            element: 'donut_chart',
+            data: [{
+                label: 'Chrome',
+                value: 37
+            }, {
+                label: 'Firefox',
+                value: 30
+            }, {
+                label: 'Safari',
+                value: 18
+            }, {
+                label: 'Opera',
+                value: 12
+            },
+            {
+                label: 'Other',
+                value: 3
+            }],
+            colors: ['rgb(233, 30, 99)', 'rgb(0, 188, 212)', 'rgb(255, 152, 0)', 'rgb(0, 150, 136)', 'rgb(96, 125, 139)'],
+            formatter: function (y) {
+                return y + '%'
+            }
+        });
+    }
+</script>
+
+
+<!-- Counto Js -->
+<script src="~/Scripts/Adminbsb/plugins/jquery-countto/jquery.countTo.js"></script>
+
+<!-- MORRIS Js -->
+<script src="~/Scripts/Adminbsb/plugins/raphael/raphael.js"></script>
+<script src="~/Scripts/Adminbsb/plugins/morrisjs/morris.js"></script>
