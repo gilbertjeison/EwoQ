@@ -6,12 +6,16 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity;
 using EwoQ.Models;
+using EwoQ.Dao;
+using System.Threading.Tasks;
 
 namespace EwoQ.Controllers
 {
     [Authorize]
     public class HomeController : Controller
     {
+        DaoEwo daoE = new DaoEwo();
+
         public ActionResult Index()
         {
                        
@@ -34,6 +38,16 @@ namespace EwoQ.Controllers
 
 
             return View(ivm);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> GetDonutData()
+        {
+            var donut = daoE.GetEwoPercents();
+
+            await Task.Delay(500);
+
+            return Json(donut);
         }
 
         public ActionResult About()

@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNet.Identity
 @using EwoQ.Dao
+@using EwoQ.Utils
 
 @{
     DaoUsuarios daoUser = new DaoUsuarios();
@@ -73,7 +74,7 @@
         });
     </script>
 </head>
-<body class="@(Uss.IdRol.Equals("ad3cb589-855b-4888-b234-9333eaca85ec") ? "theme-blue" : "theme-green")">
+<body class="@(Uss.IdRol.Equals(SomeHelpers.ROL_OPER) ? "theme-blue" : "theme-green")">
     <!-- Page Loader -->
     <div class="page-loader-wrapper" id="pageLoader">
         <div class="loader">
@@ -106,7 +107,17 @@
             <div class="navbar-header">
                 <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
                 <a href="javascript:void(0);" class="bars"></a>
-                @Html.ActionLink("INCIDENTES", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @{
+                    if (Uss.IdRol.Equals(SomeHelpers.ROL_OPER))
+                    {
+                        @Html.ActionLink("INCIDENTES", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("INCIDENTES", "IndexAdmin", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    }
+                }
+
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
@@ -313,8 +324,8 @@
     @if (Request.IsAuthenticated)
     {
         //ADMINISTRADOR
-        if (Uss.IdRol.Equals("d908787a-642b-480f-ba5c-f46df6fc8713")
-             || Uss.IdRol.Equals("612d016e-8e29-4b11-9927-2f4a52495257"))
+        if (Uss.IdRol.Equals(SomeHelpers.ROL_ADMIN)
+             || Uss.IdRol.Equals(SomeHelpers.ROL_SADMIN))
         {
             <style>
 
@@ -379,7 +390,7 @@
         }
 
         //OPERARIO
-        if (Uss.IdRol.Equals("ad3cb589-855b-4888-b234-9333eaca85ec"))
+        if (Uss.IdRol.Equals(SomeHelpers.ROL_OPER))
         {
             <style>
 

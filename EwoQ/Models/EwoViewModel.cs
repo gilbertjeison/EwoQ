@@ -113,4 +113,10 @@ namespace EwoQ.Models
         public string Cmd { get; set; }
         #endregion
     }
+
+    public class DonutViewModel
+    {
+        public string label { get; set; }
+        public double value { get; set; }
+    }
 }

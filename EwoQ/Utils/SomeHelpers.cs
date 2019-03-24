@@ -11,6 +11,10 @@ namespace EwoQ.Utils
 {
     public class SomeHelpers
     {
+        public static string ROL_SADMIN = "612d016e-8e29-4b11-9927-2f4a52495257";
+        public static string ROL_ADMIN = "d908787a-642b-480f-ba5c-f46df6fc8713";
+        public static string ROL_OPER = "ad3cb589-855b-4888-b234-9333eaca85ec";
+
         static string nombreE;
 
         static string noti_reg = "<div style=\"background: #fff; min-height: 50px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); position: relative; margin-bottom: 30px; -webkit-border-radius: 2px; -moz-border-radius: 2px; -ms-border-radius: 2px; border-radius: 2px;\"> "
