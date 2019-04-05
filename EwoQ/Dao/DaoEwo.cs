@@ -128,5 +128,43 @@ namespace EwoQ.Dao
 
             return list;
         }
+
+        public async Task<IndexAdminViewModel> GetIndexData()
+        {
+            IndexAdminViewModel iavm = new IndexAdminViewModel();
+
+            try
+            {
+
+                using (var context = new EwoQEntities())
+                {
+                    await Task.Run(() => 
+                    {
+                        iavm.IncidentesReportados = (from e in context.ewo select e).Count();
+                        iavm.IncidentespProceso = (from e in context.ewo
+                                                   join td in context.tipos_data
+                                                   on e.codigo_estado equals td.id
+                                                   where e.codigo_estado == 3
+                                                   select e).Count();
+                        iavm.IncidentesCerrados = (from e in context.ewo
+                                                   join td in context.tipos_data
+                                                   on e.codigo_estado equals td.id
+                                                   where e.codigo_estado == 2
+                                                   select e).Count();
+
+                    });
+
+                   
+
+                    
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Error al consultar porcentajes de tipos de incidentes: " + e.ToString());
+            }
+
+            return iavm;
+        }
     }
 }
