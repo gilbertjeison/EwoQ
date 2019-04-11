@@ -144,12 +144,13 @@ namespace EwoQ.Dao
                         iavm.IncidentespProceso = (from e in context.ewo
                                                    join td in context.tipos_data
                                                    on e.codigo_estado equals td.id
-                                                   where e.codigo_estado == 3
+                                                   where e.codigo_estado == 1
+                                                   && e.codigo_estado == 2
                                                    select e).Count();
                         iavm.IncidentesCerrados = (from e in context.ewo
                                                    join td in context.tipos_data
                                                    on e.codigo_estado equals td.id
-                                                   where e.codigo_estado == 2
+                                                   where e.codigo_estado == 3
                                                    select e).Count();
 
                     });
