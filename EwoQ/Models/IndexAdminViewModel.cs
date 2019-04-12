@@ -11,7 +11,7 @@ namespace EwoQ.Models
         public int IncidentespProceso { get; set; }
         public int IncidentesCerrados { get; set; }
         public int UsuariosRegistrados { get; set; }
-
+        public int TiempoLinParada { get; set; }
 
     }
 }

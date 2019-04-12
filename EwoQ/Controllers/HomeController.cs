@@ -23,7 +23,7 @@ namespace EwoQ.Controllers
             return View();
         }
 
-        public ActionResult IndexAdmin()
+        public async Task<ActionResult> IndexAdmin()
         {
             //using (ApplicationDbContext adc = new ApplicationDbContext())
             //{
@@ -34,8 +34,7 @@ namespace EwoQ.Controllers
 
             //}
             IndexAdminViewModel ivm = new IndexAdminViewModel();
-            ivm.IncidentesReportados = 47;
-
+            ivm = await daoE.GetIndexData();
 
             return View(ivm);
         }

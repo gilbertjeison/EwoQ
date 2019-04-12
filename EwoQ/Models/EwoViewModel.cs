@@ -101,8 +101,8 @@ namespace EwoQ.Models
         [Display(Name = "Costo Incidente")]
         public decimal CostoIncidente { get; set; }
 
-        [Display(Name = "Tiempo Parada Línea")]
-        public string TiempoLineaParada { get; set; }
+        [Display(Name = "Tiempo Parada Línea (min)")]
+        public int TiempoLineaParada { get; set; }
 
         [Display(Name = "Descripción general del problema")]
         public string DescripcionProblema { get; set; }

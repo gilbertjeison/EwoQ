@@ -131,7 +131,7 @@
           <Property Name="tamano_formato" Type="varchar" MaxLength="50" />
           <Property Name="codigo_unidad_medida_tamfor" Type="bigint" />
           <Property Name="costo_incidente" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="tiempo_linea_parada" Type="varchar" MaxLength="10" />
+          <Property Name="tiempo_linea_parada" Type="int" />
           <Property Name="descripcion_general_problema" Type="text" />
           <Property Name="tiempo_inspeccion" Type="varchar" MaxLength="10" />
           <Property Name="codigo_arbol_perdidas" Type="bigint" />
@@ -1520,7 +1520,7 @@
           <Property Name="tamano_formato" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="codigo_unidad_medida_tamfor" Type="Int64" />
           <Property Name="costo_incidente" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="tiempo_linea_parada" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="tiempo_linea_parada" Type="Int32" />
           <Property Name="descripcion_general_problema" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="tiempo_inspeccion" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="codigo_arbol_perdidas" Type="Int64" />

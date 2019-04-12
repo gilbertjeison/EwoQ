@@ -54,7 +54,7 @@ namespace EwoQ.Database
         public string tamano_formato { get; set; }
         public Nullable<long> codigo_unidad_medida_tamfor { get; set; }
         public Nullable<decimal> costo_incidente { get; set; }
-        public string tiempo_linea_parada { get; set; }
+        public Nullable<int> tiempo_linea_parada { get; set; }
         public string descripcion_general_problema { get; set; }
         public string tiempo_inspeccion { get; set; }
         public Nullable<long> codigo_arbol_perdidas { get; set; }

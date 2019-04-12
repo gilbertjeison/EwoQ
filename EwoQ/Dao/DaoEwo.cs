@@ -152,17 +152,12 @@ namespace EwoQ.Dao
                                                    on e.codigo_estado equals td.id
                                                    where e.codigo_estado == 3
                                                    select e).Count();
-                        //iavm.IncidentesCerrados = (from e in context.ewo
-                        //                           join td in context.tipos_data
-                        //                           on e.codigo_estado equals td.id
-                        //                           where e.codigo_estado == 3
-                        //                           select e).Sum(x=>x.tiempo_linea_parada);
+                        iavm.TiempoLinParada = (from e in context.ewo                                                  
+                                                   select e).Sum(x => x.tiempo_linea_parada.Value);
+                        iavm.UsuariosRegistrados = (from e in context.AspNetUsers                                                  
+                                                   select e).Count();
 
                     });
-
-                   
-
-                    
                 }
             }
             catch (Exception e)
