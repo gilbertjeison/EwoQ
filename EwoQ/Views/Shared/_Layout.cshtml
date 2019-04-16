@@ -58,6 +58,12 @@
     <!-- Jquery Core Js -->
     <script src="../../Scripts/Adminbsb/plugins/jquery/jquery.min.js"></script>
 
+    <style>
+        .card {
+            border-radius: 10px;
+        }
+    </style>
+
     <title>@ViewBag.Title - INCIDENTES QA</title>
     @*@Styles.Render("~/Content/css")
         @Scripts.Render("~/bundles/modernizr")*@
@@ -377,9 +383,10 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li>
-                                <a href="#">
-                                    <i class="material-icons">insert_chart</i>
+                            <li class="@IsActive("Index","ReportarIncidentes")">
+
+                                <a href="@Url.Action("Index", "ReportarIncidentes")">
+                                    <i class="material-icons">report</i>
                                     <span>INCIDENTES REPORTADOS</span>
                                 </a>
                             </li>
