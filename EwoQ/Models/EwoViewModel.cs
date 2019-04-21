@@ -16,7 +16,19 @@ namespace EwoQ.Models
 
     public class ReporteIncidentesViewModel
     {
+        #region CAMPOS DE LA BD
+        public long Id { get; set; }
+        public string Autor { get; set; }
+        public string AutorDesc { get; set; }
+        public DateTime Fecha { get; set; }
+        public long Estado { get; set; }
+        public string EstadoDesc { get; set; }
+        public string FormattedDate => Fecha.ToShortDateString();
+        #endregion
+
         #region NOTIFICACIÓN EVIDENCIA
+
+
         [DisplayName("Fecha de apertura de la investigación")]
         public string FchApertInvestigacion { get; set; }
 
@@ -34,7 +46,8 @@ namespace EwoQ.Models
 
 
         [Display(Name = "Tipo de incidente o no inconformidad")]
-        public int TipoIncidente { get; set; }
+        public long TipoIncidente { get; set; }
+        public string TipoIncidenteDesc { get; set; }
         public SelectList TipoIncidenteList { get; set; }
 
 
@@ -44,11 +57,13 @@ namespace EwoQ.Models
 
         [Display(Name = "Area donde ocurrió el evento")]
         public int IdArea { get; set; }
+        public string AreaDesc { get; set; }
         public SelectList AreasList { get; set; }
 
 
         [Display(Name = "Línea")]
         public int IdLinea { get; set; }
+        public string LineaDesc { get; set; }
         public SelectList LineasList { get; set; }
 
         [Display(Name = "Etapa del proceso")]
@@ -112,6 +127,7 @@ namespace EwoQ.Models
 
         public string Cmd { get; set; }
         #endregion
+
     }
 
     public class DonutViewModel

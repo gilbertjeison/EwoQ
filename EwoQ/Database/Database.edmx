@@ -157,6 +157,7 @@
           <Property Name="pa_codigo_gerente_prod" Type="nvarchar" MaxLength="128" />
           <Property Name="pa_codigo_jefe_calidad" Type="nvarchar" MaxLength="128" />
           <Property Name="pa_codigo_gerente_calidad" Type="nvarchar" MaxLength="128" />
+          <Property Name="autor" Type="nvarchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="fiveg_resultados">
           <Key>
@@ -1569,6 +1570,7 @@
           <NavigationProperty Name="respuestas4m" Relationship="EwoQModel.FK_respuestas4m_ewo" FromRole="ewo" ToRole="respuestas4m" />
           <NavigationProperty Name="revisiones" Relationship="EwoQModel.FK_revisiones_ewo" FromRole="ewo" ToRole="revisiones" />
           <NavigationProperty Name="zero_questions" Relationship="EwoQModel.FK_zero_questions_ewo" FromRole="ewo" ToRole="zero_questions" />
+          <Property Name="autor" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_acciones_inmediatas_ewo">
           <End Type="EwoQModel.ewo" Role="ewo" Multiplicity="0..1" />
@@ -2074,6 +2076,7 @@
           <EntitySetMapping Name="ewo">
             <EntityTypeMapping TypeName="EwoQModel.ewo">
               <MappingFragment StoreEntitySet="ewo">
+                <ScalarProperty Name="autor" ColumnName="autor" />
                 <ScalarProperty Name="pa_codigo_gerente_calidad" ColumnName="pa_codigo_gerente_calidad" />
                 <ScalarProperty Name="pa_codigo_jefe_calidad" ColumnName="pa_codigo_jefe_calidad" />
                 <ScalarProperty Name="pa_codigo_gerente_prod" ColumnName="pa_codigo_gerente_prod" />

@@ -13,6 +13,8 @@ using EwoQ.Dao;
 using System.Web.Script.Serialization;
 using System.Globalization;
 using System.Diagnostics;
+using Microsoft.AspNet.Identity;
+using System.Linq.Dynamic;
 
 namespace EwoQ.Controllers
 {
@@ -32,7 +34,66 @@ namespace EwoQ.Controllers
         string ADMINROLE = "d908787a-642b-480f-ba5c-f46df6fc8713";
         string OPERATINGROLE = "ad3cb589-855b-4888-b234-9333eaca85ec";
 
-        //private object kpiWiewModel;
+        #region INDEX
+        [HttpPost]
+        public async Task<ActionResult> LoadDataAsync()
+        {
+            Task<List<ReporteIncidentesViewModel>> rivm;
+
+            try
+            {
+                AspNetUsers aspNetUsers = daoUser.GetUser(User.Identity.GetUserId());
+
+                var draw = Request.Form["draw"];
+                var start = Request.Form["start"];
+                var length = Request.Form["length"];
+                var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"] + "][name]"];
+                var sortColumnDirection = Request.Form["order[0][dir]"];
+                var searchValue = Request.Form["search[value]"];
+
+                //Paging Size (10,20,50,100)
+                int pageSize = length.ToString() != null ? Convert.ToInt32(length) : 0;
+                int skip = start.ToString() != null ? Convert.ToInt32(start) : 0;
+                int recordsTotal = 0;
+
+                if (aspNetUsers.IdRol.Equals(Utils.SomeHelpers.ROL_OPER))
+                {
+                    rivm = daoEwo.GetEwoList(aspNetUsers.Id);
+                }
+                else
+                {
+                    rivm = daoEwo.GetEwoList();
+                }
+
+                var data1 = await rivm;
+
+                //Sorting
+                if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDirection)))
+                {
+                    data1 = data1.OrderBy(sortColumn + " " + sortColumnDirection).ToList();
+                }
+
+                //Search
+                if (!string.IsNullOrEmpty(searchValue))
+                {
+                    data1 = data1.Where(m => m.DescripcionProblema.Contains(searchValue) || m.LineaDesc.Contains(searchValue)).ToList();
+                }
+
+                //total number of rows count 
+                recordsTotal = data1.Count();
+                //Paging 
+                var data = data1.Skip(skip).Take(pageSize).ToList();
+
+                return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        #endregion
+
+
 
         // GET: ReportarIncidentes
         public async Task<ActionResult> Index()

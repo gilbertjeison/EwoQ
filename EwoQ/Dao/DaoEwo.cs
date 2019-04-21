@@ -167,5 +167,108 @@ namespace EwoQ.Dao
 
             return iavm;
         }
+
+        public async Task<List<ReporteIncidentesViewModel>> GetEwoList(string id_autor)
+        {
+            List<ReporteIncidentesViewModel> list = new List<ReporteIncidentesViewModel>();
+
+            try
+            {
+                using (var context = new EwoQEntities())
+                {
+                    var query = from e in context.ewo
+                                join l in context.tipos_data
+                                on e.codigo_linea equals l.id
+                                join a in context.tipos_data
+                                on e.codigo_area equals a.id
+                                join ti in context.tipos_data
+                                on e.tipo_incidente equals ti.id
+                                join es in context.tipos_data
+                                on e.codigo_estado equals es.id
+                                join t in context.AspNetUsers
+                                on e.autor equals t.Id
+                                where e.autor == id_autor
+                                select new { e, l, a, t, ti,es };
+
+                    var data = await query.ToListAsync();
+
+                    foreach (var item in data.ToList())
+                    {
+                        list.Add(new ReporteIncidentesViewModel()
+                        {
+                            Id = item.e.id,
+                            AreaDesc = item.a.descripcion,
+                            LineaDesc = item.l.descripcion,
+                            Autor = item.t.Id,
+                            AutorDesc = item.t.Nombres + " " + item.t.Apellidos,
+                            TipoIncidente = item.e.tipo_incidente.Value,
+                            TipoIncidenteDesc = item.ti.descripcion,
+                            DescripcionProblema = item.e.descripcion_general_problema,
+                            TiempoLineaParada = item.e.tiempo_linea_parada.Value,
+                            Fecha = item.e.fecha_apertura_investigacion.Value,
+                            Estado = item.e.codigo_estado.Value,
+                            EstadoDesc = item.es.descripcion
+                        });
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Excepción al momento de consultar consildado de incidentes reportados: " + e.ToString());
+            }
+
+            return list;
+        }
+
+        public async Task<List<ReporteIncidentesViewModel>> GetEwoList()
+        {
+            List<ReporteIncidentesViewModel> list = new List<ReporteIncidentesViewModel>();
+
+            try
+            {
+                using (var context = new EwoQEntities())
+                {
+                    var query = from e in context.ewo
+                                join l in context.tipos_data
+                                on e.codigo_linea equals l.id
+                                join a in context.tipos_data
+                                on e.codigo_area equals a.id
+                                join ti in context.tipos_data
+                                on e.tipo_incidente equals ti.id
+                                join es in context.tipos_data
+                                on e.codigo_estado equals es.id
+                                join t in context.AspNetUsers
+                                on e.autor equals t.Id
+                                select new { e, l, a, t, ti, es };
+
+                    var data = await query.ToListAsync();
+
+                    foreach (var item in data.ToList())
+                    {
+                        list.Add(new ReporteIncidentesViewModel()
+                        {
+                            Id = item.e.id,
+                            AreaDesc = item.a.descripcion,
+                            LineaDesc = item.l.descripcion,
+                            Autor = item.t.Id,
+                            AutorDesc = item.t.Nombres + " " + item.t.Apellidos,
+                            TipoIncidente = item.e.tipo_incidente.Value,
+                            TipoIncidenteDesc = item.ti.descripcion,
+                            DescripcionProblema = item.e.descripcion_general_problema,
+                            TiempoLineaParada = item.e.tiempo_linea_parada.Value,
+                            Fecha = item.e.fecha_apertura_investigacion.Value,
+                            Estado = item.e.codigo_estado.Value,
+                            EstadoDesc = item.es.descripcion
+                        });
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Excepción al momento de consultar consildado de incidentes reportados: " + e.ToString());
+            }
+
+            return list;
+        }
     }
 }

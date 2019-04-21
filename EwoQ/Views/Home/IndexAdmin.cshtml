@@ -1,5 +1,7 @@
 ﻿@model EwoQ.Models.IndexAdminViewModel
-
+@{
+    ViewBag.Title = "Página principal";
+}
 <!-- Morris Chart Css-->
 <link href="~/Scripts/Adminbsb/plugins/morrisjs/morris.css" rel="stylesheet" />
 <style>
@@ -15,7 +17,7 @@
 
     svg:not(:root) {
         left: 50% !important;
-        transform: translateX(-50%);       
+        transform: translateX(-50%);
     }
 </style>
 <div class="row clearfix">
@@ -79,7 +81,7 @@
     <div class="col-md-6">
         <div class="card">
             <div class="header">
-                <h2>Tipo de incidente o no conformidad</h2>                
+                <h2>Tipo de incidente o no conformidad</h2>
             </div>
             <div class="body">
                 <div id="donut_chart" class="dashboard-donut-chart"></div>
@@ -96,7 +98,7 @@
 
 
         initDonutChart();
-       
+
     });
 
     function initDonutChart() {
@@ -118,14 +120,14 @@
                 Morris.Donut({
                     element: 'donut_chart',
                     data: response,
-                    
+
                     colors: ['rgb(255, 5, 100)', 'rgb(5, 200, 211)', 'rgb(232, 0, 180)','rgb(233, 30, 99)', 'rgb(0, 188, 212)', 'rgb(255, 152, 0)', 'rgb(0, 150, 136)', 'rgb(96, 125, 139)'],
                     formatter: function (y) {
                         return y + '%'
                     }
                 });
 
-                
+
                 //OCULTAR LOADER UNA VEZ CARAGADA LA INFORMACIÓN
                 $('.page-loader-wrapper').fadeOut();
             },
@@ -135,7 +137,7 @@
 
             }
         });
-        
+
     }
 </script>
 

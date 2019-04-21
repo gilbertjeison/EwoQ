@@ -11,10 +11,6 @@
 <!-- SWEETALERT Css -->
 <link href="~/Scripts/Adminbsb/plugins/sweetalert/sweetalert.css" rel="stylesheet">
 
-@{
-
-}
-
 
 @functions {
     DaoUsuarios daoUser = new DaoUsuarios();
@@ -69,7 +65,7 @@
         <h2>Detalle de Incidentes Reportados</h2>
     </div>
     <div class="body">
-        <table id="ewoTable" class="table table-striped table-bordered responsive nowrap table-hover">
+        <table id="irTable" class="table table-striped table-bordered responsive nowrap table-hover">
             <thead>
                 <tr>
                     <th>Línea</th>
@@ -89,6 +85,90 @@
         </table>
     </div>
 </div>
+<script>
+    $(function () {
+        var table = $('#irTable').DataTable({
+            fixedHeader: true,
+            "processing": true,
+            "serverSide": true,
+            "filter": true,
+            "orderMulti": false,
+            "autoWidth": false,
+            "ajax": {
+                "url": '@Url.Action("LoadDataAsync", "ReportarIncidentes")',
+                "type": "POST",
+                "datatype": "json"
+            },
+            //"columnDefs": [
+            //    { "targets": [0], "width": "5px" },
+            //    { "targets": [1], "width": "5px" },
+            //    { "targets": [2], "width": "5px" },
+            //    { "targets": [3], "width": "5px" },
+            //    { "targets": [4], "width": "5px" },
+            //    { "targets": [5], "width": "5px" },
+            //    { "targets": [6], "width": "5px" },
+            //    { "targets": [7], "width": "5px" },
+            //    { "targets": [8], "width": "5px" },
+            //    { "targets": [9], "width": "5px" },
+            //    { "targets": [10], "width": "5px" },
+            //    { "targets": [11], "width": "5px" }
+            //],
+            "columns": [
+                { "data": "LineaDesc", "name": "LineaDesc", "autoWidth": true },
+                { "data": "AreaDesc", "name": "AreaDesc", "autoWidth": true },
+                { "data": "TipoIncidenteDesc", "name": "TipoIncidenteDesc", "autoWidth": true },
+                { "data": "DescripcionProblema", "name": "DescripcionProblema"},
+                { "data": "TiempoLineaParada", "name": "TiempoLineaParada", "autoWidth": true },
+                {
+                    "data": "EstadoDesc", "name": "EstadoDesc", "autoWidth": true,
+                    render: function (data, type, value) {
+
+                        if (value.Estado === 1) {
+                            return "<span class='label label-primary' style='font-size:14px;'>" + data + "</span>";
+                        }
+                        else if (value.Estado === 2) {
+                            return "<span class='label label-success' style='font-size:14px;'>" + data + "</span>";
+                        }
+                        else if (value.Estado === 3) {
+                            return "<span class='label label-warning' style='font-size:14px;'>" + data + "</span>";
+                        }
+                    }
+                },                
+                
+                {
+                    "data": "Fecha", "name": "Fecha", "autoWidth": true,
+                    render: function (data, type, value) {
+                        return value.FormattedDate;
+                    }
+                },
+                { "data": "AutorDesc", "name": "AutorDesc", "autoWidth": true },
+                {
+                    data: null, "autoWidth": true, render: function (data, type, row) {
+                        return "<a class='btn btn-success waves-effect'  onClick=DownloadEwoFile('" +row.Id+"'); >Procesar incidente</a>";
+                    }
+                },
+                {
+                    data: null, "autoWidth": true, render: function (data, type, row) {
+                        return "<a class='btn btn-info waves-effect' onClick=editEwo('" + row.Id +"');>Editar</a>";
+                    }
+                },
+                {
+                    data: null, "autoWidth": true, render: function (data, type, row) {
+                        return "<a class='btn btn-danger waves-effect'>Eliminar</a>";
+                    }
+                },
+                {
+                    data: null, "autoWidth": true, render: function (data, type, row) {
+                        return "<a class='btn btn-primary waves-effect'>Generar formato</a>";
+                    }
+                }
+            ],
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+            }
+        });
+    });
+</script>       
 
 <!-- Jquery DataTable Plugin Js -->
 <script src="~/Scripts/Adminbsb/plugins/jquery-datatable/jquery.dataTables.js"></script>
