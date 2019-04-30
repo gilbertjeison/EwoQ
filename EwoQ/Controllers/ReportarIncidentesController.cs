@@ -154,9 +154,7 @@ namespace EwoQ.Controllers
 
             viewModel.FchApertInvestigacion = DateTime.Now.ToString("dd/MM/yyyy");
             viewModel.FchEntregaInvestigacion = DateTime.Now.ToString("dd/MM/yyyy");
-
-
-            
+                                   
             //LISTA DE TIPOS DE INCIDENTE
             var listTI = await daoTD.GetTypesAsync(INCIDENTSTYPES);
             listTI.Insert(0, new Database.tipos_data() { id = 0, descripcion = "Seleccione tipo de incidente..." });
@@ -255,6 +253,36 @@ namespace EwoQ.Controllers
             
 
             return Json(new { code= res });
+        }
+
+       public async Task<ActionResult> ProcesarIncidente(int? id)
+        {
+            int code;
+            string message;
+
+            try
+            {
+                if (id.HasValue)
+                {
+                    ViewBag.Cons = await daoEwo.GetConsecutiveAsync(id.Value);                    
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                code = -1;
+                message = "Error al iniciar el proceso con incidente reportado "+ ex.Message;
+                Trace.WriteLine(message);
+            }
+
+            return View(id);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> ProcesarIncidente(ReporteIncidentesViewModel rivm)
+        {
+            await Task.Delay(100);
+            return View();
         }
 
         // GET: ReportarIncidentes/Edit/5

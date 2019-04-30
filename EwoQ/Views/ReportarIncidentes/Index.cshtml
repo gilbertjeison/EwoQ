@@ -3,7 +3,6 @@
 @using EwoQ.Dao
 @model IEnumerable<EwoQ.Database.ewo>
 
-
 <!-- JQuery DataTable Css -->
 <link href="~/Scripts/Adminbsb/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.min.css" rel="stylesheet">
 <link href="~/Scripts/Adminbsb/plugins/jquery-datatable/Responsive-2.2.2/css/responsive.dataTables.min.css" rel="stylesheet">
@@ -11,11 +10,9 @@
 <!-- SWEETALERT Css -->
 <link href="~/Scripts/Adminbsb/plugins/sweetalert/sweetalert.css" rel="stylesheet">
 
-
 @functions {
     DaoUsuarios daoUser = new DaoUsuarios();
-
-
+    
     string setColor()
     {
         var Uss = daoUser.GetUser(User.Identity.GetUserId());
@@ -144,7 +141,7 @@
                 { "data": "AutorDesc", "name": "AutorDesc", "autoWidth": true },
                 {
                     data: null, "autoWidth": true, render: function (data, type, row) {
-                        return "<a class='btn btn-success waves-effect'  onClick=DownloadEwoFile('" +row.Id+"'); >Procesar incidente</a>";
+                        return "<a class='btn btn-success waves-effect'  onClick=proccessIncident('" +row.Id+"'); >Procesar incidente</a>";
                     }
                 },
                 {
@@ -168,6 +165,10 @@
             }
         });
     });
+
+    function proccessIncident(id) {
+        window.location.href = "/ReportarIncidentes/ProcesarIncidente?id=" + id;
+    }
 </script>       
 
 <!-- Jquery DataTable Plugin Js -->
