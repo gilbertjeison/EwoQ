@@ -22,11 +22,11 @@
 <link href="~/Scripts/Adminbsb/plugins/sweetalert/sweetalert.css" rel="stylesheet">
 
 <style>
-    .panel-heading {
+    .header:not(.tit) {
         background-color: #009688
     }
 
-    .panel-group .panel .panel-heading a {
+    .card .header h2:not(.tit) {
         color: white;
     }
 
@@ -47,7 +47,7 @@
 </style>
 
 <div class="card js-sweetalert">
-    <div class="header">
+    <div class="header tit">
         <h2 class="tit">
             REPORTE DE INCIDENTES QA
         </h2>
@@ -59,373 +59,359 @@
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             @using (Html.BeginForm("ProcesarIncidente", "ReportarIncidentes", FormMethod.Post, new { @id = "wizard_validation" }))
             {
-                @Html.Hidden("Id", Model)
+                
+                @Html.Hidden("Id", Model.Id)
                 <h3>Notificación</h3>
                 <section class="clearfix">
-                    <div class="panel-group" role="tablist" aria-multiselectable="true">
-                        <div class="panel">
-                            <div class="panel-heading" role="tab" id="headingOne_2">
-                                <h4 class="panel-title">
-                                    <a role="button" data-toggle="collapse" href="#collapseOne_2" aria-expanded="true" aria-controls="collapseOne_2">
-                                        Información básica
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="collapseOne_2" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne_2">
-                                <div class="panel-body">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <b>@Html.LabelFor(model => model.FchApertInvestigacion)</b>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">date_range</i>
-                                                </span>
-                                                <div class="form-line">
-                                                    @Html.EditorFor(model => model.FchApertInvestigacion, new { htmlAttributes = new { @class = "form-control datepicker", placeholder = "Seleccione fecha...", required = "required" } })
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <b>@Html.LabelFor(model => model.HrApertInvestigacion)</b>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">access_time</i>
-                                                </span>
-                                                <div class="form-line">
-                                                    @Html.EditorFor(model => model.HrApertInvestigacion, new { htmlAttributes = new { @class = "form-control timepicker selectpick", placeholder = "Seleccione hora...", required = "required" } })
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <b>@Html.LabelFor(model => model.HrEvento)</b>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">access_time</i>
-                                                </span>
-                                                <div class="form-line">
-                                                    @Html.EditorFor(model => model.HrEvento, new { htmlAttributes = new { @class = "form-control timepicker", placeholder = "Seleccione hora...", required = "required" } })
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <b>@Html.LabelFor(model => model.FchEntregaInvestigacion)</b>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">date_range</i>
-                                                </span>
-                                                <div class="form-line">
-                                                    @Html.EditorFor(model => model.FchEntregaInvestigacion, new { htmlAttributes = new { @class = "form-control datepicker", placeholder = "Seleccione fecha...", required = "required" } })
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <b>@Html.LabelFor(model => model.HrEntregaInvestigacion)</b>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">access_time</i>
-                                                </span>
-                                                <div class="form-line">
-                                                    @Html.EditorFor(model => model.HrEntregaInvestigacion, new { htmlAttributes = new { @class = "form-control timepicker", placeholder = "Seleccione hora...", required = "required" } })
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <b>@Html.LabelFor(model => model.TipoIncidente)</b>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">report_problem</i>
-                                                </span>
-                                                <div class="form-line" style="border:none;">
-                                                    <select id="TipoIncidente" name="TipoIncidente" class="selectpicker show-tick" required>
-                                                        @foreach (var item in Model.TipoIncidenteList)
-                                                        {
-                                                            <option value="@item.Value">@item.Text</option>
-                                                        }
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <b>@Html.LabelFor(model => model.Recurrente)</b>
-                                            <div class="input-group">
-                                                <div class="switch">
-                                                    <label>
-                                                        NO
-                                                        <input name="Recurrente" type="checkbox">
-                                                        <span class="lever"></span>
-                                                        SI
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <b>@Html.LabelFor(model => model.IdArea)</b>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">edit_location</i>
-                                                </span>
-                                                <div class="form-line" style="border:none;">
-                                                    <select id="IdArea" name="IdArea" data-size="5" data-live-search="true" class="selectpicker show-tick">
-                                                        @foreach (var item in Model.AreasList)
-                                                        {
-                                                            <option value="@item.Value">@item.Text</option>
-                                                        }
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <b>@Html.LabelFor(model => model.IdLinea)</b>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">edit_location</i>
-                                                </span>
-                                                <div class="form-line" style="border:none;">
-                                                    <select id="IdLinea" name="IdLinea" data-size="5" data-live-search="true" class="selectpicker show-tick" required>
-                                                        @foreach (var item in Model.LineasList)
-                                                        {
-                                                            <option value="@item.Value">@item.Text</option>
-                                                        }
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <b>@Html.LabelFor(model => model.EtapaProceso)</b>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">rotate_90_degrees_ccw</i>
-                                                </span>
-                                                <div class="form-line">
-                                                    @Html.EditorFor(model => model.EtapaProceso, new { htmlAttributes = new { @class = "form-control", placeholder = "Escriba etapa del proceso...", required = "required" } })
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <b>@Html.LabelFor(model => model.IdCoorSup)</b>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">person</i>
-                                                </span>
-                                                <div class="form-line" style="border:none;">
-                                                    <select id="IdCoorSup" name="IdCoorSup" data-size="5" data-live-search="true" class="selectpicker show-tick" required>
-                                                        @foreach (var item in Model.AdminUsersList)
-                                                        {
-                                                            <option value="@item.Value">@item.Text</option>
-                                                        }
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <b>@Html.LabelFor(model => model.IdRespArea)</b>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">person</i>
-                                                </span>
-                                                <div class="form-line" style="border:none;">
-                                                    <select id="IdRespArea" name="IdRespArea" data-size="5" data-live-search="true" class="selectpicker show-tick" required>
-                                                        @foreach (var item in Model.AdminUsersList)
-                                                        {
-                                                            <option value="@item.Value">@item.Text</option>
-                                                        }
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <b>@Html.LabelFor(model => model.IdOpeRes)</b>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">person</i>
-                                                </span>
-                                                <div class="form-line" style="border:none;">
-                                                    <select id="IdOpeRes" name="IdOpeRes" data-size="5" data-live-search="true" class="selectpicker show-tick" required>
-                                                        @foreach (var item in Model.OperatingUsersList)
-                                                        {
-                                                            <option value="@item.Value">@item.Text</option>
-                                                        }
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <b>@Html.LabelFor(model => model.IdLidInv)</b>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">person</i>
-                                                </span>
-                                                <div class="form-line" style="border:none;">
-                                                    <select id="IdLidInv" name="IdLidInv" data-size="5" data-live-search="true" class="selectpicker show-tick" required>
-                                                        @foreach (var item in Model.AdminUsersList)
-                                                        {
-                                                            <option value="@item.Value">@item.Text</option>
-                                                        }
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="card">
+                        <div class="header">                            
+                            <h2>
+                                Información básica
+                            </h2>                                
                         </div>
-                        <div class="panel">
-                            <div class="panel-heading" role="tab" id="headingTwo_2">
-                                <h4 class="panel-title">
-                                    <a class="collapsed" role="button" data-toggle="collapse" href="#collapseTwo_2" aria-expanded="false"
-                                       aria-controls="collapseTwo_2">
-                                        Información del producto
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="collapseTwo_2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo_2">
-                                <div class="panel-body">
-                                    <div class="row">
-                                        <div class="col-sm-4">
-                                            <b>@Html.LabelFor(model => model.NombreProducto)</b>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">text_format</i>
-                                                </span>
-                                                <div class="form-line">
-                                                    @Html.EditorFor(model => model.NombreProducto, new { htmlAttributes = new { @class = "form-control", placeholder = "ingrese nombre producto...", required = "required" } })
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <b>@Html.LabelFor(model => model.CodigoSAP)</b>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">format_list_numbered</i>
-                                                </span>
-                                                <div class="form-line">
-                                                    @Html.EditorFor(model => model.CodigoSAP, new { htmlAttributes = new { @class = "form-control", placeholder = "Ingrese código sap...", required = "required" } })
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <b>@Html.LabelFor(model => model.Lote)</b>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">pages</i>
-                                                </span>
-                                                <div class="form-line">
-                                                    @Html.EditorFor(model => model.Lote, new { htmlAttributes = new { @class = "form-control", placeholder = "Ingrese lote...", required = "required" } })
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <b>@Html.LabelFor(model => model.TiempoLineaParada)</b>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">access_time</i>
-                                                </span>
-                                                <div class="form-line">
-                                                    @Html.EditorFor(model => model.TiempoLineaParada, new { htmlAttributes = new { @class = "form-control", required = "required" } })
-                                                </div>
-                                            </div>
+                        <div class="body" >                                                                
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <b>@Html.LabelFor(model => model.FchApertInvestigacion)</b>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">date_range</i>
+                                        </span>
+                                        <div class="form-line">
+                                            @Html.EditorFor(model => model.FchApertInvestigacion, new { htmlAttributes = new { @class = "form-control datepicker", placeholder = "Seleccione fecha...", required = "required" } })
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-sm-2">
-                                            <b>@Html.LabelFor(model => model.Toneladas)</b>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">play_for_work</i>
-                                                </span>
-                                                <div class="form-line">
-                                                    @Html.EditorFor(model => model.Toneladas, new { htmlAttributes = new { @class = "form-control align-center", required = "required" } })
-                                                </div>
-                                            </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <b>@Html.LabelFor(model => model.HrApertInvestigacion)</b>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">access_time</i>
+                                        </span>
+                                        <div class="form-line">
+                                            @Html.EditorFor(model => model.HrApertInvestigacion, new { htmlAttributes = new { @class = "form-control timepicker selectpick", placeholder = "Seleccione hora...", required = "required" } })
                                         </div>
-                                        <div class="col-sm-2">
-                                            <b>@Html.LabelFor(model => model.NumCajas)</b>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">play_for_work</i>
-                                                </span>
-                                                <div class="form-line">
-                                                    @Html.EditorFor(model => model.NumCajas, new { htmlAttributes = new { @class = "form-control", required = "required" } })
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <b>@Html.LabelFor(model => model.NumPallet)</b>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">layers</i>
-                                                </span>
-                                                <div class="form-line">
-                                                    @Html.EditorFor(model => model.NumPallet, new { htmlAttributes = new { @class = "form-control", required = "required" } })
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <b>@Html.LabelFor(model => model.Unidades)</b>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">layers</i>
-                                                </span>
-                                                <div class="form-line">
-                                                    @Html.EditorFor(model => model.Unidades, new { htmlAttributes = new { @class = "form-control", required = "required" } })
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <b>@Html.LabelFor(model => model.TamanoFormato)</b>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">layers</i>
-                                                </span>
-                                                <div class="form-line">
-                                                    @Html.EditorFor(model => model.TamanoFormato, new { htmlAttributes = new { @class = "form-control", required = "required" } })
-                                                </div>
-                                            </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <b>@Html.LabelFor(model => model.HrEvento)</b>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">access_time</i>
+                                        </span>
+                                        <div class="form-line">
+                                            @Html.EditorFor(model => model.HrEvento, new { htmlAttributes = new { @class = "form-control timepicker", placeholder = "Seleccione hora...", required = "required" } })
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="panel">
-                            <div class="panel-heading" role="tab" id="headingThree_2">
-                                <h4 class="panel-title">
-                                    <a class="collapsed" role="button" data-toggle="collapse" href="#collapseThree_2" aria-expanded="false"
-                                       aria-controls="collapseThree_2">
-                                        Detalles del problema
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="collapseThree_2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree_2">
-                                <div class="panel-body">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                @Html.LabelFor(model => model.DescripcionProblema)
-                                                @Html.TextAreaFor(model => model.DescripcionProblema, 4, 0, new { @class = "form-control rounded-10", placeholder = "Escriba aquí la descripción del problema...", required = "required" })
-                                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <b>@Html.LabelFor(model => model.FchEntregaInvestigacion)</b>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">date_range</i>
+                                        </span>
+                                        <div class="form-line">
+                                            @Html.EditorFor(model => model.FchEntregaInvestigacion, new { htmlAttributes = new { @class = "form-control datepicker", placeholder = "Seleccione fecha...", required = "required" } })
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                @Html.LabelFor(model => model.AccionesList)
-                                                <div id="gridAcciones" style="width:100%;height:300px;"></div>
-                                            </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <b>@Html.LabelFor(model => model.HrEntregaInvestigacion)</b>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">access_time</i>
+                                        </span>
+                                        <div class="form-line">
+                                            @Html.EditorFor(model => model.HrEntregaInvestigacion, new { htmlAttributes = new { @class = "form-control timepicker", placeholder = "Seleccione hora...", required = "required" } })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <b>@Html.LabelFor(model => model.TipoIncidente)</b>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">report_problem</i>
+                                        </span>
+                                        <div class="form-line" style="border:none;">
+                                            <select id="TipoIncidente" name="TipoIncidente" class="selectpicker show-tick" required>
+                                                @foreach (var item in Model.TipoIncidenteList)
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <b>@Html.LabelFor(model => model.Recurrente)</b>
+                                    <div class="input-group">
+                                        <div class="switch">
+                                            <label>
+                                                NO
+                                                <input name="Recurrente" type="checkbox">
+                                                <span class="lever"></span>
+                                                SI
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <b>@Html.LabelFor(model => model.IdArea)</b>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">edit_location</i>
+                                        </span>
+                                        <div class="form-line" style="border:none;">
+                                            <select id="IdArea" name="IdArea" data-size="5" data-live-search="true" class="selectpicker show-tick">
+                                                @foreach (var item in Model.AreasList)
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <b>@Html.LabelFor(model => model.IdLinea)</b>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">edit_location</i>
+                                        </span>
+                                        <div class="form-line" style="border:none;">
+                                            <select id="IdLinea" name="IdLinea" data-size="5" data-live-search="true" class="selectpicker show-tick" required>
+                                                @foreach (var item in Model.LineasList)
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <b>@Html.LabelFor(model => model.EtapaProceso)</b>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">rotate_90_degrees_ccw</i>
+                                        </span>
+                                        <div class="form-line">
+                                            @Html.EditorFor(model => model.EtapaProceso, new { htmlAttributes = new { @class = "form-control", placeholder = "Escriba etapa del proceso...", required = "required" } })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <b>@Html.LabelFor(model => model.IdCoorSup)</b>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">person</i>
+                                        </span>
+                                        <div class="form-line" style="border:none;">
+                                            <select id="IdCoorSup" name="IdCoorSup" data-size="5" data-live-search="true" class="selectpicker show-tick" required>
+                                                @foreach (var item in Model.AdminUsersList)
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <b>@Html.LabelFor(model => model.IdRespArea)</b>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">person</i>
+                                        </span>
+                                        <div class="form-line" style="border:none;">
+                                            <select id="IdRespArea" name="IdRespArea" data-size="5" data-live-search="true" class="selectpicker show-tick" required>
+                                                @foreach (var item in Model.AdminUsersList)
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <b>@Html.LabelFor(model => model.IdOpeRes)</b>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">person</i>
+                                        </span>
+                                        <div class="form-line" style="border:none;">
+                                            <select id="IdOpeRes" name="IdOpeRes" data-size="5" data-live-search="true" class="selectpicker show-tick" required>
+                                                @foreach (var item in Model.OperatingUsersList)
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <b>@Html.LabelFor(model => model.IdLidInv)</b>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">person</i>
+                                        </span>
+                                        <div class="form-line" style="border:none;">
+                                            <select id="IdLidInv" name="IdLidInv" data-size="5" data-live-search="true" class="selectpicker show-tick" required>
+                                                @foreach (var item in Model.AdminUsersList)
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                            
                         </div>
                     </div>
+                    <div class="card">
+                        <div class="header">
+                            <h2>                                
+                                Información del producto                                
+                            </h2>
+                        </div>
+                        <div class="body" >
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <b>@Html.LabelFor(model => model.NombreProducto)</b>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">text_format</i>
+                                        </span>
+                                        <div class="form-line">
+                                            @Html.EditorFor(model => model.NombreProducto, new { htmlAttributes = new { @class = "form-control", placeholder = "ingrese nombre producto...", required = "required" } })
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <b>@Html.LabelFor(model => model.CodigoSAP)</b>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">format_list_numbered</i>
+                                        </span>
+                                        <div class="form-line">
+                                            @Html.EditorFor(model => model.CodigoSAP, new { htmlAttributes = new { @class = "form-control", placeholder = "Ingrese código sap...", required = "required" } })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <b>@Html.LabelFor(model => model.Lote)</b>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">pages</i>
+                                        </span>
+                                        <div class="form-line">
+                                            @Html.EditorFor(model => model.Lote, new { htmlAttributes = new { @class = "form-control", placeholder = "Ingrese lote...", required = "required" } })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <b>@Html.LabelFor(model => model.TiempoLineaParada)</b>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">access_time</i>
+                                        </span>
+                                        <div class="form-line">
+                                            @Html.EditorFor(model => model.TiempoLineaParada, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <b>@Html.LabelFor(model => model.Toneladas)</b>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">play_for_work</i>
+                                        </span>
+                                        <div class="form-line">
+                                            @Html.EditorFor(model => model.Toneladas, new { htmlAttributes = new { @class = "form-control align-center", required = "required" } })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <b>@Html.LabelFor(model => model.NumCajas)</b>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">play_for_work</i>
+                                        </span>
+                                        <div class="form-line">
+                                            @Html.EditorFor(model => model.NumCajas, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <b>@Html.LabelFor(model => model.NumPallet)</b>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">layers</i>
+                                        </span>
+                                        <div class="form-line">
+                                            @Html.EditorFor(model => model.NumPallet, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <b>@Html.LabelFor(model => model.Unidades)</b>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">layers</i>
+                                        </span>
+                                        <div class="form-line">
+                                            @Html.EditorFor(model => model.Unidades, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <b>@Html.LabelFor(model => model.TamanoFormato)</b>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">layers</i>
+                                        </span>
+                                        <div class="form-line">
+                                            @Html.EditorFor(model => model.TamanoFormato, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="header">
+                            <h2>                                
+                                Detalles del problema                                
+                            </h2>
+                        </div>
+                        <div class="body">                          
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.DescripcionProblema)
+                                        @Html.TextAreaFor(model => model.DescripcionProblema, 4, 0, new { @class = "form-control rounded-10", placeholder = "Escriba aquí la descripción del problema...", required = "required" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.AccionesList)
+                                        <div id="gridAcciones" style="width:100%;height:300px;"></div>
+                                    </div>
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>
+                    
                 </section>
 
                 <h3>Análisis de causas & 4M</h3>
@@ -482,196 +468,7 @@
 <script src="~/Scripts/Adminbsb/plugins/sweetalert/sweetalert.min.js"></script>
 
 <script>
-    var cmd = new Array();
-    var grid;
-
-    function populateSelect(select, dataSource, addBlank) {
-        var index, len, newOption;
-
-        if (addBlank) { select.appendChild(new Option('', '')); }
-
-        $.each(dataSource, function (value, text) {
-            newOption = new Option(text.NombresCommpletos, text.Id);
-            select.appendChild(newOption);
-        });
-    };
-
-    function SelectEditor(args) {
-        var $input;
-        var defaultValue;
-        this.keyCaptureList = [Slick.keyCode.UP, Slick.keyCode.DOWN, Slick.keyCode.ENTER];
-
-        this.init = function () {
-            $input = $('<select></select>');
-            $input.width(args.container.clientWidth + 3);
-            populateSelect($input[0], args.column.dataSource, true);
-            $input.appendTo(args.container);
-            $input.focus().select();
-
-            $input.select2({
-                placeholder: '-',
-                allowClear: true
-            });
-        };
-
-        this.destroy = function () {
-            $input.select2('destroy');
-        };
-
-        this.show = function () {
-
-        };
-        this.hide = function () {
-            $input.select('results_hide');
-        };
-        this.focus = function () {
-            $input.select2('input_focus');
-        };
-        this.loadValue = function (item) {
-            defaultValue = item[args.column.field];
-            $input.val(defaultValue);
-            $input[0].defaultValue = defaultValue;
-            $input.trigger('change.select2');
-        };
-        this.serializeValue = function () {
-            return $input.val();
-        };
-        this.applyValue = function (item, state) {
-            item[args.column.field] = state;
-        }
-        this.isValueChanged = function () {
-            return (!($input.val() == "" && defaultValue == null)) && ($input.val() != defaultValue);
-        };
-        this.validate = function () {
-            return {
-                valid: true,
-                msg: null
-            };
-        };
-        this.init();
-    }
-
-    function select2Formatter(row, cell, value, columnDef, dataContext) {
-        if (value) {
-            return columnDef.dataSource.find(x => x.Id === value).NombresCommpletos || '-';
-        }
-        else {
-            return '-';
-        }
-    }
-
-    function RemoveClick(index) {
-        var data = grid.getData();
-        data.splice(index, 1);
-        grid.setData(data);
-        grid.render();
-    }
-
-    function initGrid() {
-        var columns =
-            [
-                { id: "titulo", name: "Acción", field: "accion", minWidth: 300, editable: true, editor: Slick.Editors.Text },
-                { id: "id_responsable", name: "Responsable", field: "codigo_responsable", minWidth: 200, formatter: select2Formatter, editor: SelectEditor, dataSource: user_data },
-                { id: "fecha_compromiso", name: "Fecha de compromiso", field: "fecha_compromiso", minWidth: 130, editor: Slick.Editors.Date },
-                { id: "evi_efe", name: "Evidencia/Efectividad", field: "evidencia_efectividad", minWidth: 120, resizable: false, formatter: Slick.Formatters.PercentCompleteBar, editor: Slick.Editors.PercentComplete },
-                {
-                    id: 'id', name: '#', field: 'id', formatter: function (index, c, id, def, datactx) {
-                        return '<a id="deleteSG" class="btn btn-primary" style="padding:2px;" onclick="RemoveClick(' + index + ')">Eliminar</a>';
-                    }
-                }
-            ];
-
-        var options =
-            {
-                editable: true,
-                enableAddRow: true,
-                enableCellNavigation: true,
-                asyncEditorLoading: false,
-                autoEdit: false,
-                forceFitColumns: false
-            };
-
-        //INICIALIZACIÓN DEL GRID
-        var data = [];
-        //for (var i = 0; i < 5; i++) {
-        //    var d = (data[i] = {});
-        //    d["titulo"] = "Elemento " + i + 9;
-        //    d["NombresCommpletos"] = "280475b9-58b9-441c-9142-e2acc9c1139b";
-        //    d["fecha_compromiso"] = getCurrentDate();
-        //    d["evi_efe"] = 0;
-        //}
-
-        grid = new Slick.Grid("#gridAcciones", data, columns, options);
-        grid.setSelectionModel(new Slick.CellSelectionModel());
-        grid.onAddNewRow.subscribe(function (e, args) {
-            var item = args.item;
-            grid.invalidateRow(data.length);
-            data.push(item);
-            grid.updateRowCount();
-            grid.render();
-        });
-
-        $('#gridAcciones').on('focusout', '.editor-percentcomplete', function () {
-
-            window.setTimeout(function () {
-
-                if (Slick.GlobalEditorLock.isActive())
-                    Slick.GlobalEditorLock.commitCurrentEdit();
-
-            }, 5000);
-        });
-    }
-
-    function getCurrentDate() {
-        var today = new Date();
-        var dd = today.getDate();
-        var mm = today.getMonth() + 1; //January is 0!
-        var yyyy = today.getFullYear();
-
-        if (dd < 10) {
-            dd = '0' + dd;
-        }
-
-        if (mm < 10) {
-            mm = '0' + mm;
-        }
-
-        today = mm + '/' + dd + '/' + yyyy;
-        return today;
-    }
-
-    var user_data = {};
-            //INICIALIZAR OBJETO AJAX PARA TRAER DATOS DEL SERVIDOR
-        $.ajax({
-            //PARAMETRIZAR SERVICIO AJAX
-            url: '@Url.Action("GetAllUsersJsonAsync", "ReportarIncidentes")',
-            type: 'post',
-            //MOSTRAR LOADER ANTES DE INICIAR LA SOLICITUD
-            beforeSend: function () {
-                $('.page-loader-wrapper').fadeIn();
-            },
-            success: function (response) {
-                user_data = response;
-                initGrid();
-                //OCULTAR LOADER UNA VEZ CARAGADA LA INFORMACIÓN
-                $('.page-loader-wrapper').fadeOut();
-            },
-            //EN CASO DE ERROR, IMPRIMIRLO
-            error: function (request, status, error) {
-                alert('Error al cargar usuarios Json: ' + request.responseText);
-            }
-    });
-
-
-
-
-
-
-
-
-
-
-
+     var idEdit = @Html.Raw(Json.Encode(Model.Id));
     $(function () {    
         //Advanced form with validation
         var form = $('#wizard_validation').show();
@@ -831,5 +628,215 @@
     });
 </script>
 <script>
-   
+    var cmd = new Array();
+    var grid;
+
+    function populateSelect(select, dataSource, addBlank) {
+        var index, len, newOption;
+
+        if (addBlank) { select.appendChild(new Option('', '')); }
+
+        $.each(dataSource, function (value, text) {
+            newOption = new Option(text.NombresCommpletos, text.Id);
+            select.appendChild(newOption);
+        });
+    };
+
+    function SelectEditor(args) {
+        var $input;
+        var defaultValue;
+        this.keyCaptureList = [Slick.keyCode.UP, Slick.keyCode.DOWN, Slick.keyCode.ENTER];
+
+        this.init = function () {
+            $input = $('<select></select>');
+            $input.width(args.container.clientWidth + 3);
+            populateSelect($input[0], args.column.dataSource, true);
+            $input.appendTo(args.container);
+            $input.focus().select();
+
+            $input.select2({
+                placeholder: '-',
+                allowClear: true
+            });
+        };
+
+        this.destroy = function () {
+            $input.select2('destroy');
+        };
+
+        this.show = function () {
+
+        };
+        this.hide = function () {
+            $input.select('results_hide');
+        };
+        this.focus = function () {
+            $input.select2('input_focus');
+        };
+        this.loadValue = function (item) {
+            defaultValue = item[args.column.field];
+            $input.val(defaultValue);
+            $input[0].defaultValue = defaultValue;
+            $input.trigger('change.select2');
+        };
+        this.serializeValue = function () {
+            return $input.val();
+        };
+        this.applyValue = function (item, state) {
+            item[args.column.field] = state;
+        }
+        this.isValueChanged = function () {
+            return (!($input.val() == "" && defaultValue == null)) && ($input.val() != defaultValue);
+        };
+        this.validate = function () {
+            return {
+                valid: true,
+                msg: null
+            };
+        };
+        this.init();
+    }
+
+    function select2Formatter(row, cell, value, columnDef, dataContext) {
+        if (value) {
+            return columnDef.dataSource.find(x => x.Id === value).NombresCommpletos || '-';
+        }
+        else {
+            return '-';
+        }
+    }
+
+    function RemoveClick(index) {
+        var data = grid.getData();
+        data.splice(index, 1);
+        grid.setData(data);
+        grid.render();
+    }
+
+    function initGrid() {
+        var columns =
+            [
+                { id: "titulo", name: "Acción", field: "accion", minWidth: 300, editable: true, editor: Slick.Editors.Text },
+                { id: "id_responsable", name: "Responsable", field: "codigo_responsable", minWidth: 200, formatter: select2Formatter, editor: SelectEditor, dataSource: user_data },
+                { id: "fecha_compromiso", name: "Fecha de compromiso", field: "fecha_compromiso", minWidth: 130, editor: Slick.Editors.Date },
+                { id: "evi_efe", name: "Evidencia/Efectividad", field: "evidencia_efectividad", minWidth: 120, resizable: false, formatter: Slick.Formatters.PercentCompleteBar, editor: Slick.Editors.PercentComplete },
+                {
+                    id: 'id', name: '#', field: 'id', formatter: function (index, c, id, def, datactx) {
+                        return '<a id="deleteSG" class="btn btn-primary" style="padding:2px;" onclick="RemoveClick(' + index + ')">Eliminar</a>';
+                    }
+                }
+            ];
+
+        var options =
+            {
+                editable: true,
+                enableAddRow: true,
+                enableCellNavigation: true,
+                asyncEditorLoading: false,
+                autoEdit: false,
+                forceFitColumns: false
+            };
+
+        //INICIALIZACIÓN DEL GRID
+        var data = [];
+        //for (var i = 0; i < 5; i++) {
+        //    var d = (data[i] = {});
+        //    d["titulo"] = "Elemento " + i + 9;
+        //    d["NombresCommpletos"] = "280475b9-58b9-441c-9142-e2acc9c1139b";
+        //    d["fecha_compromiso"] = getCurrentDate();
+        //    d["evi_efe"] = 0;
+        //}
+
+        grid = new Slick.Grid("#gridAcciones", data, columns, options);
+        grid.setSelectionModel(new Slick.CellSelectionModel());
+        grid.onAddNewRow.subscribe(function (e, args) {
+            var item = args.item;
+            grid.invalidateRow(data.length);
+            data.push(item);
+            grid.updateRowCount();
+            grid.render();
+        });
+
+        $('#gridAcciones').on('focusout', '.editor-percentcomplete', function () {
+
+            window.setTimeout(function () {
+
+                if (Slick.GlobalEditorLock.isActive())
+                    Slick.GlobalEditorLock.commitCurrentEdit();
+
+            }, 5000);
+        });
+
+
+        if (idEdit > 0) {
+            //SI SE ESTÁ EDITANDO, CARGAR LOS DATOS
+            //LISTA DE ACCIONES
+            $.ajax({
+                //PARAMETRIZAR SERVICIO AJAX
+                url: '@Url.Action("GetAcionsList", "ReportarIncidentes")',
+                type: 'post',
+                data: { id_ewo: idEdit },
+                success: function (r)
+                {
+                    r.forEach(function (item) {
+                        grid.invalidateRow(data.length);
+                        data.push(item);
+                        grid.updateRowCount();
+                        grid.render();
+                    });
+                },
+                //EN CASO DE ERROR, IMPRIMIRLO
+                error: function (request, status, error) {
+                    alert('Error al consultar acciones inmediatas: ' + request.responseText);
+                }
+            });
+        }
+    }
+
+    function getCurrentDate() {
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; //January is 0!
+        var yyyy = today.getFullYear();
+
+        if (dd < 10) {
+            dd = '0' + dd;
+        }
+
+        if (mm < 10) {
+            mm = '0' + mm;
+        }
+
+        today = mm + '/' + dd + '/' + yyyy;
+        return today;
+    }
+
+    var user_data = {};
+            //INICIALIZAR OBJETO AJAX PARA TRAER DATOS DEL SERVIDOR
+        $.ajax({
+            //PARAMETRIZAR SERVICIO AJAX
+            url: '@Url.Action("GetAllUsersJsonAsync", "ReportarIncidentes")',
+            type: 'post',
+            //MOSTRAR LOADER ANTES DE INICIAR LA SOLICITUD
+            beforeSend: function () {
+                $('.page-loader-wrapper').fadeIn();
+            },
+            success: function (response) {
+                user_data = response;
+                initGrid();
+                //OCULTAR LOADER UNA VEZ CARAGADA LA INFORMACIÓN
+                $('.page-loader-wrapper').fadeOut();
+            },
+            //EN CASO DE ERROR, IMPRIMIRLO
+            error: function (request, status, error) {
+                alert('Error al cargar usuarios Json: ' + request.responseText);
+            }
+    });
+</script>
+<script>
+    //CARGAR DATOS DE INCIDENTES REPORTADOS
+    $(function () {
+        //CONSULTAR LA BASE DE DATOS
+               
+    });
 </script>

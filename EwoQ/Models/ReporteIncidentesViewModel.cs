@@ -9,11 +9,6 @@ using System.Web.Mvc;
 
 namespace EwoQ.Models
 {
-    public class EwoViewModel
-    {
-
-    }
-
     public class ReporteIncidentesViewModel
     {
         #region CAMPOS DE LA BD
@@ -35,16 +30,18 @@ namespace EwoQ.Models
 
         [DisplayName("Hora de apertura de la investigación")]
         public string HrApertInvestigacion { get; set; }
+        public TimeSpan HrApertInvestigacionTS { get; set; }
 
         [DisplayName("Hora del evento")]
         public string HrEvento { get; set; }
+        public TimeSpan HrEventoTS { get; set; }
 
         [DisplayName("Fecha de entrega de la investigación a QA")]
         public string FchEntregaInvestigacion { get; set; }
 
         [DisplayName("Hora de entrega de la investigación a QA")]
         public string HrEntregaInvestigacion { get; set; }
-
+        public TimeSpan HrEntregaInvestigacionTS { get; set; }
 
         [Display(Name = "Tipo de incidente o no inconformidad")]
         public long TipoIncidente { get; set; }
@@ -54,16 +51,17 @@ namespace EwoQ.Models
 
         [DisplayName("Recurrente")]
         public string Recurrente { get; set; }
+        public bool RecurrenteB { get; set; }
 
 
         [Display(Name = "Area donde ocurrió el evento")]
-        public int IdArea { get; set; }
+        public long IdArea { get; set; }
         public string AreaDesc { get; set; }
         public SelectList AreasList { get; set; }
 
 
         [Display(Name = "Línea")]
-        public int IdLinea { get; set; }
+        public long IdLinea { get; set; }
         public string LineaDesc { get; set; }
         public SelectList LineasList { get; set; }
 
@@ -128,12 +126,6 @@ namespace EwoQ.Models
 
         public string Cmd { get; set; }
         #endregion
-
     }
-
-    public class DonutViewModel
-    {
-        public string label { get; set; }
-        public double value { get; set; }
-    }
+   
 }

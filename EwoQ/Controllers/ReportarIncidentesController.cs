@@ -150,7 +150,7 @@ namespace EwoQ.Controllers
         // GET: ReportarIncidentes/Create
         public async Task<ActionResult> Create()
         {   
-            return View(await BuildModel());
+            return View(await BuildModel(0));
         }
 
         // POST: ReportarIncidentes/Create
@@ -172,10 +172,10 @@ namespace EwoQ.Controllers
                 ewo ewo = new ewo();
                 ewo.consecutivo = await daoEwo.GetLastConsecutive();
                 ewo.codigo_estado = 1; //ABIERTO - TIPOS DATA
-                ewo.fecha_apertura_investigacion = DateTime.ParseExact(ewr.FchApertInvestigacion, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                ewo.fecha_apertura_investigacion = ewr.FchApertInvestigacion == null ? DateTime.Now : DateTime.ParseExact(ewr.FchApertInvestigacion, "dd-MM-yyyy", CultureInfo.InvariantCulture);
                 ewo.hora_apertura_investigacion = TimeSpan.Parse(ewr.HrApertInvestigacion);
                 ewo.hora_evento = TimeSpan.Parse(ewr.HrEvento);
-                ewo.fecha_entrega_investigacion = DateTime.ParseExact(ewr.FchEntregaInvestigacion, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                ewo.fecha_entrega_investigacion = ewr.FchEntregaInvestigacion == null ? DateTime.Now : DateTime.ParseExact(ewr.FchEntregaInvestigacion, "dd-MM-yyyy", CultureInfo.InvariantCulture);
                 ewo.hora_entrega_investigacion = TimeSpan.Parse(ewr.HrEntregaInvestigacion);
                 ewo.tipo_incidente = ewr.TipoIncidente;
                 ewo.codigo_area = ewr.IdArea;
@@ -196,6 +196,7 @@ namespace EwoQ.Controllers
                 ewo.tamano_formato = ewr.TamanoFormato;
                 ewo.tiempo_linea_parada = ewr.TiempoLineaParada;
                 ewo.descripcion_general_problema = ewr.DescripcionProblema;
+                ewo.autor = User.Identity.GetUserId();
 
                 long reg = await daoEwo.AddEwo(ewo);
 
@@ -231,8 +232,7 @@ namespace EwoQ.Controllers
             {
                 if (id.HasValue)
                 {
-                    var rivm = await BuildModel();
-                    rivm.Consecutivo = await daoEwo.GetConsecutiveAsync(id.Value);
+                    var rivm = await BuildModel(id.Value);
                     return View(rivm);
                 }
                 else
@@ -356,12 +356,41 @@ namespace EwoQ.Controllers
                     JsonRequestBehavior.AllowGet);
         }
 
-        private async Task<ReporteIncidentesViewModel> BuildModel()
+        [HttpPost]
+        public async Task<JsonResult> GetAcionsList(long id_ewo)
+        {
+            var actList = await daoAcc.GetActionsList(id_ewo);
+            List<CustomInmActions> kla = new List<CustomInmActions>();
+            actList.ForEach(x =>
+            {
+                kla.Add(new CustomInmActions()
+                {
+                    codigo_ewo = x.codigo_ewo,
+                    accion = x.accion,
+                    fecha_compromiso = x.fecha_compromiso.Value.ToString("MM-dd-yyyy"),
+                    id = x.id,
+                    codigo_responsable = x.codigo_responsable,
+                    evidencia_efectividad = x.evidencia_efectividad
+                });
+            });
+
+            return Json(kla);
+        }
+
+        private async Task<ReporteIncidentesViewModel> BuildModel(long id)
         {
             var viewModel = new ReporteIncidentesViewModel();
 
-            viewModel.FchApertInvestigacion = DateTime.Now.ToString("dd/MM/yyyy");
-            viewModel.FchEntregaInvestigacion = DateTime.Now.ToString("dd/MM/yyyy");
+            if (id > 0)
+            {
+                viewModel = await daoEwo.GetEwoDesc(id);
+            }
+            else
+            {               
+                viewModel.FchApertInvestigacion = DateTime.Now.ToString("dd-MM-yyyy");
+                viewModel.FchEntregaInvestigacion = DateTime.Now.ToString("dd-MM-yyyy");                
+                viewModel.Consecutivo = "00" + await daoEwo.GetLastConsecutive();
+            }
 
             //LISTA DE TIPOS DE INCIDENTE
             var listTI = await daoTD.GetTypesAsync(INCIDENTSTYPES);
@@ -390,7 +419,6 @@ namespace EwoQ.Controllers
             listUO.Insert(0, new UsersUI() { Id = "0", NombresCommpletos = "Seleccione usuario..." });
             viewModel.OperatingUsersList = new SelectList(listUO, "Id", "NombresCommpletos");
 
-            viewModel.Consecutivo = "00" + await daoEwo.GetLastConsecutive();
 
             return viewModel;
         }

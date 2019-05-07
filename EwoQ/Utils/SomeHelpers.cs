@@ -65,5 +65,12 @@ namespace EwoQ.Utils
 
             System.Diagnostics.Debug.WriteLine("Respuesta de correo electrónico " + response.StatusCode);                        
         }
+
+        public static decimal TruncateDecimal(decimal value, int precision)
+        {
+            decimal step = (decimal)Math.Pow(10, precision);
+            decimal tmp = Math.Truncate(step * value);
+            return tmp / step;
+        }
     }
 }

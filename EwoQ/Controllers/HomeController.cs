@@ -42,10 +42,13 @@ namespace EwoQ.Controllers
         [HttpPost]
         public async Task<JsonResult> GetDonutData()
         {
-            var donut = daoE.GetEwoPercents();
+            List<DonutViewModel> donut = null;
 
-            await Task.Delay(500);
-
+            await Task.Run(() => 
+            {
+                donut = daoE.GetEwoPercents();
+            });
+                 
             return Json(donut);
         }
 

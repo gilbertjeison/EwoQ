@@ -148,7 +148,7 @@ namespace EwoQ.Dao
                             list.Add(new DonutViewModel()
                             {
                                 label = item.descripcion,
-                                value = (double)item.Count / GetCount() * 100
+                                value = ((double)item.Count / GetCount() * 100).ToString("F2")
                             });
                         }
                     }
@@ -302,6 +302,81 @@ namespace EwoQ.Dao
             }
 
             return list;
+        }
+
+        public async Task<ReporteIncidentesViewModel> GetEwoDesc(long id)
+        {
+            ReporteIncidentesViewModel lDecs = null;
+
+            try
+            {
+                using (var context = new EwoQEntities())
+                {
+                    var query = from e in context.ewo
+                                join a in context.tipos_data
+                                on e.codigo_area equals a.id
+                                join l in context.tipos_data
+                                on e.codigo_linea equals l.id
+                                join es in context.tipos_data
+                                on e.codigo_estado equals es.id
+                                join t in context.AspNetUsers
+                                on e.autor equals t.Id
+                                join ti in context.tipos_data
+                                on e.tipo_incidente equals ti.id
+                                where e.id == id
+                                select new { e, a, l, t, ti,es };
+
+                    var data = await query.ToListAsync();
+
+                    foreach (var i in data.ToList())
+                    {
+                        lDecs = new ReporteIncidentesViewModel()
+                        {
+                            Id = i.e.id,
+                            AreaDesc = i.a.descripcion,
+                            IdArea = i.a.id,
+                            LineaDesc = i.l.descripcion,
+                            IdLinea = i.e.codigo_linea.Value,
+                            Autor = i.t.Nombres + " " + i.t.Apellidos,
+                            TipoIncidente = i.e.tipo_incidente.Value,
+                            TipoIncidenteDesc = i.ti.descripcion,
+                            Consecutivo = i.e.consecutivo.Value.ToString(),
+                            Fecha = i.e.fecha_apertura_investigacion.Value,
+                            FchApertInvestigacion = i.e.fecha_apertura_investigacion.Value.ToString("dd-MM-yyyy"),
+                            EstadoDesc = i.es.descripcion,
+                            HrApertInvestigacionTS = i.e.hora_apertura_investigacion.Value,
+                            HrEventoTS = i.e.hora_evento.Value,
+                            HrEvento = i.e.hora_evento.Value.ToString(@"hh\:mm"),
+                            HrApertInvestigacion = i.e.hora_apertura_investigacion.Value.ToString(@"hh\:mm"),
+                            FchEntregaInvestigacion = i.e.fecha_entrega_investigacion.Value.ToString("dd-MM-yyyy"),
+                            HrEntregaInvestigacion = i.e.hora_entrega_investigacion.Value.ToString(@"hh\:mm"),
+                            HrEntregaInvestigacionTS = i.e.hora_entrega_investigacion.Value,
+                            RecurrenteB = i.e.recurrente,
+                            EtapaProceso = i.e.etapa,
+                            IdCoorSup = i.e.codigo_coordinador_turno,
+                            IdRespArea = i.e.codigo_responsable_area,
+                            IdOpeRes = i.e.codigo_operario_responsable,
+                            IdLidInv = i.e.codigo_lider_investigacion,
+                            NombreProducto = i.e.producto,
+                            CodigoSAP = i.e.codigo_sap_producto,
+                            Lote = i.e.lote_producto,
+                            Toneladas = i.e.toneladas_producto.Value,
+                            NumCajas = i.e.numero_cajas.Value,
+                            NumPallet = i.e.numero_pallet,
+                            Unidades = i.e.unidades.Value,
+                            TamanoFormato = i.e.tamano_formato,
+                            TiempoLineaParada = i.e.tiempo_linea_parada.Value,
+                            DescripcionProblema = i.e.descripcion_general_problema
+                        };
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Trace.WriteLine("Error al obtener información descriptiva de incidente : " + e.ToString());
+            }
+
+            return lDecs;
         }
     }
 }
