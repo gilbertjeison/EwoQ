@@ -4243,6 +4243,7 @@
     <Content Include="Views\ReportarIncidentes\Index.cshtml" />
     <Content Include="Views\Home\IndexAdmin.cshtml" />
     <Content Include="Views\ReportarIncidentes\ProcesarIncidente.cshtml" />
+    <Content Include="Views\Shared\_ReportarIncidente.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

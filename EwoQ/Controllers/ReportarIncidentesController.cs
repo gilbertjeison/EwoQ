@@ -149,42 +149,8 @@ namespace EwoQ.Controllers
 
         // GET: ReportarIncidentes/Create
         public async Task<ActionResult> Create()
-        {
-            var viewModel = new ReporteIncidentesViewModel();
-
-            viewModel.FchApertInvestigacion = DateTime.Now.ToString("dd/MM/yyyy");
-            viewModel.FchEntregaInvestigacion = DateTime.Now.ToString("dd/MM/yyyy");
-                                   
-            //LISTA DE TIPOS DE INCIDENTE
-            var listTI = await daoTD.GetTypesAsync(INCIDENTSTYPES);
-            listTI.Insert(0, new Database.tipos_data() { id = 0, descripcion = "Seleccione tipo de incidente..." });
-            viewModel.TipoIncidenteList = new SelectList(listTI, "Id", "descripcion");
-
-
-            //LISTA AREAS
-            var listA = await daoTD.GetTypesAsync(AREASTYPES);
-            listA.Insert(0, new Database.tipos_data() { id = 0, descripcion = "Seleccione área..." });
-            viewModel.AreasList = new SelectList(listA, "Id", "descripcion");
-
-            //LISTA LÍNEAS
-            var listL = await daoTD.GetTypesAsync(LINESTYPES);
-            listL.Insert(0, new Database.tipos_data() { id = 0, descripcion = "Seleccione línea..." });
-            viewModel.LineasList = new SelectList(listL, "Id", "descripcion");
-
-
-            //USUARIOS ADMINISTRADORES
-            var listUA = await daoUser.GetUsersByRole(ADMINROLE);
-            listUA.Insert(0, new UsersUI() { Id = "0", NombresCommpletos = "Seleccione usuario..." });
-            viewModel.AdminUsersList = new SelectList(listUA, "Id", "NombresCommpletos");
-
-            //USUARIOS OPERARIOS
-            var listUO = await daoUser.GetUsersByRole(OPERATINGROLE);
-            listUO.Insert(0, new UsersUI() { Id = "0", NombresCommpletos = "Seleccione usuario..." });
-            viewModel.OperatingUsersList = new SelectList(listUO, "Id", "NombresCommpletos");
-
-            ViewBag.Cons = "00" + await daoEwo.GetLastConsecutive();
-
-            return View(viewModel);
+        {   
+            return View(await BuildModel());
         }
 
         // POST: ReportarIncidentes/Create
@@ -255,6 +221,7 @@ namespace EwoQ.Controllers
             return Json(new { code= res });
         }
 
+       [HttpGet]
        public async Task<ActionResult> ProcesarIncidente(int? id)
         {
             int code;
@@ -264,7 +231,13 @@ namespace EwoQ.Controllers
             {
                 if (id.HasValue)
                 {
-                    ViewBag.Cons = await daoEwo.GetConsecutiveAsync(id.Value);                    
+                    var rivm = await BuildModel();
+                    rivm.Consecutivo = await daoEwo.GetConsecutiveAsync(id.Value);
+                    return View(rivm);
+                }
+                else
+                {
+                    return Json(new {code = -1, message = "Error al procesar incidente" });
                 }
                 
             }
@@ -273,9 +246,8 @@ namespace EwoQ.Controllers
                 code = -1;
                 message = "Error al iniciar el proceso con incidente reportado "+ ex.Message;
                 Trace.WriteLine(message);
+                return Json(new { code, message });
             }
-
-            return View(id);
         }
 
         [HttpPost]
@@ -382,6 +354,45 @@ namespace EwoQ.Controllers
             return Json(list.Where(x => x.StartsWith
                 (term,StringComparison.CurrentCultureIgnoreCase)),
                     JsonRequestBehavior.AllowGet);
+        }
+
+        private async Task<ReporteIncidentesViewModel> BuildModel()
+        {
+            var viewModel = new ReporteIncidentesViewModel();
+
+            viewModel.FchApertInvestigacion = DateTime.Now.ToString("dd/MM/yyyy");
+            viewModel.FchEntregaInvestigacion = DateTime.Now.ToString("dd/MM/yyyy");
+
+            //LISTA DE TIPOS DE INCIDENTE
+            var listTI = await daoTD.GetTypesAsync(INCIDENTSTYPES);
+            listTI.Insert(0, new Database.tipos_data() { id = 0, descripcion = "Seleccione tipo de incidente..." });
+            viewModel.TipoIncidenteList = new SelectList(listTI, "Id", "descripcion");
+
+
+            //LISTA AREAS
+            var listA = await daoTD.GetTypesAsync(AREASTYPES);
+            listA.Insert(0, new Database.tipos_data() { id = 0, descripcion = "Seleccione área..." });
+            viewModel.AreasList = new SelectList(listA, "Id", "descripcion");
+
+            //LISTA LÍNEAS
+            var listL = await daoTD.GetTypesAsync(LINESTYPES);
+            listL.Insert(0, new Database.tipos_data() { id = 0, descripcion = "Seleccione línea..." });
+            viewModel.LineasList = new SelectList(listL, "Id", "descripcion");
+
+
+            //USUARIOS ADMINISTRADORES
+            var listUA = await daoUser.GetUsersByRole(ADMINROLE);
+            listUA.Insert(0, new UsersUI() { Id = "0", NombresCommpletos = "Seleccione usuario..." });
+            viewModel.AdminUsersList = new SelectList(listUA, "Id", "NombresCommpletos");
+
+            //USUARIOS OPERARIOS
+            var listUO = await daoUser.GetUsersByRole(OPERATINGROLE);
+            listUO.Insert(0, new UsersUI() { Id = "0", NombresCommpletos = "Seleccione usuario..." });
+            viewModel.OperatingUsersList = new SelectList(listUO, "Id", "NombresCommpletos");
+
+            viewModel.Consecutivo = "00" + await daoEwo.GetLastConsecutive();
+
+            return viewModel;
         }
 
         protected override void Dispose(bool disposing)

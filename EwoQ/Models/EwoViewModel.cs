@@ -17,6 +17,7 @@ namespace EwoQ.Models
     public class ReporteIncidentesViewModel
     {
         #region CAMPOS DE LA BD
+        public string Consecutivo { get; set; }
         public long Id { get; set; }
         public string Autor { get; set; }
         public string AutorDesc { get; set; }

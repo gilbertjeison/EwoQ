@@ -41,9 +41,9 @@ namespace EwoQ.Dao
             return max;
         }
 
-        public async Task<long> GetConsecutiveAsync(int id)
+        public async Task<string> GetConsecutiveAsync(int id)
         {
-            long max = 0;
+            string max = "0";
 
             try
             {
@@ -55,11 +55,11 @@ namespace EwoQ.Dao
                             .FirstOrDefault().consecutivo;
                         if (maxv != null)
                         {
-                            max = maxv.Value;
+                            max = maxv.Value.ToString();
                         }
                         else
                         {
-                            max = 0;
+                            max = "0";
                         }
                     }
                 });
@@ -68,7 +68,7 @@ namespace EwoQ.Dao
             catch (Exception e)
             {
                 Debug.WriteLine("Error al consultar consecutivo de ewo: " + e.ToString());
-                max = -1;
+                max = "-1";
             }
 
             return max;
