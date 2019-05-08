@@ -837,6 +837,31 @@
     //CARGAR DATOS DE INCIDENTES REPORTADOS
     $(function () {
         //CONSULTAR LA BASE DE DATOS
-               
+        if (idEdit) {
+            //CARGAR LOS CAMPOS PARA SU EDICIÓN
+            $.ajax({
+                //PARAMETRIZAR SERVICIO AJAX
+                url: '@Url.Action("GetEwoAsync", "ReportarIncidentes")',
+                type: 'post',
+                data: { id: idEdit },
+                //MOSTRAR LOADER ANTES DE INICIAR LA SOLICITUD
+                beforeSend: function () {
+                    $('.page-loader-wrapper').fadeIn();
+                },
+                success: function (r)
+                {
+                    console.log(r);                    
+                    $('#TipoIncidente').val(r.TipoIncidente);
+                    $('input[name^="Recurrente"]').prop('checked', r.RecurrenteB);
+
+                    $('select').selectpicker('refresh');
+                    $('.page-loader-wrapper').fadeOut();
+                },
+                //EN CASO DE ERROR, IMPRIMIRLO
+                error: function (request, status, error) {
+                    alert('Error al generar consultar inncidente reportado para procesamiento: ' + request.responseText);
+                }
+            });
+        }        
     });
 </script>

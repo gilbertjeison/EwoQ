@@ -377,6 +377,13 @@ namespace EwoQ.Controllers
             return Json(kla);
         }
 
+        [HttpPost]
+        public async Task<JsonResult> GetEwoAsync(int id)
+        {
+            var ewo = await daoEwo.GetEwoDesc(id);
+            return Json(ewo);
+        }
+
         private async Task<ReporteIncidentesViewModel> BuildModel(long id)
         {
             var viewModel = new ReporteIncidentesViewModel();
