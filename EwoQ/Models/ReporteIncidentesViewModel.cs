@@ -84,6 +84,15 @@ namespace EwoQ.Models
         public SelectList AdminUsersList { get; set; }
         public SelectList OperatingUsersList { get; set; }
 
+        [Display(Name = "Equipo de trabajo")]
+        public string EquipoTrabajo { get; set; }
+
+        [Display(Name = "N° Airsweb")]
+        public int NumAirsweb { get; set; }
+
+        [Display(Name = "Tiempo ingreso Airsweb (min)")]
+        public string TiempoAirsWeb { get; set; }
+
         #endregion
 
         #region INFORMACIÓN DEL PRODUCTO 

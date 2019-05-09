@@ -457,12 +457,17 @@
     <Content Include="Scripts\Adminbsb\plugins\bootstrap-select\js\i18n\defaults-zh_CN.min.js" />
     <Content Include="Scripts\Adminbsb\plugins\bootstrap-select\js\i18n\defaults-zh_TW.js" />
     <Content Include="Scripts\Adminbsb\plugins\bootstrap-select\js\i18n\defaults-zh_TW.min.js" />
+    <Content Include="Scripts\Adminbsb\plugins\bootstrap-tagsinput\bloodhound.js" />
     <Content Include="Scripts\Adminbsb\plugins\bootstrap-tagsinput\bootstrap-tagsinput-angular.js" />
     <Content Include="Scripts\Adminbsb\plugins\bootstrap-tagsinput\bootstrap-tagsinput-angular.min.js" />
     <Content Include="Scripts\Adminbsb\plugins\bootstrap-tagsinput\bootstrap-tagsinput-typeahead.css" />
     <Content Include="Scripts\Adminbsb\plugins\bootstrap-tagsinput\bootstrap-tagsinput.css" />
     <Content Include="Scripts\Adminbsb\plugins\bootstrap-tagsinput\bootstrap-tagsinput.js" />
     <Content Include="Scripts\Adminbsb\plugins\bootstrap-tagsinput\bootstrap-tagsinput.min.js" />
+    <Content Include="Scripts\Adminbsb\plugins\bootstrap-tagsinput\bootstrap-typeahead.js" />
+    <Content Include="Scripts\Adminbsb\plugins\bootstrap-tagsinput\typeahead.bundle.js" />
+    <Content Include="Scripts\Adminbsb\plugins\bootstrap-tagsinput\typeahead.jquery.js" />
+    <Content Include="Scripts\Adminbsb\plugins\bootstrap-tagsinput\typeaheadProcess.js" />
     <Content Include="Scripts\Adminbsb\plugins\bootstrap\css\bootstrap-theme.css" />
     <Content Include="Scripts\Adminbsb\plugins\bootstrap\css\bootstrap-theme.min.css" />
     <Content Include="Scripts\Adminbsb\plugins\bootstrap\css\bootstrap.css" />

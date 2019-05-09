@@ -20,6 +20,8 @@
 <link href="~/Scripts/Adminbsb/plugins/slickgrid/css/select2.css" rel="stylesheet" />
 <!-- SWEETALERT Css -->
 <link href="~/Scripts/Adminbsb/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+<!-- TAGSINPUT typeahead Css -->
+<link href="~/Scripts/Adminbsb/plugins/bootstrap-tagsinput/bootstrap-tagsinput-typeahead.css" rel="stylesheet" />
 
 <style>
     .header:not(.tit) {
@@ -41,9 +43,9 @@
         left: -6px;
     }
 
-    .select2-container .select2-selection--single {
-        height: 26px;
-    }
+        .select2-container .select2-selection--single {
+            height: 26px;
+        }
 </style>
 
 <div class="card js-sweetalert">
@@ -59,17 +61,17 @@
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             @using (Html.BeginForm("ProcesarIncidente", "ReportarIncidentes", FormMethod.Post, new { @id = "wizard_validation" }))
             {
-                
+
                 @Html.Hidden("Id", Model.Id)
                 <h3>Notificación</h3>
                 <section class="clearfix">
                     <div class="card">
-                        <div class="header">                            
+                        <div class="header">
                             <h2>
                                 Información básica
-                            </h2>                                
+                            </h2>
                         </div>
-                        <div class="body" >                                                                
+                        <div class="body">
                             <div class="row">
                                 <div class="col-md-4">
                                     <b>@Html.LabelFor(model => model.FchApertInvestigacion)</b>
@@ -270,16 +272,16 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>                            
+                            </div>
                         </div>
                     </div>
                     <div class="card">
                         <div class="header">
-                            <h2>                                
-                                Información del producto                                
+                            <h2>
+                                Información del producto
                             </h2>
                         </div>
-                        <div class="body" >
+                        <div class="body">
                             <div class="row">
                                 <div class="col-sm-4">
                                     <b>@Html.LabelFor(model => model.NombreProducto)</b>
@@ -383,16 +385,16 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>                            
+                            </div>
                         </div>
                     </div>
                     <div class="card">
                         <div class="header">
-                            <h2>                                
-                                Detalles del problema                                
+                            <h2>
+                                Detalles del problema
                             </h2>
                         </div>
-                        <div class="body">                          
+                        <div class="body">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -408,15 +410,69 @@
                                         <div id="gridAcciones" style="width:100%;height:300px;"></div>
                                     </div>
                                 </div>
-                            </div>                            
+                            </div>
                         </div>
                     </div>
-                    
+
                 </section>
 
                 <h3>Análisis de causas & 4M</h3>
                 <section>
-                    <div>prueba</div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><h5><b>AJUSTES BÁSICOS</b></h5></div>
+                        <div class="panel-body">
+                           
+                            <div class="tags">
+                                <div class="col-md-12">
+                                    <b>Ingrese los nombres de las personas que integran el grupo de trabajo</b>
+                                    <br />
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">group</i>
+                                        </span>
+                                        <div class="form-line">
+                                            @Html.EditorFor(model => model.EquipoTrabajo, new { htmlAttributes = new { placeholder = "Escriba aquí los nombres..." } })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <b>@Html.LabelFor(model => model.NumAirsweb)</b>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">text_format</i>
+                                        </span>
+                                        <div class="form-line">
+                                            @Html.EditorFor(model => model.NumAirsweb, new { htmlAttributes = new { @class = "form-control", placeholder = "ingrese número...", required = "required" } })
+
+                                        </div>
+                                    </div>
+                                </div>                                    
+                                <div class="col-sm-6">
+                                    <b>@Html.LabelFor(model => model.TiempoAirsWeb)</b>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">access_time</i>
+                                        </span>
+                                        <div class="form-line">
+                                            @Html.EditorFor(model => model.TiempoAirsWeb, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>   
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                Información del producto (procesar)
+                            </h2>
+                        </div>
+                        <div class="body">
+
+                        </div>
+                    </div>
                 </section>
 
                 <h3>Plan de acción</h3>
@@ -467,9 +523,15 @@
 <!-- SweetAlert Plugin Js -->
 <script src="~/Scripts/Adminbsb/plugins/sweetalert/sweetalert.min.js"></script>
 
+<!-- TAGSINPUT Plugin Js -->
+<script src="~/Scripts/Adminbsb/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
+<!-- TYPEHEAD Plugin Js -->
+<script src="~/Scripts/Adminbsb/plugins/bootstrap-tagsinput/typeahead.bundle.js"></script>
+<!-- Bloodhound Plugin Js -->
+<script src="~/Scripts/Adminbsb/plugins/bootstrap-tagsinput/bloodhound.js"></script>
 <script>
      var idEdit = @Html.Raw(Json.Encode(Model.Id));
-    $(function () {    
+    $(function () {
         //Advanced form with validation
         var form = $('#wizard_validation').show();
         form.steps({
@@ -526,7 +588,7 @@
             onFinished: function (event, currentIndex) {
                 var form = $('#wizard_validation')[0];
                 var dataString = new FormData(form);
-                               
+
                 $.ajax({
                     type: "POST",
                     url: '@Url.Action("ProcesarIncidente", "ReportarIncidentes")',
@@ -554,7 +616,7 @@
                     contentType: false,
                     processData: false
                 });
-                                
+
                 $('.page-loader-wrapper').hide();
             }
         });
@@ -612,6 +674,7 @@
             cancelText: 'Cancelar'
         });
 
+        //AUTOCOMPLETAR
         $('#NombreProducto').autocomplete({
             //Los datos, que son invocado mediante JQuery ajax
             source: function (request, response) {
@@ -625,6 +688,69 @@
                 });
             }
         });
+
+        //TAGSINPUT GENERATOR
+        var names = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('NombresCommpletos'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            prefetch: {
+                url: '@Url.Content("~/")' + "ReportarIncidentes/GetAllUsers"
+            },
+            remote: {
+                url: '@Url.Content("~/")' + "ReportarIncidentes/GetAllUsers"
+            }
+        });
+
+        names.initialize();
+
+
+        $('.tags input:text').tagsinput({
+            typeaheadjs: {
+                name: 'names',
+                displayKey: 'NombresCommpletos',
+                valueKey: 'Id',
+                source: names.ttAdapter()
+            }
+        });
+    });
+</script>
+
+<script>
+    //CARGAR DATOS DE INCIDENTES REPORTADOS
+    $(function () {
+        //CONSULTAR LA BASE DE DATOS
+        if (idEdit) {
+            //CARGAR LOS CAMPOS PARA SU EDICIÓN
+            $.ajax({
+                //PARAMETRIZAR SERVICIO AJAX
+                url: '@Url.Action("GetEwoAsync", "ReportarIncidentes")',
+                type: 'post',
+                data: { id: idEdit },
+                //MOSTRAR LOADER ANTES DE INICIAR LA SOLICITUD
+                beforeSend: function () {
+                    $('.page-loader-wrapper').fadeIn();
+                },
+                success: function (r)
+                {
+                    console.log(r);
+                    $('#TipoIncidente').val(r.TipoIncidente);
+                    $('#IdArea').val(r.IdArea);
+                    $('#IdLinea').val(r.IdLinea);
+                    $('#IdCoorSup').val(r.IdCoorSup);
+                    $('#IdRespArea').val(r.IdRespArea);
+                    $('#IdOpeRes').val(r.IdOpeRes);
+                    $('#IdLidInv').val(r.IdLidInv);
+                    $('input[name^="Recurrente"]').prop('checked', r.RecurrenteB);
+
+                    $('select').selectpicker('refresh');
+                    $('.page-loader-wrapper').fadeOut();
+                },
+                //EN CASO DE ERROR, IMPRIMIRLO
+                error: function (request, status, error) {
+                    alert('Error al generar consultar inncidente reportado para procesamiento: ' + request.responseText);
+                }
+            });
+        }
     });
 </script>
 <script>
@@ -783,6 +909,7 @@
                         data.push(item);
                         grid.updateRowCount();
                         grid.render();
+                        console.log('se actualizó grid!');
                     });
                 },
                 //EN CASO DE ERROR, IMPRIMIRLO
@@ -831,37 +958,5 @@
             error: function (request, status, error) {
                 alert('Error al cargar usuarios Json: ' + request.responseText);
             }
-    });
-</script>
-<script>
-    //CARGAR DATOS DE INCIDENTES REPORTADOS
-    $(function () {
-        //CONSULTAR LA BASE DE DATOS
-        if (idEdit) {
-            //CARGAR LOS CAMPOS PARA SU EDICIÓN
-            $.ajax({
-                //PARAMETRIZAR SERVICIO AJAX
-                url: '@Url.Action("GetEwoAsync", "ReportarIncidentes")',
-                type: 'post',
-                data: { id: idEdit },
-                //MOSTRAR LOADER ANTES DE INICIAR LA SOLICITUD
-                beforeSend: function () {
-                    $('.page-loader-wrapper').fadeIn();
-                },
-                success: function (r)
-                {
-                    console.log(r);                    
-                    $('#TipoIncidente').val(r.TipoIncidente);
-                    $('input[name^="Recurrente"]').prop('checked', r.RecurrenteB);
-
-                    $('select').selectpicker('refresh');
-                    $('.page-loader-wrapper').fadeOut();
-                },
-                //EN CASO DE ERROR, IMPRIMIRLO
-                error: function (request, status, error) {
-                    alert('Error al generar consultar inncidente reportado para procesamiento: ' + request.responseText);
-                }
-            });
-        }        
     });
 </script>

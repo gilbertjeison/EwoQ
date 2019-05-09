@@ -120,16 +120,16 @@ namespace EwoQ.Controllers
         {
             var users = await daoUser.GetAllUsers();
 
-            //var dict = new Dictionary<int, string>();
-
-            //for (int i = 0; i < users.Count; i++)
-            
-            //{
-            //    dict.Add(i, users[i].NombresCommpletos);
-            //}           
-
-            //var output = Newtonsoft.Json.JsonConvert.SerializeObject(dict);
+           
             return Json(users);
+        }
+
+        public async Task<JsonResult> GetAllUsers()
+        {
+            //LISTA DE DE LÍNEAS
+            var list = await daoUser.GetAllUsers();
+
+            return Json(list, JsonRequestBehavior.AllowGet);
         }
 
         // GET: ReportarIncidentes/Details/5
@@ -152,6 +152,7 @@ namespace EwoQ.Controllers
         {   
             return View(await BuildModel(0));
         }
+
 
         // POST: ReportarIncidentes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -383,6 +384,7 @@ namespace EwoQ.Controllers
             var ewo = await daoEwo.GetEwoDesc(id);
             return Json(ewo);
         }
+
 
         private async Task<ReporteIncidentesViewModel> BuildModel(long id)
         {
