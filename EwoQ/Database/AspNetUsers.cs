@@ -21,9 +21,6 @@ namespace EwoQ.Database
             this.AspNetUserClaims = new HashSet<AspNetUserClaims>();
             this.AspNetUserLogins = new HashSet<AspNetUserLogins>();
             this.equipo_trabajo = new HashSet<equipo_trabajo>();
-            this.plan_accion = new HashSet<plan_accion>();
-            this.revisiones = new HashSet<revisiones>();
-            this.AspNetRoles = new HashSet<AspNetRoles>();
             this.ewo = new HashSet<ewo>();
             this.ewo1 = new HashSet<ewo>();
             this.ewo2 = new HashSet<ewo>();
@@ -32,6 +29,9 @@ namespace EwoQ.Database
             this.ewo5 = new HashSet<ewo>();
             this.ewo6 = new HashSet<ewo>();
             this.ewo7 = new HashSet<ewo>();
+            this.plan_accion = new HashSet<plan_accion>();
+            this.revisiones = new HashSet<revisiones>();
+            this.AspNetRoles = new HashSet<AspNetRoles>();
         }
     
         public string Id { get; set; }
@@ -60,12 +60,6 @@ namespace EwoQ.Database
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<equipo_trabajo> equipo_trabajo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<plan_accion> plan_accion { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<revisiones> revisiones { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AspNetRoles> AspNetRoles { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ewo> ewo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ewo> ewo1 { get; set; }
@@ -81,5 +75,11 @@ namespace EwoQ.Database
         public virtual ICollection<ewo> ewo6 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ewo> ewo7 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<plan_accion> plan_accion { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<revisiones> revisiones { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AspNetRoles> AspNetRoles { get; set; }
     }
 }

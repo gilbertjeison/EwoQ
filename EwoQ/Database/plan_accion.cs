@@ -27,8 +27,8 @@ namespace EwoQ.Database
         public Nullable<System.DateTime> fecha_compromiso { get; set; }
     
         public virtual AspNetUsers AspNetUsers { get; set; }
+        public virtual ewo ewo { get; set; }
         public virtual tipos_data tipos_data { get; set; }
         public virtual tipos_data tipos_data1 { get; set; }
-        public virtual ewo ewo { get; set; }
     }
 }

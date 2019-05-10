@@ -219,9 +219,6 @@
     <Compile Include="Database\acciones_inmediatas.cs">
       <DependentUpon>Database.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\arbol_perdidas.cs">
-      <DependentUpon>Database.tt</DependentUpon>
-    </Compile>
     <Compile Include="Database\AspNetRoles.cs">
       <DependentUpon>Database.tt</DependentUpon>
     </Compile>

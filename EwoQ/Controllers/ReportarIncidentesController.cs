@@ -97,10 +97,8 @@ namespace EwoQ.Controllers
 
         // GET: ReportarIncidentes
         public async Task<ActionResult> Index()
-        {
-            var ewo = db.ewo.Include(e => e.arbol_perdidas).Include(e => e.AspNetUsers).Include(e => e.AspNetUsers1).Include(e => e.AspNetUsers2).Include(e => e.AspNetUsers3).Include(e => e.AspNetUsers4).Include(e => e.AspNetUsers5).Include(e => e.AspNetUsers6).Include(e => e.AspNetUsers7).Include(e => e.tipos_data).Include(e => e.tipos_data1).Include(e => e.tipos_data2).Include(e => e.tipos_data3).Include(e => e.tipos_data4);
-            
-            return View(await ewo.ToListAsync());
+        {            
+            return View();
         }
 
         public async Task<JsonResult> GetAllUsersAsync()
@@ -270,7 +268,6 @@ namespace EwoQ.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.codigo_arbol_perdidas = new SelectList(db.arbol_perdidas, "id", "nvl_1", ewo.codigo_arbol_perdidas);
             ViewBag.codigo_coordinador_turno = new SelectList(db.AspNetUsers, "Id", "Nombres", ewo.codigo_coordinador_turno);
             ViewBag.codigo_lider_investigacion = new SelectList(db.AspNetUsers, "Id", "Nombres", ewo.codigo_lider_investigacion);
             ViewBag.codigo_operario_responsable = new SelectList(db.AspNetUsers, "Id", "Nombres", ewo.codigo_operario_responsable);
@@ -302,7 +299,6 @@ namespace EwoQ.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.codigo_arbol_perdidas = new SelectList(db.arbol_perdidas, "id", "nvl_1", ewo.codigo_arbol_perdidas);
             ViewBag.codigo_coordinador_turno = new SelectList(db.AspNetUsers, "Id", "Nombres", ewo.codigo_coordinador_turno);
             ViewBag.codigo_lider_investigacion = new SelectList(db.AspNetUsers, "Id", "Nombres", ewo.codigo_lider_investigacion);
             ViewBag.codigo_operario_responsable = new SelectList(db.AspNetUsers, "Id", "Nombres", ewo.codigo_operario_responsable);

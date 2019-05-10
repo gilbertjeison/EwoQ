@@ -57,7 +57,11 @@ namespace EwoQ.Database
         public Nullable<int> tiempo_linea_parada { get; set; }
         public string descripcion_general_problema { get; set; }
         public string tiempo_inspeccion { get; set; }
-        public Nullable<long> codigo_arbol_perdidas { get; set; }
+        public string ap_nivel_1 { get; set; }
+        public string ap_nivel_2 { get; set; }
+        public string ap_nivel_3 { get; set; }
+        public string ap_nivel_4 { get; set; }
+        public string ap_nivel_otro { get; set; }
         public Nullable<int> numero_airsweb { get; set; }
         public string tiempo_ingresado_airsweb { get; set; }
         public Nullable<long> codigo_disposicion_final_prod { get; set; }
@@ -84,7 +88,6 @@ namespace EwoQ.Database
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<acciones_inmediatas> acciones_inmediatas { get; set; }
-        public virtual arbol_perdidas arbol_perdidas { get; set; }
         public virtual AspNetUsers AspNetUsers { get; set; }
         public virtual AspNetUsers AspNetUsers1 { get; set; }
         public virtual AspNetUsers AspNetUsers2 { get; set; }
