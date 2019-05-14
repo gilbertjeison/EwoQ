@@ -3137,6 +3137,10 @@
     <Content Include="Scripts\Adminbsb\plugins\ckeditor\skins\moono\images\refresh.png" />
     <Content Include="Scripts\Adminbsb\plugins\ckeditor\skins\moono\images\spinner.gif" />
     <Content Include="Scripts\Adminbsb\plugins\ckeditor\styles.js" />
+    <Content Include="Scripts\Adminbsb\plugins\dropzone-custom\dropzone.css" />
+    <Content Include="Scripts\Adminbsb\plugins\dropzone-custom\dropzone.js" />
+    <Content Include="Scripts\Adminbsb\plugins\dropzone-custom\images\spritemap%402x.png" />
+    <Content Include="Scripts\Adminbsb\plugins\dropzone-custom\images\spritemap.png" />
     <Content Include="Scripts\Adminbsb\plugins\dropzone\basic.css" />
     <Content Include="Scripts\Adminbsb\plugins\dropzone\dropzone-amd-module.js" />
     <Content Include="Scripts\Adminbsb\plugins\dropzone\dropzone.css" />

@@ -22,6 +22,10 @@
 <link href="~/Scripts/Adminbsb/plugins/sweetalert/sweetalert.css" rel="stylesheet">
 <!-- TAGSINPUT typeahead Css -->
 <link href="~/Scripts/Adminbsb/plugins/bootstrap-tagsinput/bootstrap-tagsinput-typeahead.css" rel="stylesheet" />
+@*DROPZONE CUSTOM CSS*@
+<link href="~/Scripts/Adminbsb/plugins/dropzone-custom/dropzone.css" rel="stylesheet" />
+@*DROPZONE CUSTOM JS*@
+<script src="~/Scripts/Adminbsb/plugins/dropzone-custom/dropzone.js"></script>
 
 <style>
     .header:not(.tit) {
@@ -43,18 +47,39 @@
         left: -6px;
     }
 
-    .select2-container .select2-selection--single {
-        height: 26px;
-    }
+        .select2-container .select2-selection--single {
+            height: 26px;
+        }
 
     .list-group .list-group-item {
         padding: 10px 15px;
     }
 
-    .list-group .list-group-item input {
-        float:none;
+        .list-group .list-group-item input {
+            float: none;
+        }
+
+    .list-group-item .input-group {
+        margin: 5px;
     }
 
+    .smlw {
+        color: white !important;
+    }
+
+    .gray_cube {
+        display: block;
+        padding: 10px;
+        background-color: #f5f5f5;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 12px;
+    }
+
+    .dropzone .dz-message {
+        text-align: center;
+        margin: 2em 0;
+    }
 </style>
 
 <div class="card js-sweetalert">
@@ -429,7 +454,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading"><h5><b>AJUSTES BÁSICOS</b></h5></div>
                         <div class="panel-body">
-                           
+
                             <div class="tags">
                                 <div class="col-md-12">
                                     <b>Ingrese los nombres de las personas que integran el grupo de trabajo</b>
@@ -445,53 +470,54 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-6">                                    
+                                <div class="col-sm-4">
                                     <ul class="list-group">
+                                        <b>@Html.LabelFor(model => model.ArbPerd1)</b>
                                         <li class="list-group-item">
-                                            <div class="input-group" style="margin:5px;">
-                                                <span class="bg-green input-group-addon" style="padding:2px;">Nivel 1</span>
+                                            <div class="input-group">
+                                                <span class="bg-lime input-group-addon" style="padding:2px;">Nivel 1</span>
                                                 <div class="form-line" style="margin-left:5px;">
-                                                    @Html.EditorFor(model => model.AreaDesc, new { htmlAttributes = new { @class = "form-control", placeholder = "ingrese número...", required = "required" } })
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item" >
-                                            <div class="input-group" style="margin:5px;">
-                                                <span class="bg-green input-group-addon" style="padding:2px;">Nivel 2</span>
-                                                <div class="form-line" style="margin-left:5px;">
-                                                    @Html.EditorFor(model => model.AreaDesc, new { htmlAttributes = new { @class = "form-control", placeholder = "ingrese número...", required = "required" } })
+                                                    @Html.EditorFor(model => model.ArbPerd1, new { htmlAttributes = new { @class = "form-control", placeholder = "Escriba aquí...", required = "required" } })
                                                 </div>
                                             </div>
                                         </li>
                                         <li class="list-group-item">
-                                            <div class="input-group" style="margin:5px;">
+                                            <div class="input-group">
+                                                <span class="bg-light-green input-group-addon" style="padding:2px;">Nivel 2</span>
+                                                <div class="form-line" style="margin-left:5px;">
+                                                    @Html.EditorFor(model => model.ArbPerd2, new { htmlAttributes = new { @class = "form-control", placeholder = "Escriba aquí...", required = "required" } })
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="input-group">
                                                 <span class="bg-green input-group-addon" style="padding:2px;">Nivel 3</span>
                                                 <div class="form-line" style="margin-left:5px;">
-                                                    @Html.EditorFor(model => model.AreaDesc, new { htmlAttributes = new { @class = "form-control", placeholder = "ingrese número...", required = "required" } })
+                                                    @Html.EditorFor(model => model.ArbPerd3, new { htmlAttributes = new { @class = "form-control", placeholder = "Escriba aquí...", required = "required" } })
                                                 </div>
                                             </div>
                                         </li>
-                                        <li class="list-group-item" >
-                                            <div class="input-group" style="margin:5px;">
-                                                <span class="bg-green input-group-addon" style="padding:2px;">Nivel 4</span>
+                                        <li class="list-group-item">
+                                            <div class="input-group">
+                                                <span class="bg-teal input-group-addon" style="padding:2px;">Nivel 4</span>
                                                 <div class="form-line" style="margin-left:5px;">
-                                                    @Html.EditorFor(model => model.AreaDesc, new { htmlAttributes = new { @class = "form-control", placeholder = "ingrese número...", required = "required" } })
+                                                    @Html.EditorFor(model => model.ArbPerd4, new { htmlAttributes = new { @class = "form-control", placeholder = "Escriba aquí...", required = "required" } })
                                                 </div>
                                             </div>
                                         </li>
-                                        <li class="list-group-item" >
-                                            <div class="input-group" style="margin:5px;">
-                                                <span class="bg-green input-group-addon" style="padding:2px;">Otro</span>
+                                        <li class="list-group-item">
+                                            <div class="input-group">
+                                                <span class="bg-indigo input-group-addon" style="padding:2px;">Otro&nbsp;&nbsp;&nbsp;&nbsp;  </span>
                                                 <div class="form-line" style="margin-left:5px;">
-                                                    @Html.EditorFor(model => model.AreaDesc, new { htmlAttributes = new { @class = "form-control", placeholder = "ingrese número...", required = "required" } })
+                                                    @Html.EditorFor(model => model.ArbPerdO, new { htmlAttributes = new { @class = "form-control", placeholder = "Escriba aquí...", required = "required" } })
                                                 </div>
                                             </div>
                                         </li>
-                                    </ul>                                  
-                                </div>                                                           
-                                <div class="col-sm-6">
+                                    </ul>
+                                </div>
+                                <div class="col-sm-8">
                                     <div class="row">
-                                        <div class="col-sm-6">
+                                        <div class="col-sm-4">
                                             <b>@Html.LabelFor(model => model.NumAirsweb)</b>
                                             <div class="input-group">
                                                 <span class="input-group-addon">
@@ -502,7 +528,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-6">
+                                        <div class="col-sm-4">
                                             <b>@Html.LabelFor(model => model.TiempoAirsWeb)</b>
                                             <div class="input-group">
                                                 <span class="input-group-addon">
@@ -513,19 +539,147 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>                                        
+                                        <div class="col-sm-4">
+                                            <b>@Html.LabelFor(model => model.TiempoInpeccion)</b>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="material-icons">access_time</i>
+                                                </span>
+                                                <div class="form-line">
+                                                    @Html.EditorFor(model => model.TiempoInpeccion, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <b>@Html.LabelFor(model => model.CostoIncidente)</b>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="material-icons">attach_money</i>
+                                                </span>
+                                                <div class="form-line">
+                                                    @Html.EditorFor(model => model.CostoIncidente, new { htmlAttributes = new { @class = "form-control", required = "required", type = "number", placeholder = "000.000" } })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <b>@Html.LabelFor(model => model.IdDisposicionF)</b>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="material-icons">restore</i>
+                                                </span>
+                                                <div class="form-line">
+                                                    <select id="IdDisposicionF" name="IdDisposicionF" class="selectpicker show-tick" required>
+                                                        @foreach (var item in Model.DisposicionFList)
+                                                        {
+                                                            <option value="@item.Value">@item.Text</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <b>@Html.LabelFor(model => model.DFToneladas)</b>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="material-icons">play_for_work</i>
+                                                </span>
+                                                <div class="form-line">
+                                                    @Html.EditorFor(model => model.DFToneladas, new { htmlAttributes = new { @class = "form-control align-center", required = "required" } })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>   
+                            </div>
                         </div>
                     </div>
                     <div class="card">
                         <div class="header">
                             <h2>
-                                Información del producto (procesar)
+                                Investigación en piso (5G)
+                                <small class="smlw"> En base al enfoque 5G utiliza el siguiente check list para enunciar los factores o variable relacionados al fenómeno a analizar. Chequea las actividades que realizaste.</small>
                             </h2>
                         </div>
                         <div class="body">
-
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="table-responsive-md" style="margin-top:40px">
+                                        <table class="table table-bordered" >
+                                            <tbody>
+                                                <tr>
+                                                    <td style="width:50%">
+                                                        <div class="gray_cube">
+                                                            <strong>
+                                                                GEMBA:
+                                                            </strong>
+                                                            (Ir al lugar donde se produce el problema)
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:50%">
+                                                        <div class="gray_cube">
+                                                            <div class="switch">
+                                                                <label>NOK<input type="checkbox" name="GembaOk"><span class="lever"></span>OK</label>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width:50%">
+                                                        <div class="gray_cube">
+                                                            <strong>
+                                                                GEMBUTSU:
+                                                            </strong>
+                                                            (Examinar la evidencia)
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:50%">
+                                                        <div class="gray_cube">
+                                                            <div class="switch">
+                                                                <label>NOK<input type="checkbox" name="GembutsuOk"><span class="lever"></span>OK</label>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width:50%">
+                                                        <div class="gray_cube">
+                                                            <strong>
+                                                                GENJITSU:
+                                                            </strong>
+                                                            (Verificar hechos y escenarios)
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:50%">
+                                                        <div class="gray_cube">
+                                                            <div class="switch">
+                                                                <label>NOK<input type="checkbox" name="GenjitsuOk"><span class="lever"></span>OK</label>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">                                   
+                                    <b>ANEXAR SKETCH DE LA EVIDENCIA DEL PROBLEMA</b>
+                                    <div class="dropzone" id="dropzone5G">
+                                        <div class="dz-default dz-message gray_cube">
+                                            <div class="drag-icon-cph">
+                                                <i class="material-icons">touch_app</i>
+                                            </div>
+                                            <h3>Arrastre imágenes aquí o presione click para cargar...</h3>
+                                            <em>(<strong>1</strong> imágen permitida.)</em>
+                                        </div>
+                                    </div>                                  
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -584,9 +738,13 @@
 <script src="~/Scripts/Adminbsb/plugins/bootstrap-tagsinput/typeahead.bundle.js"></script>
 <!-- Bloodhound Plugin Js -->
 <script src="~/Scripts/Adminbsb/plugins/bootstrap-tagsinput/bloodhound.js"></script>
+
+
 <script>
-     var idEdit = @Html.Raw(Json.Encode(Model.Id));
+    var idEdit = @Html.Raw(Json.Encode(Model.Id));
+    var myDropzone1;
     $(function () {
+        Dropzone.autoDiscover = false;
         //Advanced form with validation
         var form = $('#wizard_validation').show();
         form.steps({
@@ -766,6 +924,16 @@
                 valueKey: 'Id',
                 source: names.ttAdapter()
             }
+        });
+
+        //INICIALIZAR DROPZONE PARA LAS IMAGENES
+        myDropzone1 = new Dropzone("div#dropzone5G", {
+            autoProcessQueue: false,
+            acceptedFiles: 'image/*',
+            addRemoveLinks: true,
+            dictRemoveFile: 'Remover archivo',
+            maxFiles:1,
+            url: '@Url.Content("~/")' + "Home/CreateKpi"
         });
     });
 </script>

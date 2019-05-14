@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="8824473c76ab46728b1a0b8c83d497f1" Name="Diagram1" ZoomLevel="21">
+      <Diagram DiagramId="8824473c76ab46728b1a0b8c83d497f1" Name="Diagram1" ZoomLevel="77">
         <EntityTypeShape EntityType="EwoQModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="EwoQModel.acciones_inmediatas" Width="1.5" PointX="10.5" PointY="11.25" />
         <EntityTypeShape EntityType="EwoQModel.AspNetRoles" Width="1.5" PointX="3.75" PointY="8.75" />
@@ -12,7 +12,6 @@
         <EntityTypeShape EntityType="EwoQModel.AspNetUserLogins" Width="1.5" PointX="8.25" PointY="2" />
         <EntityTypeShape EntityType="EwoQModel.AspNetUsers" Width="1.5" PointX="6" PointY="6.125" />
         <EntityTypeShape EntityType="EwoQModel.equipo_trabajo" Width="1.5" PointX="13.5" PointY="12.625" />
-        <EntityTypeShape EntityType="EwoQModel.ewo" Width="1.5" PointX="8.25" PointY="8.375" />
         <EntityTypeShape EntityType="EwoQModel.fiveg_resultados" Width="1.5" PointX="10.5" PointY="33.125" />
         <EntityTypeShape EntityType="EwoQModel.plan_accion" Width="1.5" PointX="10.5" PointY="14.625" />
         <EntityTypeShape EntityType="EwoQModel.porque_porque" Width="1.5" PointX="10.5" PointY="36.625" />
@@ -25,10 +24,21 @@
         <EntityTypeShape EntityType="EwoQModel.zero_questions" Width="1.5" PointX="10.5" PointY="19.375" />
         <EntityTypeShape EntityType="EwoQModel.zero_responses" Width="1.5" PointX="12.75" PointY="21.625" />
         <AssociationConnector Association="EwoQModel.FK_acciones_inmediatas_AspNetUsers" />
-        <AssociationConnector Association="EwoQModel.FK_acciones_inmediatas_ewo" />
         <AssociationConnector Association="EwoQModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="EwoQModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="EwoQModel.FK_equipo_trabajo_AspNetUsers" />
+        <AssociationConnector Association="EwoQModel.FK_plan_accion_AspNetUsers" />
+        <AssociationConnector Association="EwoQModel.FK_revisiones_AspNetUsers" />
+        <AssociationConnector Association="EwoQModel.FK_plan_accion_tipos_data" />
+        <AssociationConnector Association="EwoQModel.FK_plan_accion_tipos_data_tipo" />
+        <AssociationConnector Association="EwoQModel.FK_preguntas_4m_tipos_data" />
+        <AssociationConnector Association="EwoQModel.FK_respuestas4m_preguntas_4m" />
+        <AssociationConnector Association="EwoQModel.FK_tipos_data_tipos" />
+        <AssociationConnector Association="EwoQModel.FK_zero_questions_tipos_data" />
+        <AssociationConnector Association="EwoQModel.FK_zero_responses_zero_questions" />
+        <AssociationConnector Association="EwoQModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="EwoQModel.ewo" Width="1.5" PointX="8.25" PointY="8.125" />
+        <AssociationConnector Association="EwoQModel.FK_acciones_inmediatas_ewo" />
         <AssociationConnector Association="EwoQModel.FK_ewo_AspNetUsers_coordinador_turno" />
         <AssociationConnector Association="EwoQModel.FK_ewo_AspNetUsers_lider_investigacion" />
         <AssociationConnector Association="EwoQModel.FK_ewo_AspNetUsers_operario_responsable" />
@@ -37,8 +47,6 @@
         <AssociationConnector Association="EwoQModel.FK_ewo_AspNetUsers_pa_geren_ca" />
         <AssociationConnector Association="EwoQModel.FK_ewo_AspNetUsers_pa_jefe_cal" />
         <AssociationConnector Association="EwoQModel.FK_ewo_AspNetUsers_responsable_area" />
-        <AssociationConnector Association="EwoQModel.FK_plan_accion_AspNetUsers" />
-        <AssociationConnector Association="EwoQModel.FK_revisiones_AspNetUsers" />
         <AssociationConnector Association="EwoQModel.FK_equipo_trabajo_ewo" />
         <AssociationConnector Association="EwoQModel.FK_ewo_tipos_data" />
         <AssociationConnector Association="EwoQModel.FK_ewo_tipos_data_area" />
@@ -52,14 +60,6 @@
         <AssociationConnector Association="EwoQModel.FK_respuestas4m_ewo" />
         <AssociationConnector Association="EwoQModel.FK_revisiones_ewo" />
         <AssociationConnector Association="EwoQModel.FK_zero_questions_ewo" />
-        <AssociationConnector Association="EwoQModel.FK_plan_accion_tipos_data" />
-        <AssociationConnector Association="EwoQModel.FK_plan_accion_tipos_data_tipo" />
-        <AssociationConnector Association="EwoQModel.FK_preguntas_4m_tipos_data" />
-        <AssociationConnector Association="EwoQModel.FK_respuestas4m_preguntas_4m" />
-        <AssociationConnector Association="EwoQModel.FK_tipos_data_tipos" />
-        <AssociationConnector Association="EwoQModel.FK_zero_questions_tipos_data" />
-        <AssociationConnector Association="EwoQModel.FK_zero_responses_zero_questions" />
-        <AssociationConnector Association="EwoQModel.AspNetUserRoles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

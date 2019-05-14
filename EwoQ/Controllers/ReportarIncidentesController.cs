@@ -31,6 +31,7 @@ namespace EwoQ.Controllers
         int AREASTYPES = 7;
         int LINESTYPES = 8;
         int INCIDENTSTYPES = 15;
+        int FINALDISPOSITION = 9;
         string ADMINROLE = "d908787a-642b-480f-ba5c-f46df6fc8713";
         string OPERATINGROLE = "ad3cb589-855b-4888-b234-9333eaca85ec";
 
@@ -424,6 +425,10 @@ namespace EwoQ.Controllers
             listUO.Insert(0, new UsersUI() { Id = "0", NombresCommpletos = "Seleccione usuario..." });
             viewModel.OperatingUsersList = new SelectList(listUO, "Id", "NombresCommpletos");
 
+            //DISPOSICIÓN FINAL DEL PRODUCTO
+            var listDF = await daoTD.GetTypesAsync(FINALDISPOSITION);
+            listDF.Insert(0, new Database.tipos_data() { id = 0, descripcion = "Seleccione disposición..." });
+            viewModel.DisposicionFList = new SelectList(listDF, "Id", "descripcion");
 
             return viewModel;
         }

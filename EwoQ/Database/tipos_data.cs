@@ -17,22 +17,31 @@ namespace EwoQ.Database
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tipos_data()
         {
+            this.plan_accion = new HashSet<plan_accion>();
+            this.plan_accion1 = new HashSet<plan_accion>();
+            this.preguntas_4m = new HashSet<preguntas_4m>();
+            this.zero_questions = new HashSet<zero_questions>();
             this.ewo = new HashSet<ewo>();
             this.ewo1 = new HashSet<ewo>();
             this.ewo2 = new HashSet<ewo>();
             this.ewo3 = new HashSet<ewo>();
             this.ewo4 = new HashSet<ewo>();
             this.ewo5 = new HashSet<ewo>();
-            this.plan_accion = new HashSet<plan_accion>();
-            this.plan_accion1 = new HashSet<plan_accion>();
-            this.preguntas_4m = new HashSet<preguntas_4m>();
-            this.zero_questions = new HashSet<zero_questions>();
         }
     
         public long id { get; set; }
         public Nullable<long> codigo_tipo { get; set; }
         public string descripcion { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<plan_accion> plan_accion { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<plan_accion> plan_accion1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<preguntas_4m> preguntas_4m { get; set; }
+        public virtual tipos tipos { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<zero_questions> zero_questions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ewo> ewo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -45,14 +54,5 @@ namespace EwoQ.Database
         public virtual ICollection<ewo> ewo4 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ewo> ewo5 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<plan_accion> plan_accion { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<plan_accion> plan_accion1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<preguntas_4m> preguntas_4m { get; set; }
-        public virtual tipos tipos { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<zero_questions> zero_questions { get; set; }
     }
 }

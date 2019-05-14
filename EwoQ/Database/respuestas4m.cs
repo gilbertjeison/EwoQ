@@ -19,7 +19,7 @@ namespace EwoQ.Database
         public Nullable<long> codigo_ewo { get; set; }
         public string verificado { get; set; }
     
-        public virtual ewo ewo { get; set; }
         public virtual preguntas_4m preguntas_4m { get; set; }
+        public virtual ewo ewo { get; set; }
     }
 }

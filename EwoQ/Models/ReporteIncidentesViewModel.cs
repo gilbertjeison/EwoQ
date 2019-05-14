@@ -87,12 +87,6 @@ namespace EwoQ.Models
         [Display(Name = "Equipo de trabajo")]
         public string EquipoTrabajo { get; set; }
 
-        [Display(Name = "N° Airsweb")]
-        public int NumAirsweb { get; set; }
-
-        [Display(Name = "Tiempo ingreso Airsweb (min)")]
-        public string TiempoAirsWeb { get; set; }
-
         #endregion
 
         #region INFORMACIÓN DEL PRODUCTO 
@@ -122,7 +116,7 @@ namespace EwoQ.Models
         public string TamanoFormato { get; set; }
 
         [Display(Name = "Costo Incidente")]
-        public decimal CostoIncidente { get; set; }
+        public double CostoIncidente { get; set; }
 
         [Display(Name = "Tiempo Parada Línea (min)")]
         public int TiempoLineaParada { get; set; }
@@ -134,7 +128,44 @@ namespace EwoQ.Models
         public ArrayList AccionesList { get; set; }
 
         public string Cmd { get; set; }
+
+        [Display(Name = "Árbol de pérdidas / Loss Tree")]
+        public string ArbPerd1 { get; set; }
+        public string ArbPerd2 { get; set; }
+        public string ArbPerd3 { get; set; }
+        public string ArbPerd4 { get; set; }
+        public string ArbPerdO { get; set; }
+
+        [Display(Name = "N° Airsweb")]
+        public int NumAirsweb { get; set; }
+
+        [Display(Name = "Tiempo Airsweb (min)")]
+        public int TiempoAirsWeb { get; set; }
+
+        [Display(Name = "Tiempo inspección (min)")]
+        public int TiempoInpeccion { get; set; }
+
+
+        [Display(Name = "Disposición final del producto")]
+        public long IdDisposicionF { get; set; }
+        public string DisposicionFDesc { get; set; }
+        public SelectList DisposicionFList { get; set; }
+
+        [Display(Name = "Toneladas / Cantidad")]
+        public int DFToneladas { get; set; }
+        #endregion
+
+        #region INVESTIGACIÓN EN PISO
+        public string GembaDesc { get; set; }
+        public string GembutsuDesc { get; set; }
+        public string GenjitsuDesc { get; set; }
+        public string GenriDesc { get; set; }
+        public string GensokuDesc { get; set; }
+
+        public string GembaOk { get; set; }
+        public string GembutsuOk { get; set; }
+        public string GenjitsuOk { get; set; }
         #endregion
     }
-   
+
 }

@@ -32,7 +32,6 @@ namespace EwoQ.Database
         public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<equipo_trabajo> equipo_trabajo { get; set; }
-        public virtual DbSet<ewo> ewo { get; set; }
         public virtual DbSet<fiveg_resultados> fiveg_resultados { get; set; }
         public virtual DbSet<plan_accion> plan_accion { get; set; }
         public virtual DbSet<porque_porque> porque_porque { get; set; }
@@ -44,5 +43,6 @@ namespace EwoQ.Database
         public virtual DbSet<tipos_data> tipos_data { get; set; }
         public virtual DbSet<zero_questions> zero_questions { get; set; }
         public virtual DbSet<zero_responses> zero_responses { get; set; }
+        public virtual DbSet<ewo> ewo { get; set; }
     }
 }

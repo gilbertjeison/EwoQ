@@ -56,14 +56,14 @@ namespace EwoQ.Database
         public Nullable<decimal> costo_incidente { get; set; }
         public Nullable<int> tiempo_linea_parada { get; set; }
         public string descripcion_general_problema { get; set; }
-        public string tiempo_inspeccion { get; set; }
+        public Nullable<int> tiempo_inspeccion { get; set; }
         public string ap_nivel_1 { get; set; }
         public string ap_nivel_2 { get; set; }
         public string ap_nivel_3 { get; set; }
         public string ap_nivel_4 { get; set; }
         public string ap_nivel_otro { get; set; }
         public Nullable<int> numero_airsweb { get; set; }
-        public string tiempo_ingresado_airsweb { get; set; }
+        public Nullable<int> tiempo_ingresado_airsweb { get; set; }
         public Nullable<long> codigo_disposicion_final_prod { get; set; }
         public Nullable<int> cantidad_toneladas { get; set; }
         public Nullable<bool> gemba { get; set; }
