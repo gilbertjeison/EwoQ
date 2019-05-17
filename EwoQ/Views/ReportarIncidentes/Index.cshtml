@@ -9,10 +9,13 @@
 <link href="~/Scripts/Adminbsb/plugins/jquery-datatable/FixedHeader-3.1.4/css/fixedHeader.bootstrap.min.css" rel="stylesheet" />
 <!-- SWEETALERT Css -->
 <link href="~/Scripts/Adminbsb/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+@{
+    ViewBag.Title = "Index";
+}
 
 @functions {
     DaoUsuarios daoUser = new DaoUsuarios();
-    
+
     string setColor()
     {
         var Uss = daoUser.GetUser(User.Identity.GetUserId());
@@ -130,8 +133,8 @@
                             return "<span class='label label-warning' style='font-size:14px;'>" + data + "</span>";
                         }
                     }
-                },                
-                
+                },
+
                 {
                     "data": "Fecha", "name": "Fecha", "autoWidth": true,
                     render: function (data, type, value) {
@@ -169,7 +172,7 @@
     function proccessIncident(id) {
         window.location.href = "/ReportarIncidentes/ProcesarIncidente?id=" + id;
     }
-</script>       
+</script>
 
 <!-- Jquery DataTable Plugin Js -->
 <script src="~/Scripts/Adminbsb/plugins/jquery-datatable/jquery.dataTables.js"></script>

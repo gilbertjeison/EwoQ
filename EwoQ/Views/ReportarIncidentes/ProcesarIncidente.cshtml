@@ -47,17 +47,27 @@
         left: -6px;
     }
 
-        .select2-container .select2-selection--single {
-            height: 26px;
-        }
+    .select2-container .select2-selection--single {
+        height: 26px;
+    }
+
+    .cell-effort-driven {
+        text-align: center;
+    }
+
+    /*EVITAR QUE MATERIALIZE OCULTE CHECK CON SUS ATRUBUTOS*/ 
+    [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+         left: auto; 
+         opacity: 1; 
+    }
 
     .list-group .list-group-item {
         padding: 10px 15px;
     }
 
-        .list-group .list-group-item input {
-            float: none;
-        }
+    .list-group .list-group-item input {
+        float: none;
+    }
 
     .list-group-item .input-group {
         margin: 5px;
@@ -79,6 +89,12 @@
     .dropzone .dz-message {
         text-align: center;
         margin: 2em 0;
+    }
+
+    /*QUITAR EL COLOR DE FONDO EN COLLAPSE*/
+    .full-body .panel-col-teal .panel-body {
+        background-color: white;
+        color: black;
     }
 </style>
 
@@ -599,6 +615,63 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Multiple Items To Be Open -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">         
+                            <div class="row clearfix">
+                                <div class="col-xs-12 ol-sm-12 col-md-12 col-lg-12">
+                                    <div class="panel-group full-body" id="accordion_19" role="tablist" aria-multiselectable="true">
+                                        <div class="panel panel-col-teal">
+                                            <div class="panel-heading" role="tab" id="headingOne_19">
+                                                <h4 class="panel-title">
+                                                    <a role="button" data-toggle="collapse" href="#collapseOne_19" aria-expanded="true" aria-controls="collapseOne_19">
+                                                        <i class="material-icons">filter_5</i> GENJITSU |
+                                                        <small class="smlw"> (Verificar los hechos)</small>
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseOne_19" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne_19">
+                                                <div class="panel-body">
+                                                    <div id="gridGenjitsu" style="width:100%;height:300px; margin:0 auto;"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-col-teal">
+                                            <div class="panel-heading" role="tab" id="headingTwo_19">
+                                                <h4 class="panel-title">
+                                                    <a class="collapsed" role="button" data-toggle="collapse" href="#collapseTwo_19" aria-expanded="false" aria-controls="collapseTwo_19">
+                                                        <i class="material-icons">filter_5</i> GENRI |
+                                                        <small class="smlw">(Referirse a la teoría)</small>
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseTwo_19" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo_19">
+                                                <div class="panel-body">
+                                                    <div id="gridGenri" style="width:100%;height:300px; margin:0 auto;"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-col-teal">
+                                            <div class="panel-heading" role="tab" id="headingThree_19">
+                                                <h4 class="panel-title">
+                                                    <a class="collapsed" role="button" data-toggle="collapse" href="#collapseThree_19" aria-expanded="false" aria-controls="collapseThree_19">
+                                                        <i class="material-icons">filter_5</i>GENSOKU |
+                                                        <small class="smlw">(Seguir el estándar)</small>
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseThree_19" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree_19">
+                                                <div class="panel-body">
+                                                    <div id="gridGensoku" style="width:100%;height:300px; margin:0 auto;"></div>
+                                                </div>
+                                            </div>
+                                        </div>                                
+                                    </div>
+                                </div>
+                            </div>
+                        </div>   
+                    </div>
                     <div class="card">
                         <div class="header">
                             <h2>
@@ -682,15 +755,154 @@
                             </div>
                         </div>
                     </div>
+                   
                     <div class="card">
                         <div class="header">
                             <h2>
-                                GENJITSU
-                                <small class="smlw"> Verificar los hechos</small>
+                                5W+1H
+                                <small class="smlw">(basado en las 5Gs)</small>
                             </h2>
                         </div>
                         <div class="body">
-
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="gray_cube">
+                                        <b>@Html.LabelFor(model => model.DescripcionProblema)</b>
+                                        @Html.TextAreaFor(model => model.DescripcionProblema, 2, 0, new { @class = "form-control rounded-10", placeholder = "Escriba aquí la descripción del problema...", @readonly = "readonly", style = "background-color: white;" })
+                                    </div>
+                                </div>                                
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="table-responsive-md">
+                                        <table class="table table-bordered ">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="width:40%">
+                                                        <div class="gray_cube">
+                                                            <strong>
+                                                                QUÉ ( WHAT)?
+                                                            </strong>
+                                                            ¿Qué producto/parte tiene el problema?
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:60%">
+                                                        <div class="form-group" style="margin-bottom:0;">
+                                                            @Html.TextAreaFor(model => model.QueDesc, 0, 40, new { @class = "form-control rounded-10", placeholder = "...", style = "width:100%; max-width:100%;", required = "required" })
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width:40%">
+                                                        <div class="gray_cube">
+                                                            <strong>
+                                                                DÓNDE (WHERE)?
+                                                            </strong>
+                                                            ¿Dónde está viendo el problema? (Área, línea, equipo, componente, ubicación)
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:60%">
+                                                        <div class="form-group" style="margin-bottom:0;">
+                                                            @Html.TextAreaFor(model => model.DondeDesc, 0, 40, new { @class = "form-control rounded-10", placeholder = "...", style = "width:100%; max-width:100%;", required = "required" })
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width:40%">
+                                                        <div class="gray_cube">
+                                                            <strong>
+                                                                CUÁNDO (WHEN)?
+                                                            </strong>
+                                                            ¿Cuándo se presenta el problema? (p.ej. Arranque/Producción Normal/Después de un cambio/Tiempo, etc.)
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:60%">
+                                                        <div class="form-group" style="margin-bottom:0;">
+                                                            @Html.TextAreaFor(model => model.CuandoDesc, 0, 40, new { @class = "form-control rounded-10", placeholder = "...", style = "width:100%; max-width:100%;", required = "required" })
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width:40%">
+                                                        <div class="gray_cube">
+                                                            <strong>
+                                                                QUIÉN (WHO)?
+                                                            </strong>
+                                                            ¿Quién esta relacionado con el problema?
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:60%">
+                                                        <div class="form-group" style="margin-bottom:0;">
+                                                            @Html.TextAreaFor(model => model.QuienDesc, 0, 40, new { @class = "form-control rounded-10", placeholder = "...", style = "width:100%; max-width:100%;", required = "required" })
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width:40%">
+                                                        <div class="gray_cube">
+                                                            <strong>
+                                                                CUÁL (WHICH)?
+                                                            </strong>
+                                                            ¿Cuál es la tendencia del problema?¿Es puntual o presenta algún patrón?
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:60%">
+                                                        <div class="form-group" style="margin-bottom:0;">
+                                                            @Html.TextAreaFor(model => model.CualDesc, 0, 40, new { @class = "form-control rounded-10", placeholder = "...", style = "width:100%; max-width:100%;", required = "required" })
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width:40%">
+                                                        <div class="gray_cube">
+                                                            <strong>
+                                                                CÓMO (HOW)?
+                                                            </strong>
+                                                            ¿Cómo se afectan los resultados o el proceso al compararlo con lo normal o deseado?
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:60%">
+                                                        <div class="form-group" style="margin-bottom:0;">
+                                                            @Html.TextAreaFor(model => model.ComoDesc, 0, 40, new { @class = "form-control rounded-10", placeholder = "...", style = "width:100%; max-width:100%;", required = "required" })
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width:100%" colspan="2">
+                                                        <hr />
+                                                        <div class="gray_cube">
+                                                            <strong>
+                                                                HOW + WHAT + WHERE + WHEN + WHICH + WHO = FENOMENO
+                                                            </strong>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width:100%" colspan="2">
+                                                        <div class="form-group" style="margin-bottom:0;">
+                                                            @Html.TextAreaFor(model => model.FenomenoDesc, 0, 40, new { @class = "form-control rounded-10", placeholder = "...", style = "width:100%; max-width:100%;", required = "required" })
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <b>ANEXE SKETCH DEL FENÓMENO</b>
+                                    <div class="dropzone" id="dropzoneFNM">
+                                        <div class="dz-default dz-message gray_cube">
+                                            <div class="drag-icon-cph">
+                                                <i class="material-icons">touch_app</i>
+                                            </div>
+                                            <h3>Arrastre imágenes aquí o presione click para cargar...</h3>
+                                            <em>(<strong>1</strong> imágen permitida.)</em>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -750,10 +962,324 @@
 <!-- Bloodhound Plugin Js -->
 <script src="~/Scripts/Adminbsb/plugins/bootstrap-tagsinput/bloodhound.js"></script>
 
+<script>
+     var idEdit = @Html.Raw(Json.Encode(Model.Id));
+    var myDropzone1;
+    var myDropzone2;
+    var cmd = new Array();
+    var grid;
+    var gridGenjitsu;
+    var gridGenri;
+    var gridGensoku;
+
+    var options =
+        {
+            editable: true,
+            enableAddRow: true,
+            enableCellNavigation: true,
+            asyncEditorLoading: false,
+            autoEdit: false,
+            forceFitColumns: false
+        };
+</script>
 
 <script>
-    var idEdit = @Html.Raw(Json.Encode(Model.Id));
-    var myDropzone1;
+    function populateSelect(select, dataSource, addBlank) {
+        var index, len, newOption;
+
+        if (addBlank) { select.appendChild(new Option('', '')); }
+
+        $.each(dataSource, function (value, text) {
+            newOption = new Option(text.NombresCommpletos, text.Id);
+            select.appendChild(newOption);
+        });
+    };
+
+    function SelectEditor(args) {
+        var $input;
+        var defaultValue;
+        this.keyCaptureList = [Slick.keyCode.UP, Slick.keyCode.DOWN, Slick.keyCode.ENTER];
+
+        this.init = function () {
+            $input = $('<select></select>');
+            $input.width(args.container.clientWidth + 3);
+            populateSelect($input[0], args.column.dataSource, true);
+            $input.appendTo(args.container);
+            $input.focus().select();
+
+            $input.select2({
+                placeholder: '-',
+                allowClear: true
+            });
+        };
+
+        this.destroy = function () {
+            $input.select2('destroy');
+        };
+
+        this.show = function () {
+
+        };
+        this.hide = function () {
+            $input.select('results_hide');
+        };
+        this.focus = function () {
+            $input.select2('input_focus');
+        };
+        this.loadValue = function (item) {
+            defaultValue = item[args.column.field];
+            $input.val(defaultValue);
+            $input[0].defaultValue = defaultValue;
+            $input.trigger('change.select2');
+        };
+        this.serializeValue = function () {
+            return $input.val();
+        };
+        this.applyValue = function (item, state) {
+            item[args.column.field] = state;
+        }
+        this.isValueChanged = function () {
+            return (!($input.val() == "" && defaultValue == null)) && ($input.val() != defaultValue);
+        };
+        this.validate = function () {
+            return {
+                valid: true,
+                msg: null
+            };
+        };
+        this.init();
+    }
+
+    function select2Formatter(row, cell, value, columnDef, dataContext) {
+        if (value) {
+            return columnDef.dataSource.find(x => x.Id === value).NombresCommpletos || '-';
+        }
+        else {
+            return '-';
+        }
+    }
+
+    function RemoveClick(index, ind) {
+        if (ind == 0) {
+            var data = grid.getData();
+            data.splice(index, 1);
+            grid.setData(data);
+            grid.render();
+        }
+        if (ind == 1) {
+            var data = gridGenjitsu.getData();
+            data.splice(index, 1);
+            gridGenjitsu.setData(data);
+            gridGenjitsu.render();
+        }
+        if (ind == 2) {
+            var data = gridGenri.getData();
+            data.splice(index, 1);
+            gridGenri.setData(data);
+            gridGenri.render();
+        }
+        if (ind == 3) {
+            var data = gridGensoku.getData();
+            data.splice(index, 1);
+            gridGensoku.setData(data);
+            gridGensoku.render();
+        }        
+    }
+
+    function initGrid() {
+        var columns =
+            [
+                { id: "titulo", name: "Acción", field: "accion", minWidth: 300, editable: true, editor: Slick.Editors.Text },
+                { id: "id_responsable", name: "Responsable", field: "codigo_responsable", minWidth: 200, formatter: select2Formatter, editor: SelectEditor, dataSource: user_data },
+                { id: "fecha_compromiso", name: "Fecha de compromiso", field: "fecha_compromiso", minWidth: 130, editor: Slick.Editors.Date },
+                { id: "evi_efe", name: "Evidencia/Efectividad", field: "evidencia_efectividad", minWidth: 120, resizable: false, formatter: Slick.Formatters.PercentCompleteBar, editor: Slick.Editors.PercentComplete },
+                {
+                    id: 'id', name: '#', field: 'id', formatter: function (index, c, id, def, datactx) {
+                        return '<a id="deleteSG" class="btn btn-primary" style="padding:2px;" onclick="RemoveClick(' + index + ',0)">Eliminar</a>';
+                    }
+                }
+            ];
+        
+        //INICIALIZACIÓN DEL GRID
+        var data = [];
+        
+        //for (var i = 0; i < 5; i++) {
+        //    var d = (data[i] = {});
+        //    d["titulo"] = "Elemento " + i + 9;
+        //    d["NombresCommpletos"] = "280475b9-58b9-441c-9142-e2acc9c1139b";
+        //    d["fecha_compromiso"] = getCurrentDate();
+        //    d["evi_efe"] = 0;
+        //}
+
+        grid = new Slick.Grid("#gridAcciones", data, columns, options);
+        grid.setSelectionModel(new Slick.CellSelectionModel());
+        grid.onAddNewRow.subscribe(function (e, args) {
+            var item = args.item;
+            grid.invalidateRow(data.length);
+            data.push(item);
+            grid.updateRowCount();
+            grid.render();
+        });
+
+
+        
+
+        $('#gridAcciones').on('focusout', '.editor-percentcomplete', function () {
+
+            window.setTimeout(function () {
+
+                if (Slick.GlobalEditorLock.isActive())
+                    Slick.GlobalEditorLock.commitCurrentEdit();
+
+            }, 5000);
+        });
+
+
+        if (idEdit > 0) {
+            //SI SE ESTÁ EDITANDO, CARGAR LOS DATOS
+            //LISTA DE ACCIONES
+            $.ajax({
+                //PARAMETRIZAR SERVICIO AJAX
+                url: '@Url.Action("GetAcionsList", "ReportarIncidentes")',
+                type: 'post',
+                data: { id_ewo: idEdit },
+                success: function (r)
+                {
+                    r.forEach(function (item) {
+                        grid.invalidateRow(data.length);
+                        data.push(item);
+                        grid.updateRowCount();
+                        grid.render();
+                        console.log('se actualizó grid!');
+                    });
+                },
+                //EN CASO DE ERROR, IMPRIMIRLO
+                error: function (request, status, error) {
+                    alert('Error al consultar acciones inmediatas: ' + request.responseText);
+                }
+            });
+        }
+    }
+
+    function initGridGens() {
+        var columnsGenjitsu =
+            [
+                { id: "condicion", name: "Condición", field: "accion", minWidth: 200, editable: true, editor: Slick.Editors.LongText },
+                { id: "condicion_ideal", name: "Condición ideal", field: "condicion_ideal", minWidth: 200, editable: true, editor: Slick.Editors.LongText },
+                { id: "check", name: "Check", field: "check", minWidth: 200, editable: true, editor: Slick.Editors.LongText },
+                { id: "como", name: "¿Cómo?", field: "como", minWidth: 200, editable: true, editor: Slick.Editors.LongText },
+                { id: "ok", name: "OK / NOK", field: "ok", minWidth: 100, cssClass: "cell-effort-driven", formatter: Slick.Formatters.Checkmark, editor: Slick.Editors.Checkbox },
+                {
+                    id: 'id', name: '#', field: 'id', formatter: function (index, c, id, def, datactx) {
+                        return '<a id="deleteGjt" class="btn btn-primary" style="padding:2px;" onclick="RemoveClick(' + index + ',1)">Eliminar</a>';
+                    }
+                }
+            ];
+
+        var columnsGenri =
+            [
+                { id: "condicion", name: "Condición", field: "accion", minWidth: 200, editable: true, editor: Slick.Editors.LongText },
+                { id: "condicion_ideal", name: "Condición ideal", field: "condicion_ideal", minWidth: 200, editable: true, editor: Slick.Editors.LongText },
+                { id: "check", name: "Check", field: "check", minWidth: 200, editable: true, editor: Slick.Editors.LongText },
+                { id: "como", name: "¿Cómo?", field: "como", minWidth: 200, editable: true, editor: Slick.Editors.LongText },
+                { id: "ok", name: "OK / NOK", field: "ok", minWidth: 100, cssClass: "cell-effort-driven", formatter: Slick.Formatters.Checkmark, editor: Slick.Editors.Checkbox },
+                {
+                    id: 'id', name: '#', field: 'id', formatter: function (index, c, id, def, datactx) {
+                        return '<a id="deleteGnr" class="btn btn-primary" style="padding:2px;" onclick="RemoveClick(' + index + ',2)">Eliminar</a>';
+                    }
+                }
+            ];
+
+        var columnsGensoku =
+            [
+                { id: "condicion", name: "Condición", field: "accion", minWidth: 200, editable: true, editor: Slick.Editors.LongText },
+                { id: "condicion_ideal", name: "Condición ideal", field: "condicion_ideal", minWidth: 200, editable: true, editor: Slick.Editors.LongText },
+                { id: "check", name: "Check", field: "check", minWidth: 200, editable: true, editor: Slick.Editors.LongText },
+                { id: "como", name: "¿Cómo?", field: "como", minWidth: 200, editable: true, editor: Slick.Editors.LongText },
+                { id: "ok", name: "OK / NOK", field: "ok", minWidth: 100, cssClass: "cell-effort-driven", formatter: Slick.Formatters.Checkmark, editor: Slick.Editors.Checkbox },
+                {
+                    id: 'id', name: '#', field: 'id', formatter: function (index, c, id, def, datactx) {
+                        return '<a id="deleteGnsk" class="btn btn-primary" style="padding:2px;" onclick="RemoveClick(' + index + ',3)">Eliminar</a>';
+                    }
+                }
+            ];
+
+        var dataGenjitsu = [];
+        var dataGenri = [];
+        var dataGensoku = [];
+
+        gridGenjitsu = new Slick.Grid("#gridGenjitsu", dataGenjitsu, columnsGenjitsu, options);
+        gridGenjitsu.setSelectionModel(new Slick.CellSelectionModel());
+        gridGenjitsu.onAddNewRow.subscribe(function (e, args) {
+            var item = args.item;
+            gridGenjitsu.invalidateRow(dataGenjitsu.length);
+            dataGenjitsu.push(item);
+            gridGenjitsu.updateRowCount();
+            gridGenjitsu.render();
+        });
+
+        gridGenri = new Slick.Grid("#gridGenri", dataGenri, columnsGenri, options);
+        gridGenri.setSelectionModel(new Slick.CellSelectionModel());
+        gridGenri.onAddNewRow.subscribe(function (e, args) {
+            var item = args.item;
+            gridGenri.invalidateRow(dataGenri.length);
+            dataGenri.push(item);
+            gridGenri.updateRowCount();
+            gridGenri.render();
+        });
+
+        gridGensoku = new Slick.Grid("#gridGensoku", dataGensoku, columnsGensoku, options);
+        gridGensoku.setSelectionModel(new Slick.CellSelectionModel());
+        gridGensoku.onAddNewRow.subscribe(function (e, args) {
+            var item = args.item;
+            gridGensoku.invalidateRow(dataGensoku.length);
+            dataGensoku.push(item);
+            gridGensoku.updateRowCount();
+            gridGensoku.render();
+        });
+    }
+
+    function getCurrentDate() {
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; //January is 0!
+        var yyyy = today.getFullYear();
+
+        if (dd < 10) {
+            dd = '0' + dd;
+        }
+
+        if (mm < 10) {
+            mm = '0' + mm;
+        }
+
+        today = mm + '/' + dd + '/' + yyyy;
+        return today;
+    }
+
+    var user_data = {};
+    //INICIALIZAR OBJETO AJAX PARA TRAER DATOS DEL SERVIDOR
+    $.ajax({
+        //PARAMETRIZAR SERVICIO AJAX
+        url: '@Url.Action("GetAllUsersJsonAsync", "ReportarIncidentes")',
+        type: 'post',
+        //MOSTRAR LOADER ANTES DE INICIAR LA SOLICITUD
+        beforeSend: function () {
+            $('.page-loader-wrapper').fadeIn();
+        },
+        success: function (response) {
+            user_data = response;
+            initGrid();
+            //OCULTAR LOADER UNA VEZ CARAGADA LA INFORMACIÓN
+            $('.page-loader-wrapper').fadeOut();
+        },
+        //EN CASO DE ERROR, IMPRIMIRLO
+        error: function (request, status, error) {
+            alert('Error al cargar usuarios Json: ' + request.responseText);
+        }
+    });
+</script>
+<script>   
     $(function () {
         Dropzone.autoDiscover = false;
         //Advanced form with validation
@@ -800,6 +1326,10 @@
                 //return true;
             },
             onStepChanged: function (event, currentIndex, priorIndex) {
+
+                if (currentIndex == 1) {
+                    initGridGens();
+                }
 
                 setButtonWavesEffect(event);
             },
@@ -932,13 +1462,23 @@
             typeaheadjs: {
                 name: 'names',
                 displayKey: 'NombresCommpletos',
-                valueKey: 'Id',
+                valueKey: 'NombresCommpletos',
                 source: names.ttAdapter()
             }
         });
 
-        //INICIALIZAR DROPZONE PARA LAS IMAGENES
+        //INICIALIZAR DROPZONE PARA LAS IMAGENES 1
         myDropzone1 = new Dropzone("div#dropzone5G", {
+            autoProcessQueue: false,
+            acceptedFiles: 'image/*',
+            addRemoveLinks: true,
+            dictRemoveFile: 'Remover archivo',
+            maxFiles:1,
+            url: '@Url.Content("~/")' + "Home/CreateKpi"
+        });
+
+        //INICIALIZAR DROPZONE PARA LAS IMAGENES 2
+        myDropzone2 = new Dropzone("div#dropzoneFNM", {
             autoProcessQueue: false,
             acceptedFiles: 'image/*',
             addRemoveLinks: true,
@@ -948,7 +1488,6 @@
         });
     });
 </script>
-
 <script>
     //CARGAR DATOS DE INCIDENTES REPORTADOS
     $(function () {
@@ -985,212 +1524,5 @@
                 }
             });
         }
-    });
-</script>
-<script>
-    var cmd = new Array();
-    var grid;
-
-    function populateSelect(select, dataSource, addBlank) {
-        var index, len, newOption;
-
-        if (addBlank) { select.appendChild(new Option('', '')); }
-
-        $.each(dataSource, function (value, text) {
-            newOption = new Option(text.NombresCommpletos, text.Id);
-            select.appendChild(newOption);
-        });
-    };
-
-    function SelectEditor(args) {
-        var $input;
-        var defaultValue;
-        this.keyCaptureList = [Slick.keyCode.UP, Slick.keyCode.DOWN, Slick.keyCode.ENTER];
-
-        this.init = function () {
-            $input = $('<select></select>');
-            $input.width(args.container.clientWidth + 3);
-            populateSelect($input[0], args.column.dataSource, true);
-            $input.appendTo(args.container);
-            $input.focus().select();
-
-            $input.select2({
-                placeholder: '-',
-                allowClear: true
-            });
-        };
-
-        this.destroy = function () {
-            $input.select2('destroy');
-        };
-
-        this.show = function () {
-
-        };
-        this.hide = function () {
-            $input.select('results_hide');
-        };
-        this.focus = function () {
-            $input.select2('input_focus');
-        };
-        this.loadValue = function (item) {
-            defaultValue = item[args.column.field];
-            $input.val(defaultValue);
-            $input[0].defaultValue = defaultValue;
-            $input.trigger('change.select2');
-        };
-        this.serializeValue = function () {
-            return $input.val();
-        };
-        this.applyValue = function (item, state) {
-            item[args.column.field] = state;
-        }
-        this.isValueChanged = function () {
-            return (!($input.val() == "" && defaultValue == null)) && ($input.val() != defaultValue);
-        };
-        this.validate = function () {
-            return {
-                valid: true,
-                msg: null
-            };
-        };
-        this.init();
-    }
-
-    function select2Formatter(row, cell, value, columnDef, dataContext) {
-        if (value) {
-            return columnDef.dataSource.find(x => x.Id === value).NombresCommpletos || '-';
-        }
-        else {
-            return '-';
-        }
-    }
-
-    function RemoveClick(index) {
-        var data = grid.getData();
-        data.splice(index, 1);
-        grid.setData(data);
-        grid.render();
-    }
-
-    function initGrid() {
-        var columns =
-            [
-                { id: "titulo", name: "Acción", field: "accion", minWidth: 300, editable: true, editor: Slick.Editors.Text },
-                { id: "id_responsable", name: "Responsable", field: "codigo_responsable", minWidth: 200, formatter: select2Formatter, editor: SelectEditor, dataSource: user_data },
-                { id: "fecha_compromiso", name: "Fecha de compromiso", field: "fecha_compromiso", minWidth: 130, editor: Slick.Editors.Date },
-                { id: "evi_efe", name: "Evidencia/Efectividad", field: "evidencia_efectividad", minWidth: 120, resizable: false, formatter: Slick.Formatters.PercentCompleteBar, editor: Slick.Editors.PercentComplete },
-                {
-                    id: 'id', name: '#', field: 'id', formatter: function (index, c, id, def, datactx) {
-                        return '<a id="deleteSG" class="btn btn-primary" style="padding:2px;" onclick="RemoveClick(' + index + ')">Eliminar</a>';
-                    }
-                }
-            ];
-
-        var options =
-            {
-                editable: true,
-                enableAddRow: true,
-                enableCellNavigation: true,
-                asyncEditorLoading: false,
-                autoEdit: false,
-                forceFitColumns: false
-            };
-
-        //INICIALIZACIÓN DEL GRID
-        var data = [];
-        //for (var i = 0; i < 5; i++) {
-        //    var d = (data[i] = {});
-        //    d["titulo"] = "Elemento " + i + 9;
-        //    d["NombresCommpletos"] = "280475b9-58b9-441c-9142-e2acc9c1139b";
-        //    d["fecha_compromiso"] = getCurrentDate();
-        //    d["evi_efe"] = 0;
-        //}
-
-        grid = new Slick.Grid("#gridAcciones", data, columns, options);
-        grid.setSelectionModel(new Slick.CellSelectionModel());
-        grid.onAddNewRow.subscribe(function (e, args) {
-            var item = args.item;
-            grid.invalidateRow(data.length);
-            data.push(item);
-            grid.updateRowCount();
-            grid.render();
-        });
-
-        $('#gridAcciones').on('focusout', '.editor-percentcomplete', function () {
-
-            window.setTimeout(function () {
-
-                if (Slick.GlobalEditorLock.isActive())
-                    Slick.GlobalEditorLock.commitCurrentEdit();
-
-            }, 5000);
-        });
-
-
-        if (idEdit > 0) {
-            //SI SE ESTÁ EDITANDO, CARGAR LOS DATOS
-            //LISTA DE ACCIONES
-            $.ajax({
-                //PARAMETRIZAR SERVICIO AJAX
-                url: '@Url.Action("GetAcionsList", "ReportarIncidentes")',
-                type: 'post',
-                data: { id_ewo: idEdit },
-                success: function (r)
-                {
-                    r.forEach(function (item) {
-                        grid.invalidateRow(data.length);
-                        data.push(item);
-                        grid.updateRowCount();
-                        grid.render();
-                        console.log('se actualizó grid!');
-                    });
-                },
-                //EN CASO DE ERROR, IMPRIMIRLO
-                error: function (request, status, error) {
-                    alert('Error al consultar acciones inmediatas: ' + request.responseText);
-                }
-            });
-        }
-    }
-
-    function getCurrentDate() {
-        var today = new Date();
-        var dd = today.getDate();
-        var mm = today.getMonth() + 1; //January is 0!
-        var yyyy = today.getFullYear();
-
-        if (dd < 10) {
-            dd = '0' + dd;
-        }
-
-        if (mm < 10) {
-            mm = '0' + mm;
-        }
-
-        today = mm + '/' + dd + '/' + yyyy;
-        return today;
-    }
-
-    var user_data = {};
-            //INICIALIZAR OBJETO AJAX PARA TRAER DATOS DEL SERVIDOR
-        $.ajax({
-            //PARAMETRIZAR SERVICIO AJAX
-            url: '@Url.Action("GetAllUsersJsonAsync", "ReportarIncidentes")',
-            type: 'post',
-            //MOSTRAR LOADER ANTES DE INICIAR LA SOLICITUD
-            beforeSend: function () {
-                $('.page-loader-wrapper').fadeIn();
-            },
-            success: function (response) {
-                user_data = response;
-                initGrid();
-                //OCULTAR LOADER UNA VEZ CARAGADA LA INFORMACIÓN
-                $('.page-loader-wrapper').fadeOut();
-            },
-            //EN CASO DE ERROR, IMPRIMIRLO
-            error: function (request, status, error) {
-                alert('Error al cargar usuarios Json: ' + request.responseText);
-            }
     });
 </script>

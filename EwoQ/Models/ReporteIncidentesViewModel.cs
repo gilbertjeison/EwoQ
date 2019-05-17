@@ -165,6 +165,14 @@ namespace EwoQ.Models
         public string GembaOk { get; set; }
         public string GembutsuOk { get; set; }
         public string GenjitsuOk { get; set; }
+
+        public string QueDesc { get; set; }
+        public string DondeDesc { get; set; }
+        public string CuandoDesc { get; set; }
+        public string QuienDesc { get; set; }
+        public string CualDesc { get; set; }
+        public string ComoDesc { get; set; }
+        public string FenomenoDesc { get; set; }
         #endregion
     }
 
