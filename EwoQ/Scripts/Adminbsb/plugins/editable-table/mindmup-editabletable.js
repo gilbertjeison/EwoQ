@@ -16,7 +16,7 @@ $.fn.editableTableWidget = function (options) {
 				active = element.find('td:focus');
 				if (active.length) {
 					editor.val(active.text())
-						.removeClass('error')
+						.removeClass('errora')
 						.show()
 						.offset(active.offset())
 						.css(active.css(activeOptions.cloneProperties))
@@ -32,7 +32,7 @@ $.fn.editableTableWidget = function (options) {
 				var text = editor.val(),
 					evt = $.Event('change'),
 					originalContent;
-				if (active.text() === text || editor.hasClass('error')) {
+				if (active.text() === text || editor.hasClass('errora')) {
 					return true;
 				}
 				originalContent = active.html();
@@ -84,9 +84,9 @@ $.fn.editableTableWidget = function (options) {
 			var evt = $.Event('validate');
 			active.trigger(evt, editor.val());
 			if (evt.result === false) {
-				editor.addClass('error');
+				editor.addClass('errora');
 			} else {
-				editor.removeClass('error');
+				editor.removeClass('errora');
 			}
 		});
 		element.on('click keypress dblclick', showEditor)

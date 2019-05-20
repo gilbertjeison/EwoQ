@@ -3149,7 +3149,9 @@
     <Content Include="Scripts\Adminbsb\plugins\dropzone\min\dropzone-amd-module.min.js" />
     <Content Include="Scripts\Adminbsb\plugins\dropzone\min\dropzone.min.css" />
     <Content Include="Scripts\Adminbsb\plugins\dropzone\min\dropzone.min.js" />
+    <Content Include="Scripts\Adminbsb\plugins\editable-table\index.css" />
     <Content Include="Scripts\Adminbsb\plugins\editable-table\mindmup-editabletable.js" />
+    <Content Include="Scripts\Adminbsb\plugins\editable-table\numeric-input-example.js" />
     <Content Include="Scripts\Adminbsb\plugins\flot-charts\excanvas.js" />
     <Content Include="Scripts\Adminbsb\plugins\flot-charts\excanvas.min.js" />
     <Content Include="Scripts\Adminbsb\plugins\flot-charts\jquery.colorhelpers.js" />

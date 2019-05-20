@@ -173,7 +173,9 @@ namespace EwoQ.Models
         public string CualDesc { get; set; }
         public string ComoDesc { get; set; }
         public string FenomenoDesc { get; set; }
+        public string FenomenoDescT { get; set; }
+
+        public string ManoObra { get; set; } = "% 0";
         #endregion
     }
-
 }
