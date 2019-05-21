@@ -28,6 +28,9 @@
 <script src="~/Scripts/Adminbsb/plugins/dropzone-custom/dropzone.js"></script>
 @* EDITABLE DATATABLE *@
 <link href="~/Scripts/Adminbsb/plugins/editable-table/index.css" rel="stylesheet" />
+@* GRIDSTACK *@
+<link href="~/Scripts/Adminbsb/plugins/gridstack/gridstack.min.css" rel="stylesheet" />
+
 <style>
     .header:not(.tit) {
         background-color: #009688
@@ -98,6 +101,36 @@
         background-color: white;
         color: black;
     }
+
+    /*div {
+        display: inline-block;
+        height: 200px;
+        overflow: auto
+    }
+
+    table th {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+    }
+
+    table {
+        border-collapse: collapse;
+    }
+
+    th {
+        background-color: #ddd;
+        color: #fff;
+    }
+
+    th,
+    td {
+        padding: 1em .5em;
+    }
+
+    table tr {
+        color: #212121;
+    }*/
 </style>
 
 <div class="card js-sweetalert">
@@ -960,8 +993,59 @@
                                         <li class="list-group-item">
                                             <div class="input-group">
                                                 <span class="bg-green input-group-addon" style="padding:2px;">MANO DE OBRA / MAN </span>
-                                                <div class="form-line" style="margin-left:5px; width:70%">
-                                                    @Html.EditorFor(model => model.ManoObra, new { htmlAttributes = new { @class = "form-control", placeholder = "% 0", required = "required", style = "text-align:center;", @readonly="readonly" } })
+                                                <div class="form-line" style="margin-left:5px; width:40%">
+                                                    @Html.EditorFor(model => model.ManoObra4M, new { htmlAttributes = new { @class = "form-control", placeholder = "% 0", required = "required", style = "text-align:center;", @readonly = "readonly" } })
+                                                </div>
+                                                <a style="margin-left:5px;" class="waves-effect btn bg-green" href="javascript:loadManQs();">Iniciar</a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-2"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-8">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <div class="input-group">
+                                                <span class="bg-green input-group-addon" style="padding:2px;">MATERIAL / MATERIAL</span>
+                                                <div class="form-line" style="margin-left:5px; width:40%">
+                                                    @Html.EditorFor(model => model.Material4M, new { htmlAttributes = new { @class = "form-control", placeholder = "% 0", required = "required", style = "text-align:center;", @readonly = "readonly" } })
+                                                </div>
+                                                <a style="margin-left:5px;" class="waves-effect btn bg-green">Iniciar</a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-2"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-8">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <div class="input-group">
+                                                <span class="bg-green input-group-addon" style="padding:2px;">MAQUINA / MACHINE</span>
+                                                <div class="form-line" style="margin-left:5px; width:40%">
+                                                    @Html.EditorFor(model => model.Maquina4M, new { htmlAttributes = new { @class = "form-control", placeholder = "% 0", required = "required", style = "text-align:center;", @readonly = "readonly" } })
+                                                </div>
+                                                <a style="margin-left:5px;" class="waves-effect btn bg-green">Iniciar</a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-2"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-8">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <div class="input-group">
+                                                <span class="bg-green input-group-addon" style="padding:2px;">MÉTODO / METHOD</span>
+                                                <div class="form-line" style="margin-left:5px; width:40%">
+                                                    @Html.EditorFor(model => model.Metodo4M, new { htmlAttributes = new { @class = "form-control", placeholder = "% 0", required = "required", style = "text-align:center;", @readonly = "readonly" } })
                                                 </div>
                                                 <a style="margin-left:5px;" class="waves-effect btn bg-green">Iniciar</a>
                                             </div>
@@ -994,7 +1078,20 @@
                 <h4 class="modal-title" id="mdlExito-label">MANO DE OBRA / MAN</h4>
             </div>
             <div class="modal-body">
-                <p id="modalMsg"> </p>
+                <div class="sticky" style="border: 1px solid #00BCD4; width: 100%; height: 400px; overflow: auto;">
+                    <table id="tbl4M" class="table table-hover table-bordered ignore" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <th>Pregunta</th>
+                                <th>Yes</th>
+                                <th>No</th>
+                                <th>NA</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+               
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -1050,6 +1147,10 @@
 <script src="~/Scripts/Adminbsb/plugins/bootstrap-tagsinput/bloodhound.js"></script>
 @* EDITABLE DATATABLE JS *@
 <script src="~/Scripts/Adminbsb/plugins/editable-table/mindmup-editabletable.js"></script>
+@* LODASH JS *@ 
+<script src="~/Scripts/Adminbsb/plugins/lodash/lodash.min.js"></script>
+@* GRIDSTACK JS *@
+<script src="~/Scripts/Adminbsb/plugins/gridstack/gridstack.min.js"></script>
 
 <script>
      var idEdit = @Html.Raw(Json.Encode(Model.Id));
@@ -1070,8 +1171,43 @@
             autoEdit: false,
             forceFitColumns: false
         };
-</script>
 
+    function loadManQs() {
+       
+
+        $.ajax({
+                //PARAMETRIZAR SERVICIO AJAX
+                url: '@Url.Action("Get4MQuestionsByType", "ReportarIncidentes")',
+                type: 'post',
+                data: { id: 24 },
+                //MOSTRAR LOADER ANTES DE INICIAR LA SOLICITUD
+                beforeSend: function () {
+                    $('.page-loader-wrapper').fadeIn();
+                },
+                success: function (r)
+                {
+                    $('#mdlExito').modal('toggle');
+
+                    r.forEach(function (val, ind) {                       
+                        $("#tbl4M").find('tbody').fadeIn(300, function () {
+                            $(this).append($('<tr>')
+                                .append($('<td>').append(val.descripcion))
+                                .append($('<td>').append('<input type="radio" id="rYes_' + val.id + '" name="option_' + val.id + '" value="1" class="with-gap radio-col-cyan" > <label for="rYes_' + val.id +'"></label>'))
+                                .append($('<td>').append('<input type="radio" id="rNo_' + val.id + '" name="option_' + val.id + '" value="0" class="with-gap radio-col-cyan"> <label for="rNo_' + val.id +'"></label>'))
+                                .append($('<td>').append('<input type="radio" id="rNa_' + val.id + '" name="option_' + val.id + '" value="2" class="with-gap radio-col-cyan"> <label for="rNa_' + val.id +'"></label>')));
+                        });
+                    });
+                    
+                    
+                    $('.page-loader-wrapper').fadeOut();
+                },
+                //EN CASO DE ERROR, IMPRIMIRLO
+                error: function (request, status, error) {
+                    alert('Error al consultar preguntas 4M: ' + request.responseText);
+                }
+            });
+    }
+</script>
 <script>
     function populateSelect(select, dataSource, addBlank) {
         var index, len, newOption;
@@ -1209,10 +1345,7 @@
             grid.updateRowCount();
             grid.render();
         });
-
-
-
-
+                
         $('#gridAcciones').on('focusout', '.editor-percentcomplete', function () {
 
             window.setTimeout(function () {

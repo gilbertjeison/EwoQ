@@ -175,7 +175,10 @@ namespace EwoQ.Models
         public string FenomenoDesc { get; set; }
         public string FenomenoDescT { get; set; }
 
-        public string ManoObra { get; set; } = "% 0";
+        public string ManoObra4M { get; set; } = "% 0";
+        public string Material4M { get; set; } = "% 0";
+        public string Maquina4M { get; set; } = "% 0";
+        public string Metodo4M { get; set; } = "% 0";
         #endregion
     }
 }

@@ -27,6 +27,7 @@ namespace EwoQ.Controllers
         DaoUsuarios daoUser = new DaoUsuarios();
         DaoProductos daoPro = new DaoProductos();
         DaoEwo daoEwo = new DaoEwo();
+        Dao4M dao4m = new Dao4M();
 
         int AREASTYPES = 7;
         int LINESTYPES = 8;
@@ -117,10 +118,15 @@ namespace EwoQ.Controllers
         [HttpPost]
         public async Task<JsonResult> GetAllUsersJsonAsync()
         {
-            var users = await daoUser.GetAllUsers();
-
-           
+            var users = await daoUser.GetAllUsers();           
             return Json(users);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> Get4MQuestionsByType(int id)
+        {
+            var qstns = await dao4m.Get4mQuestionsByType(id);
+            return Json(qstns);
         }
 
         public async Task<JsonResult> GetAllUsers()

@@ -210,6 +210,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ReportarIncidentesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Dao\Dao4M.cs" />
     <Compile Include="Dao\DaoAcciones.cs" />
     <Compile Include="Dao\DaoEwo.cs" />
     <Compile Include="Dao\DaoProductos.cs" />
@@ -3177,6 +3178,7 @@
     <Content Include="Scripts\Adminbsb\plugins\gmaps\gmaps.js" />
     <Content Include="Scripts\Adminbsb\plugins\gmaps\gmaps.min.js" />
     <Content Include="Scripts\Adminbsb\plugins\gmaps\Gruntfile.js" />
+    <Content Include="Scripts\Adminbsb\plugins\gridstack\gridstack.min.css" />
     <Content Include="Scripts\Adminbsb\plugins\ion-rangeslider\css\ion.rangeSlider.css" />
     <Content Include="Scripts\Adminbsb\plugins\ion-rangeslider\css\ion.rangeSlider.skinFlat.css" />
     <Content Include="Scripts\Adminbsb\plugins\ion-rangeslider\css\ion.rangeSlider.skinHTML5.css" />
@@ -3717,6 +3719,7 @@
     <Content Include="Scripts\Adminbsb\plugins\light-gallery\js\lightgallery-all.min.js" />
     <Content Include="Scripts\Adminbsb\plugins\light-gallery\js\lightgallery.js" />
     <Content Include="Scripts\Adminbsb\plugins\light-gallery\js\lightgallery.min.js" />
+    <Content Include="Scripts\Adminbsb\plugins\lodash\lodash.min.js" />
     <Content Include="Scripts\Adminbsb\plugins\material-design-iconic-font\css\material-design-iconic-font.css" />
     <Content Include="Scripts\Adminbsb\plugins\material-design-iconic-font\css\material-design-iconic-font.min.css" />
     <Content Include="Scripts\Adminbsb\plugins\material-design-iconic-font\fonts\Material-Design-Iconic-Font.svg" />
@@ -4178,6 +4181,7 @@
     </Content>
     <Content Include="Scripts\Adminbsb\plugins\jquery-datatable\Buttons-1.5.4\css\common.scss" />
     <Content Include="Scripts\Adminbsb\plugins\jquery-datatable\Buttons-1.5.4\css\mixins.scss" />
+    <Content Include="Scripts\Adminbsb\plugins\gridstack\gridstack.min.js" />
     <None Include="Scripts\jquery-2.2.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.2.4.js" />
     <Content Include="Scripts\jquery-2.2.4.min.js" />
