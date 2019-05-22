@@ -102,35 +102,40 @@
         color: black;
     }
 
-    /*div {
+    .modal-body .sticky {
         display: inline-block;
         height: 200px;
         overflow: auto
     }
 
-    table th {
+    .tbl4M th {
         position: -webkit-sticky;
         position: sticky;
         top: 0;
-    }
-
-    table {
-        border-collapse: collapse;
-    }
-
-    th {
         background-color: #ddd;
         color: #fff;
     }
 
-    th,
-    td {
+    .tbl4M {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+
+    .tbl4M th {
         padding: 1em .5em;
     }
 
-    table tr {
+
+    .tbl4M tr {
         color: #212121;
-    }*/
+    }
+
+    [type="radio"]:not(:checked), [type="radio"]:checked {
+        position: static; 
+        left: -9999px;
+        opacity: 0;
+        display: none;
 </style>
 
 <div class="card js-sweetalert">
@@ -993,11 +998,17 @@
                                         <li class="list-group-item">
                                             <div class="input-group">
                                                 <span class="bg-green input-group-addon" style="padding:2px;">MANO DE OBRA / MAN </span>
-                                                <div class="form-line" style="margin-left:5px; width:40%">
+                                                
+                                                <div class="form-line" style="margin-left:5px; width:25%">
+                                                    <h5 style="text-align:center">Subtotal</h5>
                                                     @Html.EditorFor(model => model.ManoObra4M, new { htmlAttributes = new { @class = "form-control", placeholder = "% 0", required = "required", style = "text-align:center;", @readonly = "readonly" } })
                                                 </div>
-                                                <a style="margin-left:5px;" class="waves-effect btn bg-green" href="javascript:loadManQs();">Iniciar</a>
-                                            </div>
+                                                <div class="form-line" style="margin-left:5px; width:25%">
+                                                    <h5 style="text-align:center">Total</h5>
+                                                    @Html.EditorFor(model => model.ManoObra4MTotal, new { htmlAttributes = new { @class = "form-control", placeholder = "% 0", required = "required", style = "text-align:center;", @readonly = "readonly" } })
+                                                </div>
+                                                <a style="margin-left:5px;" class="waves-effect btn bg-green" href="javascript:loadManQs(1);">Iniciar</a>
+                                            </div>                                            
                                         </li>
                                     </ul>
                                 </div>
@@ -1010,10 +1021,15 @@
                                         <li class="list-group-item">
                                             <div class="input-group">
                                                 <span class="bg-green input-group-addon" style="padding:2px;">MATERIAL / MATERIAL</span>
-                                                <div class="form-line" style="margin-left:5px; width:40%">
+                                                <div class="form-line" style="margin-left:5px; width:25%">
+                                                    <h5 style="text-align:center">Subtotal</h5>
                                                     @Html.EditorFor(model => model.Material4M, new { htmlAttributes = new { @class = "form-control", placeholder = "% 0", required = "required", style = "text-align:center;", @readonly = "readonly" } })
                                                 </div>
-                                                <a style="margin-left:5px;" class="waves-effect btn bg-green">Iniciar</a>
+                                                <div class="form-line" style="margin-left:5px; width:25%">
+                                                    <h5 style="text-align:center">Total</h5>
+                                                    @Html.EditorFor(model => model.Material4MTotal, new { htmlAttributes = new { @class = "form-control", placeholder = "% 0", required = "required", style = "text-align:center;", @readonly = "readonly" } })
+                                                </div>
+                                                <a style="margin-left:5px;" class="waves-effect btn bg-green" href="javascript:loadManQs(2);">Iniciar</a>
                                             </div>
                                         </li>
                                     </ul>
@@ -1027,10 +1043,15 @@
                                         <li class="list-group-item">
                                             <div class="input-group">
                                                 <span class="bg-green input-group-addon" style="padding:2px;">MAQUINA / MACHINE</span>
-                                                <div class="form-line" style="margin-left:5px; width:40%">
+                                                <div class="form-line" style="margin-left:5px; width:25%">
+                                                    <h5 style="text-align:center">Subtotal</h5>
                                                     @Html.EditorFor(model => model.Maquina4M, new { htmlAttributes = new { @class = "form-control", placeholder = "% 0", required = "required", style = "text-align:center;", @readonly = "readonly" } })
                                                 </div>
-                                                <a style="margin-left:5px;" class="waves-effect btn bg-green">Iniciar</a>
+                                                <div class="form-line" style="margin-left:5px; width:25%">
+                                                    <h5 style="text-align:center">Total</h5>
+                                                    @Html.EditorFor(model => model.Maquina4MTotal, new { htmlAttributes = new { @class = "form-control", placeholder = "% 0", required = "required", style = "text-align:center;", @readonly = "readonly" } })
+                                                </div>
+                                                <a style="margin-left:5px;" class="waves-effect btn bg-green" href="javascript:loadManQs(3);">Iniciar</a>
                                             </div>
                                         </li>
                                     </ul>
@@ -1044,10 +1065,15 @@
                                         <li class="list-group-item">
                                             <div class="input-group">
                                                 <span class="bg-green input-group-addon" style="padding:2px;">MÉTODO / METHOD</span>
-                                                <div class="form-line" style="margin-left:5px; width:40%">
+                                                <div class="form-line" style="margin-left:5px; width:25%">
+                                                    <h5 style="text-align:center">Subtotal</h5>
                                                     @Html.EditorFor(model => model.Metodo4M, new { htmlAttributes = new { @class = "form-control", placeholder = "% 0", required = "required", style = "text-align:center;", @readonly = "readonly" } })
                                                 </div>
-                                                <a style="margin-left:5px;" class="waves-effect btn bg-green">Iniciar</a>
+                                                <div class="form-line" style="margin-left:5px; width:25%">
+                                                    <h5 style="text-align:center">Total</h5>
+                                                    @Html.EditorFor(model => model.Metodo4MTotal, new { htmlAttributes = new { @class = "form-control", placeholder = "% 0", required = "required", style = "text-align:center;", @readonly = "readonly" } })
+                                                </div>
+                                                <a style="margin-left:5px;" class="waves-effect btn bg-green" href="javascript:loadManQs(4);">Iniciar</a>
                                             </div>
                                         </li>
                                     </ul>
@@ -1075,11 +1101,12 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="mdlExito-label">MANO DE OBRA / MAN</h4>
+                @*<h4 class="modal-title" id="mdlExito-label"></h4>*@
+                <h4 class="label label-info modal-title" style="font-size:100%;"></h4>
             </div>
             <div class="modal-body">
                 <div class="sticky" style="border: 1px solid #00BCD4; width: 100%; height: 400px; overflow: auto;">
-                    <table id="tbl4M" class="table table-hover table-bordered ignore" style="width:100%;">
+                    <table id="tblManoObra" class="table table-hover table-bordered ignore tbl4M">
                         <thead>
                             <tr>
                                 <th>Pregunta</th>
@@ -1090,12 +1117,44 @@
                         </thead>
                         <tbody></tbody>
                     </table>
-                </div>
-               
+                    <table id="tblMaterial" class="table table-hover table-bordered ignore tbl4M">
+                        <thead>
+                            <tr>
+                                <th>Pregunta</th>
+                                <th>Yes</th>
+                                <th>No</th>
+                                <th>NA</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <table id="tblMaquina" class="table table-hover table-bordered ignore tbl4M">
+                        <thead>
+                            <tr>
+                                <th>Pregunta</th>
+                                <th>Yes</th>
+                                <th>No</th>
+                                <th>NA</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <table id="tblMetodo" class="table table-hover table-bordered ignore tbl4M">
+                        <thead>
+                            <tr>
+                                <th>Pregunta</th>
+                                <th>Yes</th>
+                                <th>No</th>
+                                <th>NA</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>               
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" onclick="location.href='/Home/Index'">Aceptar</button>
+                <button type="button" class="btn btn-primary" onclick="calculateValues()">Aceptar</button>
             </div>
         </div>
     </div>
@@ -1161,6 +1220,10 @@
     var gridGenjitsu;
     var gridGenri;
     var gridGensoku;
+    var manos = new Array();
+    var mats = new Array();
+    var maqs = new Array();
+    var metds = new Array();
 
     var options =
         {
@@ -1172,40 +1235,300 @@
             forceFitColumns: false
         };
 
-    function loadManQs() {
-       
+    function calculateValues() {
+        $('#mdlExito').modal('toggle');
 
-        $.ajax({
-                //PARAMETRIZAR SERVICIO AJAX
-                url: '@Url.Action("Get4MQuestionsByType", "ReportarIncidentes")',
-                type: 'post',
-                data: { id: 24 },
-                //MOSTRAR LOADER ANTES DE INICIAR LA SOLICITUD
-                beforeSend: function () {
-                    $('.page-loader-wrapper').fadeIn();
-                },
-                success: function (r)
-                {
-                    $('#mdlExito').modal('toggle');
+        manos = [];
+        mats = [];
+        maqs = [];
+        metds = [];
 
-                    r.forEach(function (val, ind) {                       
-                        $("#tbl4M").find('tbody').fadeIn(300, function () {
-                            $(this).append($('<tr>')
-                                .append($('<td>').append(val.descripcion))
-                                .append($('<td>').append('<input type="radio" id="rYes_' + val.id + '" name="option_' + val.id + '" value="1" class="with-gap radio-col-cyan" > <label for="rYes_' + val.id +'"></label>'))
-                                .append($('<td>').append('<input type="radio" id="rNo_' + val.id + '" name="option_' + val.id + '" value="0" class="with-gap radio-col-cyan"> <label for="rNo_' + val.id +'"></label>'))
-                                .append($('<td>').append('<input type="radio" id="rNa_' + val.id + '" name="option_' + val.id + '" value="2" class="with-gap radio-col-cyan"> <label for="rNa_' + val.id +'"></label>')));
-                        });
+        //CREAR DATOS DE TABLA EN ARREGLO
+        $("#tblManoObra TBODY TR").each(function (a,b) {
+            var row = $(this);
+            var pregunta = {};
+
+            pregunta.id = row.find("TD").eq(0).html();
+            pregunta.descripcion = row.find("TD").eq(1).html();
+            pregunta.option = "2";  //NA        
+
+            var radios = document.getElementsByName('option_' + pregunta.id + '');
+            for (var i = 0, length = radios.length; i < length; i++) {
+                if (radios[i].checked) {
+                    // do whatever you want with the checked radio
+                    pregunta.option = radios[i].value;
+
+                    // only one radio can be logically checked, don't check the rest
+                    break;
+                }
+            }           
+            manos.push(pregunta);
+        });
+
+        //CREAR DATOS DE TABLA EN ARREGLO
+        $("#tblMaterial TBODY TR").each(function (a, b) {
+            var row = $(this);
+            var pregunta = {};
+
+            pregunta.id = row.find("TD").eq(0).html();
+            pregunta.descripcion = row.find("TD").eq(1).html();
+            pregunta.option = "2";  //NA        
+
+            var radios = document.getElementsByName('option_' + pregunta.id + '');
+            for (var i = 0, length = radios.length; i < length; i++) {
+                if (radios[i].checked) {
+                    // do whatever you want with the checked radio
+                    pregunta.option = radios[i].value;
+
+                    // only one radio can be logically checked, don't check the rest
+                    break;
+                }
+            }
+            mats.push(pregunta);
+        });
+
+
+        var cntM1 = _.countBy(manos, 'option');
+        var ttlM1 = parseInt(cntM1['1']) + parseInt(cntM1['0']);
+        var divM1;
+        if (ttlM1) {
+            divM1 = _.divide(cntM1['1'], ttlM1) * 100;
+        }
+        else {
+            if (parseInt(cntM1['1'])>0) {
+                divM1 = 100;
+            }
+            else {
+                divM1 = 0;
+            }            
+        }        
+        var perM1 = _.floor(divM1, 1);
+        $('#ManoObra4M').val('%' + perM1);
+
+        var cntM2 = _.countBy(mats, 'option');
+        var ttlM2 = parseInt(cntM2['1']) + parseInt(cntM2['0']);
+        var divM2;
+        if (ttlM2) {
+            divM2 = _.divide(cntM2['1'], ttlM2) * 100;
+        }
+        else {
+            if (parseInt(cntM2['1']) > 0) {
+                divM2 = 100;
+            }
+            else {
+                divM2 = 0;
+            }
+        }
+        var perM2 = _.floor(divM2, 1);
+        $('#Material4M').val('%' + perM2);
+        
+    }
+
+    function loadManQs(opt) {
+
+        $('#mdlExito').modal('toggle');
+
+        switch (opt) {
+            case 1:
+                //FIJAR TITULO
+                $('.modal-title').text("MANO DE OBRA / MAN");
+                //FIJAR ID
+                var id4M = 24;
+                //VERIFICAR SI HAY REGISTROS EN LA TABLA
+                var rowCount = $('#tblManoObra tr').length;
+                //SI ESTÁ VACÍA LA TABLA
+                if (rowCount == 1) {
+                    //OBTENER REGISTROS
+                    $.ajax({
+                        //PARAMETRIZAR SERVICIO AJAX
+                        url: '@Url.Action("Get4MQuestionsByType", "ReportarIncidentes")',
+                        type: 'post',
+                        data: { id: id4M },
+                        //MOSTRAR LOADER ANTES DE INICIAR LA SOLICITUD
+                        beforeSend: function () {
+                            $('.page-loader-wrapper').fadeIn();
+                        },
+                        success: function (r)
+                        {                            
+                            //AGREGAR NUEVOS REGISTROS
+                            r.forEach(function (val, ind) {
+                                $("#tblManoObra").find('tbody').fadeIn(300, function () {
+                                    $(this).append($('<tr>')
+                                        .append($('<td style="display:none;">').append(val.id))
+                                        .append($('<td>').append(val.descripcion))
+                                        .append($('<td>').append('<input type="radio" id="rYes_' + val.id + '" name="option_' + val.id + '" value="1" class="with-gap radio-col-cyan" > <label for="rYes_' + val.id + '"></label>'))
+                                        .append($('<td>').append('<input type="radio" id="rNo_' + val.id + '" name="option_' + val.id + '" value="0" class="with-gap radio-col-cyan"> <label for="rNo_' + val.id + '"></label>'))
+                                        .append($('<td>').append('<input type="radio" id="rNa_' + val.id + '" name="option_' + val.id + '" value="2" class="with-gap radio-col-cyan"> <label for="rNa_' + val.id + '"></label>')));
+                                });
+                            });
+                                       
+                            $('.page-loader-wrapper').fadeOut();
+                        },
+                        //EN CASO DE ERROR, IMPRIMIRLO
+                        error: function (request, status, error) {
+                            alert('Error al consultar preguntas 4M(24): ' + request.responseText);
+                        }
                     });
                     
+                }  
+
+                //MOSTAR TABLA                            
+                $('#tblManoObra').show();
+                $('#tblMaterial').hide();
+                $('#tblMaquina').hide();
+                $('#tblMetodo').hide();
+            break;
+
+            case 2:
+                //FIJAR TITULO
+                $('.modal-title').text("MATERIAL / MATERIAL");
+                //FIJAR ID
+                var id4M = 25;
+                //VERIFICAR SI HAY REGISTROS EN LA TABLA
+                var rowCount = $('#tblMaterial tr').length;
+                //SI ESTÁ VACÍA LA TABLA
+                if (rowCount == 1) {
+                    //OBTENER REGISTROS
+                    $.ajax({
+                        //PARAMETRIZAR SERVICIO AJAX
+                        url: '@Url.Action("Get4MQuestionsByType", "ReportarIncidentes")',
+                        type: 'post',
+                        data: { id: id4M },
+                        //MOSTRAR LOADER ANTES DE INICIAR LA SOLICITUD
+                        beforeSend: function () {
+                            $('.page-loader-wrapper').fadeIn();
+                        },
+                        success: function (r)
+                        {
+                            //AGREGAR NUEVOS REGISTROS
+                            r.forEach(function (val, ind) {
+                                $("#tblMaterial").find('tbody').fadeIn(300, function () {
+                                    $(this).append($('<tr>')
+                                        .append($('<td style="display:none;">').append(val.id))
+                                        .append($('<td>').append(val.descripcion))
+                                        .append($('<td>').append('<input type="radio" id="rYes_' + val.id + '" name="option_' + val.id + '" value="1" class="with-gap radio-col-cyan" > <label for="rYes_' + val.id + '"></label>'))
+                                        .append($('<td>').append('<input type="radio" id="rNo_' + val.id + '" name="option_' + val.id + '" value="0" class="with-gap radio-col-cyan"> <label for="rNo_' + val.id + '"></label>'))
+                                        .append($('<td>').append('<input type="radio" id="rNa_' + val.id + '" name="option_' + val.id + '" value="2" class="with-gap radio-col-cyan"> <label for="rNa_' + val.id + '"></label>')));
+                                });
+                            });
+                                       
+                            $('.page-loader-wrapper').fadeOut();
+                        },
+                        //EN CASO DE ERROR, IMPRIMIRLO
+                        error: function (request, status, error) {
+                            alert('Error al consultar preguntas 4M(25): ' + request.responseText);
+                        }
+                    });
                     
-                    $('.page-loader-wrapper').fadeOut();
-                },
-                //EN CASO DE ERROR, IMPRIMIRLO
-                error: function (request, status, error) {
-                    alert('Error al consultar preguntas 4M: ' + request.responseText);
-                }
-            });
+                }     
+
+                //MOSTAR TABLA                            
+                $('#tblManoObra').hide();
+                $('#tblMaterial').show();
+                $('#tblMaquina').hide();
+                $('#tblMetodo').hide();
+                break;
+
+            case 3:
+                //FIJAR TITULO
+                $('.modal-title').text("MAQUINA / MACHINE");
+                //FIJAR ID
+                var id4M = 26;
+                //VERIFICAR SI HAY REGISTROS EN LA TABLA
+                var rowCount = $('#tblMaquina tr').length;
+                //SI ESTÁ VACÍA LA TABLA
+                if (rowCount == 1) {
+                    //OBTENER REGISTROS
+                    $.ajax({
+                        //PARAMETRIZAR SERVICIO AJAX
+                        url: '@Url.Action("Get4MQuestionsByType", "ReportarIncidentes")',
+                        type: 'post',
+                        data: { id: id4M },
+                        //MOSTRAR LOADER ANTES DE INICIAR LA SOLICITUD
+                        beforeSend: function () {
+                            $('.page-loader-wrapper').fadeIn();
+                        },
+                        success: function (r)
+                        {
+                            //AGREGAR NUEVOS REGISTROS
+                            r.forEach(function (val, ind) {
+                                $("#tblMaquina").find('tbody').fadeIn(300, function () {
+                                    $(this).append($('<tr>')
+                                        .append($('<td style="display:none;">').append(val.id))
+                                        .append($('<td>').append(val.descripcion))
+                                        .append($('<td>').append('<input type="radio" id="rYes_' + val.id + '" name="option_' + val.id + '" value="1" class="with-gap radio-col-cyan" > <label for="rYes_' + val.id + '"></label>'))
+                                        .append($('<td>').append('<input type="radio" id="rNo_' + val.id + '" name="option_' + val.id + '" value="0" class="with-gap radio-col-cyan"> <label for="rNo_' + val.id + '"></label>'))
+                                        .append($('<td>').append('<input type="radio" id="rNa_' + val.id + '" name="option_' + val.id + '" value="2" class="with-gap radio-col-cyan"> <label for="rNa_' + val.id + '"></label>')));
+                                });
+                            });
+                                       
+                            $('.page-loader-wrapper').fadeOut();
+                        },
+                        //EN CASO DE ERROR, IMPRIMIRLO
+                        error: function (request, status, error) {
+                            alert('Error al consultar preguntas 4M(26): ' + request.responseText);
+                        }
+                    });
+                    
+                }     
+
+                //MOSTAR TABLA                            
+                $('#tblManoObra').hide();
+                $('#tblMaterial').hide();
+                $('#tblMaquina').show();
+                $('#tblMetodo').hide();
+                break;
+
+            case 4:
+                //FIJAR TITULO
+                $('.modal-title').text("MÉTODO / METHOD");
+                //FIJAR ID
+                var id4M = 27;
+                //VERIFICAR SI HAY REGISTROS EN LA TABLA
+                var rowCount = $('#tblMetodo tr').length;
+                //SI ESTÁ VACÍA LA TABLA
+                if (rowCount == 1) {
+                    //OBTENER REGISTROS
+                    $.ajax({
+                        //PARAMETRIZAR SERVICIO AJAX
+                        url: '@Url.Action("Get4MQuestionsByType", "ReportarIncidentes")',
+                        type: 'post',
+                        data: { id: id4M },
+                        //MOSTRAR LOADER ANTES DE INICIAR LA SOLICITUD
+                        beforeSend: function () {
+                            $('.page-loader-wrapper').fadeIn();
+                        },
+                        success: function (r)
+                        {
+                            //AGREGAR NUEVOS REGISTROS
+                            r.forEach(function (val, ind) {
+                                $("#tblMetodo").find('tbody').fadeIn(300, function () {
+                                    $(this).append($('<tr>')
+                                        .append($('<td style="display:none;">').append(val.id))
+                                        .append($('<td>').append(val.descripcion))
+                                        .append($('<td>').append('<input type="radio" id="rYes_' + val.id + '" name="option_' + val.id + '" value="1" class="with-gap radio-col-cyan" > <label for="rYes_' + val.id + '"></label>'))
+                                        .append($('<td>').append('<input type="radio" id="rNo_' + val.id + '" name="option_' + val.id + '" value="0" class="with-gap radio-col-cyan"> <label for="rNo_' + val.id + '"></label>'))
+                                        .append($('<td>').append('<input type="radio" id="rNa_' + val.id + '" name="option_' + val.id + '" value="2" class="with-gap radio-col-cyan"> <label for="rNa_' + val.id + '"></label>')));
+                                });
+                            });
+                                       
+                            $('.page-loader-wrapper').fadeOut();
+                        },
+                        //EN CASO DE ERROR, IMPRIMIRLO
+                        error: function (request, status, error) {
+                            alert('Error al consultar preguntas 4M(26): ' + request.responseText);
+                        }
+                    });
+                    
+                }     
+
+                //MOSTAR TABLA                            
+                $('#tblManoObra').hide();
+                $('#tblMaterial').hide();
+                $('#tblMaquina').hide();
+                $('#tblMetodo').show();
+            break;
+        }
     }
 </script>
 <script>

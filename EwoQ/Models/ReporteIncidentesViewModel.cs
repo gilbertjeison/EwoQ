@@ -179,6 +179,11 @@ namespace EwoQ.Models
         public string Material4M { get; set; } = "% 0";
         public string Maquina4M { get; set; } = "% 0";
         public string Metodo4M { get; set; } = "% 0";
+
+        public string ManoObra4MTotal { get; set; } = "% 0";
+        public string Material4MTotal { get; set; } = "% 0";
+        public string Maquina4MTotal { get; set; } = "% 0";
+        public string Metodo4MTotal { get; set; } = "% 0";
         #endregion
     }
 }
