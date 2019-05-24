@@ -37,23 +37,9 @@
         <AssociationConnector Association="EwoQModel.FK_zero_questions_tipos_data" />
         <AssociationConnector Association="EwoQModel.FK_zero_responses_zero_questions" />
         <AssociationConnector Association="EwoQModel.AspNetUserRoles" />
-        <EntityTypeShape EntityType="EwoQModel.ewo" Width="1.5" PointX="8.25" PointY="8.125" />
+        <EntityTypeShape EntityType="EwoQModel.ewo" Width="1.5" PointX="8.25" PointY="18.125" />
         <AssociationConnector Association="EwoQModel.FK_acciones_inmediatas_ewo" />
-        <AssociationConnector Association="EwoQModel.FK_ewo_AspNetUsers_coordinador_turno" />
-        <AssociationConnector Association="EwoQModel.FK_ewo_AspNetUsers_lider_investigacion" />
-        <AssociationConnector Association="EwoQModel.FK_ewo_AspNetUsers_operario_responsable" />
-        <AssociationConnector Association="EwoQModel.FK_ewo_AspNetUsers_pa_coord_pro" />
-        <AssociationConnector Association="EwoQModel.FK_ewo_AspNetUsers_pa_gere_prod" />
-        <AssociationConnector Association="EwoQModel.FK_ewo_AspNetUsers_pa_geren_ca" />
-        <AssociationConnector Association="EwoQModel.FK_ewo_AspNetUsers_pa_jefe_cal" />
-        <AssociationConnector Association="EwoQModel.FK_ewo_AspNetUsers_responsable_area" />
         <AssociationConnector Association="EwoQModel.FK_equipo_trabajo_ewo" />
-        <AssociationConnector Association="EwoQModel.FK_ewo_tipos_data" />
-        <AssociationConnector Association="EwoQModel.FK_ewo_tipos_data_area" />
-        <AssociationConnector Association="EwoQModel.FK_ewo_tipos_data_disposicion_final" />
-        <AssociationConnector Association="EwoQModel.FK_ewo_tipos_data_estado" />
-        <AssociationConnector Association="EwoQModel.FK_ewo_tipos_data_linea" />
-        <AssociationConnector Association="EwoQModel.FK_ewo_tipos_data_unimed_tamfor" />
         <AssociationConnector Association="EwoQModel.FK_fiveg_resultados_ewo" />
         <AssociationConnector Association="EwoQModel.FK_plan_accion_ewo" />
         <AssociationConnector Association="EwoQModel.FK_porque_porque_ewo" />

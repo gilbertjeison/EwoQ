@@ -70,7 +70,6 @@ namespace EwoQ.Database
         public Nullable<bool> gembutsu { get; set; }
         public Nullable<bool> genjitsu { get; set; }
         public string five_g_image { get; set; }
-        public string descripcion_problema { get; set; }
         public string que { get; set; }
         public string donde { get; set; }
         public string cuando { get; set; }
@@ -79,6 +78,10 @@ namespace EwoQ.Database
         public string como { get; set; }
         public string descripcion_fenomeno { get; set; }
         public string images_path { get; set; }
+        public Nullable<decimal> maquina4m { get; set; }
+        public Nullable<decimal> metodo4m { get; set; }
+        public Nullable<decimal> material4m { get; set; }
+        public Nullable<decimal> manoobra4m { get; set; }
         public string comentarios_resoluciones { get; set; }
         public string pa_codigo_coordinador_prod { get; set; }
         public string pa_codigo_gerente_prod { get; set; }
@@ -88,22 +91,8 @@ namespace EwoQ.Database
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<acciones_inmediatas> acciones_inmediatas { get; set; }
-        public virtual AspNetUsers AspNetUsers { get; set; }
-        public virtual AspNetUsers AspNetUsers1 { get; set; }
-        public virtual AspNetUsers AspNetUsers2 { get; set; }
-        public virtual AspNetUsers AspNetUsers3 { get; set; }
-        public virtual AspNetUsers AspNetUsers4 { get; set; }
-        public virtual AspNetUsers AspNetUsers5 { get; set; }
-        public virtual AspNetUsers AspNetUsers6 { get; set; }
-        public virtual AspNetUsers AspNetUsers7 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<equipo_trabajo> equipo_trabajo { get; set; }
-        public virtual tipos_data tipos_data { get; set; }
-        public virtual tipos_data tipos_data1 { get; set; }
-        public virtual tipos_data tipos_data2 { get; set; }
-        public virtual tipos_data tipos_data3 { get; set; }
-        public virtual tipos_data tipos_data4 { get; set; }
-        public virtual tipos_data tipos_data5 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<fiveg_resultados> fiveg_resultados { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

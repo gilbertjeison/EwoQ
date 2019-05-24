@@ -992,31 +992,35 @@
                         </div>
                         <div class="body">
                             <div class="row">
-                                <div class="col-md-2"></div>
-                                <div class="col-md-8">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
                                     <ul class="list-group">
                                         <li class="list-group-item">
                                             <div class="input-group">
                                                 <span class="bg-green input-group-addon" style="padding:2px;">MANO DE OBRA / MAN </span>
-                                                
-                                                <div class="form-line" style="margin-left:5px; width:25%">
+
+                                                <div class="form-line" style="margin-left:5px; width:20%">
                                                     <h5 style="text-align:center">Subtotal</h5>
                                                     @Html.EditorFor(model => model.ManoObra4M, new { htmlAttributes = new { @class = "form-control", placeholder = "% 0", required = "required", style = "text-align:center;", @readonly = "readonly" } })
                                                 </div>
-                                                <div class="form-line" style="margin-left:5px; width:25%">
+                                                <div class="form-line" style="margin-left:5px; width:20%">
                                                     <h5 style="text-align:center">Total</h5>
                                                     @Html.EditorFor(model => model.ManoObra4MTotal, new { htmlAttributes = new { @class = "form-control", placeholder = "% 0", required = "required", style = "text-align:center;", @readonly = "readonly" } })
                                                 </div>
                                                 <a style="margin-left:5px;" class="waves-effect btn bg-green" href="javascript:loadManQs(1);">Iniciar</a>
+                                                <div class="form-line" style="margin-left:15px; width:35%">
+                                                    <h5 style="text-align:center">Descripción</h5>
+                                                    @Html.EditorFor(model => model.ManoObra4MTotal, new { htmlAttributes = new { @class = "form-control", placeholder = "% 0", required = "required", style = "text-align:center;", @readonly = "readonly" } })
+                                                </div>
                                             </div>                                            
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="col-md-2"></div>
+                                <div class="col-md-1"></div>
                             </div>
                             <div class="row">
-                                <div class="col-md-2"></div>
-                                <div class="col-md-8">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
                                     <ul class="list-group">
                                         <li class="list-group-item">
                                             <div class="input-group">
@@ -1034,11 +1038,11 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="col-md-2"></div>
+                                <div class="col-md-1"></div>
                             </div>
                             <div class="row">
-                                <div class="col-md-2"></div>
-                                <div class="col-md-8">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
                                     <ul class="list-group">
                                         <li class="list-group-item">
                                             <div class="input-group">
@@ -1056,11 +1060,11 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="col-md-2"></div>
+                                <div class="col-md-1"></div>
                             </div>
                             <div class="row">
-                                <div class="col-md-2"></div>
-                                <div class="col-md-8">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
                                     <ul class="list-group">
                                         <li class="list-group-item">
                                             <div class="input-group">
@@ -1078,7 +1082,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="col-md-2"></div>
+                                <div class="col-md-1"></div>
                             </div>
                         </div>
                     </div>
@@ -1287,7 +1291,51 @@
             mats.push(pregunta);
         });
 
+        //CREAR DATOS DE TABLA EN ARREGLO
+        $("#tblMaquina TBODY TR").each(function (a, b) {
+            var row = $(this);
+            var pregunta = {};
 
+            pregunta.id = row.find("TD").eq(0).html();
+            pregunta.descripcion = row.find("TD").eq(1).html();
+            pregunta.option = "2";  //NA        
+
+            var radios = document.getElementsByName('option_' + pregunta.id + '');
+            for (var i = 0, length = radios.length; i < length; i++) {
+                if (radios[i].checked) {
+                    // do whatever you want with the checked radio
+                    pregunta.option = radios[i].value;
+
+                    // only one radio can be logically checked, don't check the rest
+                    break;
+                }
+            }
+            maqs.push(pregunta);
+        });
+
+        //CREAR DATOS DE TABLA EN ARREGLO
+        $("#tblMetodo TBODY TR").each(function (a, b) {
+            var row = $(this);
+            var pregunta = {};
+
+            pregunta.id = row.find("TD").eq(0).html();
+            pregunta.descripcion = row.find("TD").eq(1).html();
+            pregunta.option = "2";  //NA        
+
+            var radios = document.getElementsByName('option_' + pregunta.id + '');
+            for (var i = 0, length = radios.length; i < length; i++) {
+                if (radios[i].checked) {
+                    // do whatever you want with the checked radio
+                    pregunta.option = radios[i].value;
+
+                    // only one radio can be logically checked, don't check the rest
+                    break;
+                }
+            }
+            metds.push(pregunta);
+        });
+
+        //CALCULO PARA PREGUNTAS DE MANO DE OBRA
         var cntM1 = _.countBy(manos, 'option');
         var ttlM1 = parseInt(cntM1['1']) + parseInt(cntM1['0']);
         var divM1;
@@ -1305,6 +1353,7 @@
         var perM1 = _.floor(divM1, 1);
         $('#ManoObra4M').val('%' + perM1);
 
+        //CALCULO PARA PREGUNTAS DE MATERIALES
         var cntM2 = _.countBy(mats, 'option');
         var ttlM2 = parseInt(cntM2['1']) + parseInt(cntM2['0']);
         var divM2;
@@ -1321,7 +1370,74 @@
         }
         var perM2 = _.floor(divM2, 1);
         $('#Material4M').val('%' + perM2);
-        
+
+        //CALCULO PARA PREGUNTAS DE MAQUINAS
+        var cntM3 = _.countBy(maqs, 'option');
+        var ttlM3 = parseInt(cntM3['1']) + parseInt(cntM3['0']);
+        var divM3;
+        if (ttlM3) {
+            divM3 = _.divide(cntM3['1'], ttlM3) * 100;
+        }
+        else {
+            if (parseInt(cntM3['1']) > 0) {
+                divM3 = 100;
+            }
+            else {
+                divM3 = 0;
+            }
+        }
+        var perM3 = _.floor(divM3, 1);
+        $('#Maquina4M').val('%' + perM3);
+
+
+        //CALCULO PARA PREGUNTAS DE METODO
+        var cntM4 = _.countBy(metds, 'option');
+        var ttlM4 = parseInt(cntM4['1']) + parseInt(cntM4['0']);
+        var divM4;
+        if (ttlM4) {
+            divM4 = _.divide(cntM4['1'], ttlM4) * 100;
+        }
+        else {
+            if (parseInt(cntM4['1']) > 0) {
+                divM4 = 100;
+            }
+            else {
+                divM4 = 0;
+            }
+        }
+        var perM4 = _.floor(divM4, 1);
+        $('#Metodo4M').val('%' + perM4);
+
+        //CALCULAR PORCENTAJE TOTAL POR GRUPO
+        var yesM1 = isNum(cntM1['1']);
+        var yesM2 = isNum(cntM2['1']);
+        var yesM3 = isNum(cntM3['1']);
+        var yesM4 = isNum(cntM4['1']);
+        var allYes = yesM1 + yesM2 + yesM3 + yesM4;
+                
+        var divTM1 = _.divide(yesM1, allYes) * 100;
+        var divTM2 = _.divide(yesM2, allYes) * 100;
+        var divTM3 = _.divide(yesM3, allYes) * 100;
+        var divTM4 = _.divide(yesM4, allYes) * 100;
+
+        var perTM1 = _.floor(divTM1, 1);
+        var perTM2 = _.floor(divTM2, 1);
+        var perTM3 = _.floor(divTM3, 1);
+        var perTM4 = _.floor(divTM4, 1);
+                
+        $('#ManoObra4MTotal').val('%' + perTM1);
+        $('#Material4MTotal').val('%' + perTM2);
+        $('#Maquina4MTotal').val('%' + perTM3);
+        $('#Metodo4MTotal').val('%' + perTM4);
+    }
+
+    function isNum(num) {
+        if (isNaN(num)) {
+            return 0;
+        }
+        else {
+            return num;
+        }
     }
 
     function loadManQs(opt) {
@@ -1366,10 +1482,9 @@
                         },
                         //EN CASO DE ERROR, IMPRIMIRLO
                         error: function (request, status, error) {
-                            alert('Error al consultar preguntas 4M(24): ' + request.responseText);
+                            alert('Error al consultar preguntas 4M (24): ' + request.responseText);
                         }
-                    });
-                    
+                    });                    
                 }  
 
                 //MOSTAR TABLA                            
@@ -1416,10 +1531,9 @@
                         },
                         //EN CASO DE ERROR, IMPRIMIRLO
                         error: function (request, status, error) {
-                            alert('Error al consultar preguntas 4M(25): ' + request.responseText);
+                            alert('Error al consultar preguntas 4M (25): ' + request.responseText);
                         }
-                    });
-                    
+                    });                    
                 }     
 
                 //MOSTAR TABLA                            
@@ -1466,10 +1580,9 @@
                         },
                         //EN CASO DE ERROR, IMPRIMIRLO
                         error: function (request, status, error) {
-                            alert('Error al consultar preguntas 4M(26): ' + request.responseText);
+                            alert('Error al consultar preguntas 4M (26): ' + request.responseText);
                         }
-                    });
-                    
+                    });                    
                 }     
 
                 //MOSTAR TABLA                            
@@ -1516,10 +1629,9 @@
                         },
                         //EN CASO DE ERROR, IMPRIMIRLO
                         error: function (request, status, error) {
-                            alert('Error al consultar preguntas 4M(26): ' + request.responseText);
+                            alert('Error al consultar preguntas 4M (26): ' + request.responseText);
                         }
-                    });
-                    
+                    });                    
                 }     
 
                 //MOSTAR TABLA                            

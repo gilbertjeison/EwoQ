@@ -24,14 +24,6 @@ namespace EwoQ.Database
             this.plan_accion = new HashSet<plan_accion>();
             this.revisiones = new HashSet<revisiones>();
             this.AspNetRoles = new HashSet<AspNetRoles>();
-            this.ewo = new HashSet<ewo>();
-            this.ewo1 = new HashSet<ewo>();
-            this.ewo2 = new HashSet<ewo>();
-            this.ewo3 = new HashSet<ewo>();
-            this.ewo4 = new HashSet<ewo>();
-            this.ewo5 = new HashSet<ewo>();
-            this.ewo6 = new HashSet<ewo>();
-            this.ewo7 = new HashSet<ewo>();
         }
     
         public string Id { get; set; }
@@ -65,21 +57,5 @@ namespace EwoQ.Database
         public virtual ICollection<revisiones> revisiones { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetRoles> AspNetRoles { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ewo> ewo { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ewo> ewo1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ewo> ewo2 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ewo> ewo3 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ewo> ewo4 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ewo> ewo5 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ewo> ewo6 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ewo> ewo7 { get; set; }
     }
 }
