@@ -20,63 +20,72 @@
         transform: translateX(-50%);
     }
 </style>
+
 <div class="row clearfix">
     <div class="col-md-6">
-        <div class="col-md-12">
-            <div class="info-box bg-light-green hover-expand-effect">
-                <div class="icon">
-                    <i class="material-icons">playlist_add_check</i>
+        <div class="card clearfix">
+            <div class="header">
+                <h2>DATOS DE INCIDENTE</h2>
+            </div>
+            <div class="body">
+                <div class="col-md-12">
+                    <div class="info-box bg-light-green hover-expand-effect">
+                        <div class="icon">
+                            <i class="material-icons">playlist_add_check</i>
+                        </div>
+                        <div class="content">
+                            <div class="text">INCIDENTES REPORTADOS</div>
+                            <div class="number count-to" data-from="0" data-to="@Model.IncidentesReportados" data-speed="2000" data-fresh-interval="20"></div>
+                        </div>
+                    </div>
                 </div>
-                <div class="content">
-                    <div class="text">INCIDENTES REPORTADOS</div>
-                    <div class="number count-to" data-from="0" data-to="@Model.IncidentesReportados" data-speed="2000" data-fresh-interval="20"></div>
+                <div class="col-md-12">
+                    <div class="info-box bg-light-green hover-expand-effect">
+                        <div class="icon">
+                            <i class="material-icons">playlist_play</i>
+                        </div>
+                        <div class="content">
+                            <div class="text">INCIDENTES EN PROCESO</div>
+                            <div class="number count-to" data-from="0" data-to="@Model.IncidentespProceso" data-speed="2000" data-fresh-interval="20"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="info-box bg-light-green hover-expand-effect">
+                        <div class="icon">
+                            <i class="material-icons">playlist_play</i>
+                        </div>
+                        <div class="content">
+                            <div class="text">INCIDENTES CERRADOS</div>
+                            <div class="number count-to" data-from="0" data-to="@Model.IncidentesCerrados" data-speed="2000" data-fresh-interval="20"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="info-box bg-light-green hover-expand-effect">
+                        <div class="icon">
+                            <i class="material-icons">timer_off</i>
+                        </div>
+                        <div class="content">
+                            <div class="text">TIEMPO LÍNEAS PARADAS (MIN)</div>
+                            <div class="number count-to" data-from="0" data-to="@Model.TiempoLinParada" data-speed="2000" data-fresh-interval="20"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="info-box bg-light-green hover-expand-effect">
+                        <div class="icon">
+                            <i class="material-icons">person_add</i>
+                        </div>
+                        <div class="content">
+                            <div class="text">USUARIOS REGISTRADOS</div>
+                            <div class="number count-to" data-from="0" data-to="@Model.UsuariosRegistrados" data-speed="2000" data-fresh-interval="20"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-12">
-            <div class="info-box bg-light-green hover-expand-effect">
-                <div class="icon">
-                    <i class="material-icons">playlist_play</i>
-                </div>
-                <div class="content">
-                    <div class="text">INCIDENTES EN PROCESO</div>
-                    <div class="number count-to" data-from="0" data-to="@Model.IncidentespProceso" data-speed="2000" data-fresh-interval="20"></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="info-box bg-light-green hover-expand-effect">
-                <div class="icon">
-                    <i class="material-icons">playlist_play</i>
-                </div>
-                <div class="content">
-                    <div class="text">INCIDENTES CERRADOS</div>
-                    <div class="number count-to" data-from="0" data-to="@Model.IncidentesCerrados" data-speed="2000" data-fresh-interval="20"></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="info-box bg-light-green hover-expand-effect">
-                <div class="icon">
-                    <i class="material-icons">timer_off</i>
-                </div>
-                <div class="content">
-                    <div class="text">TIEMPO LÍNEAS PARADAS (MIN)</div>
-                    <div class="number count-to" data-from="0" data-to="@Model.TiempoLinParada" data-speed="2000" data-fresh-interval="20"></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="info-box bg-light-green hover-expand-effect">
-                <div class="icon">
-                    <i class="material-icons">person_add</i>
-                </div>
-                <div class="content">
-                    <div class="text">USUARIOS REGISTRADOS</div>
-                    <div class="number count-to" data-from="0" data-to="@Model.UsuariosRegistrados" data-speed="2000" data-fresh-interval="20"></div>
-                </div>
-            </div>
-        </div>
+        
     </div>
     <div class="col-md-6">
         <div class="card">
@@ -95,14 +104,12 @@
     $(function () {
         //Widgets count
         $('.count-to').countTo();
-
-
+        
         initDonutChart();
 
     });
 
     function initDonutChart() {
-        console.log('hola');
         //URL PARA OBTENER LOS DATOS
         var url = '@Url.Content("~/")' + "Home/GetDonutData";
         //INICIALIZAR OBJETO AJAX PARA TRAER DATOS DEL SERVIDOR
@@ -140,7 +147,6 @@
 
     }
 </script>
-
 
 <!-- Counto Js -->
 <script src="~/Scripts/Adminbsb/plugins/jquery-countto/jquery.countTo.js"></script>
