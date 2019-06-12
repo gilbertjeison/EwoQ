@@ -82,6 +82,10 @@ namespace EwoQ.Database
         public Nullable<decimal> metodo4m { get; set; }
         public Nullable<decimal> material4m { get; set; }
         public Nullable<decimal> manoobra4m { get; set; }
+        public string maquina4m_desc { get; set; }
+        public string metodo4m_desc { get; set; }
+        public string material4m_desc { get; set; }
+        public string manoobra4m_desc { get; set; }
         public string comentarios_resoluciones { get; set; }
         public string pa_codigo_coordinador_prod { get; set; }
         public string pa_codigo_gerente_prod { get; set; }

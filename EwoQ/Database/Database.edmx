@@ -148,6 +148,10 @@
           <Property Name="metodo4m" Type="decimal" Precision="18" Scale="0" />
           <Property Name="material4m" Type="decimal" Precision="18" Scale="0" />
           <Property Name="manoobra4m" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="maquina4m_desc" Type="varchar" MaxLength="100" />
+          <Property Name="metodo4m_desc" Type="varchar" MaxLength="100" />
+          <Property Name="material4m_desc" Type="varchar" MaxLength="100" />
+          <Property Name="manoobra4m_desc" Type="varchar" MaxLength="100" />
           <Property Name="comentarios_resoluciones" Type="text" />
           <Property Name="pa_codigo_coordinador_prod" Type="nvarchar" MaxLength="128" />
           <Property Name="pa_codigo_gerente_prod" Type="nvarchar" MaxLength="128" />
@@ -1217,6 +1221,10 @@
           <Property Name="metodo4m" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="material4m" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="manoobra4m" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="maquina4m_desc" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="metodo4m_desc" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="material4m_desc" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="manoobra4m_desc" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="comentarios_resoluciones" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="pa_codigo_coordinador_prod" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="pa_codigo_gerente_prod" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
@@ -1550,6 +1558,10 @@
                 <ScalarProperty Name="pa_codigo_gerente_prod" ColumnName="pa_codigo_gerente_prod" />
                 <ScalarProperty Name="pa_codigo_coordinador_prod" ColumnName="pa_codigo_coordinador_prod" />
                 <ScalarProperty Name="comentarios_resoluciones" ColumnName="comentarios_resoluciones" />
+                <ScalarProperty Name="manoobra4m_desc" ColumnName="manoobra4m_desc" />
+                <ScalarProperty Name="material4m_desc" ColumnName="material4m_desc" />
+                <ScalarProperty Name="metodo4m_desc" ColumnName="metodo4m_desc" />
+                <ScalarProperty Name="maquina4m_desc" ColumnName="maquina4m_desc" />
                 <ScalarProperty Name="manoobra4m" ColumnName="manoobra4m" />
                 <ScalarProperty Name="material4m" ColumnName="material4m" />
                 <ScalarProperty Name="metodo4m" ColumnName="metodo4m" />

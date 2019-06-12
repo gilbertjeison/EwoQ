@@ -365,6 +365,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="card">
                         <div class="header">
                             <h2>
@@ -988,7 +989,7 @@
                             <h2>
                                 Análisis 4M
                                 <small class="smlw">Asistente para responder las preguntas formuladas para determinar su peso</small>
-                            </h2>                            
+                            </h2>
                         </div>
                         <div class="body">
                             <div class="row">
@@ -998,7 +999,6 @@
                                         <li class="list-group-item">
                                             <div class="input-group">
                                                 <span class="bg-green input-group-addon" style="padding:2px;">MANO DE OBRA / MAN </span>
-
                                                 <div class="form-line" style="margin-left:5px; width:20%">
                                                     <h5 style="text-align:center">Subtotal</h5>
                                                     @Html.EditorFor(model => model.ManoObra4M, new { htmlAttributes = new { @class = "form-control", placeholder = "% 0", required = "required", style = "text-align:center;", @readonly = "readonly" } })
@@ -1010,9 +1010,9 @@
                                                 <a style="margin-left:5px;" class="waves-effect btn bg-green" href="javascript:loadManQs(1);">Iniciar</a>
                                                 <div class="form-line" style="margin-left:15px; width:35%">
                                                     <h5 style="text-align:center">Descripción</h5>
-                                                    @Html.EditorFor(model => model.ManoObra4MTotal, new { htmlAttributes = new { @class = "form-control", placeholder = "% 0", required = "required", style = "text-align:center;", @readonly = "readonly" } })
+                                                    @Html.EditorFor(model => model.ManoObra4MDesc, new { htmlAttributes = new { @class = "form-control", placeholder = "...", style = "text-align:center;" } })
                                                 </div>
-                                            </div>                                            
+                                            </div>
                                         </li>
                                     </ul>
                                 </div>
@@ -1025,15 +1025,19 @@
                                         <li class="list-group-item">
                                             <div class="input-group">
                                                 <span class="bg-green input-group-addon" style="padding:2px;">MATERIAL / MATERIAL</span>
-                                                <div class="form-line" style="margin-left:5px; width:25%">
+                                                <div class="form-line" style="margin-left:5px; width:20%">
                                                     <h5 style="text-align:center">Subtotal</h5>
                                                     @Html.EditorFor(model => model.Material4M, new { htmlAttributes = new { @class = "form-control", placeholder = "% 0", required = "required", style = "text-align:center;", @readonly = "readonly" } })
                                                 </div>
-                                                <div class="form-line" style="margin-left:5px; width:25%">
+                                                <div class="form-line" style="margin-left:5px; width:20%">
                                                     <h5 style="text-align:center">Total</h5>
                                                     @Html.EditorFor(model => model.Material4MTotal, new { htmlAttributes = new { @class = "form-control", placeholder = "% 0", required = "required", style = "text-align:center;", @readonly = "readonly" } })
                                                 </div>
                                                 <a style="margin-left:5px;" class="waves-effect btn bg-green" href="javascript:loadManQs(2);">Iniciar</a>
+                                                <div class="form-line" style="margin-left:15px; width:35%">
+                                                    <h5 style="text-align:center">Descripción</h5>
+                                                    @Html.EditorFor(model => model.Material4MDesc, new { htmlAttributes = new { @class = "form-control", placeholder = "...", style = "text-align:center;" } })
+                                                </div>
                                             </div>
                                         </li>
                                     </ul>
@@ -1047,15 +1051,19 @@
                                         <li class="list-group-item">
                                             <div class="input-group">
                                                 <span class="bg-green input-group-addon" style="padding:2px;">MAQUINA / MACHINE</span>
-                                                <div class="form-line" style="margin-left:5px; width:25%">
+                                                <div class="form-line" style="margin-left:5px; width:20%">
                                                     <h5 style="text-align:center">Subtotal</h5>
                                                     @Html.EditorFor(model => model.Maquina4M, new { htmlAttributes = new { @class = "form-control", placeholder = "% 0", required = "required", style = "text-align:center;", @readonly = "readonly" } })
                                                 </div>
-                                                <div class="form-line" style="margin-left:5px; width:25%">
+                                                <div class="form-line" style="margin-left:5px; width:20%">
                                                     <h5 style="text-align:center">Total</h5>
                                                     @Html.EditorFor(model => model.Maquina4MTotal, new { htmlAttributes = new { @class = "form-control", placeholder = "% 0", required = "required", style = "text-align:center;", @readonly = "readonly" } })
                                                 </div>
                                                 <a style="margin-left:5px;" class="waves-effect btn bg-green" href="javascript:loadManQs(3);">Iniciar</a>
+                                                <div class="form-line" style="margin-left:15px; width:35%">
+                                                    <h5 style="text-align:center">Descripción</h5>
+                                                    @Html.EditorFor(model => model.Maquina4MDesc, new { htmlAttributes = new { @class = "form-control", placeholder = "...", style = "text-align:center;" } })
+                                                </div>
                                             </div>
                                         </li>
                                     </ul>
@@ -1069,20 +1077,40 @@
                                         <li class="list-group-item">
                                             <div class="input-group">
                                                 <span class="bg-green input-group-addon" style="padding:2px;">MÉTODO / METHOD</span>
-                                                <div class="form-line" style="margin-left:5px; width:25%">
+                                                <div class="form-line" style="margin-left:5px; width:20%">
                                                     <h5 style="text-align:center">Subtotal</h5>
                                                     @Html.EditorFor(model => model.Metodo4M, new { htmlAttributes = new { @class = "form-control", placeholder = "% 0", required = "required", style = "text-align:center;", @readonly = "readonly" } })
                                                 </div>
-                                                <div class="form-line" style="margin-left:5px; width:25%">
+                                                <div class="form-line" style="margin-left:5px; width:20%">
                                                     <h5 style="text-align:center">Total</h5>
                                                     @Html.EditorFor(model => model.Metodo4MTotal, new { htmlAttributes = new { @class = "form-control", placeholder = "% 0", required = "required", style = "text-align:center;", @readonly = "readonly" } })
                                                 </div>
                                                 <a style="margin-left:5px;" class="waves-effect btn bg-green" href="javascript:loadManQs(4);">Iniciar</a>
+                                                <div class="form-line" style="margin-left:15px; width:35%">
+                                                    <h5 style="text-align:center">Descripción</h5>
+                                                    @Html.EditorFor(model => model.Metodo4MDesc, new { htmlAttributes = new { @class = "form-control", placeholder = "...", style = "text-align:center;" } })
+                                                </div>
                                             </div>
                                         </li>
                                     </ul>
                                 </div>
                                 <div class="col-md-1"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                TOP FIVE FOR ZERO
+                                <small class="smlw">Es un programa Global de Unilever que tiene como objetivo eliminar las causas que pueden generar Incidentes de Calidad en el Mercado  ( A B C).</small>
+                            </h2>
+                        </div>
+                        <div class="body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                                                      
+                                </div>
                             </div>
                         </div>
                     </div>

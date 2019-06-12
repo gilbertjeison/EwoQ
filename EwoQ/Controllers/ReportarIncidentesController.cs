@@ -33,6 +33,7 @@ namespace EwoQ.Controllers
         int LINESTYPES = 8;
         int INCIDENTSTYPES = 15;
         int FINALDISPOSITION = 9;
+        int TOPFIVEFORZERO = 9;
         string ADMINROLE = "d908787a-642b-480f-ba5c-f46df6fc8713";
         string OPERATINGROLE = "ad3cb589-855b-4888-b234-9333eaca85ec";
 
@@ -359,7 +360,7 @@ namespace EwoQ.Controllers
                 (term,StringComparison.CurrentCultureIgnoreCase)),
                     JsonRequestBehavior.AllowGet);
         }
-
+            
         [HttpPost]
         public async Task<JsonResult> GetAcionsList(long id_ewo)
         {
@@ -387,8 +388,7 @@ namespace EwoQ.Controllers
             var ewo = await daoEwo.GetEwoDesc(id);
             return Json(ewo);
         }
-
-
+        
         private async Task<ReporteIncidentesViewModel> BuildModel(long id)
         {
             var viewModel = new ReporteIncidentesViewModel();
