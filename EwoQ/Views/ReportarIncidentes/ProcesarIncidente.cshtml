@@ -1108,8 +1108,20 @@
                         </div>
                         <div class="body">
                             <div class="row">
-                                <div class="col-md-12">
-                                                                      
+                                <div class="col-lg-12">
+                                    <table class="table table-bordered table-hover center">
+                                        <tr>
+                                            @foreach (var item in Model.TopFiveForZeroList)
+                                            {
+
+                                                <td>
+                                                    <input name="grpTFFZ" type="radio" class="with-gap" id="tffz_@item.id" />
+                                                    <label for="tffz_@item.id">@item.descripcion</label>
+                                                </td>
+
+                                            }
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
                         </div>

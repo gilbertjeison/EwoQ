@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EwoQ.Database;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -189,7 +190,8 @@ namespace EwoQ.Models
         public string ManoObra4MDesc { get; set; }
         public string Material4MDesc { get; set; }
         public string Maquina4MDesc { get; set; } 
-        public string Metodo4MDesc { get; set; } 
+        public string Metodo4MDesc { get; set; }
+        public List<tipos_data> TopFiveForZeroList { get; set; }
         #endregion
     }
 }
