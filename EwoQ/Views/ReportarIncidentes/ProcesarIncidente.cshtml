@@ -2019,8 +2019,8 @@
 
                 form.validate().settings.ignore = ':disabled,:hidden';
 
-                return form.valid();
-                //return true;
+                //return form.valid();
+                return true;
             },
             onStepChanged: function (event, currentIndex, priorIndex) {
 
@@ -2033,8 +2033,8 @@
             onFinishing: function (event, currentIndex) {
 
                 form.validate().settings.ignore = ':disabled,.ignore';
-                return form.valid();
-                //return true;
+                //return form.valid();
+                return true;
             },
             onFinished: function (event, currentIndex) {
                 var form = $('#wizard_validation')[0];
