@@ -28,6 +28,7 @@ namespace EwoQ.Controllers
         DaoProductos daoPro = new DaoProductos();
         DaoEwo daoEwo = new DaoEwo();
         Dao4M dao4m = new Dao4M();
+        DaoZero daoZ = new DaoZero();
 
         int AREASTYPES = 7;
         int LINESTYPES = 8;
@@ -95,8 +96,7 @@ namespace EwoQ.Controllers
             }
         }
         #endregion
-
-
+        
 
         // GET: ReportarIncidentes
         public async Task<ActionResult> Index()
@@ -236,7 +236,7 @@ namespace EwoQ.Controllers
             string message;
 
             try
-            {
+            {               
                 if (id.HasValue)
                 {
                     var rivm = await BuildModel(id.Value);
@@ -246,6 +246,7 @@ namespace EwoQ.Controllers
                 {
                     return Json(new {code = -1, message = "Error al procesar incidente" });
                 }
+
                 
             }
             catch (Exception ex)
@@ -388,7 +389,15 @@ namespace EwoQ.Controllers
             var ewo = await daoEwo.GetEwoDesc(id);
             return Json(ewo);
         }
-        
+
+        [HttpPost]
+        public async Task<JsonResult> GetZeroQuestions(int id_tipom)
+        {
+            //TEST THE ZERO METHOD
+            var res = await daoZ.GetZeroQuestions(id_tipom);
+            return Json(res);
+        }
+
         private async Task<ReporteIncidentesViewModel> BuildModel(long id)
         {
             var viewModel = new ReporteIncidentesViewModel();

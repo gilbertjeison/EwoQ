@@ -12,11 +12,15 @@ namespace EwoQ.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class C__MigrationHistory
+    public partial class zero_ewo
     {
-        public string MigrationId { get; set; }
-        public string ContextKey { get; set; }
-        public byte[] Model { get; set; }
-        public string ProductVersion { get; set; }
+        public long id { get; set; }
+        public Nullable<long> codigo_response { get; set; }
+        public Nullable<long> codigo_ewo { get; set; }
+        public Nullable<int> before { get; set; }
+        public Nullable<int> after { get; set; }
+    
+        public virtual ewo ewo { get; set; }
+        public virtual zero_responses zero_responses { get; set; }
     }
 }

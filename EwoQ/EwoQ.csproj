@@ -217,6 +217,7 @@
     <Compile Include="Dao\DaoRoles.cs" />
     <Compile Include="Dao\DaoTiposData.cs" />
     <Compile Include="Dao\DaoUsuarios.cs" />
+    <Compile Include="Dao\DaoZero.cs" />
     <Compile Include="Database\acciones_inmediatas.cs">
       <DependentUpon>Database.tt</DependentUpon>
     </Compile>
@@ -230,9 +231,6 @@
       <DependentUpon>Database.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\AspNetUsers.cs">
-      <DependentUpon>Database.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\C__MigrationHistory.cs">
       <DependentUpon>Database.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\Database.Context.cs">
@@ -283,6 +281,9 @@
     <Compile Include="Database\tipos_data.cs">
       <DependentUpon>Database.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\zero_ewo.cs">
+      <DependentUpon>Database.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\zero_questions.cs">
       <DependentUpon>Database.tt</DependentUpon>
     </Compile>
@@ -305,6 +306,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\IndexAdminViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\ZeroViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Utils\SomeHelpers.cs" />
@@ -4172,6 +4174,9 @@
     <Content Include="Scripts\Adminbsb\plugins\tinymce\skins\lightgray\fonts\tinymce.woff" />
     <Content Include="Scripts\Adminbsb\plugins\sweetalert\sweetalert2.all.min.js" />
     <Content Include="Scripts\Adminbsb\plugins\jquery-ui-1.12.1.autocomplete\package.json" />
+    <Content Include="Scripts\Adminbsb\plugins\jquery-datatable\Buttons-1.5.4\css\common.scss" />
+    <Content Include="Scripts\Adminbsb\plugins\jquery-datatable\Buttons-1.5.4\css\mixins.scss" />
+    <Content Include="Scripts\Adminbsb\plugins\gridstack\gridstack.min.js" />
     <EntityDeploy Include="Database\Database.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Database.Designer.cs</LastGenOutput>
@@ -4179,9 +4184,7 @@
     <Content Include="Database\Database.edmx.diagram">
       <DependentUpon>Database.edmx</DependentUpon>
     </Content>
-    <Content Include="Scripts\Adminbsb\plugins\jquery-datatable\Buttons-1.5.4\css\common.scss" />
-    <Content Include="Scripts\Adminbsb\plugins\jquery-datatable\Buttons-1.5.4\css\mixins.scss" />
-    <Content Include="Scripts\Adminbsb\plugins\gridstack\gridstack.min.js" />
+    <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
     <None Include="Scripts\jquery-2.2.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.2.4.js" />
     <Content Include="Scripts\jquery-2.2.4.min.js" />

@@ -132,10 +132,11 @@
     }
 
     [type="radio"]:not(:checked), [type="radio"]:checked {
-        position: static; 
+        position: static;
         left: -9999px;
         opacity: 0;
         display: none;
+    }
 </style>
 
 <div class="card js-sweetalert">
@@ -479,6 +480,7 @@
                             </div>
                         </div>
                     </div>
+                    
                     <div class="card">
                         <div class="header">
                             <h2>
@@ -529,7 +531,7 @@
                             <div class="row">
                                 <div class="col-sm-4">
                                     <ul class="list-group">
-                                        <b>@Html.LabelFor(model => model.ArbPerd1)</b>
+                                        @Html.LabelFor(model => model.ArbPerd1)
                                         <li class="list-group-item">
                                             <div class="input-group">
                                                 <span class="bg-lime input-group-addon" style="padding:2px;">Nivel 1</span>
@@ -1132,21 +1134,37 @@
                 <section>
                     <div class="card">
                         <div class="header">
-                            <h2>Zero Questions</h2>
-                            <small>Prueba</small>
+                            <h2>
+                                <span id="spnMethod"></span>Before
+                                <small class="smlw">Zero Questions</small>
+                            </h2>
                         </div>
                         <div class="body">
                             <table id="tblZeroBefore" class="table table-hover table-bordered ignore tblZeroBefore">
-                                <thead>
+                                <thead class="bg-teal">
                                     <tr>
                                         <th>Pregunta</th>
-                                        <th>Yes</th>
-                                        <th>No</th>
-                                        <th>NA</th>
+                                        <th>1 Punto</th>
+                                        <th>3 Puntos</th>
+                                        <th>5 Puntos</th>
+                                        <th class="bg-red">BEFORE (pts)</th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
+                                <tfoot></tfoot>
                             </table>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                Plan de acción
+                                <small class="smlw">Listado de acciones</small>
+                            </h2>
+                        </div>
+                        <div class="body">
+                           
                         </div>
                     </div>
                 </section>
@@ -1500,6 +1518,71 @@
         }
     }
 
+    function loadZeroQuestions() {
+        //OBTENER EL 'M' CON MAYOR PUNTAJE
+        //CONVERTIR TODOS LOS VALORES A NUMEROS
+        var manObra = parseInt($('#ManoObra4MTotal').val().replace('%', ''));
+        var material = parseInt($('#Material4MTotal').val().replace('%', ''));
+        var maquina = parseInt($('#Maquina4MTotal').val().replace('%', ''));
+        var metodo = parseInt($('#Metodo4MTotal').val().replace('%', ''));
+
+        //ASIGNAR LAS CANTIDADES OBTENIDAS A SUS RESPECTIVOS ID'S DE LA BASE DE DATOS        
+        var mapV = new Map();
+        mapV.set(manObra, 27);
+        mapV.set(material, 26);
+        mapV.set(maquina, 24);
+        mapV.set(metodo, 25);
+
+        //obtener el mayor valor entre todas las cantidades
+        var maxM = Math.max(manObra, material, maquina, metodo);
+        //de ese mayor valor, obtener el id
+        var maxMId = mapV.get(maxM);
+        
+        //OBTENER REGISTROS
+        $.ajax({
+            //PARAMETRIZAR SERVICIO AJAX
+            url: '@Url.Action("GetZeroQuestions", "ReportarIncidentes")',
+            type: 'post',
+            data: { id_tipom: maxMId },
+            //MOSTRAR LOADER ANTES DE INICIAR LA SOLICITUD
+            beforeSend: function () {
+                $('.page-loader-wrapper').fadeIn();
+            },
+            success: function (r)
+            {                
+                console.log(r);
+                //establecer encabezado de la tabla con el metodo seleccionado
+                $('#spnMethod').text(r[0].DescTipoM+' - ');
+                //AGREGAR NUEVOS REGISTROS                
+                //BORRAR ITEMS DE LA TABLE 
+                $("#tblZeroBefore").find("tr:gt(0)").remove();
+                r.forEach(function (val, ind) {
+                    $("#tblZeroBefore").find('tbody').fadeIn(300, function () {
+                        $(this).append($('<tr>')
+                            .append($('<td style="display:none;">').append(val.Id))
+                            .append($('<td>').append('<b>'+val.Pregunta+'</b>'))
+                            .append($('<td>').append('<input type="radio" id="r1_' + val.Id + '" name="option_' + val.Id + '" value="1" class="with-gap radio-col-cyan" > <label for="r1_' + val.Id + '">' + val.Responses[0].Respuesta+'</label>'))
+                            .append($('<td>').append('<input type="radio" id="r3_' + val.Id + '" name="option_' + val.Id + '" value="3" class="with-gap radio-col-cyan"> <label for="r3_' + val.Id + '">' + val.Responses[1].Respuesta +'</label>'))
+                            .append($('<td>').append('<input type="radio" id="r5_' + val.Id + '" name="option_' + val.Id + '" value="5" class="with-gap radio-col-cyan"> <label for="r5_' + val.Id + '">' + val.Responses[2].Respuesta + '</label>'))
+                            .append($('<td style="text-align:center;" class="bg-red ptsBef" id="pt_'+val.Id+'">').append('0')));
+                    });
+                });
+
+                //agregar pie de tabla para mostrar el total de los puntos
+                $("#tblZeroBefore").find('tfoot').append($('<tr>')
+                    .append($('<td colspan="4" style="text-align:center;" class="font-20 bg-teal">').append('Total'))
+                    .append($('<td style="text-align:center;" class="font-15 bg-red" id="befTotal">').append('0%')));
+                                       
+                $('.page-loader-wrapper').fadeOut();
+            },
+            //EN CASO DE ERROR, IMPRIMIRLO
+            error: function (request, status, error) {
+                alert('Error al consultar preguntas 4M (24): ' + request.responseText);
+            }
+        });  
+        
+    }
+
     function loadManQs(opt) {
 
         $('#mdlExito').modal('toggle');
@@ -1512,7 +1595,7 @@
                 var id4M = 24;
                 //VERIFICAR SI HAY REGISTROS EN LA TABLA
                 var rowCount = $('#tblManoObra tr').length;
-                //SI ESTÁ VACÍA LA TABLA
+                //SI ESTÁ VACÍA LA TABLA, INCLUYENDO EL ENCABEZADO
                 if (rowCount == 1) {
                     //OBTENER REGISTROS
                     $.ajax({
@@ -2048,6 +2131,10 @@
                     initGridGens();
                 }
 
+                if (currentIndex == 2) {
+                    loadZeroQuestions();
+                }
+
                 setButtonWavesEffect(event);
             },
             onFinishing: function (event, currentIndex) {
@@ -2260,6 +2347,25 @@
 
             return false;
         });
+
+        function onRadioChanged(e) {
+            //obtener id de la respuesta mediante el radio button seleccionado
+            var idRes = e.target.id.split('_')[1];
+            //obtener el valor a mostrar por respuesta seleccionada
+            var valueRes = e.target.value;
+            //cargar el puntaje de la respuesta seleccionada en la columna before
+            $('#pt_' + idRes).text(valueRes);            
+
+            //obtener la suma de todos los valores de la columna before            
+            var sum = 0;
+            $('.ptsBef').each(function () {
+                sum += parseFloat($(this).text()); 
+            });
+
+            $('#befTotal').text(_.floor((sum / 25 * 100), 1) + '%');
+        }
+
+        $(document).on('click', '#tblZeroBefore input[type=radio]', onRadioChanged);
     });
 </script>
 <script>

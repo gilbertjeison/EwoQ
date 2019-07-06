@@ -21,13 +21,11 @@ namespace EwoQ.Database
         }
     
         public long id { get; set; }
-        public Nullable<long> codigo_ewo { get; set; }
         public Nullable<long> codigo_tipom { get; set; }
         public string pregunta { get; set; }
     
         public virtual tipos_data tipos_data { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<zero_responses> zero_responses { get; set; }
-        public virtual ewo ewo { get; set; }
     }
 }

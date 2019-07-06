@@ -483,6 +483,8 @@
             $picker.find(".editor-percentcomplete-buttons button").on("click", function (e) {
                 $input.val($(this).attr("val"));
                 $picker.find(".editor-percentcomplete-slider").slider("value", $(this).attr("val"));
+
+                return false;
             })
         };
 

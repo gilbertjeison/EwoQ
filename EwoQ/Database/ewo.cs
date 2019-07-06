@@ -24,7 +24,7 @@ namespace EwoQ.Database
             this.porque_porque = new HashSet<porque_porque>();
             this.respuestas4m = new HashSet<respuestas4m>();
             this.revisiones = new HashSet<revisiones>();
-            this.zero_questions = new HashSet<zero_questions>();
+            this.zero_ewo = new HashSet<zero_ewo>();
         }
     
         public long id { get; set; }
@@ -108,6 +108,6 @@ namespace EwoQ.Database
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<revisiones> revisiones { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<zero_questions> zero_questions { get; set; }
+        public virtual ICollection<zero_ewo> zero_ewo { get; set; }
     }
 }
