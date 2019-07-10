@@ -193,5 +193,10 @@ namespace EwoQ.Models
         public string Metodo4MDesc { get; set; }
         public List<tipos_data> TopFiveForZeroList { get; set; }
         #endregion
+
+        #region VERIFICACIÓN Y FINALIZACIÓN
+        [Display(Name = "Comentarios / Resoluciones")]
+        public string ComentariosResoluciones { get; set; }
+        #endregion
     }
 }
