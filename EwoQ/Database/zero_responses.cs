@@ -25,8 +25,8 @@ namespace EwoQ.Database
         public string respuesta { get; set; }
         public Nullable<int> puntaje { get; set; }
     
+        public virtual zero_questions zero_questions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<zero_ewo> zero_ewo { get; set; }
-        public virtual zero_questions zero_questions { get; set; }
     }
 }

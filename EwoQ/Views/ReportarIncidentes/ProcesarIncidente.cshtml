@@ -1207,18 +1207,130 @@
                 <section>
 
                     <div class="card">
-                       
-                        
-                        <div class="body clearfix">                           
+
+
+                        <div class="body clearfix">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.ComentariosResoluciones)
                                     @Html.TextAreaFor(model => model.ComentariosResoluciones, 4, 0, new { @class = "form-control rounded-10", placeholder = "Escriba aquí los comentarios...", required = "required" })
                                 </div>
                             </div>
-                                
 
-                    
+
+
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                NOMBRES Y FIRMAS
+                            </h2>
+                        </div>
+                        <div class="body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <b>@Html.LabelFor(model => model.IdCoorProd)</b>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">person</i>
+                                        </span>
+                                        <div class="form-line" style="border:none;">
+                                            <select id="IdCoorProd" name="IdCoorProd" data-size="5" data-live-search="true" class="selectpicker show-tick" required>
+                                                @foreach (var item in Model.AdminUsersList)
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <b>@Html.LabelFor(model => model.IdJefCal)</b>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">person</i>
+                                        </span>
+                                        <div class="form-line" style="border:none;">
+                                            <select id="IdJefCal" name="IdJefCal" data-size="5" data-live-search="true" class="selectpicker show-tick" required>
+                                                @foreach (var item in Model.AdminUsersList)
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <b>@Html.LabelFor(model => model.IdGerProd)</b>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">person</i>
+                                        </span>
+                                        <div class="form-line" style="border:none;">
+                                            <select id="IdGerProd" name="IdGerProd" data-size="5" data-live-search="true" class="selectpicker show-tick" required>
+                                                @foreach (var item in Model.AdminUsersList)
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <b>@Html.LabelFor(model => model.IdGerCal)</b>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">person</i>
+                                        </span>
+                                        <div class="form-line" style="border:none;">
+                                            <select id="IdGerCal" name="IdGerCal" data-size="5" data-live-search="true" class="selectpicker show-tick" required>
+                                                @foreach (var item in Model.AdminUsersList)
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                CIERRE DE INCIDENTE O NO INCONFORMIDAD
+                            </h2>
+                        </div>
+                        <div class="body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="gray_cube">
+                                        <p style="text-align:center; font-weight: bold;">Estado del incidente o no inconformidad</p>
+                                        <hr />
+                                        <div class="switch" style="margin: 0 auto; display:table; ">
+                                            <label>Abierto<input type="checkbox" name="GembaOk"><span class="lever"></span>Cerrado</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="gray_cube">
+                                        <p style="text-align:center; font-weight: bold;">Puntaje de Zero Questions (After)</p>
+                                        <hr />
+                                        <div class="progress">
+                                            <div class="progress-bar bg-green progress-bar-striped active" role="progressbar" aria-valuenow="10" aria-valuemin="0"
+                                                 aria-valuemax="100" style="width: 10%">
+                                                <p style="text-align:center;">10%</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>

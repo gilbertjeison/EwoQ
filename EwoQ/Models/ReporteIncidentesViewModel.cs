@@ -197,6 +197,18 @@ namespace EwoQ.Models
         #region VERIFICACIÓN Y FINALIZACIÓN
         [Display(Name = "Comentarios / Resoluciones")]
         public string ComentariosResoluciones { get; set; }
+
+        [Display(Name = "Coordinador de Producción:")]
+        public string IdCoorProd { get; set; }
+
+        [Display(Name = "Gerente de Producción: :")]
+        public string IdGerProd { get; set; }
+
+        [Display(Name = "Jefe inmediato Calidad:")]
+        public string IdJefCal { get; set; }
+
+        [Display(Name = "Gerente de Calidad: ")]
+        public string IdGerCal { get; set; }
         #endregion
     }
 }

@@ -150,7 +150,7 @@ namespace EwoQ.Dao
                             Email = s.Email,
                             Usuario = s.UserName,
                             IdRol = s.IdRol,
-                            NombresCommpletos = s.Nombres + "" + s.Apellidos
+                            NombresCommpletos = s.Nombres + " " + s.Apellidos
                         });
 
                     }));

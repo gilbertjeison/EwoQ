@@ -17,10 +17,8 @@ namespace EwoQ.Database
         public long id { get; set; }
         public Nullable<long> codigo_response { get; set; }
         public Nullable<long> codigo_ewo { get; set; }
-        public Nullable<int> before { get; set; }
-        public Nullable<int> after { get; set; }
     
-        public virtual ewo ewo { get; set; }
         public virtual zero_responses zero_responses { get; set; }
+        public virtual ewo ewo { get; set; }
     }
 }
