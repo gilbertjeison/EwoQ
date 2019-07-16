@@ -1314,7 +1314,7 @@
                                         <p style="text-align:center; font-weight: bold;">Estado del incidente o no inconformidad</p>
                                         <hr />
                                         <div class="switch" style="margin: 0 auto; display:table; ">
-                                            <label>Abierto<input type="checkbox" name="GembaOk"><span class="lever"></span>Cerrado</label>
+                                            <label>Abierto<input type="checkbox" name="chkCerrado" disabled><span class="lever"></span>Cerrado</label>
                                         </div>
                                     </div>
                                 </div>
@@ -1323,9 +1323,9 @@
                                         <p style="text-align:center; font-weight: bold;">Puntaje de Zero Questions (After)</p>
                                         <hr />
                                         <div class="progress">
-                                            <div class="progress-bar bg-green progress-bar-striped active" role="progressbar" aria-valuenow="10" aria-valuemin="0"
-                                                 aria-valuemax="100" style="width: 10%">
-                                                <p style="text-align:center;">10%</p>
+                                            <div class="progress-bar progress-bar-striped active" id="pgbAfter" role="progressbar" aria-valuenow="5" aria-valuemin="0"
+                                                 aria-valuemax="100" style="width: 5%">
+                                                <p id="statePercent" style="text-align:center;">5%</p>
                                             </div>
                                         </div>
                                     </div>
@@ -2787,7 +2787,24 @@
                 sum += parseFloat($(this).text());
             });
 
-            $('#aftTotal').text(_.floor((sum / 25 * 100), 1) + '%');
+            var ttl = _.floor((sum / 25 * 100), 1);
+            $('#aftTotal').text( ttl + '%');
+
+            //fijar valor en el estado del incidente
+            $('#statePercent').text(ttl + '%');
+            $('#pgbAfter').attr('aria-valuenow', ttl).css('width', ttl + '%');
+
+            //indicar si ya está cerrado
+            if (ttl >= 80) {
+                $('input[name^="chkCerrado"]').prop('checked', true);
+                $('#pgbAfter').addClass('bg-green');
+                $('#pgbAfter').removeClass('bg-red');
+            } else {
+                $('input[name^="chkCerrado"]').prop('checked', false);
+                $('#pgbAfter').addClass('bg-red');
+                $('#pgbAfter').removeClass('bg-green');
+            }
+            
         }
 
         $(document).on('click', '#tblZeroBefore input[type=radio]', onRadioChanged);
