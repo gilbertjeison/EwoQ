@@ -171,7 +171,7 @@ namespace EwoQ.Controllers
             int res = 0;
             try
             {
-                var ewo1 = ewr;
+                //var ewo1 = ewr;
 
                 JavaScriptSerializer ser = new JavaScriptSerializer();
                 List<acciones_inmediatas> accInm = ser.Deserialize<List<acciones_inmediatas>>(ewr.Cmd);
@@ -261,7 +261,20 @@ namespace EwoQ.Controllers
         [HttpPost]
         public async Task<ActionResult> ProcesarIncidente(ReporteIncidentesViewModel rivm)
         {
+            //CAMPOS´PARA ALMACENAR RESULTADO DE TRANSACCIÓN
+            int r;
+            string message;
+
             await Task.Delay(100);
+            try
+            {
+                ewo e = new ewo();
+
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine("Error al Procesar incidente " + ex.ToString());
+            }
             return View();
         }
 

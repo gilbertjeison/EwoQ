@@ -1460,7 +1460,23 @@
      var idEdit = @Html.Raw(Json.Encode(Model.Id));
     var myDropzone1;
     var myDropzone2;
-    var cmd = new Array();
+    //lista de acciones inmediatas para enviar
+    var listAccInm = new Array();
+    //lista de genjitsu para enviar
+    var listGenj = new Array();
+    //lista de genri para enviar
+    var listGenr = new Array();
+    //lista de gesoku para enviar
+    var listGens = new Array();
+    //lista de por que para enviar
+    var listPorq = new Array();
+    //lista de zero before para enviar
+    var listBefo = new Array();
+    //lista de zero after para enviar
+    var listAfte = new Array();
+    //lista de plan de acción para enviar
+    var listPlan = new Array();
+
     var grid;
     var gridGenjitsu;
     var gridGenri;
@@ -1972,6 +1988,11 @@
 
         //permitir seleccionar tabla de nuevo
         changedQstn = true;
+    }
+
+    function showSweetAlert(titulo, mensaje, tipo) {
+        swal(titulo, mensaje, tipo);
+        //$('.showSweetAlert h2').addClass('tit');
     }
 </script>
 <script>
@@ -2510,6 +2531,35 @@
                 if (currentIndex < newIndex) {
                     form.find('.body:eq(' + newIndex + ') label.error').remove();
                     form.find('.body:eq(' + newIndex + ') .error').removeClass('error');
+                }
+
+                //validación de datos antes de cambiar la pestaña
+                if (currentIndex == 0) {
+
+                    //asignar registros de las acciones inmediatas
+                    listAccInm = [];
+                    listAccInm = grid.getData();
+
+                    //validar acciones inmediatas
+                    if (listAccInm.length == 0) {
+                        showSweetAlert("Acciones inmediatas", "Debe cargar las acciones inmediatas", "error");
+                        return false;
+                    }                                        
+                }
+
+                if (currentIndex == 1) {
+
+                    //asignar registros de las acciones inmediatas
+                    listGenj = [];
+                    listGenj = gridGenjitsu.getData();
+
+                    //validar acciones inmediatas
+                    if (listGenj.length == 0) {
+                        showSweetAlert("INVESTIGACIÓN EN PISO", "Debe cargar la información Genjitsu", "error");
+                        return false;
+                    }
+
+                    console.log(listGenj);
                 }
 
                 form.validate().settings.ignore = ':disabled,:hidden';

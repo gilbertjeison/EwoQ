@@ -4200,6 +4200,7 @@
     <Content Include="Scripts\popper.js" />
     <Content Include="Scripts\popper.min.js" />
     <Content Include="Scripts\ProcesarIncidente\slickGrid.js" />
+    <Content Include="Scripts\ReportarIncidentes\ProcesarIncidente.js" />
     <Content Include="Scripts\umd\popper-utils.js" />
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
