@@ -406,7 +406,7 @@
         var scope = this;
 
         this.init = function () {
-            $select = $("<INPUT type=checkbox value='true' class='editor-checkbox' hideFocus>");
+            $select = $("<INPUT type=checkbox value='true' class='editor-checkbox' id='checkEd' hideFocus >");
             $select.appendTo(args.container);
             $select.focus();
         };

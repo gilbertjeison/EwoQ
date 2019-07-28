@@ -1207,8 +1207,6 @@
                 <section>
 
                     <div class="card">
-
-
                         <div class="body clearfix">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -1216,9 +1214,6 @@
                                     @Html.TextAreaFor(model => model.ComentariosResoluciones, 4, 0, new { @class = "form-control rounded-10", placeholder = "Escriba aquí los comentarios...", required = "required" })
                                 </div>
                             </div>
-
-
-
                         </div>
                     </div>
 
@@ -2549,21 +2544,143 @@
 
                 if (currentIndex == 1) {
 
-                    //asignar registros de las acciones inmediatas
+                    //asignar registros de la pestaña 2
                     listGenj = [];
                     listGenj = gridGenjitsu.getData();
 
-                    //validar acciones inmediatas
+                    listGenr = [];
+                    listGenr = gridGenri.getData();
+
+                    listGens = [];
+                    listGens = gridGensoku.getData();
+                                        
+                    //validar listas de la pestaña 2
                     if (listGenj.length == 0) {
-                        showSweetAlert("INVESTIGACIÓN EN PISO", "Debe cargar la información Genjitsu", "error");
+                        //showSweetAlert("INVESTIGACIÓN EN PISO", "Debe cargar la información Genjitsu", "error");
+                        //return false;
+                    }
+
+                    if (listGenr.length == 0) {
+                        //showSweetAlert("INVESTIGACIÓN EN PISO", "Debe cargar la información Genri", "error");
+                        //return false;
+                    }
+
+                    if (listGens.length == 0) {
+                        //showSweetAlert("INVESTIGACIÓN EN PISO", "Debe cargar la información Gensoku", "error");
+                        //return false;
+                    }
+                                       
+                    //VALIDAR QUE LOS POR QUÉ ESTÉN DILIGENCIADOS                    
+                    //CAPTURAR RESGISTROS DE LA TABLA
+                    listPorq = [];
+                    $("#tblPorque TBODY TR").each(function () {
+                        var row = $(this);
+                        var porque = {};
+                        porque.porque_1 = row.find("TD").eq(0).html();
+                        porque.porque_2 = row.find("TD").eq(1).html();
+                        porque.porque_3 = row.find("TD").eq(2).html();
+                        porque.porque_4 = row.find("TD").eq(3).html();
+                        porque.porque_5 = row.find("TD").eq(4).html();
+                        porque.contramedida = row.find("TD").eq(5).html();
+
+                        listPorq.push(porque);
+                    });
+
+                    if (listPorq.length == 0) {
+                        //if (!$('#GembaDesc').val() || !$('#GembutsuDesc').val() || !$('#GenjitsuDesc').val()) {
+                            //showSweetAlert("ANÁLISIS POR QUÉ", "Debe diligenciar los registros de por qué", "error");
+                            //return false;
+                        //}
+                    };
+
+
+                    //validar imagenes
+                    console.log();
+                    if (myDropzone1.files.length == 0) {
+
+                    }
+                }
+
+                if (currentIndex == 2) {
+                    //VALIDAR BEFORE                    
+                    //CAPTURAR RESGISTROS DE LA TABLA
+                    listBefo = [];
+                    $("#tblZeroBefore TBODY TR").each(function () {
+                        var row = $(this);
+                        var beforeQ = {};
+                        beforeQ.id = row.find("TD").eq(0).html();
+                        beforeQ.pregunta = row.find("TD").eq(1).html();
+                        beforeQ.p1 = row.find("TD").eq(2).html();
+                        beforeQ.p3 = row.find("TD").eq(3).html();
+                        beforeQ.p5 = row.find("TD").eq(4).html();
+                        beforeQ.puntos = row.find("TD").eq(5).html();
+
+                        listBefo.push(beforeQ);
+                    });
+
+
+                    //flag para determinar si hay alguna sin reponder
+                    var anyZeroB = false; 
+                    listBefo.forEach(function myfunction(i, v) {
+                        if (i.puntos == 0) {
+                            anyZeroB = true;
+                        }
+                    });
+                                        
+                    if (anyZeroB) {
+                        //showSweetAlert("ZERO QUESTIONS", "Debe responder todas las preguntas BEFORE", "error");
+                        //return false;
+                    }
+
+
+                    //VALIDAR BEFORE                    
+                    //CAPTURAR RESGISTROS DE LA TABLA
+                    listAfte = [];
+                    $("#tblZeroAfter TBODY TR").each(function () {
+                        var row = $(this);
+                        var afterQ = {};
+                        afterQ.id = row.find("TD").eq(0).html();
+                        afterQ.pregunta = row.find("TD").eq(1).html();
+                        afterQ.p1 = row.find("TD").eq(2).html();
+                        afterQ.p3 = row.find("TD").eq(3).html();
+                        afterQ.p5 = row.find("TD").eq(4).html();
+                        afterQ.puntos = row.find("TD").eq(5).html();
+
+                        listAfte.push(afterQ);
+                    });
+                    
+                    //flag para determinar si hay alguna sin reponder
+                    var anyZeroA = false;
+                    listAfte.forEach(function myfunction(i, v) {
+                        if (i.puntos == 0) {
+                            anyZeroA = true;
+                        }
+                    });
+
+                    if (anyZeroA) {
+                        //showSweetAlert("ZERO QUESTIONS", "Debe responder todas las preguntas AFTER", "error");
+                        //return false;
+                    }
+
+                    //validar plan de acción
+                    listPlan = [];
+                    listPlan = gridPlanAccion.getData();
+
+                    //validar listas 
+                    if (listPlan.length == 0) {
+                        showSweetAlert("PLAN DE ACCIÓN", "Debe cargar la información del plan de acción", "error");
                         return false;
                     }
 
-                    console.log(listGenj);
+                    console.log(listPlan);
                 }
 
                 form.validate().settings.ignore = ':disabled,:hidden';
 
+
+                //confirmar los cambios de todos los slickgrid
+                if (Slick.GlobalEditorLock.isActive())
+                    Slick.GlobalEditorLock.commitCurrentEdit();
                 //return form.valid();
                 return true;
             },
@@ -2783,6 +2900,7 @@
             $("#tblPorque").find('tbody').fadeIn(300, function () {
                 $(this).append($('<tr>')
                     .append($('<td>').append('.'))
+                    .append($('<td>').append(''))
                     .append($('<td>').append(''))
                     .append($('<td>').append(''))
                     .append($('<td>').append(''))
