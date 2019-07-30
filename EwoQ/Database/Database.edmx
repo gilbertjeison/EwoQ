@@ -108,7 +108,6 @@
           <Property Name="numero_pallet" Type="varchar" MaxLength="50" />
           <Property Name="unidades" Type="int" />
           <Property Name="tamano_formato" Type="varchar" MaxLength="50" />
-          <Property Name="codigo_unidad_medida_tamfor" Type="bigint" />
           <Property Name="costo_incidente" Type="decimal" Precision="18" Scale="0" />
           <Property Name="tiempo_linea_parada" Type="int" />
           <Property Name="descripcion_general_problema" Type="text" />
@@ -151,6 +150,7 @@
           <Property Name="before" Type="decimal" Precision="18" Scale="0" />
           <Property Name="after" Type="decimal" Precision="18" Scale="0" />
           <Property Name="fecha_after" Type="date" />
+          <Property Name="top_five_fzero" Type="varchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="fiveg_resultados">
           <Key>
@@ -1222,7 +1222,6 @@
           <Property Name="numero_pallet" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="unidades" Type="Int32" />
           <Property Name="tamano_formato" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="codigo_unidad_medida_tamfor" Type="Int64" />
           <Property Name="costo_incidente" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="tiempo_linea_parada" Type="Int32" />
           <Property Name="descripcion_general_problema" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
@@ -1265,6 +1264,7 @@
           <Property Name="before" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="after" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="fecha_after" Type="DateTime" Precision="0" />
+          <Property Name="top_five_fzero" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="acciones_inmediatas" Relationship="EwoQModel.FK_acciones_inmediatas_ewo" FromRole="ewo" ToRole="acciones_inmediatas" />
           <NavigationProperty Name="equipo_trabajo" Relationship="EwoQModel.FK_equipo_trabajo_ewo" FromRole="ewo" ToRole="equipo_trabajo" />
           <NavigationProperty Name="fiveg_resultados" Relationship="EwoQModel.FK_fiveg_resultados_ewo" FromRole="ewo" ToRole="fiveg_resultados" />
@@ -1584,6 +1584,7 @@
           <EntitySetMapping Name="ewo">
             <EntityTypeMapping TypeName="EwoQModel.ewo">
               <MappingFragment StoreEntitySet="ewo">
+                <ScalarProperty Name="top_five_fzero" ColumnName="top_five_fzero" />
                 <ScalarProperty Name="fecha_after" ColumnName="fecha_after" />
                 <ScalarProperty Name="after" ColumnName="after" />
                 <ScalarProperty Name="before" ColumnName="before" />
@@ -1626,7 +1627,6 @@
                 <ScalarProperty Name="descripcion_general_problema" ColumnName="descripcion_general_problema" />
                 <ScalarProperty Name="tiempo_linea_parada" ColumnName="tiempo_linea_parada" />
                 <ScalarProperty Name="costo_incidente" ColumnName="costo_incidente" />
-                <ScalarProperty Name="codigo_unidad_medida_tamfor" ColumnName="codigo_unidad_medida_tamfor" />
                 <ScalarProperty Name="tamano_formato" ColumnName="tamano_formato" />
                 <ScalarProperty Name="unidades" ColumnName="unidades" />
                 <ScalarProperty Name="numero_pallet" ColumnName="numero_pallet" />

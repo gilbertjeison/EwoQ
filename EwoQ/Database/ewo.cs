@@ -52,7 +52,6 @@ namespace EwoQ.Database
         public string numero_pallet { get; set; }
         public Nullable<int> unidades { get; set; }
         public string tamano_formato { get; set; }
-        public Nullable<long> codigo_unidad_medida_tamfor { get; set; }
         public Nullable<decimal> costo_incidente { get; set; }
         public Nullable<int> tiempo_linea_parada { get; set; }
         public string descripcion_general_problema { get; set; }
@@ -95,6 +94,7 @@ namespace EwoQ.Database
         public Nullable<decimal> before { get; set; }
         public Nullable<decimal> after { get; set; }
         public Nullable<System.DateTime> fecha_after { get; set; }
+        public string top_five_fzero { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<acciones_inmediatas> acciones_inmediatas { get; set; }

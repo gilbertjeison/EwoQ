@@ -2595,9 +2595,16 @@
 
 
                     //validar imagenes
-                    console.log();
+                    //imagen 1
                     if (myDropzone1.files.length == 0) {
+                        //showSweetAlert("Investigación en piso (5G)", "Debe cargar la imágen de la evidencia del problema", "error");
+                        //return false;
+                    }
 
+                    //imagen 2
+                    if (myDropzone2.files.length == 0) {
+                        //showSweetAlert("5W+1H", "Debe cargar la imágen del fenómeno", "error");
+                        //return false;
                     }
                 }
 
@@ -2671,8 +2678,6 @@
                         showSweetAlert("PLAN DE ACCIÓN", "Debe cargar la información del plan de acción", "error");
                         return false;
                     }
-
-                    console.log(listPlan);
                 }
 
                 form.validate().settings.ignore = ':disabled,:hidden';
@@ -2721,6 +2726,8 @@
             onFinished: function (event, currentIndex) {
                 var form = $('#wizard_validation')[0];
                 var dataString = new FormData(form);
+
+                //espacio para adjuntar listas y campos especiales
 
                 $.ajax({
                     type: "POST",
