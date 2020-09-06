@@ -4,8 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace EwoQ.Models
@@ -209,6 +207,20 @@ namespace EwoQ.Models
 
         [Display(Name = "Gerente de Calidad: ")]
         public string IdGerCal { get; set; }
+        #endregion
+
+        #region CAMPOS ADJUNTOS
+        public string BeforePct { get; set; }
+        public string AfterPct { get; set; }
+        public string ListAccInm { get; set; }
+        public string ListGenj { get; set; }
+        public string ListGenr { get; set; }
+        public string ListGens { get; set; }
+        public string ListPorq { get; set; }
+        public string ListBefo { get; set; }
+        public string ListAfte { get; set; }
+        public string ListPlan { get; set; }
+
         #endregion
     }
 }

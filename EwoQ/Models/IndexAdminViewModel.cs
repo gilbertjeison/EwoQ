@@ -13,5 +13,7 @@ namespace EwoQ.Models
         public int UsuariosRegistrados { get; set; }
         public int TiempoLinParada { get; set; }
 
+        public int Counter { get; set; }
+
     }
 }

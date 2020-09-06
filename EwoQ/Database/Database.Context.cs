@@ -44,5 +44,8 @@ namespace EwoQ.Database
         public virtual DbSet<zero_responses> zero_responses { get; set; }
         public virtual DbSet<zero_ewo> zero_ewo { get; set; }
         public virtual DbSet<ewo> ewo { get; set; }
+        public virtual DbSet<areas_productivas> areas_productivas { get; set; }
+        public virtual DbSet<lineas> lineas { get; set; }
+        public virtual DbSet<plantas> plantas { get; set; }
     }
 }

@@ -47,6 +47,12 @@
         <AssociationConnector Association="EwoQModel.FK_respuestas4m_ewo" />
         <AssociationConnector Association="EwoQModel.FK_revisiones_ewo" />
         <AssociationConnector Association="EwoQModel.FK_zero_ewo_ewo" />
+        <EntityTypeShape EntityType="EwoQModel.areas_productivas" Width="1.5" PointX="0.75" PointY="43.25" />
+        <EntityTypeShape EntityType="EwoQModel.lineas" Width="1.5" PointX="0.75" PointY="40.25" />
+        <EntityTypeShape EntityType="EwoQModel.plantas" Width="1.5" PointX="0.75" PointY="46.375" />
+        <AssociationConnector Association="EwoQModel.FK_areas_productivas_plantas" />
+        <AssociationConnector Association="EwoQModel.FK_lineas_areas_productivas" />
+        <AssociationConnector Association="EwoQModel.FK_ewo_lineas" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

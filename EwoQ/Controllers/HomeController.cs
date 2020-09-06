@@ -8,19 +8,28 @@ using Microsoft.AspNet.Identity;
 using EwoQ.Models;
 using EwoQ.Dao;
 using System.Threading.Tasks;
+using System.Web.SessionState;
 
 namespace EwoQ.Controllers
 {
     [Authorize]
+    [SessionState(SessionStateBehavior.Default)]
     public class HomeController : Controller
     {
         DaoEwo daoE = new DaoEwo();
+        IndexAdminViewModel ivm = new IndexAdminViewModel();
 
         public ActionResult Index()
-        {
-                       
+        {                       
             
             return View();
+        }
+
+        [HttpPost]
+        public void OnPost(int counter)
+        {
+            ivm.Counter = counter;
+            Session["SessionCount"] = counter;
         }
 
         public async Task<ActionResult> IndexAdmin()
@@ -33,8 +42,21 @@ namespace EwoQ.Controllers
             //    var RoleMan = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(adc));
 
             //}
-            IndexAdminViewModel ivm = new IndexAdminViewModel();
+
+           
+
+           
+            
             ivm = await daoE.GetIndexData();
+            if (Session["SessionCount"] != null)
+            {
+                string tempCount = Session["SessionCount"].ToString();
+                ivm.Counter = int.Parse(tempCount);
+            }
+            else
+            {
+                ivm.Counter = 0;
+            }
 
             return View(ivm);
         }

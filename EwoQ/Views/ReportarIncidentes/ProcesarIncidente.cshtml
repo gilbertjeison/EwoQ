@@ -2728,6 +2728,14 @@
                 var dataString = new FormData(form);
 
                 //espacio para adjuntar listas y campos especiales
+                dataString.append('ListAccInm', JSON.stringify(listAccInm));
+                dataString.append('ListGenj', JSON.stringify(listGenj));
+                dataString.append('ListGenr', JSON.stringify(listGenr));
+                dataString.append('ListGens', JSON.stringify(listGens));
+                dataString.append('ListPorq', JSON.stringify(listPorq));
+                dataString.append('ListBefo', JSON.stringify(listBefo));
+                dataString.append('ListAfte', JSON.stringify(listAfte));
+                dataString.append('ListPlan', JSON.stringify(listPlan));
 
                 $.ajax({
                     type: "POST",
@@ -2967,7 +2975,7 @@
 
             //fijar valor en el estado del incidente
             $('#statePercent').text(ttl + '%');
-            $('#pgbAfter').attr('aria-valuenow', ttl).css('width', ttl + '%');
+            $('#pgbAfter').añttr('aria-valuenow', ttl).css('width', ttl + '%');
 
             //indicar si ya está cerrado
             if (ttl >= 80) {

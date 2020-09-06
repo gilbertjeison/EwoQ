@@ -21,6 +21,8 @@ namespace EwoQ.Controllers
     [Authorize]
     public class ReportarIncidentesController : Controller
     {
+        
+
         private EwoQEntities db = new EwoQEntities();
         DaoAcciones daoAcc = new DaoAcciones();
         DaoTiposData daoTD = new DaoTiposData();
@@ -97,10 +99,11 @@ namespace EwoQ.Controllers
         }
         #endregion
         
-
+        
         // GET: ReportarIncidentes
         public async Task<ActionResult> Index()
-        {            
+        {
+            
             return View();
         }
 
@@ -261,8 +264,7 @@ namespace EwoQ.Controllers
         [HttpPost]
         public async Task<ActionResult> ProcesarIncidente(ReporteIncidentesViewModel rivm)
         {
-            //CAMPOS´PARA ALMACENAR RESULTADO DE TRANSACCIÓN
-            int r;
+            //CAMPOS´PARA ALMACENAR RESULTADO DE TRANSACCIÓN        
             string message;
 
             await Task.Delay(100);

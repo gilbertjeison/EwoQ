@@ -37,7 +37,6 @@ namespace EwoQ.Database
         public Nullable<System.TimeSpan> hora_entrega_investigacion { get; set; }
         public Nullable<long> tipo_incidente { get; set; }
         public bool recurrente { get; set; }
-        public Nullable<long> codigo_area { get; set; }
         public Nullable<long> codigo_linea { get; set; }
         public string etapa { get; set; }
         public string codigo_coordinador_turno { get; set; }
@@ -112,5 +111,6 @@ namespace EwoQ.Database
         public virtual ICollection<revisiones> revisiones { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<zero_ewo> zero_ewo { get; set; }
+        public virtual lineas lineas { get; set; }
     }
 }

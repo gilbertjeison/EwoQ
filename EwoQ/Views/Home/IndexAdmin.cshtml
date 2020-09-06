@@ -4,6 +4,12 @@
 }
 <!-- Morris Chart Css-->
 <link href="~/Scripts/Adminbsb/plugins/morrisjs/morris.css" rel="stylesheet" />
+<script src="~/Scripts/vue.min.js"></script>
+<script src="~/Scripts/axios.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+<link href="@Url.Content("https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css")" rel="stylesheet" type="text/css" />
+<link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+
 <style>
     .info-box .content .text {
         //font-weight: bold;
@@ -85,7 +91,7 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
     <div class="col-md-6">
         <div class="card">
@@ -100,11 +106,59 @@
 
 </div>
 
+
+
+<div id="app">
+    @Html.AntiForgeryToken()
+    <v-app>
+        <v-main>
+            <div>
+                <h1>Count is {{count}}</h1>
+                <br />
+                <p>
+                    <button v-on:click="incrementCount">Incrementar contador</button>
+                </p>
+                <br>
+                <v-alert text
+                         outlined
+                         color="deep-orange"
+                         icon="mdi-fire">
+                    Tony tincidunt adipiscing enim. In consectetuer turpis ut velit. Maecenas egestas arcu quis ligula mattis placerat. Praesent metus tellus, elementum eu, semper a, adipiscing nec, purus.
+                </v-alert>
+            </div>
+        </v-main>
+       
+    </v-app>
+       
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+
+<script>
+    var vueApp = new Vue({
+        el: '#app',
+        vuetify: new Vuetify(),
+        data: {
+            count:@Html.Raw(Json.Encode(Model.Counter))
+        },
+        methods: {
+            incrementCount: function () {
+                console.log(this.count);
+                this.count++;
+
+                var headers = { "RequestVerificationToken": $('input:hidden[name="__RequestVerificationToken"]').val() }
+
+                axios.post('/Home/OnPost/counter?counter=' + this.count, null, { headers: headers });
+            }
+        }
+    });
+</script>
 <script>
     $(function () {
         //Widgets count
         $('.count-to').countTo();
-        
+
         initDonutChart();
 
     });
