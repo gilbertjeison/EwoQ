@@ -29,8 +29,11 @@ namespace EwoQ.Controllers
         DaoUsuarios daoUser = new DaoUsuarios();
         DaoProductos daoPro = new DaoProductos();
         DaoEwo daoEwo = new DaoEwo();
+        DaoPlantas daoPlan = new DaoPlantas();
         Dao4M dao4m = new Dao4M();
         DaoZero daoZ = new DaoZero();
+        DaoAreas daoAr = new DaoAreas();
+        DaoLineas daoLin = new DaoLineas();
 
         int AREASTYPES = 7;
         int LINESTYPES = 8;
@@ -50,16 +53,16 @@ namespace EwoQ.Controllers
             {
                 AspNetUsers aspNetUsers = daoUser.GetUser(User.Identity.GetUserId());
 
-                var draw = Request.Form["draw"];
-                var start = Request.Form["start"];
-                var length = Request.Form["length"];
-                var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"] + "][name]"];
-                var sortColumnDirection = Request.Form["order[0][dir]"];
-                var searchValue = Request.Form["search[value]"];
+                //var draw = Request.Form["draw"];
+                //var start = Request.Form["start"];
+                //var length = Request.Form["length"];
+                //var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"] + "][name]"];
+                //var sortColumnDirection = Request.Form["order[0][dir]"];
+                //var searchValue = Request.Form["search[value]"];
 
                 //Paging Size (10,20,50,100)
-                int pageSize = length.ToString() != null ? Convert.ToInt32(length) : 0;
-                int skip = start.ToString() != null ? Convert.ToInt32(start) : 0;
+                //int pageSize = length.ToString() != null ? Convert.ToInt32(length) : 0;
+                //int skip = start.ToString() != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
 
                 if (aspNetUsers.IdRol.Equals(Utils.SomeHelpers.ROL_OPER))
@@ -74,23 +77,24 @@ namespace EwoQ.Controllers
                 var data1 = await rivm;
 
                 //Sorting
-                if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDirection)))
-                {
-                    data1 = data1.OrderBy(sortColumn + " " + sortColumnDirection).ToList();
-                }
+                //if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDirection)))
+                //{
+                //    data1 = data1.OrderBy(sortColumn + " " + sortColumnDirection).ToList();
+                //}
 
-                //Search
-                if (!string.IsNullOrEmpty(searchValue))
-                {
-                    data1 = data1.Where(m => m.DescripcionProblema.Contains(searchValue) || m.LineaDesc.Contains(searchValue)).ToList();
-                }
+                ////Search
+                //if (!string.IsNullOrEmpty(searchValue))
+                //{
+                //    data1 = data1.Where(m => m.DescripcionProblema.Contains(searchValue) || m.LineaDesc.Contains(searchValue)).ToList();
+                //}
 
                 //total number of rows count 
                 recordsTotal = data1.Count();
                 //Paging 
-                var data = data1.Skip(skip).Take(pageSize).ToList();
+                //var data = data1.Skip(skip).Take(pageSize).ToList();
 
-                return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
+                //return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
+                return Json(new { recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data1 });
             }
             catch (Exception)
             {
@@ -187,8 +191,7 @@ namespace EwoQ.Controllers
                 ewo.hora_evento = TimeSpan.Parse(ewr.HrEvento);
                 ewo.fecha_entrega_investigacion = ewr.FchEntregaInvestigacion == null ? DateTime.Now : DateTime.ParseExact(ewr.FchEntregaInvestigacion, "dd-MM-yyyy", CultureInfo.InvariantCulture);
                 ewo.hora_entrega_investigacion = TimeSpan.Parse(ewr.HrEntregaInvestigacion);
-                ewo.tipo_incidente = ewr.TipoIncidente;
-                ewo.codigo_area = ewr.IdArea;
+                ewo.tipo_incidente = ewr.TipoIncidente;                
                 ewo.codigo_linea = ewr.IdLinea;
                 ewo.etapa = ewr.EtapaProceso;
                 ewo.codigo_coordinador_turno = ewr.IdCoorSup;
@@ -301,7 +304,6 @@ namespace EwoQ.Controllers
             ViewBag.pa_codigo_jefe_calidad = new SelectList(db.AspNetUsers, "Id", "Nombres", ewo.pa_codigo_jefe_calidad);
             ViewBag.codigo_responsable_area = new SelectList(db.AspNetUsers, "Id", "Nombres", ewo.codigo_responsable_area);
             ViewBag.codigo_producto = new SelectList(db.productos, "id", "nombre", ewo.producto);
-            ViewBag.codigo_area = new SelectList(db.tipos_data, "id", "descripcion", ewo.codigo_area);
             ViewBag.codigo_disposicion_final_prod = new SelectList(db.tipos_data, "id", "descripcion", ewo.codigo_disposicion_final_prod);
             ViewBag.codigo_estado = new SelectList(db.tipos_data, "id", "descripcion", ewo.codigo_estado);
             ViewBag.codigo_linea = new SelectList(db.tipos_data, "id", "descripcion", ewo.codigo_linea);
@@ -332,7 +334,6 @@ namespace EwoQ.Controllers
             ViewBag.pa_codigo_jefe_calidad = new SelectList(db.AspNetUsers, "Id", "Nombres", ewo.pa_codigo_jefe_calidad);
             ViewBag.codigo_responsable_area = new SelectList(db.AspNetUsers, "Id", "Nombres", ewo.codigo_responsable_area);
             ViewBag.codigo_producto = new SelectList(db.productos, "id", "nombre", ewo.producto);
-            ViewBag.codigo_area = new SelectList(db.tipos_data, "id", "descripcion", ewo.codigo_area);
             ViewBag.codigo_disposicion_final_prod = new SelectList(db.tipos_data, "id", "descripcion", ewo.codigo_disposicion_final_prod);
             ViewBag.codigo_estado = new SelectList(db.tipos_data, "id", "descripcion", ewo.codigo_estado);
             ViewBag.codigo_linea = new SelectList(db.tipos_data, "id", "descripcion", ewo.codigo_linea);
@@ -413,6 +414,31 @@ namespace EwoQ.Controllers
             return Json(res);
         }
 
+        public async Task<JsonResult> GetDropDownListAsync(int from, int id)
+        {
+            //FROM 1 - DESDE PLANTAS
+            //FROM 2 - DESDE AREAS
+
+            SelectList List = null;
+
+            switch (from)
+            {
+                case 1:
+                    //LISTA DE DE LÍNEAS
+                    var listA = await daoAr.GetAreasAsync(id);
+                    listA.Insert(0, new Database.areas_productivas() { id = 0, descripcion = "Seleccione area..." });
+                    List = new SelectList(listA, "id", "descripcion");
+                    break;
+                case 2:
+                    //LISTA DE DE LÍNEAS
+                    var listL = await daoLin.GetLinesAsync(id);
+                    listL.Insert(0, new Database.lineas() { id = 0, descripcion = "Seleccione línea..." });
+                    List = new SelectList(listL, "id", "descripcion");
+                    break;
+            }
+            return Json(new SelectList(List, "Value", "Text"));
+        }
+
         private async Task<ReporteIncidentesViewModel> BuildModel(long id)
         {
             var viewModel = new ReporteIncidentesViewModel();
@@ -430,9 +456,13 @@ namespace EwoQ.Controllers
 
             //LISTA DE TIPOS DE INCIDENTE
             var listTI = await daoTD.GetTypesAsync(INCIDENTSTYPES);
-            listTI.Insert(0, new Database.tipos_data() { id = 0, descripcion = "Seleccione tipo de incidente..." });
-            viewModel.TipoIncidenteList = new SelectList(listTI, "Id", "descripcion");
+            listTI.Insert(0, new Database.tipos_data() { id = 0, descripcion = "Seleccione tipo de incidente..." });            
+            viewModel.TipoIncidenteList = new SelectList(listTI, "id", "descripcion");
 
+            //LISTA PLANTAS
+            var listPlantas = await daoPlan.GetPlantasAsync();
+            listPlantas.Insert(0, new Database.plantas() { id = 0, descripcion = "Seleccione planta..." });
+            viewModel.PlantasList = new SelectList(listPlantas, "Id", "descripcion");
 
             //LISTA AREAS
             var listA = await daoTD.GetTypesAsync(AREASTYPES);

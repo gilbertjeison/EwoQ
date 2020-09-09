@@ -22,7 +22,7 @@ namespace EwoQ.Database
     
         public long id { get; set; }
         public Nullable<long> codigo_planta { get; set; }
-        public string descipcion { get; set; }
+        public string descripcion { get; set; }
     
         public virtual plantas plantas { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

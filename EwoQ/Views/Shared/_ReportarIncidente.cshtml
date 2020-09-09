@@ -7,7 +7,8 @@
 <link href="~/Scripts/Adminbsb/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
 
 <!-- Bootstrap Select Css -->
-<link href="~/Scripts/Adminbsb/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" />
+@*<link href="~/Scripts/Adminbsb/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" />*@
+<link href="~/Content/bootstrap-select.min.css" rel="stylesheet" />
 
 <!-- Jquery UI Css -->
 <link href="~/Scripts/Adminbsb/plugins/jquery-ui-1.12.1.autocomplete/jquery-ui.min.css" rel="stylesheet" />
@@ -36,6 +37,15 @@
     .select2-container .select2-selection--single {
         height: 26px;
     }
+
+    .bootstrap-select .dropdown-menu {
+        overflow: inherit !important;
+    }
+
+    .btn:not(.btn-link):not(.btn-circle) {
+        box-shadow: inherit;
+    }
+
 </style>
 @using (Html.BeginForm("Create", "ReportarIncidentes", FormMethod.Post, new { id = "formReporte" }))
 {
@@ -141,6 +151,24 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <b>@Html.LabelFor(model => model.IdPlanta)</b>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="material-icons">edit_location</i>
+                            </span>
+                            <div class="form-line" style="border:none;">
+                                <select id="IdPlanta" name="IdPlanta" data-size="5" data-live-search="true" class="selectpicker show-tick">
+                                    @foreach (var item in Model.PlantasList)
+                                    {
+                                        <option value="@item.Value">@item.Text</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-md-4">
                         <b>@Html.LabelFor(model => model.IdArea)</b>
                         <div class="input-group">
@@ -148,11 +176,12 @@
                                 <i class="material-icons">edit_location</i>
                             </span>
                             <div class="form-line" style="border:none;">
-                                <select id="IdArea" name="IdArea" data-size="5" data-live-search="true" class="selectpicker show-tick">
-                                    @foreach (var item in Model.AreasList)
-                                    {
-                                        <option value="@item.Value">@item.Text</option>
-                                    }
+                                <select id="IdArea" 
+                                        name="IdArea" 
+                                        data-width="200"
+                                        data-live-search="true" 
+                                        data-size="5"
+                                        class="selectpicker show-tick">                                    
                                 </select>
                             </div>
                         </div>
@@ -164,11 +193,11 @@
                                 <i class="material-icons">edit_location</i>
                             </span>
                             <div class="form-line" style="border:none;">
-                                <select id="IdLinea" name="IdLinea" data-size="5" data-live-search="true" class="selectpicker show-tick" required>
-                                    @foreach (var item in Model.LineasList)
-                                    {
-                                        <option value="@item.Value">@item.Text</option>
-                                    }
+                                <select id="IdLinea" 
+                                        name="IdLinea" 
+                                        data-size="5" 
+                                        data-live-search="true" 
+                                        class="selectpicker show-tick" required>                                    
                                 </select>
                             </div>
                         </div>
@@ -430,7 +459,8 @@
 </div>
 
 <!-- Select Plugin Js -->
-<script src="~/Scripts/Adminbsb/plugins/bootstrap-select/js/bootstrap-select.min.js"></script>
+@*<script src="~/Scripts/Adminbsb/plugins/bootstrap-select/js/bootstrap-select.min.js"></script>*@
+<script src="~/Scripts/bootstrap-select.min.js"></script>
 
 <!-- Moment Plugin Js -->
 <script src="~/Scripts/Adminbsb/plugins/momentjs/moment.js"></script>
@@ -647,6 +677,9 @@
     });
 
     $(function () {
+
+        $.fn.selectpicker.Constructor.BootstrapVersion = '3';
+
         $('.datepicker').bootstrapMaterialDatePicker({
             format: 'DD-MM-YYYY',
             clearButton: true,
@@ -664,6 +697,81 @@
             lang: 'es',
             clearText: 'Limipiar',
             cancelText: 'Cancelar'
+        });
+
+        //Combo en cascada
+        $('#IdPlanta').change(function (e) {
+            var idPlanta = $('#IdPlanta').find("option:selected").val();
+            console.log(idPlanta);
+
+            var url = '@Url.Content("~/")' + "ReportarIncidentes/GetDropDownListAsync";
+
+
+
+            $('#IdArea').selectpicker('destroy');
+            $('#IdArea').empty();
+
+            //e.stopImmediatePropagation();
+
+            $.ajax({
+                url: url,
+                type: 'post',
+                data: { from: 1, id: idPlanta },
+                success: function (response) {
+
+                    $.each(response, function (i, area) {
+
+                        $('#IdArea').append($('<option>', {
+                            value: area.Value,
+                            text: area.Text
+                        }));
+                    });
+
+                    $('#IdArea').selectpicker('refresh');
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            });
+
+            return true;
+        });
+
+        $('#IdArea').change(function (e) {
+            var idArea = $('#IdArea').find("option:selected").val();
+            console.log(idArea);
+
+            var url = '@Url.Content("~/")' + "ReportarIncidentes/GetDropDownListAsync";
+
+
+
+            $('#IdLinea').selectpicker('destroy');
+            $('#IdLinea').empty();
+
+            //e.stopImmediatePropagation();
+
+            $.ajax({
+                url: url,
+                type: 'post',
+                data: { from: 2, id: idArea },
+                success: function (response) {
+
+                    $.each(response, function (i, linea) {
+
+                        $('#IdLinea').append($('<option>', {
+                            value: linea.Value,
+                            text: linea.Text
+                        }));
+                    });
+
+                    $('#IdLinea').selectpicker('refresh');
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            });
+
+            return true;
         });
 
         $('#NombreProducto').autocomplete({
@@ -763,6 +871,5 @@
 
         $('.page-loader-wrapper').fadeOut();
     }
-
 
 </script>

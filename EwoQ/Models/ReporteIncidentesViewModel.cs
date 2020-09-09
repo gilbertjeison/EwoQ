@@ -53,6 +53,12 @@ namespace EwoQ.Models
         public bool RecurrenteB { get; set; }
 
 
+        [Display(Name = "Planta")]
+        public long IdPlanta { get; set; }
+        public string PlantaDesc { get; set; }
+        public SelectList PlantasList { get; set; }
+
+
         [Display(Name = "Area donde ocurrió el evento")]
         public long IdArea { get; set; }
         public string AreaDesc { get; set; }

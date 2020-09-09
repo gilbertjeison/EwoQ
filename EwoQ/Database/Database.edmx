@@ -22,7 +22,7 @@
           </Key>
           <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="codigo_planta" Type="bigint" />
-          <Property Name="descipcion" Type="varchar" MaxLength="100" />
+          <Property Name="descripcion" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="AspNetRoles">
           <Key>
@@ -1464,9 +1464,9 @@
           </Key>
           <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="codigo_planta" Type="Int64" />
-          <Property Name="descipcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="plantas" Relationship="EwoQModel.FK_areas_productivas_plantas" FromRole="areas_productivas" ToRole="plantas" />
           <NavigationProperty Name="lineas" Relationship="EwoQModel.FK_lineas_areas_productivas" FromRole="areas_productivas" ToRole="lineas" />
+          <Property Name="descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="lineas">
           <Key>
@@ -1809,7 +1809,7 @@
           <EntitySetMapping Name="areas_productivas">
             <EntityTypeMapping TypeName="EwoQModel.areas_productivas">
               <MappingFragment StoreEntitySet="areas_productivas">
-                <ScalarProperty Name="descipcion" ColumnName="descipcion" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
                 <ScalarProperty Name="codigo_planta" ColumnName="codigo_planta" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>

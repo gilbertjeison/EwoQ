@@ -147,6 +147,10 @@
         opacity: 0;
         display: none;
     }
+
+    .bootstrap-select .dropdown-menu {
+        overflow: inherit !important;
+    }
 </style>
 
 <div class="card js-sweetalert">
@@ -262,6 +266,24 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <b>@Html.LabelFor(model => model.IdPlanta)</b>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">edit_location</i>
+                                        </span>
+                                        <div class="form-line" style="border:none;">
+                                            <select id="IdPlanta" name="IdPlanta" data-size="5" data-live-search="true" class="selectpicker show-tick">
+                                                @foreach (var item in Model.PlantasList)
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-md-4">
                                     <b>@Html.LabelFor(model => model.IdArea)</b>
                                     <div class="input-group">
@@ -269,11 +291,11 @@
                                             <i class="material-icons">edit_location</i>
                                         </span>
                                         <div class="form-line" style="border:none;">
-                                            <select id="IdArea" name="IdArea" data-size="5" data-live-search="true" class="selectpicker show-tick">
-                                                @foreach (var item in Model.AreasList)
-                                                {
-                                                    <option value="@item.Value">@item.Text</option>
-                                                }
+                                            <select id="IdArea" name="IdArea" 
+                                                    data-size="5" 
+                                                    data-live-search="true" 
+                                                    class="selectpicker show-tick">
+                                                
                                             </select>
                                         </div>
                                     </div>
@@ -285,11 +307,11 @@
                                             <i class="material-icons">edit_location</i>
                                         </span>
                                         <div class="form-line" style="border:none;">
-                                            <select id="IdLinea" name="IdLinea" data-size="5" data-live-search="true" class="selectpicker show-tick" required>
-                                                @foreach (var item in Model.LineasList)
-                                                {
-                                                    <option value="@item.Value">@item.Text</option>
-                                                }
+                                            <select id="IdLinea" 
+                                                    name="IdLinea" 
+                                                    data-size="5" 
+                                                    data-live-search="true" 
+                                                    class="selectpicker show-tick" required>                                                
                                             </select>
                                         </div>
                                     </div>
@@ -2318,7 +2340,6 @@
                         data.push(item);
                         grid.updateRowCount();
                         grid.render();
-                        console.log('sg!');
                     });
                 },
                 //EN CASO DE ERROR, IMPRIMIRLO
@@ -2851,7 +2872,6 @@
 
         names.initialize();
 
-
         $('.tags input:text').tagsinput({
             typeaheadjs: {
                 name: 'names',
@@ -3011,11 +3031,11 @@
                     $('.page-loader-wrapper').fadeIn();
                 },
                 success: function (r)
-                {
-                    //console.log(r);
+                {                    
                     $('#TipoIncidente').val(r.TipoIncidente);
-                    $('#IdArea').val(r.IdArea);
-                    $('#IdLinea').val(r.IdLinea);
+                    $('#IdPlanta').val(r.IdPlanta);
+                    $('#IdPlanta').trigger("change", r);
+                                       
                     $('#IdCoorSup').val(r.IdCoorSup);
                     $('#IdRespArea').val(r.IdRespArea);
                     $('#IdOpeRes').val(r.IdOpeRes);
@@ -3031,5 +3051,89 @@
                 }
             });
         }
+
+        //Combo en cascada
+        $('#IdPlanta').change(function (e, obj) {
+            var idPlanta = $('#IdPlanta').find("option:selected").val();
+           
+            var url = '@Url.Content("~/")' + "ReportarIncidentes/GetDropDownListAsync";
+
+
+
+            $('#IdArea').selectpicker('destroy');
+            $('#IdArea').empty();
+
+            //e.stopImmediatePropagation();
+
+            $.ajax({
+                url: url,
+                type: 'post',
+                data: { from: 1, id: idPlanta },
+                success: function (response) {
+
+                    $.each(response, function (i, area) {
+
+                        $('#IdArea').append($('<option>', {
+                            value: area.Value,
+                            text: area.Text
+                        }));
+                    });
+
+                    if (obj.IdArea)
+                    {                        
+                        $('#IdArea').val(obj.IdArea);
+                        $('#IdArea').trigger("change", obj.IdLinea); 
+                    }
+                    $('#IdArea').selectpicker('refresh');
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            });
+
+            return true;
+        });
+
+        $('#IdArea').change(function (e, IdLinea) {
+            var idArea = $('#IdArea').find("option:selected").val();
+            
+            var url = '@Url.Content("~/")' + "ReportarIncidentes/GetDropDownListAsync";
+
+
+
+            $('#IdLinea').selectpicker('destroy');
+            $('#IdLinea').empty();
+
+            //e.stopImmediatePropagation();
+
+            $.ajax({
+                url: url,
+                type: 'post',
+                data: { from: 2, id: idArea },
+                success: function (response) {
+
+                    $.each(response, function (i, linea) {
+
+                        $('#IdLinea').append($('<option>', {
+                            value: linea.Value,
+                            text: linea.Text
+                        }));
+                    });
+
+                    if (IdLinea) {
+                        $('#IdLinea').val(IdLinea);
+                    }
+                                        
+                    $('#IdLinea').selectpicker('refresh');
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            });
+
+            return true;
+        });
     });
+
+
 </script>

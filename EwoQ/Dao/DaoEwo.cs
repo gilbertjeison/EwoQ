@@ -186,7 +186,7 @@ namespace EwoQ.Dao
                                                    where e.codigo_estado == 3
                                                    select e).Count();
                         iavm.TiempoLinParada = (from e in context.ewo                                                  
-                                                   select e).Sum(x => x.tiempo_linea_parada.Value);
+                                                   select e).Sum(x => x.tiempo_linea_parada.HasValue ? (int?)x.tiempo_linea_parada.Value  : 0) ?? 0;
                         iavm.UsuariosRegistrados = (from e in context.AspNetUsers                                                  
                                                    select e).Count();
 
@@ -211,9 +211,7 @@ namespace EwoQ.Dao
                 {
                     var query = from e in context.ewo
                                 join l in context.tipos_data
-                                on e.codigo_linea equals l.id
-                                join a in context.tipos_data
-                                on e.codigo_area equals a.id
+                                on e.codigo_linea equals l.id                                
                                 join ti in context.tipos_data
                                 on e.tipo_incidente equals ti.id
                                 join es in context.tipos_data
@@ -221,7 +219,7 @@ namespace EwoQ.Dao
                                 join t in context.AspNetUsers
                                 on e.autor equals t.Id
                                 where e.autor == id_autor
-                                select new { e, l, a, t, ti,es };
+                                select new { e, l, t, ti,es };
 
                     var data = await query.ToListAsync();
 
@@ -229,8 +227,7 @@ namespace EwoQ.Dao
                     {
                         list.Add(new ReporteIncidentesViewModel()
                         {
-                            Id = item.e.id,
-                            AreaDesc = item.a.descripcion,
+                            Id = item.e.id,                            
                             LineaDesc = item.l.descripcion,
                             Autor = item.t.Id,
                             AutorDesc = item.t.Nombres + " " + item.t.Apellidos,
@@ -262,17 +259,17 @@ namespace EwoQ.Dao
                 using (var context = new EwoQEntities())
                 {
                     var query = from e in context.ewo
-                                join l in context.tipos_data
+                                join l in context.lineas
                                 on e.codigo_linea equals l.id
-                                join a in context.tipos_data
-                                on e.codigo_area equals a.id
+                                join a in context.areas_productivas
+                                on l.codigo_area equals a.id
                                 join ti in context.tipos_data
                                 on e.tipo_incidente equals ti.id
                                 join es in context.tipos_data
                                 on e.codigo_estado equals es.id
                                 join t in context.AspNetUsers
                                 on e.autor equals t.Id
-                                select new { e, l, a, t, ti, es };
+                                select new { e, l, t, ti, es, a  };
 
                     var data = await query.ToListAsync();
 
@@ -281,8 +278,8 @@ namespace EwoQ.Dao
                         list.Add(new ReporteIncidentesViewModel()
                         {
                             Id = item.e.id,
-                            AreaDesc = item.a.descripcion,
                             LineaDesc = item.l.descripcion,
+                            AreaDesc = item.a.descripcion,
                             Autor = item.t.Id,
                             AutorDesc = item.t.Nombres + " " + item.t.Apellidos,
                             TipoIncidente = item.e.tipo_incidente.Value,
@@ -312,11 +309,13 @@ namespace EwoQ.Dao
             {
                 using (var context = new EwoQEntities())
                 {
-                    var query = from e in context.ewo
-                                join a in context.tipos_data
-                                on e.codigo_area equals a.id
-                                join l in context.tipos_data
+                    var query = from e in context.ewo                                
+                                join l in context.lineas
                                 on e.codigo_linea equals l.id
+                                join a in context.areas_productivas
+                                on l.codigo_area equals a.id
+                                join p in context.plantas
+                                on a.codigo_planta equals p.id
                                 join es in context.tipos_data
                                 on e.codigo_estado equals es.id
                                 join t in context.AspNetUsers
@@ -324,7 +323,7 @@ namespace EwoQ.Dao
                                 join ti in context.tipos_data
                                 on e.tipo_incidente equals ti.id
                                 where e.id == id
-                                select new { e, a, l, t, ti,es };
+                                select new { e, l, t, ti,es, a, p };
 
                     var data = await query.ToListAsync();
 
@@ -333,10 +332,10 @@ namespace EwoQ.Dao
                         lDecs = new ReporteIncidentesViewModel()
                         {
                             Id = i.e.id,
-                            AreaDesc = i.a.descripcion,
-                            IdArea = i.a.id,
                             LineaDesc = i.l.descripcion,
                             IdLinea = i.e.codigo_linea.Value,
+                            IdPlanta = i.p.id,
+                            IdArea = i.a.id,
                             Autor = i.t.Nombres + " " + i.t.Apellidos,
                             TipoIncidente = i.e.tipo_incidente.Value,
                             TipoIncidenteDesc = i.ti.descripcion,
