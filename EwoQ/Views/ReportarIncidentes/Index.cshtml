@@ -77,7 +77,7 @@
                     <th>Fecha</th>
                     <th>Autor</th>
                     <th>Continuar</th>
-                    <th>Edición</th>
+                    @*<th>Edición</th>*@
                     <th>Eliminación</th>
                     <th>Descargar</th>
                 </tr>
@@ -147,11 +147,11 @@
                         return "<a class='btn btn-success waves-effect'  onClick=proccessIncident('" +row.Id+"'); >Procesar incidente</a>";
                     }
                 },
-                {
-                    data: null, "autoWidth": true, render: function (data, type, row) {
-                        return "<a class='btn btn-info waves-effect' onClick=editEwo('" + row.Id +"');>Editar</a>";
-                    }
-                },
+                //{
+                //    data: null, "autoWidth": true, render: function (data, type, row) {
+                //        return "<a class='btn btn-info waves-effect' onClick=editEwo('" + row.Id +"');>Editar</a>";
+                //    }
+                //},
                 {
                     data: null, "autoWidth": true, render: function (data, type, row) {
                         return "<a class='btn btn-danger waves-effect'>Eliminar</a>";
