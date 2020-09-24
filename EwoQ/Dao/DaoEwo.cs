@@ -12,6 +12,21 @@ namespace EwoQ.Dao
 {
     public class DaoEwo
     {
+        private static DaoEwo daoInstance = null;
+
+        public static DaoEwo DaoInstance
+        {
+            get
+            {
+                if (daoInstance == null)
+                {
+                    daoInstance = new DaoEwo();
+                }
+
+                return daoInstance;
+            }
+        }
+
         public async Task<int> GetLastConsecutive()
         {
             int max = 0;

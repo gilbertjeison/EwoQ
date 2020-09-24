@@ -11,6 +11,21 @@ namespace EwoQ.Dao
 {
     public class DaoTiposData
     {
+        private static DaoTiposData daoInstance = null;
+
+        public static DaoTiposData DaoInstance
+        {
+            get
+            {
+                if (daoInstance == null)
+                {
+                    daoInstance = new DaoTiposData();
+                }
+
+                return daoInstance;
+            }
+        }
+
         public async Task<List<tipos_data>> GetTypesAsync(int type)
         {
             List<tipos_data> tiposData = new List<tipos_data>();

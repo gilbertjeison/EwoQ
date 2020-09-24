@@ -11,6 +11,22 @@ namespace EwoQ.Dao
 {
     public class DaoAreas
     {
+
+        private static DaoAreas daoInstance = null;
+
+        public static DaoAreas DaoInstance
+        {
+            get
+            {
+                if (daoInstance == null)
+                {
+                    daoInstance = new DaoAreas();
+                }
+
+                return daoInstance;
+            }
+        }
+
         public async Task<List<areas_productivas>> GetAreasAsync(int id)
         {
             List<areas_productivas> areas = new List<areas_productivas>();

@@ -11,6 +11,20 @@ namespace EwoQ.Dao
 {
     public class Dao4M
     {
+        private static Dao4M daoInstance = null;
+
+        public static Dao4M DaoInstance
+        {
+            get
+            {
+                if (daoInstance == null)
+                {
+                    daoInstance = new Dao4M();
+                }
+
+                return daoInstance;
+            }
+        }
         public async Task<List<preguntas_4m>> Get4mQuestionsByType(long id)
         {
             List<preguntas_4m> p4m = new List<preguntas_4m>();

@@ -11,6 +11,20 @@ namespace EwoQ.Dao
 {
     public class DaoProductos
     {
+        private static DaoProductos daoInstance = null;
+
+        public static DaoProductos DaoInstance
+        {
+            get
+            {
+                if (daoInstance == null)
+                {
+                    daoInstance = new DaoProductos();
+                }
+
+                return daoInstance;
+            }
+        }
         public async Task<List<string>> GetProductsAsync()
         {
             List<string> listPro = new List<string>();

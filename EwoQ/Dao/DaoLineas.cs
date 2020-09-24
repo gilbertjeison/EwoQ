@@ -11,6 +11,21 @@ namespace EwoQ.Dao
 {
     public class DaoLineas
     {
+        private static DaoLineas daoInstance = null;
+
+        public static DaoLineas DaoInstance
+        {
+            get
+            {
+                if (daoInstance == null)
+                {
+                    daoInstance = new DaoLineas();
+                }
+
+                return daoInstance;
+            }
+        }
+
         public async Task<List<lineas>> GetLinesAsync(int id)
         {
             List<lineas> lineas = new List<lineas>();

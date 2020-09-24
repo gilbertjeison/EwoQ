@@ -19,7 +19,6 @@ namespace EwoQ.Controllers
     public class UsersController : Controller
     {
         private EwoQEntities db = new EwoQEntities();
-        DaoUsuarios daoUser = new DaoUsuarios();
 
         // GET: Users
         public ActionResult Index()
@@ -49,7 +48,7 @@ namespace EwoQ.Controllers
                 int recordsTotal = 0;
 
                 // Getting all user data
-                var userData = daoUser.GetUserWOApprv();
+                var userData = DaoUsuarios.DaoInstance.GetUserWOApprv();
 
                 var data1 = await userData;
 
@@ -88,12 +87,12 @@ namespace EwoQ.Controllers
                     return RedirectToAction("Users", "Index");
                 }
 
-                int result = await daoUser.ApproveUser(id);
+                int result = await DaoUsuarios.DaoInstance.ApproveUser(id);
                
                 if (result > 0)
                 {
                     //ENVIAR CORREO ELECTRÓNICO DE NOTIFICACIÓN
-                    var user = daoUser.GetUser(id);
+                    var user = DaoUsuarios.DaoInstance.GetUser(id);
                     await Utils.SomeHelpers.SendGridAsync(2, user.Email, user.Nombres + " " + user.Apellidos);
                     return Json(data: true);
                 }

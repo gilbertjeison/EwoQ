@@ -2509,6 +2509,7 @@
         }
     });
 </script>
+@* ASISTENTE DE PAGINAS *@
 <script>
     $(function () {
         Dropzone.autoDiscover = false;
@@ -2685,9 +2686,16 @@
                         }
                     });
 
-                    if (anyZeroA) {
-                        //showSweetAlert("ZERO QUESTIONS", "Debe responder todas las preguntas AFTER", "error");
-                        //return false;
+                    if (anyZeroA) {                       
+                        showSweetAlert("ZERO QUESTIONS", "Debe responder todas las preguntas AFTER" , "error");
+                        return false;
+                    }
+                    else {
+                        var pntAfter = parseInt(aftTotal.innerHTML.replace("%", ""));
+                        if (pntAfter < 80) {
+                            showSweetAlert("ZERO QUESTIONS", "El puntaje del resultado AFTER debe ser superior al 80%", "error");
+                            return false;
+                        }
                     }
 
                     //validar plan de acción
@@ -2995,7 +3003,7 @@
 
             //fijar valor en el estado del incidente
             $('#statePercent').text(ttl + '%');
-            $('#pgbAfter').añttr('aria-valuenow', ttl).css('width', ttl + '%');
+            $('#pgbAfter').attr('aria-valuenow', ttl).css('width', ttl + '%');
 
             //indicar si ya está cerrado
             if (ttl >= 80) {
@@ -3134,6 +3142,4 @@
             return true;
         });
     });
-
-
 </script>

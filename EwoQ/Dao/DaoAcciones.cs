@@ -11,6 +11,20 @@ namespace EwoQ.Dao
 {
     public class DaoAcciones
     {
+        private static DaoAcciones daoInstance = null;
+
+        public static DaoAcciones DaoInstance
+        {
+            get
+            {
+                if (daoInstance == null)
+                {
+                    daoInstance = new DaoAcciones();
+                }
+
+                return daoInstance;
+            }
+        }
         public async Task<int> AddAcciones(List<acciones_inmediatas> ai)
         {
             int regs = 0;

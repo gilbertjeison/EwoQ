@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Globalization;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -11,8 +9,6 @@ using Microsoft.Owin.Security;
 using EwoQ.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
-using System.Data.Entity.Validation;
-using System.Diagnostics;
 using EwoQ.Dao;
 
 namespace EwoQ.Controllers
@@ -22,7 +18,6 @@ namespace EwoQ.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        DaoUsuarios daoUser = new DaoUsuarios();
 
         public AccountController()
         {
@@ -95,7 +90,7 @@ namespace EwoQ.Controllers
                 case SignInStatus.Success:
                     
                     //VALIDAR QUE USUARIO 
-                    var user = daoUser.GetUserByMail(model.Email);
+                    var user = DaoUsuarios.DaoInstance.GetUserByMail(model.Email);
                     if (user != null)
                     {
                         if (user.EmailConfirmed)

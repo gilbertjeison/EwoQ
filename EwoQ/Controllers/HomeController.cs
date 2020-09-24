@@ -15,8 +15,7 @@ namespace EwoQ.Controllers
     [Authorize]
     [SessionState(SessionStateBehavior.Default)]
     public class HomeController : Controller
-    {
-        DaoEwo daoE = new DaoEwo();
+    {        
         IndexAdminViewModel ivm = new IndexAdminViewModel();
 
         public ActionResult Index()
@@ -47,7 +46,7 @@ namespace EwoQ.Controllers
 
            
             
-            ivm = await daoE.GetIndexData();
+            ivm = await DaoEwo.DaoInstance.GetIndexData();
             if (Session["SessionCount"] != null)
             {
                 string tempCount = Session["SessionCount"].ToString();
@@ -68,7 +67,7 @@ namespace EwoQ.Controllers
 
             await Task.Run(() => 
             {
-                donut = daoE.GetEwoPercents();
+                donut = DaoEwo.DaoInstance.GetEwoPercents();
             });
                  
             return Json(donut);

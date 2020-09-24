@@ -21,19 +21,7 @@ namespace EwoQ.Controllers
     [Authorize]
     public class ReportarIncidentesController : Controller
     {
-        
-
-        private EwoQEntities db = new EwoQEntities();
-        DaoAcciones daoAcc = new DaoAcciones();
-        DaoTiposData daoTD = new DaoTiposData();
-        DaoUsuarios daoUser = new DaoUsuarios();
-        DaoProductos daoPro = new DaoProductos();
-        DaoEwo daoEwo = new DaoEwo();
-        DaoPlantas daoPlan = new DaoPlantas();
-        Dao4M dao4m = new Dao4M();
-        DaoZero daoZ = new DaoZero();
-        DaoAreas daoAr = new DaoAreas();
-        DaoLineas daoLin = new DaoLineas();
+        private EwoQEntities db = new EwoQEntities();       
 
         int AREASTYPES = 7;
         int LINESTYPES = 8;
@@ -51,7 +39,7 @@ namespace EwoQ.Controllers
 
             try
             {
-                AspNetUsers aspNetUsers = daoUser.GetUser(User.Identity.GetUserId());
+                AspNetUsers aspNetUsers = DaoUsuarios.DaoInstance.GetUser(User.Identity.GetUserId());
 
                 //var draw = Request.Form["draw"];
                 //var start = Request.Form["start"];
@@ -67,11 +55,11 @@ namespace EwoQ.Controllers
 
                 if (aspNetUsers.IdRol.Equals(Utils.SomeHelpers.ROL_OPER))
                 {
-                    rivm = daoEwo.GetEwoList(aspNetUsers.Id);
+                    rivm = DaoEwo.DaoInstance.GetEwoList(aspNetUsers.Id);
                 }
                 else
                 {
-                    rivm = daoEwo.GetEwoList();
+                    rivm = DaoEwo.DaoInstance.GetEwoList();
                 }
 
                 var data1 = await rivm;
@@ -116,7 +104,7 @@ namespace EwoQ.Controllers
             SelectList List = null;
 
             //LISTA DE DE LÍNEAS
-            var listU = await daoUser.GetAllUsers();
+            var listU = await DaoUsuarios.DaoInstance.GetAllUsers();
             listU.Insert(0, new UsersUI() { Id = "0", NombresCommpletos = "Seleccione usuario..." });
             List = new SelectList(listU, "Id", "NombresCommpletos");
 
@@ -126,21 +114,21 @@ namespace EwoQ.Controllers
         [HttpPost]
         public async Task<JsonResult> GetAllUsersJsonAsync()
         {
-            var users = await daoUser.GetAllUsers();           
+            var users = await DaoUsuarios.DaoInstance.GetAllUsers();           
             return Json(users);
         }
 
         [HttpPost]
         public async Task<JsonResult> Get4MQuestionsByType(int id)
         {
-            var qstns = await dao4m.Get4mQuestionsByType(id);
+            var qstns = await Dao4M.DaoInstance.Get4mQuestionsByType(id);
             return Json(qstns);
         }
 
         public async Task<JsonResult> GetAllUsers()
         {
             //LISTA DE DE LÍNEAS
-            var list = await daoUser.GetAllUsers();
+            var list = await DaoUsuarios.DaoInstance.GetAllUsers();
 
             return Json(list, JsonRequestBehavior.AllowGet);
         }
@@ -184,7 +172,7 @@ namespace EwoQ.Controllers
                 List<acciones_inmediatas> accInm = ser.Deserialize<List<acciones_inmediatas>>(ewr.Cmd);
 
                 ewo ewo = new ewo();
-                ewo.consecutivo = await daoEwo.GetLastConsecutive();
+                ewo.consecutivo = await DaoEwo.DaoInstance.GetLastConsecutive();
                 ewo.codigo_estado = 1; //ABIERTO - TIPOS DATA
                 ewo.fecha_apertura_investigacion = ewr.FchApertInvestigacion == null ? DateTime.Now : DateTime.ParseExact(ewr.FchApertInvestigacion, "dd-MM-yyyy", CultureInfo.InvariantCulture);
                 ewo.hora_apertura_investigacion = TimeSpan.Parse(ewr.HrApertInvestigacion);
@@ -211,7 +199,7 @@ namespace EwoQ.Controllers
                 ewo.descripcion_general_problema = ewr.DescripcionProblema;
                 ewo.autor = User.Identity.GetUserId();
 
-                long reg = await daoEwo.AddEwo(ewo);
+                long reg = await DaoEwo.DaoInstance.AddEwo(ewo);
 
                 if (reg > 0)
                 {
@@ -220,7 +208,7 @@ namespace EwoQ.Controllers
                         item.codigo_ewo = reg;
                     }
 
-                    await daoAcc.AddAcciones(accInm);
+                    await DaoAcciones.DaoInstance.AddAcciones(accInm);
 
                     res = 1;
                 }
@@ -371,7 +359,7 @@ namespace EwoQ.Controllers
         public async Task<JsonResult> GetProducts(string term)
         {
             //LISTA DE DE PRODUCTOS
-            var list = await daoPro.GetProductsAsync();
+            var list = await DaoProductos.DaoInstance.GetProductsAsync();
                        
             return Json(list.Where(x => x.StartsWith
                 (term,StringComparison.CurrentCultureIgnoreCase)),
@@ -381,7 +369,7 @@ namespace EwoQ.Controllers
         [HttpPost]
         public async Task<JsonResult> GetAcionsList(long id_ewo)
         {
-            var actList = await daoAcc.GetActionsList(id_ewo);
+            var actList = await DaoAcciones.DaoInstance.GetActionsList(id_ewo);
             List<CustomInmActions> kla = new List<CustomInmActions>();
             actList.ForEach(x =>
             {
@@ -402,7 +390,7 @@ namespace EwoQ.Controllers
         [HttpPost]
         public async Task<JsonResult> GetEwoAsync(int id)
         {
-            var ewo = await daoEwo.GetEwoDesc(id);
+            var ewo = await DaoEwo.DaoInstance.GetEwoDesc(id);
             return Json(ewo);
         }
 
@@ -410,7 +398,7 @@ namespace EwoQ.Controllers
         public async Task<JsonResult> GetZeroQuestions(int id_tipom)
         {
             //TEST THE ZERO METHOD
-            var res = await daoZ.GetZeroQuestions(id_tipom);
+            var res = await DaoZero.DaoInstance.GetZeroQuestions(id_tipom);
             return Json(res);
         }
 
@@ -425,13 +413,13 @@ namespace EwoQ.Controllers
             {
                 case 1:
                     //LISTA DE DE LÍNEAS
-                    var listA = await daoAr.GetAreasAsync(id);
+                    var listA = await DaoAreas.DaoInstance.GetAreasAsync(id);
                     listA.Insert(0, new Database.areas_productivas() { id = 0, descripcion = "Seleccione area..." });
                     List = new SelectList(listA, "id", "descripcion");
                     break;
                 case 2:
                     //LISTA DE DE LÍNEAS
-                    var listL = await daoLin.GetLinesAsync(id);
+                    var listL = await DaoLineas.DaoInstance.GetLinesAsync(id);
                     listL.Insert(0, new Database.lineas() { id = 0, descripcion = "Seleccione línea..." });
                     List = new SelectList(listL, "id", "descripcion");
                     break;
@@ -445,53 +433,53 @@ namespace EwoQ.Controllers
 
             if (id > 0)
             {
-                viewModel = await daoEwo.GetEwoDesc(id);
+                viewModel = await DaoEwo.DaoInstance.GetEwoDesc(id);
             }
             else
             {               
                 viewModel.FchApertInvestigacion = DateTime.Now.ToString("dd-MM-yyyy");
                 viewModel.FchEntregaInvestigacion = DateTime.Now.ToString("dd-MM-yyyy");                
-                viewModel.Consecutivo = "00" + await daoEwo.GetLastConsecutive();
+                viewModel.Consecutivo = "00" + await DaoEwo.DaoInstance.GetLastConsecutive();
             }
 
             //LISTA DE TIPOS DE INCIDENTE
-            var listTI = await daoTD.GetTypesAsync(INCIDENTSTYPES);
+            var listTI = await DaoTiposData.DaoInstance.GetTypesAsync(INCIDENTSTYPES);
             listTI.Insert(0, new Database.tipos_data() { id = 0, descripcion = "Seleccione tipo de incidente..." });            
             viewModel.TipoIncidenteList = new SelectList(listTI, "id", "descripcion");
 
             //LISTA PLANTAS
-            var listPlantas = await daoPlan.GetPlantasAsync();
+            var listPlantas = await DaoPlantas.DaoInstance.GetPlantasAsync();
             listPlantas.Insert(0, new Database.plantas() { id = 0, descripcion = "Seleccione planta..." });
             viewModel.PlantasList = new SelectList(listPlantas, "Id", "descripcion");
 
             //LISTA AREAS
-            var listA = await daoTD.GetTypesAsync(AREASTYPES);
+            var listA = await DaoTiposData.DaoInstance.GetTypesAsync(AREASTYPES);
             listA.Insert(0, new Database.tipos_data() { id = 0, descripcion = "Seleccione área..." });
             viewModel.AreasList = new SelectList(listA, "Id", "descripcion");
 
             //LISTA LÍNEAS
-            var listL = await daoTD.GetTypesAsync(LINESTYPES);
+            var listL = await DaoTiposData.DaoInstance.GetTypesAsync(LINESTYPES);
             listL.Insert(0, new Database.tipos_data() { id = 0, descripcion = "Seleccione línea..." });
             viewModel.LineasList = new SelectList(listL, "Id", "descripcion");
 
 
             //USUARIOS ADMINISTRADORES
-            var listUA = await daoUser.GetUsersByRole(ADMINROLE);
+            var listUA = await DaoUsuarios.DaoInstance.GetUsersByRole(ADMINROLE);
             listUA.Insert(0, new UsersUI() { Id = "0", NombresCommpletos = "Seleccione usuario..." });
             viewModel.AdminUsersList = new SelectList(listUA, "Id", "NombresCommpletos");
 
             //USUARIOS OPERARIOS
-            var listUO = await daoUser.GetUsersByRole(OPERATINGROLE);
+            var listUO = await DaoUsuarios.DaoInstance.GetUsersByRole(OPERATINGROLE);
             listUO.Insert(0, new UsersUI() { Id = "0", NombresCommpletos = "Seleccione usuario..." });
             viewModel.OperatingUsersList = new SelectList(listUO, "Id", "NombresCommpletos");
 
             //DISPOSICIÓN FINAL DEL PRODUCTO
-            var listDF = await daoTD.GetTypesAsync(FINALDISPOSITION);
+            var listDF = await DaoTiposData.DaoInstance.GetTypesAsync(FINALDISPOSITION);
             listDF.Insert(0, new Database.tipos_data() { id = 0, descripcion = "Seleccione disposición..." });
             viewModel.DisposicionFList = new SelectList(listDF, "Id", "descripcion");
 
             //TOP FIVE FOR ZERO
-            var listTF = await daoTD.GetTypesAsync(TOPFIVEFORZERO);
+            var listTF = await DaoTiposData.DaoInstance.GetTypesAsync(TOPFIVEFORZERO);
             viewModel.TopFiveForZeroList = listTF;
 
             return viewModel;

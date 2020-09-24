@@ -11,6 +11,20 @@ namespace EwoQ.Dao
 {
     public class DaoPlantas
     {
+        private static DaoPlantas daoInstance = null;
+
+        public static DaoPlantas DaoInstance
+        {
+            get
+            {
+                if (daoInstance == null)
+                {
+                    daoInstance = new DaoPlantas();
+                }
+
+                return daoInstance;
+            }
+        }
         public async Task<List<plantas>> GetPlantasAsync()
         {
             List<plantas> plantas = new List<plantas>();

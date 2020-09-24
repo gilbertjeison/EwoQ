@@ -12,6 +12,21 @@ namespace EwoQ.Dao
 {
     public class DaoZero
     {
+        private static DaoZero daoInstance = null;
+
+        public static DaoZero DaoInstance
+        {
+            get
+            {
+                if (daoInstance == null)
+                {
+                    daoInstance = new DaoZero();
+                }
+
+                return daoInstance;
+            }
+        }
+
         public async Task<List<ZeroViewModel>> GetZeroQuestions(int tipo_m)
         {
             List<ZeroViewModel> list = new List<ZeroViewModel>();

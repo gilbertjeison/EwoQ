@@ -11,7 +11,21 @@ using System.Web;
 namespace EwoQ.Dao
 {
     public class DaoUsuarios
-    {    
+    {
+        private static DaoUsuarios daoInstance = null;
+
+        public static DaoUsuarios DaoInstance { 
+            get 
+            {
+                if (daoInstance == null)
+                {
+                    daoInstance = new DaoUsuarios();
+                }                    
+
+                return daoInstance;                
+            } 
+        }
+
         public AspNetUsers GetUser(string id)
         {
             AspNetUsers user = new AspNetUsers();
