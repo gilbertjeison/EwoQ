@@ -213,6 +213,9 @@ namespace EwoQ.Models
 
         [Display(Name = "Gerente de Calidad: ")]
         public string IdGerCal { get; set; }
+
+        [DisplayName("Fecha de cierre de investigación")]
+        public string FchCierre { get; set; }
         #endregion
 
         #region CAMPOS ADJUNTOS

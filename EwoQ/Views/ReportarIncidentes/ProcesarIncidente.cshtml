@@ -1327,14 +1327,33 @@
                         <div class="body">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="gray_cube">
-                                        <p style="text-align:center; font-weight: bold;">Estado del incidente o no inconformidad</p>
-                                        <hr />
-                                        <div class="switch" style="margin: 0 auto; display:table; ">
-                                            <label>Abierto<input type="checkbox" name="chkCerrado" disabled><span class="lever"></span>Cerrado</label>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="gray_cube" style="height:130px;">
+                                                <p style="text-align:center; font-weight: bold;">Estado del incidente o no inconformidad</p>
+                                                <hr />
+                                                <div class="switch" style="margin: 0 auto; display:table; ">
+                                                    <label>Abierto<input type="checkbox" name="chkCerrado" disabled><span class="lever"></span>Cerrado</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="gray_cube" style="height:130px;">
+                                                <p style="text-align:center; font-weight: bold;">@Html.LabelFor(model => model.FchCierre)</p>
+                                                <hr />
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <i class="material-icons">date_range</i>
+                                                    </span>
+                                                    <div class="form-line">
+                                                        @Html.EditorFor(model => model.FchCierre, new { htmlAttributes = new { @class = "form-control datepicker", placeholder = "Seleccione fecha...", required = "required" } })
+                                                    </div>
+                                                </div>
+                                            </div>   
                                         </div>
                                     </div>
-                                </div>
+                                        
+                                    </div>
                                 <div class="col-md-6">
                                     <div class="gray_cube">
                                         <p style="text-align:center; font-weight: bold;">Puntaje de Zero Questions (After)</p>

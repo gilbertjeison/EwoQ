@@ -158,6 +158,7 @@
           <Property Name="after" Type="decimal" Precision="18" Scale="0" />
           <Property Name="fecha_after" Type="date" />
           <Property Name="top_five_fzero" Type="varchar" MaxLength="200" />
+          <Property Name="fecha_cierre" Type="date" />
         </EntityType>
         <EntityType Name="fiveg_resultados">
           <Key>
@@ -1361,6 +1362,7 @@
           <NavigationProperty Name="revisiones" Relationship="EwoQModel.FK_revisiones_ewo" FromRole="ewo" ToRole="revisiones" />
           <NavigationProperty Name="zero_ewo" Relationship="EwoQModel.FK_zero_ewo_ewo" FromRole="ewo" ToRole="zero_ewo" />
           <NavigationProperty Name="lineas" Relationship="EwoQModel.FK_ewo_lineas" FromRole="ewo" ToRole="lineas" />
+          <Property Name="fecha_cierre" Type="DateTime" Precision="0" />
         </EntityType>
         <Association Name="FK_acciones_inmediatas_ewo">
           <End Type="EwoQModel.ewo" Role="ewo" Multiplicity="0..1" />
@@ -1736,6 +1738,7 @@
           <EntitySetMapping Name="ewo">
             <EntityTypeMapping TypeName="EwoQModel.ewo">
               <MappingFragment StoreEntitySet="ewo">
+                <ScalarProperty Name="fecha_cierre" ColumnName="fecha_cierre" />
                 <ScalarProperty Name="top_five_fzero" ColumnName="top_five_fzero" />
                 <ScalarProperty Name="fecha_after" ColumnName="fecha_after" />
                 <ScalarProperty Name="after" ColumnName="after" />

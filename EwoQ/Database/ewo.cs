@@ -94,6 +94,7 @@ namespace EwoQ.Database
         public Nullable<decimal> after { get; set; }
         public Nullable<System.DateTime> fecha_after { get; set; }
         public string top_five_fzero { get; set; }
+        public Nullable<System.DateTime> fecha_cierre { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<acciones_inmediatas> acciones_inmediatas { get; set; }

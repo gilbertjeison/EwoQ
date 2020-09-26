@@ -434,6 +434,8 @@ namespace EwoQ.Controllers
             if (id > 0)
             {
                 viewModel = await DaoEwo.DaoInstance.GetEwoDesc(id);
+                //Fecha de cierre
+                viewModel.FchCierre = DateTime.Now.ToString("dd-MM-yyyy");
             }
             else
             {               
@@ -441,6 +443,8 @@ namespace EwoQ.Controllers
                 viewModel.FchEntregaInvestigacion = DateTime.Now.ToString("dd-MM-yyyy");                
                 viewModel.Consecutivo = "00" + await DaoEwo.DaoInstance.GetLastConsecutive();
             }
+
+
 
             //LISTA DE TIPOS DE INCIDENTE
             var listTI = await DaoTiposData.DaoInstance.GetTypesAsync(INCIDENTSTYPES);
