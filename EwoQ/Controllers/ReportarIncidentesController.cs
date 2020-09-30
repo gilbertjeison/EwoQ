@@ -238,7 +238,7 @@ namespace EwoQ.Controllers
                 }
                 else
                 {
-                    return Json(new {code = -1, message = "Error al procesar incidente" });
+                    return Json(new {code = -1, message = "Error al procesar incidente" },JsonRequestBehavior.AllowGet);
                 }
 
                 
@@ -253,10 +253,11 @@ namespace EwoQ.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> ProcesarIncidente(ReporteIncidentesViewModel rivm)
+        [ValidateAntiForgeryToken]
+        public async Task<JsonResult> ProcesarIncidentePost(ReporteIncidentesViewModel rivm)
         {
             //CAMPOS´PARA ALMACENAR RESULTADO DE TRANSACCIÓN        
-            string message;
+            string message = "res";
 
             await Task.Delay(100);
             try
@@ -268,7 +269,7 @@ namespace EwoQ.Controllers
             {
                 Trace.WriteLine("Error al Procesar incidente " + ex.ToString());
             }
-            return View();
+            return Json(new { code = message }, JsonRequestBehavior.AllowGet);
         }
 
         // GET: ReportarIncidentes/Edit/5

@@ -166,7 +166,7 @@
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             @using (Html.BeginForm("ProcesarIncidente", "ReportarIncidentes", FormMethod.Post, new { @id = "wizard_validation" }))
             {
-
+                @Html.AntiForgeryToken()
                 @Html.Hidden("Id", Model.Id)
                 <h3>Notificación</h3>
                 <section class="clearfix">
@@ -291,11 +291,10 @@
                                             <i class="material-icons">edit_location</i>
                                         </span>
                                         <div class="form-line" style="border:none;">
-                                            <select id="IdArea" name="IdArea" 
-                                                    data-size="5" 
-                                                    data-live-search="true" 
+                                            <select id="IdArea" name="IdArea"
+                                                    data-size="5"
+                                                    data-live-search="true"
                                                     class="selectpicker show-tick">
-                                                
                                             </select>
                                         </div>
                                     </div>
@@ -307,11 +306,11 @@
                                             <i class="material-icons">edit_location</i>
                                         </span>
                                         <div class="form-line" style="border:none;">
-                                            <select id="IdLinea" 
-                                                    name="IdLinea" 
-                                                    data-size="5" 
-                                                    data-live-search="true" 
-                                                    class="selectpicker show-tick" required>                                                
+                                            <select id="IdLinea"
+                                                    name="IdLinea"
+                                                    data-size="5"
+                                                    data-live-search="true"
+                                                    class="selectpicker show-tick" required>
                                             </select>
                                         </div>
                                     </div>
@@ -512,7 +511,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="card">
                         <div class="header">
                             <h2>
@@ -1349,11 +1348,11 @@
                                                         @Html.EditorFor(model => model.FchCierre, new { htmlAttributes = new { @class = "form-control datepicker", placeholder = "Seleccione fecha...", required = "required" } })
                                                     </div>
                                                 </div>
-                                            </div>   
+                                            </div>
                                         </div>
                                     </div>
-                                        
-                                    </div>
+
+                                </div>
                                 <div class="col-md-6">
                                     <div class="gray_cube">
                                         <p style="text-align:center; font-weight: bold;">Puntaje de Zero Questions (After)</p>
@@ -1781,9 +1780,9 @@
                         $(this).append($('<tr>')
                             .append($('<td style="display:none;">').append(val.Id))
                             .append($('<td>').append('<b>'+val.Pregunta+'</b>'))
-                            .append($('<td>').append('<input type="radio" id="r1_' + val.Id + '" name="option_' + val.Id + '" value="1" class="with-gap radio-col-cyan" > <label for="r1_' + val.Id + '">' + val.Responses[0].Respuesta+'</label>'))
-                            .append($('<td>').append('<input type="radio" id="r3_' + val.Id + '" name="option_' + val.Id + '" value="3" class="with-gap radio-col-cyan"> <label for="r3_' + val.Id + '">' + val.Responses[1].Respuesta +'</label>'))
-                            .append($('<td>').append('<input type="radio" id="r5_' + val.Id + '" name="option_' + val.Id + '" value="5" class="with-gap radio-col-cyan"> <label for="r5_' + val.Id + '">' + val.Responses[2].Respuesta + '</label>'))
+                            .append($('<td>').append('<input type="radio" id="r1_' + val.Id + '" name="option_' + val.Id + '" value="1" class="with-gap radio-col-cyan" ><label for="r1_' + val.Id + '">' + val.Responses[0].Respuesta+'</label>'))
+                            .append($('<td>').append('<input type="radio" id="r3_' + val.Id + '" name="option_' + val.Id + '" value="3" class="with-gap radio-col-cyan"><label for="r3_' + val.Id + '">' + val.Responses[1].Respuesta +'</label>'))
+                            .append($('<td>').append('<input type="radio" id="r5_' + val.Id + '" name="option_' + val.Id + '" value="5" class="with-gap radio-col-cyan"><label for="r5_' + val.Id + '">' + val.Responses[2].Respuesta + '</label>'))
                             .append($('<td style="text-align:center;" class="bg-red ptsBef" id="pt_'+val.Id+'">').append('0')));
                     });
                 });
@@ -2453,8 +2452,8 @@
                 { id: "tipo_accion", name: "Tipo", field: "tipo_accion", minWidth: 130, formatter: select2FormatterTipo, editor: SelectEditorTipo, dataSource: tiposAcciones },
                 { id: "contramedida", name: "Contramedida", field: "contramedida", minWidth: 220, editable: true, editor: Slick.Editors.LongText },
                 { id: "capex", name: "Requiere Capex?", field: "capex", minWidth: 150, cssClass: "cell-effort-driven", formatter: Slick.Formatters.Checkmark, editor: Slick.Editors.Checkbox },
-                { id: "antes", name: "Antes", field: "antes", minWidth: 100, editable: true, editor: Slick.Editors.Text },
-                { id: "despues", name: "Después", field: "despues", minWidth: 100, editable: true, editor: Slick.Editors.Text },
+                //{ id: "antes", name: "Antes", field: "antes", minWidth: 100, editable: true, editor: Slick.Editors.Text },
+                //{ id: "despues", name: "Después", field: "despues", minWidth: 100, editable: true, editor: Slick.Editors.Text },
                 { id: "pokayoke", name: "Pokayoke", field: "pokayoke", minWidth: 150, editable: true, editor: Slick.Editors.Text },                
                 { id: "fecha", name: "F. compromiso", field: "fecha", minWidth: 130, editor: Slick.Editors.Date },
                 { id: "id_area", name: "Área", field: "id_area", minWidth: 200, formatter: select2FormatterArea, editor: SelectEditorArea, dataSource: areas_data },
@@ -2480,9 +2479,9 @@
         });     
 
         //poner color al encabezado de una columna especifica
-        var headers = $('#gridPlanAccion .slick-header-columns').children();
-        $(headers[3]).addClass('zq-header-b');
-        $(headers[4]).addClass('zq-header-a');
+        //var headers = $('#gridPlanAccion .slick-header-columns').children();
+        //$(headers[3]).addClass('zq-header-b');
+        //$(headers[4]).addClass('zq-header-a');
 
         //quitar primer elemento del array 'seleccione area...'
         areas_data.shift();
@@ -2657,10 +2656,14 @@
                         var row = $(this);
                         var beforeQ = {};
                         beforeQ.id = row.find("TD").eq(0).html();
-                        beforeQ.pregunta = row.find("TD").eq(1).html();
-                        beforeQ.p1 = row.find("TD").eq(2).html();
-                        beforeQ.p3 = row.find("TD").eq(3).html();
-                        beforeQ.p5 = row.find("TD").eq(4).html();
+                        var p1 = row.find("TD").eq(2).html();
+
+                        //Obtener el objeto
+                        var obP1 = $(p1);
+                        //Obtener el valor del radio con el nombre del grupo
+                        var value = $('input[name=' + obP1[0].name + ']:checked').val();
+                        //Guardar valor
+                        beforeQ.value = value ? value : 0;
                         beforeQ.puntos = row.find("TD").eq(5).html();
 
                         listBefo.push(beforeQ);
@@ -2688,14 +2691,22 @@
                         var row = $(this);
                         var afterQ = {};
                         afterQ.id = row.find("TD").eq(0).html();
-                        afterQ.pregunta = row.find("TD").eq(1).html();
-                        afterQ.p1 = row.find("TD").eq(2).html();
-                        afterQ.p3 = row.find("TD").eq(3).html();
-                        afterQ.p5 = row.find("TD").eq(4).html();
+
+                        var p1 = row.find("TD").eq(2).html();
+
+                        //Obtener el objeto
+                        var obP1 = $(p1);
+                        //Obtener el valor del radio con el nombre del grupo
+                        var value = $('input[name=' + obP1[0].name + ']:checked').val();
+                        //Guardar valor
+                        afterQ.value = value ? value : 0;
+
                         afterQ.puntos = row.find("TD").eq(5).html();
 
                         listAfte.push(afterQ);
                     });
+
+                    console.log(listAfte);
                     
                     //flag para determinar si hay alguna sin reponder
                     var anyZeroA = false;
@@ -2706,14 +2717,14 @@
                     });
 
                     if (anyZeroA) {                       
-                        showSweetAlert("ZERO QUESTIONS", "Debe responder todas las preguntas AFTER" , "error");
-                        return false;
+                        //showSweetAlert("ZERO QUESTIONS", "Debe responder todas las preguntas AFTER" , "error");
+                        //return false;
                     }
                     else {
                         var pntAfter = parseInt(aftTotal.innerHTML.replace("%", ""));
                         if (pntAfter < 80) {
-                            showSweetAlert("ZERO QUESTIONS", "El puntaje del resultado AFTER debe ser superior al 80%", "error");
-                            return false;
+                            //showSweetAlert("ZERO QUESTIONS", "El puntaje del resultado AFTER debe ser superior al 80%", "error");
+                            //return false;
                         }
                     }
 
@@ -2723,8 +2734,8 @@
 
                     //validar listas 
                     if (listPlan.length == 0) {
-                        showSweetAlert("PLAN DE ACCIÓN", "Debe cargar la información del plan de acción", "error");
-                        return false;
+                        //showSweetAlert("PLAN DE ACCIÓN", "Debe cargar la información del plan de acción", "error");
+                        //return false;
                     }
                 }
 
@@ -2787,7 +2798,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: '@Url.Action("ProcesarIncidente", "ReportarIncidentes")',
+                    url: '@Url.Action("ProcesarIncidentePost", "ReportarIncidentes")',
                     data: dataString,
                     beforeSend: function () {
                         $('.page-loader-wrapper').fadeIn();

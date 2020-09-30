@@ -252,7 +252,8 @@ namespace EwoQ.Dao
                             TiempoLineaParada = item.e.tiempo_linea_parada.Value,
                             Fecha = item.e.fecha_apertura_investigacion.Value,
                             Estado = item.e.codigo_estado.Value,
-                            EstadoDesc = item.es.descripcion
+                            EstadoDesc = item.es.descripcion,
+                            NumAirsweb = item.e.numero_airsweb.HasValue ? item.e.numero_airsweb.Value : 0
                         });
                     }
                 }
@@ -303,8 +304,9 @@ namespace EwoQ.Dao
                             TiempoLineaParada = item.e.tiempo_linea_parada.Value,
                             Fecha = item.e.fecha_apertura_investigacion.Value,
                             Estado = item.e.codigo_estado.Value,
-                            EstadoDesc = item.es.descripcion
-                        });
+                            EstadoDesc = item.es.descripcion,
+                            NumAirsweb = item.e.numero_airsweb.HasValue ? item.e.numero_airsweb.Value : 0
+                        }) ;
                     }
                 }
             }

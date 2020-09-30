@@ -68,6 +68,7 @@
         <table id="irTable" class="table table-striped table-bordered responsive nowrap table-hover">
             <thead>
                 <tr>
+                    <th>N° Airsweb</th>
                     <th>Línea</th>
                     <th>Área</th>
                     <th>Tipo de incidente</th>
@@ -78,7 +79,7 @@
                     <th>Autor</th>
                     <th>Continuar</th>
                     @*<th>Edición</th>*@
-                    <th>Eliminación</th>
+                    @*<th>Eliminación</th>*@
                     <th>Descargar</th>
                 </tr>
             </thead>
@@ -114,6 +115,7 @@
             //    { "targets": [11], "width": "5px" }
             //],
             "columns": [
+                { "data": "NumAirsweb", "name": "NumAirsweb", "autoWidth": true },
                 { "data": "LineaDesc", "name": "LineaDesc", "autoWidth": true },
                 { "data": "AreaDesc", "name": "AreaDesc", "autoWidth": true },
                 { "data": "TipoIncidenteDesc", "name": "TipoIncidenteDesc", "autoWidth": true },
@@ -152,11 +154,11 @@
                 //        return "<a class='btn btn-info waves-effect' onClick=editEwo('" + row.Id +"');>Editar</a>";
                 //    }
                 //},
-                {
-                    data: null, "autoWidth": true, render: function (data, type, row) {
-                        return "<a class='btn btn-danger waves-effect'>Eliminar</a>";
-                    }
-                },
+                //{
+                //    data: null, "autoWidth": true, render: function (data, type, row) {
+                //        return "<a class='btn btn-danger waves-effect'>Eliminar</a>";
+                //    }
+                //},
                 {
                     data: null, "autoWidth": true, render: function (data, type, row) {
                         return "<a class='btn btn-primary waves-effect'>Generar formato</a>";
