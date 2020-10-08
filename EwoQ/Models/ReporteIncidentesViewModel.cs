@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Web;
 using System.Web.Mvc;
 
 namespace EwoQ.Models
@@ -171,6 +172,10 @@ namespace EwoQ.Models
         public string GembutsuOk { get; set; }
         public string GenjitsuOk { get; set; }
 
+        public string PathImageGs { get; set; }
+        public string DescImgGs { get; set; }
+        public HttpPostedFileBase ImageGs { get; set; }
+
         public string QueDesc { get; set; }
         public string DondeDesc { get; set; }
         public string CuandoDesc { get; set; }
@@ -179,6 +184,10 @@ namespace EwoQ.Models
         public string ComoDesc { get; set; }
         public string FenomenoDesc { get; set; }
         public string FenomenoDescT { get; set; }
+
+        public string PathImageFen { get; set; }
+        public string DescImgFen { get; set; }
+        public HttpPostedFileBase ImageFen { get; set; }
 
         public string ManoObra4M { get; set; } = "% 0";
         public string Material4M { get; set; } = "% 0";

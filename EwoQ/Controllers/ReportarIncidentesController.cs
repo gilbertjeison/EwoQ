@@ -30,6 +30,7 @@ namespace EwoQ.Controllers
         int TOPFIVEFORZERO = 12;
         string ADMINROLE = "d908787a-642b-480f-ba5c-f46df6fc8713";
         string OPERATINGROLE = "ad3cb589-855b-4888-b234-9333eaca85ec";
+        static string ewo_images = "~/Content/images/ewo_images/";
 
         #region INDEX
         [HttpPost]
@@ -163,64 +164,20 @@ namespace EwoQ.Controllers
         //public async Task<ActionResult> Create([Bind(Include = "id,consecutivo,codigo_estado,fecha_apertura_investigacion,hora_apertura_investigacion,hora_evento,fecha_entrega_investigacion,hora_entrega_investigacion,recurrente,codigo_area,codigo_linea,etapa,codigo_coordinador_turno,codigo_responsable_area,codigo_operario_responsable,codigo_lider_investigacion,codigo_producto,codigo_sap_producto,lote_producto,toneladas_producto,numero_cajas,numero_pallet,unidades,tamano_formato,codigo_unidad_medida_tamfor,costo_incidente,tiempo_linea_parada,descripcion_general_problema,tiempo_inspeccion,codigo_arbol_perdidas,numero_airsweb,tiempo_ingresado_airsweb,codigo_disposicion_final_prod,cantidad_toneladas,gemba,gembutsu,genjitsu,five_g_image,descripcion_problema,que,donde,cuando,quien,cual,como,descripcion_fenomeno,images_path,comentarios_resoluciones,pa_codigo_coordinador_prod,pa_codigo_gerente_prod,pa_codigo_jefe_calidad,pa_codigo_gerente_calidad")] ewo ewo)
         public async Task<JsonResult> CreateAsync(ReporteIncidentesViewModel ewr)
         {
-            int res = 0;
+            RequestResponse rr = null;
+
             try
             {
-                //var ewo1 = ewr;
-
-                JavaScriptSerializer ser = new JavaScriptSerializer();
-                List<acciones_inmediatas> accInm = ser.Deserialize<List<acciones_inmediatas>>(ewr.Cmd);
-
-                ewo ewo = new ewo();
-                ewo.consecutivo = await DaoEwo.DaoInstance.GetLastConsecutive();
-                ewo.codigo_estado = 1; //ABIERTO - TIPOS DATA
-                ewo.fecha_apertura_investigacion = ewr.FchApertInvestigacion == null ? DateTime.Now : DateTime.ParseExact(ewr.FchApertInvestigacion, "dd-MM-yyyy", CultureInfo.InvariantCulture);
-                ewo.hora_apertura_investigacion = TimeSpan.Parse(ewr.HrApertInvestigacion);
-                ewo.hora_evento = TimeSpan.Parse(ewr.HrEvento);
-                ewo.fecha_entrega_investigacion = ewr.FchEntregaInvestigacion == null ? DateTime.Now : DateTime.ParseExact(ewr.FchEntregaInvestigacion, "dd-MM-yyyy", CultureInfo.InvariantCulture);
-                ewo.hora_entrega_investigacion = TimeSpan.Parse(ewr.HrEntregaInvestigacion);
-                ewo.tipo_incidente = ewr.TipoIncidente;                
-                ewo.codigo_linea = ewr.IdLinea;
-                ewo.etapa = ewr.EtapaProceso;
-                ewo.codigo_coordinador_turno = ewr.IdCoorSup;
-                ewo.recurrente = ewr.Recurrente != null ? true : false;
-                ewo.codigo_responsable_area = ewr.IdRespArea;
-                ewo.codigo_operario_responsable = ewr.IdOpeRes;
-                ewo.codigo_lider_investigacion = ewr.IdLidInv;
-                ewo.producto = ewr.NombreProducto;
-                ewo.codigo_sap_producto = ewr.CodigoSAP;
-                ewo.lote_producto = ewr.Lote;
-                ewo.toneladas_producto = ewr.Toneladas;
-                ewo.numero_cajas = ewr.NumCajas;
-                ewo.numero_pallet = ewr.NumPallet;
-                ewo.unidades = ewr.Unidades;
-                ewo.tamano_formato = ewr.TamanoFormato;
-                ewo.tiempo_linea_parada = ewr.TiempoLineaParada;
-                ewo.descripcion_general_problema = ewr.DescripcionProblema;
-                ewo.autor = User.Identity.GetUserId();
-
-                long reg = await DaoEwo.DaoInstance.AddEwo(ewo);
-
-                if (reg > 0)
-                {
-                    foreach (var item in accInm)
-                    {
-                        item.codigo_ewo = reg;
-                    }
-
-                    await DaoAcciones.DaoInstance.AddAcciones(accInm);
-
-                    res = 1;
-                }
+                rr = await CreateEwoObject(ewr,true);                
             }
             catch (Exception e)
             {
                 Debug.WriteLine("Error en CreateAsync "+e.ToString());
-                res = -1;
+                rr.Codigo = -1;
             }
             
 
-            return Json(new { code= res });
+            return Json(new { code= rr.Codigo });
         }
 
        [HttpGet]
@@ -256,14 +213,14 @@ namespace EwoQ.Controllers
         [ValidateAntiForgeryToken]
         public async Task<JsonResult> ProcesarIncidentePost(ReporteIncidentesViewModel rivm)
         {
-            //CAMPOS´PARA ALMACENAR RESULTADO DE TRANSACCIÓN        
-            string message = "res";
+            //CAMPOS PARA ALMACENAR RESULTADO DE TRANSACCIÓN        
+            string message = "";
+            RequestResponse rr = null;
 
-            await Task.Delay(100);
             try
             {
-                ewo e = new ewo();
 
+                rr = await CreateEwoObject(rivm, false);
             }
             catch (Exception ex)
             {
@@ -488,6 +445,131 @@ namespace EwoQ.Controllers
             viewModel.TopFiveForZeroList = listTF;
 
             return viewModel;
+        }
+
+        private async Task<RequestResponse> CreateEwoObject(ReporteIncidentesViewModel ewr, bool bReporte)
+        {
+            RequestResponse rr = new RequestResponse();
+            ewo ewo = new ewo();
+
+            JavaScriptSerializer ser = new JavaScriptSerializer();
+            List<acciones_inmediatas> accInm = ser.Deserialize<List<acciones_inmediatas>>(ewr.Cmd);
+
+            ewo.consecutivo = long.Parse(ewr.Consecutivo);            
+            ewo.fecha_apertura_investigacion = ewr.FchApertInvestigacion == null ? DateTime.Now : 
+                DateTime.ParseExact(ewr.FchApertInvestigacion, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+
+            ewo.hora_apertura_investigacion = TimeSpan.Parse(ewr.HrApertInvestigacion);
+            ewo.hora_evento = TimeSpan.Parse(ewr.HrEvento);
+            ewo.fecha_entrega_investigacion = ewr.FchEntregaInvestigacion == null ? DateTime.Now : 
+                DateTime.ParseExact(ewr.FchEntregaInvestigacion, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+
+            ewo.hora_entrega_investigacion = TimeSpan.Parse(ewr.HrEntregaInvestigacion);
+            ewo.tipo_incidente = ewr.TipoIncidente;
+            ewo.codigo_linea = ewr.IdLinea;
+            ewo.etapa = ewr.EtapaProceso;
+            ewo.codigo_coordinador_turno = ewr.IdCoorSup;
+            ewo.recurrente = ewr.Recurrente != null ? true : false;
+            ewo.codigo_responsable_area = ewr.IdRespArea;
+            ewo.codigo_operario_responsable = ewr.IdOpeRes;
+            ewo.codigo_lider_investigacion = ewr.IdLidInv;
+            ewo.producto = ewr.NombreProducto;
+            ewo.codigo_sap_producto = ewr.CodigoSAP;
+            ewo.lote_producto = ewr.Lote;
+            ewo.toneladas_producto = ewr.Toneladas;
+            ewo.numero_cajas = ewr.NumCajas;
+            ewo.numero_pallet = ewr.NumPallet;
+            ewo.unidades = ewr.Unidades;
+            ewo.tamano_formato = ewr.TamanoFormato;
+            ewo.tiempo_linea_parada = ewr.TiempoLineaParada;
+            ewo.descripcion_general_problema = ewr.DescripcionProblema;
+
+            if (bReporte)
+            {
+                ewo.codigo_estado = 1; //ABIERTO - TIPOS DATA
+                ewo.autor = User.Identity.GetUserId();
+
+                long reg = await DaoEwo.DaoInstance.AddEwo(ewo);
+
+                if (reg > 0)
+                {
+                    foreach (var item in accInm)
+                    {
+                        item.codigo_ewo = reg;
+                    }
+
+                    await DaoAcciones.DaoInstance.AddAcciones(accInm);
+
+                    rr.Codigo = 1;
+                }
+            }
+            else
+            {
+                ewo.codigo_estado = 2; //CERRADO - TIPOS DATA
+                ewo.usuario_procesador = User.Identity.GetUserId();
+
+                ewo.ap_nivel_1 = ewr.ArbPerd1;
+                ewo.ap_nivel_2 = ewr.ArbPerd2;
+                ewo.ap_nivel_3 = ewr.ArbPerd3;
+                ewo.ap_nivel_4 = ewr.ArbPerd4;
+                ewo.ap_nivel_otro = ewr.ArbPerdO;
+
+                ewo.numero_airsweb = ewr.NumAirsweb;
+                ewo.tiempo_ingresado_airsweb = ewr.TiempoAirsWeb;
+                ewo.tiempo_inspeccion = ewr.TiempoInpeccion;
+                ewo.costo_incidente = Convert.ToDecimal(ewr.CostoIncidente);
+                ewo.codigo_disposicion_final_prod = ewr.IdDisposicionF;
+                ewo.cantidad_toneladas = ewr.DFToneladas;
+
+                ewo.gemba = ewr.GembaOk != null ? true : false;
+                ewo.gembutsu = ewr.GembutsuOk != null ? true : false;
+                ewo.genjitsu = ewr.GenjitsuOk != null ? true : false;
+
+
+                //Tratamiento de imagenes
+                ewo.five_g_image = ewr.ImageGs != null ? ewr.ImageGs.FileName : "";
+                ewo.images_path = ewr.ImageFen != null ? ewr.ImageFen.FileName : "";
+
+                SaveImageEwoServer(ewr.ImageGs);
+                SaveImageEwoServer(ewr.ImageFen);
+
+
+
+                //Listas Gs
+                List<fiveg_resultados> listGenjitsu = ser.Deserialize<List<fiveg_resultados>>(ewr.ListGenj);
+                foreach (var item in listGenjitsu)
+                {
+                    item.codigo_5fv_opcion = 21;//Genjitsu - tipos data
+                }
+
+                List<fiveg_resultados> listGenri = ser.Deserialize<List<fiveg_resultados>>(ewr.ListGenr);
+                foreach (var item in listGenri)
+                {
+                    item.codigo_5fv_opcion = 22;//Genri - tipos data
+                }
+
+                List<fiveg_resultados> listGensoku = ser.Deserialize<List<fiveg_resultados>>(ewr.ListGens);
+                foreach (var item in listGensoku)
+                {
+                    item.codigo_5fv_opcion = 23;//Gensoku - tipos data
+                }
+
+                List<fiveg_resultados> listGs = listGenjitsu.Union(listGenri).Union(listGensoku).ToList();
+
+                //Equipo de trabajo
+
+            }
+
+            
+
+            rr.Resultado = ewo;
+            return rr;
+        }
+
+        private void SaveImageEwoServer(HttpPostedFileBase file)
+        {
+            string nameAndLocation = ewo_images + file.FileName;
+            file.SaveAs(Server.MapPath(nameAndLocation));
         }
 
         protected override void Dispose(bool disposing)

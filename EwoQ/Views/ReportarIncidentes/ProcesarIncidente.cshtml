@@ -167,7 +167,9 @@
             @using (Html.BeginForm("ProcesarIncidente", "ReportarIncidentes", FormMethod.Post, new { @id = "wizard_validation" }))
             {
                 @Html.AntiForgeryToken()
-                @Html.Hidden("Id", Model.Id)
+                @Html.Hidden("Id", Model.Id)                
+                @Html.Hidden("Consecutivo", @Model.Consecutivo)
+
                 <h3>Notificación</h3>
                 <section class="clearfix">
                     <div class="card">
@@ -995,7 +997,7 @@
                                 <i class="material-icons">clear_all</i>
                             </button>
                         </div>
-                        <div class="body">
+                        <div class="body" style="overflow-x:auto;">
                             <div class="gray_cube">
                                 <b>FENÓMENO</b>
                                 @Html.TextAreaFor(model => model.FenomenoDescT, 2, 0, new { @class = "form-control rounded-10", @readonly = "readonly", style = "background-color: white;" })
@@ -1024,13 +1026,13 @@
                                 <small class="smlw">Asistente para responder las preguntas formuladas para determinar su peso</small>
                             </h2>
                         </div>
-                        <div class="body">
-                            <div class="row">
+                        <div class="body" >
+                            <div class="row" >
                                 <div class="col-md-1"></div>
-                                <div class="col-md-10">
-                                    <ul class="list-group">
-                                        <li class="list-group-item">
-                                            <div class="input-group">
+                                <div class="col-md-10" >
+                                    <ul class="list-group" >
+                                        <li class="list-group-item" >
+                                            <div class="input-group" >
                                                 <span class="bg-green input-group-addon" style="padding:2px;">MANO DE OBRA / MAN </span>
                                                 <div class="form-line" style="margin-left:5px; width:20%">
                                                     <h5 style="text-align:center">Subtotal</h5>
@@ -1141,8 +1143,8 @@
                         </div>
                         <div class="body">
                             <div class="row">
-                                <div class="col-lg-12">
-                                    <table class="table table-bordered table-hover center">
+                                <div class="col-lg-12" style="overflow-x:auto;">
+                                    <table class="table table-bordered table-hover center" id="tblTFFZ">
                                         <tr>
                                             @foreach (var item in Model.TopFiveForZeroList)
                                             {
@@ -1523,7 +1525,12 @@
     var metds = new Array();
     var areas_data = @Html.Raw(Json.Encode(Model.AreasList));
     var firstTime = true, firstTimeOne = true, changedQstn = true;
-    
+
+    var manObra = 0;
+    var material = 0;
+    var maquina = 0;
+    var metodo = 0;
+
     var options =
         {
             editable: true,
@@ -1735,15 +1742,19 @@
         }
     }
 
+    function getMValues()
+    {
+        //CONVERTIR TODOS LOS VALORES A NUMEROS
+        manObra = parseInt($('#ManoObra4MTotal').val().replace('%', ''));
+        material = parseInt($('#Material4MTotal').val().replace('%', ''));
+        maquina = parseInt($('#Maquina4MTotal').val().replace('%', ''));
+        metodo = parseInt($('#Metodo4MTotal').val().replace('%', ''));
+    }
+
     function loadZeroQuestions()
     {
-
         //OBTENER EL 'M' CON MAYOR PUNTAJE
-        //CONVERTIR TODOS LOS VALORES A NUMEROS
-        var manObra = parseInt($('#ManoObra4MTotal').val().replace('%', ''));
-        var material = parseInt($('#Material4MTotal').val().replace('%', ''));
-        var maquina = parseInt($('#Maquina4MTotal').val().replace('%', ''));
-        var metodo = parseInt($('#Metodo4MTotal').val().replace('%', ''));
+        getMValues();
 
         //ASIGNAR LAS CANTIDADES OBTENIDAS A SUS RESPECTIVOS ID'S DE LA BASE DE DATOS        
         var mapV = new Map();
@@ -2371,9 +2382,9 @@
     function initGridGens() {
         var columnsGenjitsu =
             [
-                { id: "condicion", name: "Condición", field: "accion", minWidth: 200, editable: true, editor: Slick.Editors.LongText },
+                { id: "condicion", name: "Condición", field: "condicion", minWidth: 200, editable: true, editor: Slick.Editors.LongText },
                 { id: "condicion_ideal", name: "Condición ideal", field: "condicion_ideal", minWidth: 200, editable: true, editor: Slick.Editors.LongText },
-                { id: "check", name: "Check", field: "check", minWidth: 200, editable: true, editor: Slick.Editors.LongText },
+                { id: "check", name: "Check", field: "checkk", minWidth: 200, editable: true, editor: Slick.Editors.LongText },
                 { id: "como", name: "¿Cómo?", field: "como", minWidth: 200, editable: true, editor: Slick.Editors.LongText },
                 { id: "ok", name: "OK / NOK", field: "ok", minWidth: 100, cssClass: "cell-effort-driven", formatter: Slick.Formatters.Checkmark, editor: Slick.Editors.Checkbox },
                 {
@@ -2385,9 +2396,9 @@
 
         var columnsGenri =
             [
-                { id: "condicion", name: "Condición", field: "accion", minWidth: 200, editable: true, editor: Slick.Editors.LongText },
+                { id: "condicion", name: "Condición", field: "condicion", minWidth: 200, editable: true, editor: Slick.Editors.LongText },
                 { id: "condicion_ideal", name: "Condición ideal", field: "condicion_ideal", minWidth: 200, editable: true, editor: Slick.Editors.LongText },
-                { id: "check", name: "Check", field: "check", minWidth: 200, editable: true, editor: Slick.Editors.LongText },
+                { id: "check", name: "Check", field: "checkk", minWidth: 200, editable: true, editor: Slick.Editors.LongText },
                 { id: "como", name: "¿Cómo?", field: "como", minWidth: 200, editable: true, editor: Slick.Editors.LongText },
                 { id: "ok", name: "OK / NOK", field: "ok", minWidth: 100, cssClass: "cell-effort-driven", formatter: Slick.Formatters.Checkmark, editor: Slick.Editors.Checkbox },
                 {
@@ -2399,9 +2410,9 @@
 
         var columnsGensoku =
             [
-                { id: "condicion", name: "Condición", field: "accion", minWidth: 200, editable: true, editor: Slick.Editors.LongText },
+                { id: "condicion", name: "Condición", field: "condicion", minWidth: 200, editable: true, editor: Slick.Editors.LongText },
                 { id: "condicion_ideal", name: "Condición ideal", field: "condicion_ideal", minWidth: 200, editable: true, editor: Slick.Editors.LongText },
-                { id: "check", name: "Check", field: "check", minWidth: 200, editable: true, editor: Slick.Editors.LongText },
+                { id: "check", name: "Check", field: "checkk", minWidth: 200, editable: true, editor: Slick.Editors.LongText },
                 { id: "como", name: "¿Cómo?", field: "como", minWidth: 200, editable: true, editor: Slick.Editors.LongText },
                 { id: "ok", name: "OK / NOK", field: "ok", minWidth: 100, cssClass: "cell-effort-driven", formatter: Slick.Formatters.Checkmark, editor: Slick.Editors.Checkbox },
                 {
@@ -2579,10 +2590,17 @@
                     if (listAccInm.length == 0) {
                         showSweetAlert("Acciones inmediatas", "Debe cargar las acciones inmediatas", "error");
                         return false;
-                    }                                        
+                    }
                 }
 
                 if (currentIndex == 1) {
+
+                    var listGrupoTrabajo = $("#EquipoTrabajo").siblings(".bootstrap-tagsinput").children(".tag");
+                    //Validar el equipo de trabajo
+                    if (listGrupoTrabajo.length == 0 ) {
+                        //showSweetAlert("Análisis de causas & 4M", "Debe incluir al menos un integrante en el equipo de trabajo", "error");
+                        //return false;
+                    }
 
                     //asignar registros de la pestaña 2
                     listGenj = [];
@@ -2593,7 +2611,7 @@
 
                     listGens = [];
                     listGens = gridGensoku.getData();
-                                        
+
                     //validar listas de la pestaña 2
                     if (listGenj.length == 0) {
                         //showSweetAlert("INVESTIGACIÓN EN PISO", "Debe cargar la información Genjitsu", "error");
@@ -2609,8 +2627,8 @@
                         //showSweetAlert("INVESTIGACIÓN EN PISO", "Debe cargar la información Gensoku", "error");
                         //return false;
                     }
-                                       
-                    //VALIDAR QUE LOS POR QUÉ ESTÉN DILIGENCIADOS                    
+
+                    //VALIDAR QUE LOS POR QUÉ ESTÉN DILIGENCIADOS
                     //CAPTURAR RESGISTROS DE LA TABLA
                     listPorq = [];
                     $("#tblPorque TBODY TR").each(function () {
@@ -2646,10 +2664,36 @@
                         //showSweetAlert("5W+1H", "Debe cargar la imágen del fenómeno", "error");
                         //return false;
                     }
+
+                    //Validación de Análisis 4M
+                    getMValues();
+                    var maxMs = _.max([manObra, material, maquina, metodo]);
+
+                    if (maxMs == 0) {
+                        //showSweetAlert("Análisis 4M", "Debe responder las preguntas 4M", "error");
+                        //return false;
+                    }
+
+                    //Validar top five for zero
+                    var bTFFZSelected = false;
+                    //CREAR DATOS DE TABLA EN ARREGLO
+                    $("#tblTFFZ TBODY TR").each(function (i, row) {
+                        var $row = $(row);
+                        $checkedBoxes = $row.find('input:checked');
+
+                        if ($checkedBoxes.length > 0) {
+                            bTFFZSelected = true;
+                        }
+                    });
+
+                    if (!bTFFZSelected) {
+                        //showSweetAlert("Top Five For Zero", "Debe seleccionar una opción", "error");
+                        //return false;
+                    }
                 }
 
                 if (currentIndex == 2) {
-                    //VALIDAR BEFORE                    
+                    //VALIDAR BEFORE
                     //CAPTURAR RESGISTROS DE LA TABLA
                     listBefo = [];
                     $("#tblZeroBefore TBODY TR").each(function () {
@@ -2671,20 +2715,20 @@
 
 
                     //flag para determinar si hay alguna sin reponder
-                    var anyZeroB = false; 
+                    var anyZeroB = false;
                     listBefo.forEach(function myfunction(i, v) {
                         if (i.puntos == 0) {
                             anyZeroB = true;
                         }
                     });
-                                        
+
                     if (anyZeroB) {
                         //showSweetAlert("ZERO QUESTIONS", "Debe responder todas las preguntas BEFORE", "error");
                         //return false;
                     }
 
 
-                    //VALIDAR BEFORE                    
+                    //VALIDAR BEFORE
                     //CAPTURAR RESGISTROS DE LA TABLA
                     listAfte = [];
                     $("#tblZeroAfter TBODY TR").each(function () {
@@ -2706,8 +2750,7 @@
                         listAfte.push(afterQ);
                     });
 
-                    console.log(listAfte);
-                    
+
                     //flag para determinar si hay alguna sin reponder
                     var anyZeroA = false;
                     listAfte.forEach(function myfunction(i, v) {
@@ -2716,7 +2759,7 @@
                         }
                     });
 
-                    if (anyZeroA) {                       
+                    if (anyZeroA) {
                         //showSweetAlert("ZERO QUESTIONS", "Debe responder todas las preguntas AFTER" , "error");
                         //return false;
                     }
@@ -2732,7 +2775,7 @@
                     listPlan = [];
                     listPlan = gridPlanAccion.getData();
 
-                    //validar listas 
+                    //validar listas
                     if (listPlan.length == 0) {
                         //showSweetAlert("PLAN DE ACCIÓN", "Debe cargar la información del plan de acción", "error");
                         //return false;
@@ -2745,6 +2788,7 @@
                 //confirmar los cambios de todos los slickgrid
                 if (Slick.GlobalEditorLock.isActive())
                     Slick.GlobalEditorLock.commitCurrentEdit();
+
                 //return form.valid();
                 return true;
             },
@@ -2765,7 +2809,7 @@
 
                         changedQstn = false;
                         firstTime = false;
-                    }              
+                    }
 
                     if (changedQstn) {
                         loadZeroQuestions();
@@ -2787,7 +2831,7 @@
                 var dataString = new FormData(form);
 
                 //espacio para adjuntar listas y campos especiales
-                dataString.append('ListAccInm', JSON.stringify(listAccInm));
+                dataString.append('Cmd', JSON.stringify(listAccInm));
                 dataString.append('ListGenj', JSON.stringify(listGenj));
                 dataString.append('ListGenr', JSON.stringify(listGenr));
                 dataString.append('ListGens', JSON.stringify(listGens));
@@ -2795,6 +2839,21 @@
                 dataString.append('ListBefo', JSON.stringify(listBefo));
                 dataString.append('ListAfte', JSON.stringify(listAfte));
                 dataString.append('ListPlan', JSON.stringify(listPlan));
+
+                //Obtener imagenes
+                myDropzone1.files.forEach((file, i) => {
+                    var text = $('#dropzone5G').find('span[name^="dz_text"]').get(i).textContent;
+                    dataString.append('ImageGs', file);
+                    dataString.append('DescImgGs', text);
+                });
+
+                myDropzone2.files.forEach((file, i) => {
+                    var text = $('#dropzoneFNM').find('span[name^="dz_text"]').get(i).textContent;
+                    dataString.append('ImageFen', file);
+                    dataString.append('DescImgFen', text);
+                });
+               
+
 
                 $.ajax({
                     type: "POST",
@@ -2839,13 +2898,13 @@
                 }
             },
             rules: {
-                //'confirm': { equalTo: '#password' },
-                //'IdPlanta': { valueNotEquals: "0" },
-                //'IdTipoLinea': { valueNotEquals: "0" },
-                //'IdLinea': { valueNotEquals: "0" },
-                //'IdMaquina': { valueNotEquals: "0" },
-                //'IdTipoAveria': { valueNotEquals: "0" },
-                //'dz_text': { valueNotEquals: "" }
+                'confirm': { equalTo: '#password' },
+                'IdDisposicionF': { valueNotEquals: "0" },
+                'IdCoorProd': { valueNotEquals: "0" },
+                'IdJefCal': { valueNotEquals: "0" },
+                'IdGerProd': { valueNotEquals: "0" },
+                'IdGerCal': { valueNotEquals: "0" },
+                'dz_text': { valueNotEquals: "" }
             },
             success: function (label, element) {
                 label.parent().removeClass('error');
@@ -2911,13 +2970,15 @@
         names.initialize();
 
         $('.tags input:text').tagsinput({
+            itemValue: 'Id',
+            itemText: 'NombresCommpletos',
             typeaheadjs: {
                 name: 'names',
                 displayKey: 'NombresCommpletos',
-                valueKey: 'NombresCommpletos',
                 source: names.ttAdapter()
             }
         });
+
 
         //INICIALIZAR DROPZONE PARA LAS IMAGENES 1
         myDropzone1 = new Dropzone("div#dropzone5G", {
@@ -3003,12 +3064,12 @@
             //obtener el valor a mostrar por respuesta seleccionada
             var valueRes = e.target.value;
             //cargar el puntaje de la respuesta seleccionada en la columna before
-            $('#pt_' + idRes).text(valueRes);            
+            $('#pt_' + idRes).text(valueRes);
 
-            //obtener la suma de todos los valores de la columna before            
+            //obtener la suma de todos los valores de la columna before
             var sum = 0;
             $('.ptsBef').each(function () {
-                sum += parseFloat($(this).text()); 
+                sum += parseFloat($(this).text());
             });
 
             $('#befTotal').text(_.floor((sum / 25 * 100), 1) + '%');
@@ -3022,7 +3083,7 @@
             //cargar el puntaje de la respuesta seleccionada en la columna before
             $('#pta_' + idRes).text(valueRes);
 
-            //obtener la suma de todos los valores de la columna before            
+            //obtener la suma de todos los valores de la columna before
             var sum = 0;
             $('.ptsAft').each(function () {
                 sum += parseFloat($(this).text());
@@ -3045,7 +3106,7 @@
                 $('#pgbAfter').addClass('bg-red');
                 $('#pgbAfter').removeClass('bg-green');
             }
-            
+
         }
 
         $(document).on('click', '#tblZeroBefore input[type=radio]', onRadioChanged);
@@ -3095,8 +3156,6 @@
             var idPlanta = $('#IdPlanta').find("option:selected").val();
            
             var url = '@Url.Content("~/")' + "ReportarIncidentes/GetDropDownListAsync";
-
-
 
             $('#IdArea').selectpicker('destroy');
             $('#IdArea').empty();

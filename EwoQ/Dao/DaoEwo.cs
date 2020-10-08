@@ -394,5 +394,26 @@ namespace EwoQ.Dao
 
             return lDecs;
         }
+
+        public async Task<int> AddEquipoTrabjo(List<equipo_trabajo> et)
+        {
+            int regs = 0;
+
+            try
+            {
+                using (var context = new EwoQEntities())
+                {
+                    context.equipo_trabajo.AddRange(et);
+                    regs = await context.SaveChangesAsync();
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Error agregando equipo de trabajo: " + e.ToString());
+                regs = -1;
+            }
+
+            return regs;
+        }
     }
 }
