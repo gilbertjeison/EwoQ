@@ -238,7 +238,17 @@ namespace EwoQ.Models
         public string ListBefo { get; set; }
         public string ListAfte { get; set; }
         public string ListPlan { get; set; }
+        public string List4M { get; set; }
 
         #endregion
     }
+
+    #region  Clase Preguntas 4M
+    public class Preguntas4M
+    {
+        public int id { get; set; }
+        public string descripcion { get; set; }
+        public string option { get; set; }
+    }
+    #endregion
 }

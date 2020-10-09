@@ -1530,6 +1530,7 @@
     var material = 0;
     var maquina = 0;
     var metodo = 0;
+    var maxMId = 0;
 
     var options =
         {
@@ -1766,7 +1767,7 @@
         //obtener el mayor valor entre todas las cantidades
         var maxM = Math.max(manObra, material, maquina, metodo);
         //de ese mayor valor, obtener el id
-        var maxMId = mapV.get(maxM);
+        maxMId = mapV.get(maxM);
         
         //OBTENER REGISTROS
         $.ajax({
@@ -2634,12 +2635,12 @@
                     $("#tblPorque TBODY TR").each(function () {
                         var row = $(this);
                         var porque = {};
-                        porque.porque_1 = row.find("TD").eq(0).html();
-                        porque.porque_2 = row.find("TD").eq(1).html();
-                        porque.porque_3 = row.find("TD").eq(2).html();
-                        porque.porque_4 = row.find("TD").eq(3).html();
-                        porque.porque_5 = row.find("TD").eq(4).html();
-                        porque.contramedida = row.find("TD").eq(5).html();
+                        porque.porque1 = row.find("TD").eq(0).html();
+                        porque.porque2 = row.find("TD").eq(1).html();
+                        porque.porque3 = row.find("TD").eq(2).html();
+                        porque.porque4 = row.find("TD").eq(3).html();
+                        porque.porque5 = row.find("TD").eq(4).html();
+                        porque.contramedidas = row.find("TD").eq(5).html();
 
                         listPorq.push(porque);
                     });
@@ -2852,7 +2853,23 @@
                     dataString.append('ImageFen', file);
                     dataString.append('DescImgFen', text);
                 });
-               
+
+
+                //Obtener respuestas 4M 
+                switch (maxMId) {
+                    case 24:
+                        dataString.append('List4M', JSON.stringify(maqs));
+                        break;
+                    case 25:
+                        dataString.append('List4M', JSON.stringify(metds));
+                        break;
+                    case 26:
+                        dataString.append('List4M', JSON.stringify(mats));
+                        break;
+                    case 27:
+                        dataString.append('List4M', JSON.stringify(manos));
+                        break;
+                }
 
 
                 $.ajax({

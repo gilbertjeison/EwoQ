@@ -533,7 +533,18 @@ namespace EwoQ.Controllers
                 SaveImageEwoServer(ewr.ImageGs);
                 SaveImageEwoServer(ewr.ImageFen);
 
+                ewo.que = ewr.QueDesc;
+                ewo.donde = ewr.DondeDesc;
+                ewo.cuando = ewr.CuandoDesc;
+                ewo.quien = ewr.QuienDesc;
+                ewo.cual = ewr.CualDesc;
+                ewo.como = ewr.ComoDesc;
+                ewo.descripcion_fenomeno = ewr.FenomenoDesc;
 
+
+
+                //Equipo de trabajo - dividir y asignar id ewo
+                var eqTrab = ewr.EquipoTrabajo;
 
                 //Listas Gs
                 List<fiveg_resultados> listGenjitsu = ser.Deserialize<List<fiveg_resultados>>(ewr.ListGenj);
@@ -556,7 +567,26 @@ namespace EwoQ.Controllers
 
                 List<fiveg_resultados> listGs = listGenjitsu.Union(listGenri).Union(listGensoku).ToList();
 
-                //Equipo de trabajo
+                //Porque Porque
+                List<porque_porque> listPorque = ser.Deserialize<List<porque_porque>>(ewr.ListPorq);
+                foreach (var item in listPorque)
+                {
+                    item.codigo_ewo = 0;
+                }
+
+                //Preguntas 4M
+                List<Preguntas4M> list4M = ser.Deserialize<List<Preguntas4M>>(ewr.List4M);
+                List<respuestas4m> listDB4M = new List<respuestas4m>();
+                foreach (var item in list4M)
+                {
+                    listDB4M.Add(new respuestas4m()
+                    {
+                        codigo_ewo = 0,
+                        codigo_pregunta = item.id,
+                        verificado = item.option == "1" ? "Yes" : (item.option == "0" ? "No" :"NA")                        
+                    });
+                }
+
 
             }
 
@@ -568,8 +598,11 @@ namespace EwoQ.Controllers
 
         private void SaveImageEwoServer(HttpPostedFileBase file)
         {
-            string nameAndLocation = ewo_images + file.FileName;
-            file.SaveAs(Server.MapPath(nameAndLocation));
+            if (file != null)
+            {
+                string nameAndLocation = ewo_images + file.FileName;
+                file.SaveAs(Server.MapPath(nameAndLocation));
+            }           
         }
 
         protected override void Dispose(bool disposing)
