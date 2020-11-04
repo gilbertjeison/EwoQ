@@ -69,12 +69,12 @@
             <thead>
                 <tr>
                     <th>N° Airsweb</th>
+                    <th>Estado</th>
                     <th>Línea</th>
                     <th>Área</th>
                     <th>Tipo de incidente</th>
                     <th>Descripción</th>
                     <th>Línea parada (min)</th>
-                    <th>Estado</th>
                     <th>Fecha</th>
                     <th>Autor</th>
                     <th>Continuar</th>
@@ -116,11 +116,6 @@
             //],
             "columns": [
                 { "data": "NumAirsweb", "name": "NumAirsweb", "autoWidth": true },
-                { "data": "LineaDesc", "name": "LineaDesc", "autoWidth": true },
-                { "data": "AreaDesc", "name": "AreaDesc", "autoWidth": true },
-                { "data": "TipoIncidenteDesc", "name": "TipoIncidenteDesc", "autoWidth": true },
-                { "data": "DescripcionProblema", "name": "DescripcionProblema"},
-                { "data": "TiempoLineaParada", "name": "TiempoLineaParada", "autoWidth": true },
                 {
                     "data": "EstadoDesc", "name": "EstadoDesc", "autoWidth": true,
                     render: function (data, type, value) {
@@ -136,6 +131,12 @@
                         }
                     }
                 },
+                { "data": "LineaDesc", "name": "LineaDesc", "autoWidth": true },
+                { "data": "AreaDesc", "name": "AreaDesc", "autoWidth": true },
+                { "data": "TipoIncidenteDesc", "name": "TipoIncidenteDesc", "autoWidth": true },
+                { "data": "DescripcionProblema", "name": "DescripcionProblema"},
+                { "data": "TiempoLineaParada", "name": "TiempoLineaParada", "autoWidth": true },
+                
 
                 {
                     "data": "Fecha", "name": "Fecha", "autoWidth": true,

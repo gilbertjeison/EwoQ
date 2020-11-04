@@ -222,11 +222,15 @@
     <Compile Include="Controllers\ReportarIncidentesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Dao\Dao4M.cs" />
+    <Compile Include="Dao\Dao5GResultados.cs" />
     <Compile Include="Dao\DaoAcciones.cs" />
     <Compile Include="Dao\DaoAreas.cs" />
     <Compile Include="Dao\DaoEwo.cs" />
+    <Compile Include="Dao\DaoExcepcion.cs" />
     <Compile Include="Dao\DaoLineas.cs" />
+    <Compile Include="Dao\DaoPlanAccion.cs" />
     <Compile Include="Dao\DaoPlantas.cs" />
+    <Compile Include="Dao\DaoPorque.cs" />
     <Compile Include="Dao\DaoProductos.cs" />
     <Compile Include="Dao\DaoRoles.cs" />
     <Compile Include="Dao\DaoTiposData.cs" />
@@ -250,6 +254,9 @@
     <Compile Include="Database\AspNetUsers.cs">
       <DependentUpon>Database.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\C__MigrationHistory.cs">
+      <DependentUpon>Database.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\Database.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -269,6 +276,9 @@
       <DependentUpon>Database.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\ewo.cs">
+      <DependentUpon>Database.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\excepciones.cs">
       <DependentUpon>Database.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\fiveg_resultados.cs">
@@ -325,6 +335,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CustomInmActions.cs" />
     <Compile Include="Models\DonutViewModel.cs" />
+    <Compile Include="Models\Preguntas4MModel.cs" />
     <Compile Include="Models\ReporteIncidentesViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\IndexAdminViewModel.cs" />
@@ -333,6 +344,7 @@
     <Compile Include="Models\ZeroViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Utils\Enums\EnListas.cs" />
     <Compile Include="Utils\SomeHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -4185,13 +4197,6 @@
     <Content Include="Scripts\Adminbsb\plugins\jquery-datatable\Buttons-1.5.4\css\common.scss" />
     <Content Include="Scripts\Adminbsb\plugins\jquery-datatable\Buttons-1.5.4\css\mixins.scss" />
     <Content Include="Scripts\Adminbsb\plugins\gridstack\gridstack.min.js" />
-    <EntityDeploy Include="Database\Database.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Database.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Database\Database.edmx.diagram">
-      <DependentUpon>Database.edmx</DependentUpon>
-    </Content>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -4201,6 +4206,13 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap-select.css.map" />
+    <EntityDeploy Include="Database\Database.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Database.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Database\Database.edmx.diagram">
+      <DependentUpon>Database.edmx</DependentUpon>
+    </Content>
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
     <Content Include="Scripts\axios.js" />

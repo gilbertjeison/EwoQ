@@ -74,20 +74,15 @@ namespace EwoQ.Dao
                                 join r in context.zero_responses
                                 on q.id equals r.codigo_pregunta                                
                                 where r.codigo_pregunta == idPregunta
-                                select new { q, r };
+                                select new ZeroResponses()
+                                {
+                                    Id = r.id,
+                                    IdPregunta = r.codigo_pregunta.Value,
+                                    Respuesta = r.respuesta,
+                                    Puntaje = r.puntaje.Value
+                                };
 
-                    var data = await query.ToListAsync();
-
-                    foreach (var item in data.ToList())
-                    {
-                        list.Add(new ZeroResponses()
-                        {
-                            Id = item.r.id,
-                            IdPregunta = item.r.codigo_pregunta.Value,
-                            Respuesta = item.r.respuesta,
-                            Puntaje = item.r.puntaje.Value
-                        });
-                    }
+                    list = await query.ToListAsync();                                        
                 }
             }
             catch (Exception e)
@@ -96,6 +91,57 @@ namespace EwoQ.Dao
             }
 
             return list;
+        }
+
+        public async Task<ZeroResponses> GetZeroResponse(long idPregunta, int puntaje)
+        {
+            ZeroResponses obj = new ZeroResponses();
+
+            try
+            {
+                using (var context = new EwoQEntities())
+                {
+                   obj = await (from q in context.zero_questions
+                                join r in context.zero_responses
+                                on q.id equals r.codigo_pregunta
+                                where r.codigo_pregunta == idPregunta
+                                && r.puntaje == puntaje
+                                select new ZeroResponses()
+                                {
+                                    Id = r.id,
+                                    IdPregunta = r.codigo_pregunta.Value,
+                                    Respuesta = r.respuesta,
+                                    Puntaje = r.puntaje.Value
+                                }).FirstOrDefaultAsync();                   
+                }
+            }
+            catch (Exception e)
+            {
+                Trace.WriteLine("Excepción al consultar zero response: " + e.ToString());
+            }
+
+            return obj;
+        }
+
+        public async Task<int> AddZeroEwoAsync(List<zero_ewo> zr)
+        {
+            int regs = 0;
+
+            try
+            {
+                using (var context = new EwoQEntities())
+                {
+                    context.zero_ewo.AddRange(zr);
+                    regs = await context.SaveChangesAsync();
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Error agregando zero ewo: " + e.ToString());
+                regs = -1;
+            }
+
+            return regs;
         }
     }
 }

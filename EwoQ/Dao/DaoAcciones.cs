@@ -25,6 +25,7 @@ namespace EwoQ.Dao
                 return daoInstance;
             }
         }
+
         public async Task<int> AddAcciones(List<acciones_inmediatas> ai)
         {
             int regs = 0;
@@ -33,6 +34,28 @@ namespace EwoQ.Dao
             {
                 using (var context = new EwoQEntities())
                 {
+                    context.acciones_inmediatas.AddRange(ai);
+                    regs = await context.SaveChangesAsync();
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Error agregando lista de acciones: " + e.ToString());
+                regs = -1;
+            }
+
+            return regs;
+        }
+
+        public async Task<int> AddAccionesProcess(List<acciones_inmediatas> ai, long cod_ewo)
+        {
+            int regs = 0;
+
+            try
+            {
+                using (var context = new EwoQEntities())
+                {
+                    context.acciones_inmediatas.RemoveRange(context.acciones_inmediatas.Where(x => x.codigo_ewo == cod_ewo));
                     context.acciones_inmediatas.AddRange(ai);
                     regs = await context.SaveChangesAsync();
                 }

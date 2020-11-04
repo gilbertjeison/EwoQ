@@ -108,7 +108,7 @@
 
 
 
-<div id="app">
+@*<div id="app">
     @Html.AntiForgeryToken()
     <v-app>
         <v-main>
@@ -130,12 +130,12 @@
        
     </v-app>
        
-</div>
+</div>*@
 
-<script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+@*<script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>*@
 
-<script>
+@*<script>
     var vueApp = new Vue({
         el: '#app',
         vuetify: new Vuetify(),
@@ -143,8 +143,7 @@
             count:@Html.Raw(Json.Encode(Model.Counter))
         },
         methods: {
-            incrementCount: function () {
-                console.log(this.count);
+            incrementCount: function () {            
                 this.count++;
 
                 var headers = { "RequestVerificationToken": $('input:hidden[name="__RequestVerificationToken"]').val() }
@@ -153,7 +152,7 @@
             }
         }
     });
-</script>
+</script>*@
 <script>
     $(function () {
         //Widgets count
@@ -176,8 +175,6 @@
                 $('.page-loader-wrapper').fadeIn();
             },
             success: function (response) {
-
-                console.log(response);
                 Morris.Donut({
                     element: 'donut_chart',
                     data: response,

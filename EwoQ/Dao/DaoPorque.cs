@@ -1,7 +1,6 @@
 ﻿using EwoQ.Database;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,41 +8,42 @@ using System.Web;
 
 namespace EwoQ.Dao
 {
-    public class DaoPlantas
+    public class DaoPorque
     {
-        private static DaoPlantas daoInstance = null;
+        private static DaoPorque daoInstance = null;
 
-        public static DaoPlantas DaoInstance
+        public static DaoPorque DaoInstance
         {
             get
             {
                 if (daoInstance == null)
                 {
-                    daoInstance = new DaoPlantas();
+                    daoInstance = new DaoPorque();
                 }
 
                 return daoInstance;
             }
         }
-        public async Task<List<plantas>> GetPlantasAsync()
+
+        public async Task<int> AddPorqueAsync(List<porque_porque> pq)
         {
-            List<plantas> plantas = new List<plantas>();
+            int regs = 0;
 
             try
             {
                 using (var context = new EwoQEntities())
                 {
-                    var query = from td in context.plantas
-                                select td;
-                    plantas = await query.OrderBy(x=> x.descripcion).ToListAsync();
+                    context.porque_porque.AddRange(pq);
+                    regs = await context.SaveChangesAsync();
                 }
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e.ToString());
+                Debug.WriteLine("Error agregando por que : " + e.ToString());
+                regs = -1;
             }
 
-            return plantas;
+            return regs;
         }
     }
 }

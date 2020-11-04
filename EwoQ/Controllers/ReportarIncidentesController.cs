@@ -15,6 +15,7 @@ using System.Globalization;
 using System.Diagnostics;
 using Microsoft.AspNet.Identity;
 using System.Linq.Dynamic;
+using static EwoQ.Utils.Enums.EnListas;
 
 namespace EwoQ.Controllers
 {
@@ -226,7 +227,7 @@ namespace EwoQ.Controllers
             {
                 Trace.WriteLine("Error al Procesar incidente " + ex.ToString());
             }
-            return Json(new { code = message }, JsonRequestBehavior.AllowGet);
+            return Json(rr, JsonRequestBehavior.AllowGet);
         }
 
         // GET: ReportarIncidentes/Edit/5
@@ -484,6 +485,8 @@ namespace EwoQ.Controllers
             ewo.tiempo_linea_parada = ewr.TiempoLineaParada;
             ewo.descripcion_general_problema = ewr.DescripcionProblema;
 
+            
+
             if (bReporte)
             {
                 ewo.codigo_estado = 1; //ABIERTO - TIPOS DATA
@@ -500,14 +503,16 @@ namespace EwoQ.Controllers
 
                     await DaoAcciones.DaoInstance.AddAcciones(accInm);
 
-                    rr.Codigo = 1;
+                    
                 }
             }
             else
             {
+                ewo.autor = (await DaoEwo.DaoInstance.GetAutorAsync(ewr.Id));
                 ewo.codigo_estado = 2; //CERRADO - TIPOS DATA
                 ewo.usuario_procesador = User.Identity.GetUserId();
 
+                ewo.id = ewr.Id;
                 ewo.ap_nivel_1 = ewr.ArbPerd1;
                 ewo.ap_nivel_2 = ewr.ArbPerd2;
                 ewo.ap_nivel_3 = ewr.ArbPerd3;
@@ -541,10 +546,64 @@ namespace EwoQ.Controllers
                 ewo.como = ewr.ComoDesc;
                 ewo.descripcion_fenomeno = ewr.FenomenoDesc;
 
+                //Campos 4M
+                ewo.maquina4m_desc = ewr.Maquina4MDesc;
+                ewo.metodo4m_desc = ewr.Metodo4MDesc;
+                ewo.manoobra4m_desc = ewr.ManoObra4MDesc;
+                ewo.material4m_desc = ewr.Material4MDesc;
 
+                decimal maq4m = decimal.Parse(ewr.Maquina4MTotal.Replace("%", ""));
+                decimal met4m = decimal.Parse(ewr.Metodo4MTotal.Replace("%", ""));
+                decimal man4m = decimal.Parse(ewr.ManoObra4MTotal.Replace("%", ""));
+                decimal mat4m = decimal.Parse(ewr.Material4MTotal.Replace("%", ""));
+
+                ewo.maquina4m = maq4m;
+                ewo.metodo4m = met4m;
+                ewo.manoobra4m = man4m;
+                ewo.material4m = mat4m;
+
+                //Before & after
+                ewo.before = decimal.Parse(ewr.BeforePct);
+                ewo.after = decimal.Parse(ewr.AfterPct);
+
+                ewo.codigo_top_five_fzero = ewr.IdTopFFZ.Split('_').Length > 0 ? Int64.Parse( ewr.IdTopFFZ.Split('_')[1]) : 0;
+
+                ewo.comentarios_resoluciones = ewr.ComentariosResoluciones;
+                ewo.pa_codigo_coordinador_prod = ewr.IdCoorProd;
+                ewo.pa_codigo_jefe_calidad = ewr.IdJefCal;
+                ewo.pa_codigo_gerente_prod = ewr.IdGerProd;
+                ewo.pa_codigo_gerente_calidad = ewr.IdGerCal;
+
+                ewo.fecha_cierre = ewr.FchCierre == null ? DateTime.Now :
+                DateTime.ParseExact(ewr.FchCierre, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+
+                //Actualizar incidente en base de datos
+                long id = await DaoEwo.DaoInstance.ProcesarIncidenteAsync(ewo);
+
+                //acciones inmediatas
+                foreach (var item in accInm)
+                {
+                    item.codigo_ewo = id;
+                }
+                //Agregar a BD acciones
+                await DaoAcciones.DaoInstance.AddAccionesProcess(accInm,id);
 
                 //Equipo de trabajo - dividir y asignar id ewo
                 var eqTrab = ewr.EquipoTrabajo;
+                string[] integrantes = eqTrab.Split(',');
+                List<equipo_trabajo> listET = new List<equipo_trabajo>();
+                
+                foreach (var integrante in integrantes)
+                {
+                    listET.Add(new equipo_trabajo()
+                    {
+                        codigo_ewo = id,
+                        codigo_usuario = integrante
+                    });
+                }
+
+                //agregar a BD equipo de trabajo
+                await DaoEwo.DaoInstance.AddEquipoTrabjo(listET);
 
                 //Listas Gs
                 List<fiveg_resultados> listGenjitsu = ser.Deserialize<List<fiveg_resultados>>(ewr.ListGenj);
@@ -565,33 +624,85 @@ namespace EwoQ.Controllers
                     item.codigo_5fv_opcion = 23;//Gensoku - tipos data
                 }
 
+                //Asociar id ewo y agregar a basse de datos
                 List<fiveg_resultados> listGs = listGenjitsu.Union(listGenri).Union(listGensoku).ToList();
+
+                foreach (var item in listGs)
+                {
+                    item.codigo_ewo = id;
+                }
+
+                //Agregar lista a DB
+                await Dao5GResultados.DaoInstance.Add5GResultadosAsync(listGs);
 
                 //Porque Porque
                 List<porque_porque> listPorque = ser.Deserialize<List<porque_porque>>(ewr.ListPorq);
                 foreach (var item in listPorque)
                 {
-                    item.codigo_ewo = 0;
+                    item.codigo_ewo = id;
                 }
 
+                //Agregar lista a DB
+                await DaoPorque.DaoInstance.AddPorqueAsync(listPorque);
+
                 //Preguntas 4M
-                List<Preguntas4M> list4M = ser.Deserialize<List<Preguntas4M>>(ewr.List4M);
+                List<Preguntas4MModel> list4M = ser.Deserialize<List<Preguntas4MModel>>(ewr.List4M);
                 List<respuestas4m> listDB4M = new List<respuestas4m>();
                 foreach (var item in list4M)
                 {
                     listDB4M.Add(new respuestas4m()
                     {
-                        codigo_ewo = 0,
+                        codigo_ewo = id,//Poner el id real
                         codigo_pregunta = item.id,
                         verificado = item.option == "1" ? "Yes" : (item.option == "0" ? "No" :"NA")                        
                     });
                 }
 
+                //Agregar lista a DB
+                await Dao4M.DaoInstance.AddRespuestasAsync(listDB4M);
+
+                //Zero Responses
+                List<ZeroResponses> listZRB = ser.Deserialize<List<ZeroResponses>>(ewr.ListBefo);
+                List<ZeroResponses> listZRA = ser.Deserialize<List<ZeroResponses>>(ewr.ListAfte);
+
+                List<zero_ewo> listZE = new List<zero_ewo>();
+                
+                foreach (var item in listZRB)
+                {
+                    listZE.Add(new zero_ewo()
+                    {
+                        codigo_ewo = 0,
+                        before = item.Puntaje,
+                        codigo_response = item.Puntaje == 0 ? 1 : (await DaoZero.DaoInstance.GetZeroResponse(item.Id, item.Puntaje)).Id 
+                    });
+                }
+
+                foreach (var item in listZRA)
+                {
+                    listZE.Add(new zero_ewo()
+                    {
+                        codigo_ewo = 0,
+                        after = item.Puntaje,
+                        codigo_response = item.Puntaje == 0 ? 1 : (await DaoZero.DaoInstance.GetZeroResponse(item.Id, item.Puntaje)).Id
+                    });
+                }
+
+                //Agregar lista a DB
+                await DaoZero.DaoInstance.AddZeroEwoAsync(listZE);
+
+                //Plan de acción - agregar clave de ewo
+                List<plan_accion> listPA = ser.Deserialize<List<plan_accion>>(ewr.ListPlan);
+                foreach (var item in listPA)
+                {
+                    item.codigo_ewo = id;
+                }
+
+                //Agregar lista a DB
+                await DaoPlanAccion.DaoInstance.AddPlanAccionAsync(listPA);
 
             }
 
-            
-
+            rr.Codigo = 1;
             rr.Resultado = ewo;
             return rr;
         }

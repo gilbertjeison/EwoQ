@@ -38,7 +38,7 @@ namespace EwoQ.Dao
                     var query = from td in context.areas_productivas
                                 where td.codigo_planta == id
                                 select td;
-                    areas = await query.ToListAsync();
+                    areas = await query.OrderBy(x => x.descripcion).ToListAsync();
                 }
             }
             catch (Exception e)

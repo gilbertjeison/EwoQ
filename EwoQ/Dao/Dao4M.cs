@@ -58,5 +58,26 @@ namespace EwoQ.Dao
 
             return p4m;
         }
+
+        public async Task<int> AddRespuestasAsync(List<respuestas4m> r4)
+        {
+            int regs = 0;
+
+            try
+            {
+                using (var context = new EwoQEntities())
+                {
+                    context.respuestas4m.AddRange(r4);
+                    regs = await context.SaveChangesAsync();
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Error agregando respuestas 4M: " + e.ToString());
+                regs = -1;
+            }
+
+            return regs;
+        }
     }
 }

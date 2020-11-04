@@ -1,5 +1,7 @@
 ﻿using EwoQ.Database;
 using EwoQ.Models;
+using EwoQ.Utils;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -89,6 +91,34 @@ namespace EwoQ.Dao
             return max;
         }
 
+        public async Task<string> GetAutorAsync(long id)
+        {
+            string auth = "-";
+
+            try
+            {
+                await Task.Run(() =>
+                {
+                    using (var context = new EwoQEntities())
+                    {
+                        var authv = context.ewo.Where(x => x.id == id)
+                            .FirstOrDefault().autor;
+                        if (authv != null)
+                        {
+                            auth = authv;
+                        }
+                    }
+                });
+
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Error al consultar autor de ewo: " + e.ToString());
+                auth = "-1";
+            }
+
+            return auth;
+        }
         public int GetCount()
         {
             int max = 0;
@@ -395,6 +425,56 @@ namespace EwoQ.Dao
             return lDecs;
         }
 
+        public async Task<long> ProcesarIncidenteAsync(ewo ewo)
+        {
+            ewo ed;
+
+            long regs = 0;
+
+            try
+            {
+                //1. Get row from DB
+                using (var context = new EwoQEntities())
+                {
+                    ed = context.ewo.Where(s => s.id == ewo.id).FirstOrDefault();
+                }
+
+                //2. change data in disconnected mode (out of ctx scope)                
+                if (ed != null)
+                {
+                    ed = ewo;
+                }
+
+                //save modified entity using new Context
+                using (var context = new EwoQEntities())
+                {
+                    //3. Mark entity as modified
+                    context.Entry(ed).State = EntityState.Modified;
+
+                    //4. call SaveChanges
+                    await context.SaveChangesAsync();
+                    regs = ed.id;
+                }
+
+            }
+            catch (Exception e)
+            {
+                string err = "Excepción al editar ewo: " + e.ToString();
+                Trace.WriteLine(err);
+                //REPORTAR ERROR EN LA BASE DE DATOS
+                await DaoExcepcion.DaoInstance.AddExceptionAsync(
+                    new excepciones()
+                    {
+                        codigo_error = -1,
+                        codigo_usuario = HttpContext.Current.User.Identity.GetUserId() ?? "No definido",
+                        descripcion = err,
+                        fecha = SomeHelpers.GetCurrentTime()
+                    });
+            }
+
+            return regs;
+        }
+
         public async Task<int> AddEquipoTrabjo(List<equipo_trabajo> et)
         {
             int regs = 0;
@@ -403,6 +483,7 @@ namespace EwoQ.Dao
             {
                 using (var context = new EwoQEntities())
                 {
+                    //context.equipo_trabajo.RemoveRange(context.equipo_trabajo.Where(x => x.codigo_ewo == cod_ewo));
                     context.equipo_trabajo.AddRange(et);
                     regs = await context.SaveChangesAsync();
                 }

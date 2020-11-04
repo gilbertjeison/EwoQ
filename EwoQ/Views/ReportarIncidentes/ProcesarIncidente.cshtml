@@ -1150,7 +1150,7 @@
                                             {
 
                                                 <td>
-                                                    <input name="grpTFFZ" type="radio" class="with-gap" id="tffz_@item.id" />
+                                                    <input name="GrpTFFZ" type="radio" class="with-gap" id="tffz_@item.id" />
                                                     <label for="tffz_@item.id">@item.descripcion</label>
                                                 </td>
 
@@ -1442,6 +1442,24 @@
     </div>
 </div>
 
+<div class="modal fade" id="mdlExitoPro" tabindex="-1" role="dialog" aria-labelledby="mdlExitoPro-label">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title_procs" id="mdlExitoPro-label">Procesamiento de incidentes</h4>
+            </div>
+            <div class="modal-body">
+                <p id="modalMsg"> </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="location.href='/ReportarIncidentes/Index'">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- JQuery Steps Plugin Js -->
 <script src="~/Scripts/Adminbsb/plugins/jquery-steps/jquery.steps.min.js"></script>
 
@@ -1523,7 +1541,7 @@
     var mats = new Array();
     var maqs = new Array();
     var metds = new Array();
-    var areas_data = @Html.Raw(Json.Encode(Model.AreasList));
+    var areas_data = {};//@Html.Raw(Json.Encode(Model.AreasList));
     var firstTime = true, firstTimeOne = true, changedQstn = true;
 
     var manObra = 0;
@@ -1531,6 +1549,8 @@
     var maquina = 0;
     var metodo = 0;
     var maxMId = 0;
+
+    var topFiveId;
 
     var options =
         {
@@ -1692,7 +1712,7 @@
         var perM3 = _.floor(divM3, 1);
         $('#Maquina4M').val('%' + perM3);
 
-
+        
         //CALCULO PARA PREGUNTAS DE METODO
         var cntM4 = _.countBy(metds, 'option');
         var ttlM4 = parseInt(cntM4['1']) + parseInt(cntM4['0']);
@@ -1792,9 +1812,9 @@
                         $(this).append($('<tr>')
                             .append($('<td style="display:none;">').append(val.Id))
                             .append($('<td>').append('<b>'+val.Pregunta+'</b>'))
-                            .append($('<td>').append('<input type="radio" id="r1_' + val.Id + '" name="option_' + val.Id + '" value="1" class="with-gap radio-col-cyan" ><label for="r1_' + val.Id + '">' + val.Responses[0].Respuesta+'</label>'))
-                            .append($('<td>').append('<input type="radio" id="r3_' + val.Id + '" name="option_' + val.Id + '" value="3" class="with-gap radio-col-cyan"><label for="r3_' + val.Id + '">' + val.Responses[1].Respuesta +'</label>'))
-                            .append($('<td>').append('<input type="radio" id="r5_' + val.Id + '" name="option_' + val.Id + '" value="5" class="with-gap radio-col-cyan"><label for="r5_' + val.Id + '">' + val.Responses[2].Respuesta + '</label>'))
+                            .append($('<td>').append('<input type="radio" id="r1_' + val.Id + '" name="optionz_' + val.Id + '" value="1" class="with-gap radio-col-cyan" ><label for="r1_' + val.Id + '">' + val.Responses[0].Respuesta+'</label>'))
+                            .append($('<td>').append('<input type="radio" id="r3_' + val.Id + '" name="optionz_' + val.Id + '" value="3" class="with-gap radio-col-cyan"><label for="r3_' + val.Id + '">' + val.Responses[1].Respuesta +'</label>'))
+                            .append($('<td>').append('<input type="radio" id="r5_' + val.Id + '" name="optionz_' + val.Id + '" value="5" class="with-gap radio-col-cyan"><label for="r5_' + val.Id + '">' + val.Responses[2].Respuesta + '</label>'))
                             .append($('<td style="text-align:center;" class="bg-red ptsBef" id="pt_'+val.Id+'">').append('0')));
                     });
                 });
@@ -1805,9 +1825,9 @@
                         $(this).append($('<tr>')
                             .append($('<td style="display:none;">').append(val.Id))
                             .append($('<td>').append('<b>' + val.Pregunta + '</b>'))
-                            .append($('<td>').append('<input type="radio" id="r1a_' + val.Id + '" name="optiona_' + val.Id + '" value="1" class="with-gap radio-col-cyan" > <label for="r1a_' + val.Id + '">' + val.Responses[0].Respuesta + '</label>'))
-                            .append($('<td>').append('<input type="radio" id="r3a_' + val.Id + '" name="optiona_' + val.Id + '" value="3" class="with-gap radio-col-cyan"> <label for="r3a_' + val.Id + '">' + val.Responses[1].Respuesta + '</label>'))
-                            .append($('<td>').append('<input type="radio" id="r5a_' + val.Id + '" name="optiona_' + val.Id + '" value="5" class="with-gap radio-col-cyan"> <label for="r5a_' + val.Id + '">' + val.Responses[2].Respuesta + '</label>'))
+                            .append($('<td>').append('<input type="radio" id="r1a_' + val.Id + '" name="optionza_' + val.Id + '" value="1" class="with-gap radio-col-cyan" > <label for="r1a_' + val.Id + '">' + val.Responses[0].Respuesta + '</label>'))
+                            .append($('<td>').append('<input type="radio" id="r3a_' + val.Id + '" name="optionza_' + val.Id + '" value="3" class="with-gap radio-col-cyan"> <label for="r3a_' + val.Id + '">' + val.Responses[1].Respuesta + '</label>'))
+                            .append($('<td>').append('<input type="radio" id="r5a_' + val.Id + '" name="optionza_' + val.Id + '" value="5" class="with-gap radio-col-cyan"> <label for="r5a_' + val.Id + '">' + val.Responses[2].Respuesta + '</label>'))
                             .append($('<td style="text-align:center;" class="bg-green ptsAft" id="pta_' + val.Id + '">').append('0')));
                     });
                 });
@@ -2042,6 +2062,7 @@
         //$('.showSweetAlert h2').addClass('tit');
     }
 </script>
+@* CARGUE DE TABLAS *@
 <script>
     //tipos de acciones para el plan de acción
     var tiposAcciones = {
@@ -2108,6 +2129,9 @@
             return (!($input.val() == "" && defaultValue == null)) && ($input.val() != defaultValue);
         };
         this.validate = function () {
+            if ($input.val() == '') {
+                return { valid: false, msg: 'Debe seleccionar un tipo de acción' };
+            }
             return {
                 valid: true,
                 msg: null
@@ -2180,6 +2204,9 @@
             return (!($input.val() == "" && defaultValue == null)) && ($input.val() != defaultValue);
         };
         this.validate = function () {
+            if ($input.val() == '') {
+                return { valid: false, msg: 'Debe seleccionar un valor de la lista' };
+            }
             return {
                 valid: true,
                 msg: null
@@ -2290,6 +2317,9 @@
             return (!($input.val() == "" && defaultValue == null)) && ($input.val() != defaultValue);
         };
         this.validate = function () {
+            if ($input.val() == '') {
+                return { valid: false, msg: 'Debe seleccionar un área' };
+            }
             return {
                 valid: true,
                 msg: null
@@ -2308,13 +2338,37 @@
     }
     //remover la acción recién creada
 
+    //Validaciones de acciones inmediatas
+    function actionValidator(newValue) { 
+        if (!newValue) {
+            return { valid: false, msg: 'Debe agregar una acción' };
+        }
+        return { valid: true, msg: '' };
+    }
+
+    //Validaciones de acciones inmediatas
+    function dateValidator(newValue) {
+        if (!newValue) {
+            return { valid: false, msg: 'Debe seleccionar una fecha' };
+        }
+        return { valid: true, msg: '' };
+    }
+
+    //Validaciones de texto
+    function textValidator(newValue) {
+        if (!newValue) {
+            return { valid: false, msg: 'Debe ingresar un valor' };
+        }
+        return { valid: true, msg: '' };
+    }
+
     //inicializar grid
     function initGrid() {
         var columns =
             [
-                { id: "titulo", name: "Acción", field: "accion", minWidth: 300, editable: true, editor: Slick.Editors.Text },
+                { id: "titulo", name: "Acción", field: "accion", minWidth: 300, editable: true, editor: Slick.Editors.Text, validator: actionValidator },
                 { id: "id_responsable", name: "Responsable", field: "codigo_responsable", minWidth: 200, formatter: select2Formatter, editor: SelectEditor, dataSource: user_data },
-                { id: "fecha_compromiso", name: "Fecha de compromiso", field: "fecha_compromiso", minWidth: 130, editor: Slick.Editors.Date },
+                { id: "fecha_compromiso", name: "Fecha de compromiso", field: "fecha_compromiso", minWidth: 130, editor: Slick.Editors.Date, validator: dateValidator },
                 { id: "evi_efe", name: "Evidencia/Efectividad", field: "evidencia_efectividad", minWidth: 120, resizable: false, formatter: Slick.Formatters.PercentCompleteBar, editor: Slick.Editors.PercentComplete },
                 {
                     id: 'id', name: '#', field: 'id', formatter: function (index, c, id, def, datactx) {
@@ -2342,6 +2396,10 @@
             data.push(item);
             grid.updateRowCount();
             grid.render();
+        });
+
+        grid.onValidationError.subscribe(function (e, args) {
+            alert(args.validationResults.msg);
         });
                 
         $('#gridAcciones').on('focusout', '.editor-percentcomplete', function () {
@@ -2461,15 +2519,21 @@
     function initGridPlanAccion() {
         var columnsPlanAccion =
             [
-                { id: "tipo_accion", name: "Tipo", field: "tipo_accion", minWidth: 130, formatter: select2FormatterTipo, editor: SelectEditorTipo, dataSource: tiposAcciones },
-                { id: "contramedida", name: "Contramedida", field: "contramedida", minWidth: 220, editable: true, editor: Slick.Editors.LongText },
-                { id: "capex", name: "Requiere Capex?", field: "capex", minWidth: 150, cssClass: "cell-effort-driven", formatter: Slick.Formatters.Checkmark, editor: Slick.Editors.Checkbox },
+                { id: "codigo_tipo", name: "Tipo", field: "codigo_tipo", minWidth: 130, formatter: select2FormatterTipo, editor: SelectEditorTipo, dataSource: tiposAcciones },
+                { id: "contramedida", name: "Contramedida", field: "contramedida", minWidth: 220, editable: true, editor: Slick.Editors.LongText, validator: textValidator },
+                { id: "requiere_capex", name: "Requiere Capex?", field: "requiere_capex", minWidth: 150, cssClass: "cell-effort-driven", formatter: Slick.Formatters.Checkmark, editor: Slick.Editors.Checkbox },
+                { id: "pokayoke", name: "Pokayoke?", field: "pokayoke", minWidth: 150, cssClass: "cell-effort-driven", formatter: Slick.Formatters.Checkmark, editor: Slick.Editors.Checkbox },
                 //{ id: "antes", name: "Antes", field: "antes", minWidth: 100, editable: true, editor: Slick.Editors.Text },
                 //{ id: "despues", name: "Después", field: "despues", minWidth: 100, editable: true, editor: Slick.Editors.Text },
-                { id: "pokayoke", name: "Pokayoke", field: "pokayoke", minWidth: 150, editable: true, editor: Slick.Editors.Text },                
-                { id: "fecha", name: "F. compromiso", field: "fecha", minWidth: 130, editor: Slick.Editors.Date },
-                { id: "id_area", name: "Área", field: "id_area", minWidth: 200, formatter: select2FormatterArea, editor: SelectEditorArea, dataSource: areas_data },
-                { id: "id_responsable", name: "Responsable", field: "codigo_responsable", minWidth: 200, formatter: select2Formatter, editor: SelectEditor, dataSource: user_data },
+                //{ id: "pokayoke", name: "Pokayoke", field: "pokayoke", minWidth: 150, editable: true, editor: Slick.Editors.Text },                
+                { id: "fecha_compromiso", name: "F. compromiso", field: "fecha_compromiso", minWidth: 130, editor: Slick.Editors.Date, validator: textValidator },
+                { id: "codigo_area", name: "Área", field: "codigo_area", minWidth: 200, formatter: select2FormatterArea, editor: SelectEditorArea, dataSource: areas_data },
+                { id: "codigo_responsable", name: "Responsable", field: "codigo_responsable", minWidth: 200, formatter: select2Formatter, editor: SelectEditor, dataSource: user_data },
+                {
+                    id: 'id_accp', name: 'acciones', field: 'id', minWidth: 130, formatter: function (index, c, id, def, datactx) {
+                        return '<a id="acceptPA" class="btn btn-primary" style="padding:2px;" >Guardar acción</a>';
+                    }
+                },
                 {
                     id: 'id', name: 'acciones', field: 'id', formatter: function (index, c, id, def, datactx) {
                         return '<a id="deletePA" class="btn btn-primary" style="padding:2px;" onclick="RemoveClick(' + index + ',4)">Eliminar</a>';
@@ -2489,6 +2553,10 @@
             gridPlanAccion.updateRowCount();
             gridPlanAccion.render();
         });     
+
+        gridPlanAccion.onValidationError.subscribe(function (e, args) {
+            alert(args.validationResults.msg);
+        });
 
         //poner color al encabezado de una columna especifica
         //var headers = $('#gridPlanAccion .slick-header-columns').children();
@@ -2587,9 +2655,38 @@
                     listAccInm = [];
                     listAccInm = grid.getData();
 
+                    //Validar que todas las columnas estén diligenciadas
+                    //Numero de columnas de la tabla sin el botón
+                    var numCols = grid.getColumns().length - 1;
+                    //Campo que indica si es válido el registro
+                    var isValid = true;
+                    //Verificar cada registro
+
+                    
+                    for (var i = 0; i < listAccInm.length; i++) {
+
+                        var numColsWithData = Object.keys(listAccInm[i]).length;
+                        //Edición de acciones
+                        if (listAccInm[i].id)
+                        {
+                            numColsWithData = Object.keys(listAccInm[i]).length - 2;//porque es procesamiento de incidente y se quitan los id's de ewo y del registro
+                        }
+
+                        //Numero de columnas diligenciadas por el usuario   
+                        if (numCols != numColsWithData) {
+                            isValid = false;
+                            break;
+                        }
+                    }       
+
                     //validar acciones inmediatas
                     if (listAccInm.length == 0) {
                         showSweetAlert("Acciones inmediatas", "Debe cargar las acciones inmediatas", "error");
+                        return false;
+                    }
+
+                    if (!isValid) {
+                        swal("Acciones Inmediatas", "Todos los campos de las acciones deben estar diligenciados", "error");
                         return false;
                     }
                 }
@@ -2599,8 +2696,8 @@
                     var listGrupoTrabajo = $("#EquipoTrabajo").siblings(".bootstrap-tagsinput").children(".tag");
                     //Validar el equipo de trabajo
                     if (listGrupoTrabajo.length == 0 ) {
-                        //showSweetAlert("Análisis de causas & 4M", "Debe incluir al menos un integrante en el equipo de trabajo", "error");
-                        //return false;
+                        showSweetAlert("Análisis de causas & 4M", "Debe incluir al menos un integrante en el equipo de trabajo", "error");
+                        return false;
                     }
 
                     //asignar registros de la pestaña 2
@@ -2615,18 +2712,18 @@
 
                     //validar listas de la pestaña 2
                     if (listGenj.length == 0) {
-                        //showSweetAlert("INVESTIGACIÓN EN PISO", "Debe cargar la información Genjitsu", "error");
-                        //return false;
+                        showSweetAlert("INVESTIGACIÓN EN PISO", "Debe cargar la información Genjitsu", "error");
+                        return false;
                     }
 
                     if (listGenr.length == 0) {
-                        //showSweetAlert("INVESTIGACIÓN EN PISO", "Debe cargar la información Genri", "error");
-                        //return false;
+                        showSweetAlert("INVESTIGACIÓN EN PISO", "Debe cargar la información Genri", "error");
+                        return false;
                     }
 
                     if (listGens.length == 0) {
-                        //showSweetAlert("INVESTIGACIÓN EN PISO", "Debe cargar la información Gensoku", "error");
-                        //return false;
+                        showSweetAlert("INVESTIGACIÓN EN PISO", "Debe cargar la información Gensoku", "error");
+                        return false;
                     }
 
                     //VALIDAR QUE LOS POR QUÉ ESTÉN DILIGENCIADOS
@@ -2646,24 +2743,24 @@
                     });
 
                     if (listPorq.length == 0) {
-                        //if (!$('#GembaDesc').val() || !$('#GembutsuDesc').val() || !$('#GenjitsuDesc').val()) {
-                            //showSweetAlert("ANÁLISIS POR QUÉ", "Debe diligenciar los registros de por qué", "error");
-                            //return false;
-                        //}
+                        if (!$('#GembaDesc').val() || !$('#GembutsuDesc').val() || !$('#GenjitsuDesc').val()) {
+                            showSweetAlert("ANÁLISIS POR QUÉ", "Debe diligenciar los registros de por qué", "error");
+                            return false;
+                        }
                     };
 
 
                     //validar imagenes
                     //imagen 1
                     if (myDropzone1.files.length == 0) {
-                        //showSweetAlert("Investigación en piso (5G)", "Debe cargar la imágen de la evidencia del problema", "error");
-                        //return false;
+                        showSweetAlert("Investigación en piso (5G)", "Debe cargar la imágen de la evidencia del problema", "error");
+                        return false;
                     }
 
                     //imagen 2
                     if (myDropzone2.files.length == 0) {
-                        //showSweetAlert("5W+1H", "Debe cargar la imágen del fenómeno", "error");
-                        //return false;
+                        showSweetAlert("5W+1H", "Debe cargar la imágen del fenómeno", "error");
+                        return false;
                     }
 
                     //Validación de Análisis 4M
@@ -2671,25 +2768,27 @@
                     var maxMs = _.max([manObra, material, maquina, metodo]);
 
                     if (maxMs == 0) {
-                        //showSweetAlert("Análisis 4M", "Debe responder las preguntas 4M", "error");
-                        //return false;
+                        showSweetAlert("Análisis 4M", "Debe responder las preguntas 4M", "error");
+                        return false;
                     }
 
                     //Validar top five for zero
                     var bTFFZSelected = false;
+
                     //CREAR DATOS DE TABLA EN ARREGLO
                     $("#tblTFFZ TBODY TR").each(function (i, row) {
                         var $row = $(row);
                         $checkedBoxes = $row.find('input:checked');
-
+                        
                         if ($checkedBoxes.length > 0) {
                             bTFFZSelected = true;
+                            topFiveId = $checkedBoxes.attr('id');
                         }
                     });
 
                     if (!bTFFZSelected) {
-                        //showSweetAlert("Top Five For Zero", "Debe seleccionar una opción", "error");
-                        //return false;
+                        showSweetAlert("Top Five For Zero", "Debe seleccionar una opción", "error");
+                        return false;
                     }
                 }
 
@@ -2700,16 +2799,16 @@
                     $("#tblZeroBefore TBODY TR").each(function () {
                         var row = $(this);
                         var beforeQ = {};
-                        beforeQ.id = row.find("TD").eq(0).html();
-                        var p1 = row.find("TD").eq(2).html();
+                        beforeQ.Id = row.find("TD").eq(0).html();
+                        //var p1 = row.find("TD").eq(2).html();
 
                         //Obtener el objeto
-                        var obP1 = $(p1);
+                        //var obP1 = $(p1);
                         //Obtener el valor del radio con el nombre del grupo
-                        var value = $('input[name=' + obP1[0].name + ']:checked').val();
+                        //var value = $('input[name=' + obP1[0].name + ']:checked').val();
                         //Guardar valor
-                        beforeQ.value = value ? value : 0;
-                        beforeQ.puntos = row.find("TD").eq(5).html();
+                        //beforeQ.value = value ? value : 0;
+                        beforeQ.Puntaje = row.find("TD").eq(5).html();
 
                         listBefo.push(beforeQ);
                     });
@@ -2718,14 +2817,14 @@
                     //flag para determinar si hay alguna sin reponder
                     var anyZeroB = false;
                     listBefo.forEach(function myfunction(i, v) {
-                        if (i.puntos == 0) {
+                        if (i.Puntaje == 0) {
                             anyZeroB = true;
                         }
                     });
 
                     if (anyZeroB) {
-                        //showSweetAlert("ZERO QUESTIONS", "Debe responder todas las preguntas BEFORE", "error");
-                        //return false;
+                        showSweetAlert("ZERO QUESTIONS", "Debe responder todas las preguntas BEFORE", "error");
+                        return false;
                     }
 
 
@@ -2735,18 +2834,17 @@
                     $("#tblZeroAfter TBODY TR").each(function () {
                         var row = $(this);
                         var afterQ = {};
-                        afterQ.id = row.find("TD").eq(0).html();
+                        afterQ.Id = row.find("TD").eq(0).html();
 
-                        var p1 = row.find("TD").eq(2).html();
-
+                        //var p1 = row.find("TD").eq(2).html();
                         //Obtener el objeto
-                        var obP1 = $(p1);
+                        //var obP1 = $(p1);
                         //Obtener el valor del radio con el nombre del grupo
-                        var value = $('input[name=' + obP1[0].name + ']:checked').val();
+                        //var value = $('input[name=' + obP1[0].name + ']:checked').val();
                         //Guardar valor
-                        afterQ.value = value ? value : 0;
+                        //afterQ.value = value ? value : 0;
 
-                        afterQ.puntos = row.find("TD").eq(5).html();
+                        afterQ.Puntaje = row.find("TD").eq(5).html();
 
                         listAfte.push(afterQ);
                     });
@@ -2755,20 +2853,20 @@
                     //flag para determinar si hay alguna sin reponder
                     var anyZeroA = false;
                     listAfte.forEach(function myfunction(i, v) {
-                        if (i.puntos == 0) {
+                        if (i.Puntaje == 0) {
                             anyZeroA = true;
                         }
                     });
 
                     if (anyZeroA) {
-                        //showSweetAlert("ZERO QUESTIONS", "Debe responder todas las preguntas AFTER" , "error");
-                        //return false;
+                        showSweetAlert("ZERO QUESTIONS", "Debe responder todas las preguntas AFTER" , "error");
+                        return false;
                     }
                     else {
                         var pntAfter = parseInt(aftTotal.innerHTML.replace("%", ""));
                         if (pntAfter < 80) {
-                            //showSweetAlert("ZERO QUESTIONS", "El puntaje del resultado AFTER debe ser superior al 80%", "error");
-                            //return false;
+                            showSweetAlert("ZERO QUESTIONS", "El puntaje del resultado AFTER debe ser superior al 80%", "error");
+                            return false;
                         }
                     }
 
@@ -2776,10 +2874,47 @@
                     listPlan = [];
                     listPlan = gridPlanAccion.getData();
 
+
+
+                    //Validar que todas las columnas estén diligenciadas
+                    //Numero de columnas de la tabla sin el botón
+                    var numCols = gridPlanAccion.getColumns().length - 1;
+                    //Campo que indica si es válido el registro
+                    var isValid = true;
+
+                    //Verificar cada registro
+                    for (var i = 0; i < listPlan.length; i++) {
+                        if (!listPlan[i].codigo_area) {
+                            isValid = false;
+                            break;
+                        }
+                        if (!listPlan[i].codigo_responsable) {
+                            isValid = false;
+                            break;
+                        }
+                        if (!listPlan[i].codigo_tipo) {
+                            isValid = false;
+                            break;
+                        }
+                        if (!listPlan[i].contramedida) {
+                            isValid = false;
+                            break;
+                        }
+                        if (!listPlan[i].fecha_compromiso) {
+                            isValid = false;
+                            break;
+                        }
+                    }       
+
                     //validar listas
                     if (listPlan.length == 0) {
-                        //showSweetAlert("PLAN DE ACCIÓN", "Debe cargar la información del plan de acción", "error");
-                        //return false;
+                        showSweetAlert("PLAN DE ACCIÓN", "Debe cargar la información del plan de acción", "error");
+                        return false;
+                    }
+
+                    if (!isValid) {
+                        swal("Plan de acción", "Todos los campos del plan de acción deben estar diligenciados", "error");
+                        return false;
                     }
                 }
 
@@ -2790,8 +2925,8 @@
                 if (Slick.GlobalEditorLock.isActive())
                     Slick.GlobalEditorLock.commitCurrentEdit();
 
-                //return form.valid();
-                return true;
+                return form.valid();
+                //return true;
             },
             onStepChanged: function (event, currentIndex, priorIndex) {
 
@@ -2824,8 +2959,8 @@
             onFinishing: function (event, currentIndex) {
 
                 form.validate().settings.ignore = ':disabled,.ignore';
-                //return form.valid();
-                return true;
+                return form.valid();
+                //return true;
             },
             onFinished: function (event, currentIndex) {
                 var form = $('#wizard_validation')[0];
@@ -2840,6 +2975,8 @@
                 dataString.append('ListBefo', JSON.stringify(listBefo));
                 dataString.append('ListAfte', JSON.stringify(listAfte));
                 dataString.append('ListPlan', JSON.stringify(listPlan));
+                dataString.append('BeforePct', JSON.stringify(parseInt(befTotal.innerHTML.replace("%", ""))));
+                dataString.append('AfterPct', JSON.stringify(parseInt(aftTotal.innerHTML.replace("%", ""))));
 
                 //Obtener imagenes
                 myDropzone1.files.forEach((file, i) => {
@@ -2871,6 +3008,57 @@
                         break;
                 }
 
+                //Id top five for zero
+                dataString.append('IdTopFFZ', topFiveId);
+
+                //var zeroResponsBef = {}; 
+                //var zeroResponsAft = {}; 
+
+                ////Obtener registros zero
+                //$("#tblZeroBefore TBODY TR").each(function (a, b) {
+                //    var row = $(this);
+                //    var pregunta = {};
+
+                //    pregunta.Id = row.find("TD").eq(0).html();          
+                //    pregunta.Puntaje = "0";
+
+                //    var radios = document.getElementsByName('optionz_' + pregunta.Id + '');
+                //    for (var i = 0, length = radios.length; i < length; i++) {
+                //        if (radios[i].checked) {
+                //            // do whatever you want with the checked radio
+                //            pregunta.Puntaje = radios[i].value;
+
+                //            // only one radio can be logically checked, don't check the rest
+                //            break;
+                //        }
+                //    }
+
+                //    zeroResponsBef.push(pregunta);
+                //});
+
+                //$("#tblZeroAfter TBODY TR").each(function (a, b) {
+                //    var row = $(this);
+                //    var pregunta = {};
+
+                //    pregunta.Id = row.find("TD").eq(0).html();
+                //    pregunta.Puntaje = "0";
+
+                //    var radios = document.getElementsByName('optionza_' + pregunta.Id + '');
+                //    for (var i = 0, length = radios.length; i < length; i++) {
+                //        if (radios[i].checked) {
+                //            // do whatever you want with the checked radio
+                //            pregunta.Puntaje = radios[i].value;
+
+                //            // only one radio can be logically checked, don't check the rest
+                //            break;
+                //        }
+                //    }
+
+                //    zeroResponsAft.push(pregunta);
+                //});
+
+                //dataString.append('ListZerBef', JSON.stringify(zeroResponsBef));
+                //dataString.append('ListZerAft', JSON.stringify(zeroResponsAft));
 
                 $.ajax({
                     type: "POST",
@@ -2881,18 +3069,18 @@
                     },
                     success: function (response) {
 
-                        $('#downloadModal').modal('toggle');
+                        $('#mdlExitoPro').modal('toggle');
 
                         //MENSAJE DE CONFIRMACIÓN O ERROR
-                        if (response.code == 1) {
-                            $('#modalMsg').text("Formato creado correctamente!");
+                        if (response.Codigo == 1) {
+                            $('#modalMsg').text("Incidente procesado correctamente!");
                             //window.location = '/ReportarIncidentes/DownloadEwoFile';
                         }
-                        else if (response.code == -1) {
-                            $('#modalMsg').text("Error al crear formato!" + response.message);
+                        else if (response.Codigo == -1) {
+                            $('#modalMsg').text("Error al procesar incidente!" + response.Message);
                         }
                         else {
-                            $('#modalMsg').text("No se pudo crear formato, intente nuevamente!");
+                            $('#modalMsg').text("No se pudo procesar incidente, intente nuevamente!");
                         }
                     },
                     cache: false,
@@ -2928,7 +3116,7 @@
                 label.remove();
             },
             messages: {
-                //'IdPlanta': { valueNotEquals: "Debe seleccionar planta..." }
+                'IdPlanta': { valueNotEquals: "Debe seleccionar planta..." }
             }
         });
 
@@ -3185,6 +3373,7 @@
                 data: { from: 1, id: idPlanta },
                 success: function (response) {
 
+                    areas_data = response; // Cargar areas del caso para mostrarlas en el plan de acción
                     $.each(response, function (i, area) {
 
                         $('#IdArea').append($('<option>', {

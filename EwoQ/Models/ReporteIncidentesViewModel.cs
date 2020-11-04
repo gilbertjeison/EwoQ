@@ -204,6 +204,9 @@ namespace EwoQ.Models
         public string Material4MDesc { get; set; }
         public string Maquina4MDesc { get; set; } 
         public string Metodo4MDesc { get; set; }
+
+        public string IdTopFFZ { get; set; }
+        public string GrpTFFZ { get; set; }
         public List<tipos_data> TopFiveForZeroList { get; set; }
         #endregion
 
@@ -242,13 +245,4 @@ namespace EwoQ.Models
 
         #endregion
     }
-
-    #region  Clase Preguntas 4M
-    public class Preguntas4M
-    {
-        public int id { get; set; }
-        public string descripcion { get; set; }
-        public string option { get; set; }
-    }
-    #endregion
 }

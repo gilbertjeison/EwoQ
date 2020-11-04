@@ -558,6 +558,9 @@
             return (!($input.val() == "" && defaultValue == null)) && ($input.val() != defaultValue);
         };
         this.validate = function () {
+            if ($input.val() == '') {
+                return { valid: false, msg: 'Debe seleccionar un responsable' };
+            }
             return {
                 valid: true,
                 msg: null
@@ -582,12 +585,28 @@
         grid.render();
     }
 
+    //Validaciones de acciones inmediatas
+    function actionValidator(newValue) {
+        if (!newValue) {
+            return { valid: false, msg: 'Debe agregar el nombre de la acción' };
+        }
+        return { valid: true, msg: '' };
+    }
+
+    //Validaciones de acciones inmediatas
+    function dateValidator(newValue) {
+        if (!newValue) {
+            return { valid: false, msg: 'Debe seleccionar una fecha' };
+        }
+        return { valid: true, msg: '' };
+    }
+
     function initGrid() {
         var columns =
             [
-                { id: "titulo", name: "Acción", field: "accion", minWidth: 300, editable: true, editor: Slick.Editors.Text },
+                { id: "titulo", name: "Acción", field: "accion", minWidth: 300, editable: true, editor: Slick.Editors.Text, validator: actionValidator },
                 { id: "id_responsable", name: "Responsable", field: "codigo_responsable", minWidth: 200, formatter: select2Formatter, editor: SelectEditor, dataSource: user_data },
-                { id: "fecha_compromiso", name: "Fecha de compromiso", field: "fecha_compromiso", minWidth: 130, editor: Slick.Editors.Date },
+                { id: "fecha_compromiso", name: "Fecha de compromiso", field: "fecha_compromiso", minWidth: 130, editor: Slick.Editors.Date, validator: dateValidator },
                 { id: "evi_efe", name: "Evidencia/Efectividad", field: "evidencia_efectividad", minWidth: 120, resizable: false, formatter: Slick.Formatters.PercentCompleteBar, editor: Slick.Editors.PercentComplete },
                 {
                     id: 'id', name: '#', field: 'id', formatter: function (index, c, id, def, datactx) {
@@ -619,11 +638,17 @@
         grid = new Slick.Grid("#gridAcciones", data, columns, options);
         grid.setSelectionModel(new Slick.CellSelectionModel());
         grid.onAddNewRow.subscribe(function (e, args) {
+          
             var item = args.item;
+            
             grid.invalidateRow(data.length);
             data.push(item);
             grid.updateRowCount();
             grid.render();
+        });
+
+        grid.onValidationError.subscribe(function (e, args) {
+            alert(args.validationResults.msg);
         });
 
         $('#gridAcciones').on('focusout', '.editor-percentcomplete', function () {
@@ -830,11 +855,33 @@
         cmd = [];
         cmd = grid.getData();
 
+        //Validar que todas las columnas estén diligenciadas
+        //Numero de columnas de la tabla sin el botón
+        var numCols = grid.getColumns().length - 1;
+        //Campo que indica si es válido el registro
+        var isValid = true;
+        //Verificar cada registro
+
+        for (var i = 0; i < cmd.length; i++) {
+            //Numero de columnas diligenciadas por el usuario
+            var numColsWithData = Object.keys(cmd[i]).length;
+            if (numCols != numColsWithData) {
+                isValid = false;
+                break;
+            }
+        }       
+
+
         if (cmd.length == 0) {
             swal("Acciones Inmediatas", "Las acciones deben estar diligenciadas", "error");
             console.log('error contramedidas!');
             return false;
-        };
+        }
+
+        if (!isValid) {
+            swal("Acciones Inmediatas", "Todos los campos de las acciones deben estar diligenciados", "error");
+            return false;
+        }
 
         if (!validate.form()) {
             return false;

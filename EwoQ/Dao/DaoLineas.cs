@@ -37,7 +37,7 @@ namespace EwoQ.Dao
                     var query = from td in context.lineas
                                 where td.codigo_area == id
                                 select td;
-                    lineas = await query.ToListAsync();
+                    lineas = await query.OrderBy(x => x.descripcion).ToListAsync();
                 }
             }
             catch (Exception e)
