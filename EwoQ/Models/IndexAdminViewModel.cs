@@ -12,6 +12,9 @@ namespace EwoQ.Models
         public int IncidentesCerrados { get; set; }
         public int UsuariosRegistrados { get; set; }
         public int TiempoLinParada { get; set; }
+        public int UnidadesAfectadas { get; set; }
+
+        public decimal CostosTotales { get; set; }
 
         public int Counter { get; set; }
 

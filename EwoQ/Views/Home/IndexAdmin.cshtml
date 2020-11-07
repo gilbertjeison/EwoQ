@@ -18,91 +18,164 @@
 
     .card {
         border-radius: 10px;
-        margin-top: 25px;
+        /*margin-top: 15px;*/
     }
 
     svg:not(:root) {
         left: 50% !important;
         transform: translateX(-50%);
     }
+
+    .card .body .col-xs-12, .card .body .col-sm-12, .card .body .col-md-12, .card .body .col-lg-12 {
+         margin-bottom: 0; 
+    }
 </style>
 
 <div class="row clearfix">
-    <div class="col-md-6">
+    <div class="col-md-12">
         <div class="card clearfix">
             <div class="header">
-                <h2>DATOS DE INCIDENTE</h2>
+                <h2>RESUMEN DE INCIDENTESS</h2>
             </div>
             <div class="body">
-                <div class="col-md-12">
-                    <div class="info-box bg-light-green hover-expand-effect">
-                        <div class="icon">
-                            <i class="material-icons">playlist_add_check</i>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="info-box bg-light-green hover-expand-effect">
+                            <div class="icon">
+                                <i class="material-icons">email</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">INCIDENTES REPORTADOS</div>
+                                <div class="number count-to" data-from="0" data-to="@Model.IncidentesReportados" data-speed="2000" data-fresh-interval="20"></div>
+                            </div>
                         </div>
-                        <div class="content">
-                            <div class="text">INCIDENTES REPORTADOS</div>
-                            <div class="number count-to" data-from="0" data-to="@Model.IncidentesReportados" data-speed="2000" data-fresh-interval="20"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-box bg-light-green hover-expand-effect">
+                            <div class="icon">
+                                <i class="material-icons">playlist_play</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">INCIDENTES EN PROCESO</div>
+                                <div class="number count-to" data-from="0" data-to="@Model.IncidentespProceso" data-speed="2000" data-fresh-interval="20"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-12">
-                    <div class="info-box bg-light-green hover-expand-effect">
-                        <div class="icon">
-                            <i class="material-icons">playlist_play</i>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="info-box bg-light-green hover-expand-effect">
+                            <div class="icon">
+                                <i class="material-icons">playlist_add_check</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">INCIDENTES CERRADOS</div>
+                                <div class="number count-to" data-from="0" data-to="@Model.IncidentesCerrados" data-speed="2000" data-fresh-interval="20"></div>
+                            </div>
                         </div>
-                        <div class="content">
-                            <div class="text">INCIDENTES EN PROCESO</div>
-                            <div class="number count-to" data-from="0" data-to="@Model.IncidentespProceso" data-speed="2000" data-fresh-interval="20"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-box bg-light-green hover-expand-effect">
+                            <div class="icon">
+                                <i class="material-icons">assignment_late</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">UNIDADES AFECTADAS</div>
+                                <div class="number count-to" data-from="0" data-to="@Model.UnidadesAfectadas" data-speed="2000" data-fresh-interval="20"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-12">
-                    <div class="info-box bg-light-green hover-expand-effect">
-                        <div class="icon">
-                            <i class="material-icons">playlist_play</i>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="info-box bg-light-green hover-expand-effect">
+                            <div class="icon">
+                                <i class="material-icons">attach_money</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">COSTOS TOTALES</div>
+                                <div class="number count-to" id="costo_incidente" data-fresh-interval="20"></div>
+                            </div>
                         </div>
-                        <div class="content">
-                            <div class="text">INCIDENTES CERRADOS</div>
-                            <div class="number count-to" data-from="0" data-to="@Model.IncidentesCerrados" data-speed="2000" data-fresh-interval="20"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-box bg-light-green hover-expand-effect">
+                            <div class="icon">
+                                <i class="material-icons">timer_off</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">TIEMPO LÍNEAS PARADAS (MIN)</div>
+                                <div class="number count-to" data-from="0" data-to="@Model.TiempoLinParada" data-speed="2000" data-fresh-interval="20"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-12">
-                    <div class="info-box bg-light-green hover-expand-effect">
-                        <div class="icon">
-                            <i class="material-icons">timer_off</i>
-                        </div>
-                        <div class="content">
-                            <div class="text">TIEMPO LÍNEAS PARADAS (MIN)</div>
-                            <div class="number count-to" data-from="0" data-to="@Model.TiempoLinParada" data-speed="2000" data-fresh-interval="20"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="info-box bg-light-green hover-expand-effect">
-                        <div class="icon">
-                            <i class="material-icons">person_add</i>
-                        </div>
-                        <div class="content">
-                            <div class="text">USUARIOS REGISTRADOS</div>
-                            <div class="number count-to" data-from="0" data-to="@Model.UsuariosRegistrados" data-speed="2000" data-fresh-interval="20"></div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="info-box bg-light-green hover-expand-effect">
+                            <div class="icon">
+                                <i class="material-icons">person_add</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">USUARIOS REGISTRADOS</div>
+                                <div class="number count-to" data-from="0" data-to="@Model.UsuariosRegistrados" data-speed="2000" data-fresh-interval="20"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-    </div>
-    <div class="col-md-6">
-        <div class="card">
-            <div class="header">
-                <h2>Tipo de incidente o no conformidad</h2>
+  
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="header">
+                        <h2>Tipo de incidente o no conformidad</h2>
+                    </div>
+                    <div class="body">
+                        <div id="donut_chart" class="dashboard-donut-chart"></div>
+                    </div>
+                </div>
             </div>
-            <div class="body">
-                <div id="donut_chart" class="dashboard-donut-chart"></div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="header">
+                        <h2>Clasificación 4M</h2>
+                    </div>
+                    <div class="body">
+                        <div id="donut_chart_4m" class="dashboard-donut-chart"></div>
+                    </div>
+                </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="header">
+                        <h2>Clasificación Top Five For Zero</h2>
+                    </div>
+                    <div class="body">
+                        <div id="donut_chart_tffz" class="dashboard-donut-chart"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="header">
+                        <h2>Clasificación por plantas</h2>
+                    </div>
+                    <div class="body">
+                        <div id="donut_chart_plants" class="dashboard-donut-chart"></div>
+                    </div>
+                </div>
+            </div>
+        </div>      
     </div>
+  
+    
 
 </div>
 
@@ -158,17 +231,33 @@
         //Widgets count
         $('.count-to').countTo();
 
-        initDonutChart();
+        $('#costo_incidente').countTo({
+            from: 0,
+            to: @Html.Raw(Json.Encode(Model.CostosTotales)),
+            speed: 1500,
+            formatter: function (value, options) {
+                value = value.toFixed(options.decimals);
+                value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                return value;
+            }
+        });
 
+        donutType();
+        donut4M();
+        donutTffz();
+        donutPlants();
     });
 
-    function initDonutChart() {
+
+
+    function donutType() {
         //URL PARA OBTENER LOS DATOS
         var url = '@Url.Content("~/")' + "Home/GetDonutData";
         //INICIALIZAR OBJETO AJAX PARA TRAER DATOS DEL SERVIDOR
         $.ajax({
             //PARAMETRIZAR SERVICIO AJAX
             url: url,
+            async: true,
             type: 'post',
             //MOSTRAR LOADER ANTES DE INICIAR LA SOLICITUD
             beforeSend: function () {
@@ -192,10 +281,114 @@
             //EN CASO DE ERROR, IMPRIMIRLO
             error: function (request, status, error) {
                 alert('Error al aplicar filtros a tiempos de carga: ' + error + request.responseText);
-
             }
         });
+    }
 
+    function donut4M() {
+        //URL PARA OBTENER LOS DATOS
+        var url = '@Url.Content("~/")' + "Home/GetDonutData4M";
+        //INICIALIZAR OBJETO AJAX PARA TRAER DATOS DEL SERVIDOR
+        $.ajax({
+            //PARAMETRIZAR SERVICIO AJAX
+            url: url,
+            async: true,
+            type: 'post',
+            //MOSTRAR LOADER ANTES DE INICIAR LA SOLICITUD
+            beforeSend: function () {
+                $('.page-loader-wrapper').fadeIn();
+            },
+            success: function (response) {
+                Morris.Donut({
+                    element: 'donut_chart_4m',
+                    data: response,
+
+                    colors: ['rgb(255, 5, 100)', 'rgb(5, 200, 211)', 'rgb(232, 0, 180)','rgb(233, 30, 99)', 'rgb(0, 188, 212)', 'rgb(255, 152, 0)', 'rgb(0, 150, 136)', 'rgb(96, 125, 139)'],
+                    formatter: function (y) {
+                        return y + '%'
+                    }
+                });
+
+
+                //OCULTAR LOADER UNA VEZ CARAGADA LA INFORMACIÓN
+                $('.page-loader-wrapper').fadeOut();
+            },
+            //EN CASO DE ERROR, IMPRIMIRLO
+            error: function (request, status, error) {
+                alert('Error al cargar dona 4m: ' + error + request.responseText);
+            }
+        });
+    }
+
+
+    function donutTffz() {
+        //URL PARA OBTENER LOS DATOS
+        var url = '@Url.Content("~/")' + "Home/GetDonutDataTffz";
+        //INICIALIZAR OBJETO AJAX PARA TRAER DATOS DEL SERVIDOR
+        $.ajax({
+            //PARAMETRIZAR SERVICIO AJAX
+            url: url,
+            async: true,
+            type: 'post',
+            //MOSTRAR LOADER ANTES DE INICIAR LA SOLICITUD
+            beforeSend: function () {
+                $('.page-loader-wrapper').fadeIn();
+            },
+            success: function (response) {
+                Morris.Donut({
+                    element: 'donut_chart_tffz',
+                    data: response,
+
+                    colors: ['rgb(255, 5, 100)', 'rgb(5, 200, 211)', 'rgb(232, 0, 180)','rgb(233, 30, 99)', 'rgb(0, 188, 212)', 'rgb(255, 152, 0)', 'rgb(0, 150, 136)', 'rgb(96, 125, 139)'],
+                    formatter: function (y) {
+                        return y + '%'
+                    }
+                });
+
+
+                //OCULTAR LOADER UNA VEZ CARAGADA LA INFORMACIÓN
+                $('.page-loader-wrapper').fadeOut();
+            },
+            //EN CASO DE ERROR, IMPRIMIRLO
+            error: function (request, status, error) {
+                alert('Error al cargar dona 4m: ' + error + request.responseText);
+            }
+        });
+    }
+
+    function donutPlants() {
+        //URL PARA OBTENER LOS DATOS
+        var url = '@Url.Content("~/")' + "Home/GetDonutDataPlants";
+        //INICIALIZAR OBJETO AJAX PARA TRAER DATOS DEL SERVIDOR
+        $.ajax({
+            //PARAMETRIZAR SERVICIO AJAX
+            url: url,
+            async: true,
+            type: 'post',
+            //MOSTRAR LOADER ANTES DE INICIAR LA SOLICITUD
+            beforeSend: function () {
+                $('.page-loader-wrapper').fadeIn();
+            },
+            success: function (response) {
+                Morris.Donut({
+                    element: 'donut_chart_plants',
+                    data: response,
+
+                    colors: ['rgb(255, 5, 100)', 'rgb(5, 200, 211)', 'rgb(232, 0, 180)','rgb(233, 30, 99)', 'rgb(0, 188, 212)', 'rgb(255, 152, 0)', 'rgb(0, 150, 136)', 'rgb(96, 125, 139)'],
+                    formatter: function (y) {
+                        return y + '%'
+                    }
+                });
+
+
+                //OCULTAR LOADER UNA VEZ CARAGADA LA INFORMACIÓN
+                $('.page-loader-wrapper').fadeOut();
+            },
+            //EN CASO DE ERROR, IMPRIMIRLO
+            error: function (request, status, error) {
+                alert('Error al cargar dona 4m: ' + error + request.responseText);
+            }
+        });
     }
 </script>
 

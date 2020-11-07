@@ -73,6 +73,45 @@ namespace EwoQ.Controllers
             return Json(donut);
         }
 
+        [HttpPost]
+        public async Task<JsonResult> GetDonutData4M()
+        {
+            List<DonutViewModel> donut = null;
+
+            await Task.Run(() =>
+            {
+                donut = DaoEwo.DaoInstance.GetEwoMPercents();
+            });
+
+            return Json(donut);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> GetDonutDataTffz()
+        {
+            List<DonutViewModel> donut = null;
+
+            await Task.Run(() =>
+            {
+                donut = DaoEwo.DaoInstance.GetEwoTFFZPercents();
+            });
+
+            return Json(donut);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> GetDonutDataPlants()
+        {
+            List<DonutViewModel> donut = null;
+
+            await Task.Run(() =>
+            {
+                donut = DaoEwo.DaoInstance.GetEwoPlantsPercents();
+            });
+
+            return Json(donut);
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

@@ -171,6 +171,7 @@
           <Property Name="codigo_top_five_fzero" Type="bigint" />
           <Property Name="fecha_cierre" Type="datetime" />
           <Property Name="usuario_procesador" Type="nvarchar" MaxLength="128" />
+          <Property Name="codigo_m" Type="bigint" />
         </EntityType>
         <EntityType Name="excepciones">
           <Key>
@@ -920,6 +921,7 @@
           <NavigationProperty Name="respuestas4m" Relationship="Self.FK_respuestas4m_ewo" FromRole="ewo" ToRole="respuestas4m" />
           <NavigationProperty Name="revisiones" Relationship="Self.FK_revisiones_ewo" FromRole="ewo" ToRole="revisiones" />
           <NavigationProperty Name="plan_accion" Relationship="EwoQModel.FK_plan_accion_ewo" FromRole="ewo" ToRole="plan_accion" />
+          <Property Name="codigo_m" Type="Int64" />
         </EntityType>
         <EntityType Name="fiveg_resultados">
           <Key>
@@ -1572,6 +1574,7 @@
           <EntitySetMapping Name="ewo">
             <EntityTypeMapping TypeName="EwoQModel.ewo">
               <MappingFragment StoreEntitySet="ewo">
+                <ScalarProperty Name="codigo_m" ColumnName="codigo_m" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="consecutivo" ColumnName="consecutivo" />
                 <ScalarProperty Name="codigo_estado" ColumnName="codigo_estado" />

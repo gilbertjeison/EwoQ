@@ -96,6 +96,7 @@ namespace EwoQ.Database
         public Nullable<long> codigo_top_five_fzero { get; set; }
         public Nullable<System.DateTime> fecha_cierre { get; set; }
         public string usuario_procesador { get; set; }
+        public Nullable<long> codigo_m { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<acciones_inmediatas> acciones_inmediatas { get; set; }

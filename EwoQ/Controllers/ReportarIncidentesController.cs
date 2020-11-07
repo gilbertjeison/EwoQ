@@ -214,8 +214,7 @@ namespace EwoQ.Controllers
         [ValidateAntiForgeryToken]
         public async Task<JsonResult> ProcesarIncidentePost(ReporteIncidentesViewModel rivm)
         {
-            //CAMPOS PARA ALMACENAR RESULTADO DE TRANSACCIÓN        
-            string message = "";
+            //CAMPOS PARA ALMACENAR RESULTADO DE TRANSACCIÓN     
             RequestResponse rr = null;
 
             try
@@ -576,6 +575,8 @@ namespace EwoQ.Controllers
 
                 ewo.fecha_cierre = ewr.FchCierre == null ? DateTime.Now :
                 DateTime.ParseExact(ewr.FchCierre, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+
+                ewo.codigo_m = ewr.MaxMId;
 
                 //Actualizar incidente en base de datos
                 long id = await DaoEwo.DaoInstance.ProcesarIncidenteAsync(ewo);

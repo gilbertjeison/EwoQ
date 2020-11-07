@@ -141,6 +141,28 @@ namespace EwoQ.Dao
             return max;
         }
 
+        public int GetCountClosed()
+        {
+            int max = 0;
+
+            try
+            {
+                using (var context = new EwoQEntities())
+                {
+                    var maxv = context.ewo.Where(x=> x.codigo_estado == 2).Count();
+
+                    max = maxv;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Error al consultar cantidad de ewos cerrados: " + e.ToString());
+                max = -1;
+            }
+
+            return max;
+        }
+
         public async Task<long> AddEwo(ewo ewo)
         {
             long regs = 0;
@@ -192,7 +214,7 @@ namespace EwoQ.Dao
                         {
                             list.Add(new DonutViewModel()
                             {
-                                label = item.descripcion,
+                                label = item.descripcion + " ("+item.Count+")",
                                 value = ((double)item.Count / GetCount() * 100).ToString("F2")
                             });
                         }
@@ -202,6 +224,145 @@ namespace EwoQ.Dao
             catch (Exception e)
             {
                 Debug.WriteLine("Error al consultar porcentajes de tipos de incidentes: " + e.ToString());
+            }
+
+            return list;
+        }
+
+        public List<DonutViewModel> GetEwoMPercents()
+        {
+            List<DonutViewModel> list = new List<DonutViewModel>();
+
+            try
+            {
+                using (var context = new EwoQEntities())
+                {
+
+                    var query = (from e in context.ewo
+                                 join td in context.tipos_data
+                                 on e.codigo_m equals td.id
+                                 group e by new { e.codigo_m, td.descripcion } into g
+                                 select new
+                                 {
+                                     g.Key.descripcion,
+                                     Count = g.Count()
+                                 }).AsEnumerable()
+                                .Select(g => new
+                                {
+                                    g.descripcion,
+                                    g.Count
+                                });
+
+                    if (query != null)
+                    {
+                        foreach (var item in query)
+                        {
+                            list.Add(new DonutViewModel()
+                            {
+                                label = item.descripcion + " (" + item.Count + ")",
+                                value = ((double)item.Count / GetCountClosed() * 100).ToString("F2")
+                            });
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Error al consultar porcentajes de tipos Ms: " + e.ToString());
+            }
+
+            return list;
+        }
+
+        public List<DonutViewModel> GetEwoTFFZPercents()
+        {
+            List<DonutViewModel> list = new List<DonutViewModel>();
+
+            try
+            {
+                using (var context = new EwoQEntities())
+                {
+
+                    var query = (from e in context.ewo
+                                 join td in context.tipos_data
+                                 on e.codigo_top_five_fzero equals td.id
+                                 group e by new { e.codigo_top_five_fzero, td.descripcion } into g
+                                 select new
+                                 {
+                                     g.Key.descripcion,
+                                     Count = g.Count()
+                                 }).AsEnumerable()
+                                .Select(g => new
+                                {
+                                    g.descripcion,
+                                    g.Count
+                                });
+
+                    if (query != null)
+                    {
+                        foreach (var item in query)
+                        {
+                            list.Add(new DonutViewModel()
+                            {
+                                label = item.descripcion + " (" + item.Count + ")",
+                                value = ((double)item.Count / GetCountClosed() * 100).ToString("F2")
+                            });
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Error al consultar porcentajes de top five for zero: " + e.ToString());
+            }
+
+            return list;
+        }
+
+        public List<DonutViewModel> GetEwoPlantsPercents()
+        {
+            List<DonutViewModel> list = new List<DonutViewModel>();
+
+            try
+            {
+                using (var context = new EwoQEntities())
+                {
+
+                    var query = (from e in context.ewo
+                                 join l in context.lineas
+                                 on e.codigo_linea equals l.id
+                                 join a in context.areas_productivas
+                                 on l.codigo_area equals a.id
+                                 join p in context.plantas
+                                 on a.codigo_planta equals p.id
+                                 group e by new { p.id, p.descripcion } into g
+                                 select new
+                                 {
+                                     g.Key.descripcion,
+                                     Count = g.Count()
+                                 }).AsEnumerable()
+                                .Select(g => new
+                                {
+                                    g.descripcion,
+                                    g.Count
+                                });
+
+                    if (query != null)
+                    {
+                        foreach (var item in query)
+                        {
+                            list.Add(new DonutViewModel()
+                            {
+                                label = item.descripcion + " (" + item.Count + ")",
+                                value = ((double)item.Count / GetCount() * 100).ToString("F2")
+                            });
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Error al consultar porcentajes de plantas: " + e.ToString());
             }
 
             return list;
@@ -223,15 +384,22 @@ namespace EwoQ.Dao
                                                    join td in context.tipos_data
                                                    on e.codigo_estado equals td.id
                                                    where e.codigo_estado == 1
-                                                   || e.codigo_estado == 2
+                                                   || e.codigo_estado == 1
                                                    select e).Count();
                         iavm.IncidentesCerrados = (from e in context.ewo
                                                    join td in context.tipos_data
                                                    on e.codigo_estado equals td.id
-                                                   where e.codigo_estado == 3
+                                                   where e.codigo_estado == 2
                                                    select e).Count();
                         iavm.TiempoLinParada = (from e in context.ewo                                                  
                                                    select e).Sum(x => x.tiempo_linea_parada.HasValue ? (int?)x.tiempo_linea_parada.Value  : 0) ?? 0;
+
+                        iavm.UnidadesAfectadas = (from e in context.ewo
+                                                select e).Sum(x => x.unidades.HasValue ? (int?)x.unidades.Value : 0) ?? 0;
+
+                        iavm.CostosTotales = (from e in context.ewo
+                                                  select e).Sum(x => x.costo_incidente.HasValue ? (int?)x.costo_incidente.Value : 0) ?? 0;
+
                         iavm.UsuariosRegistrados = (from e in context.AspNetUsers                                                  
                                                    select e).Count();
 
@@ -335,7 +503,8 @@ namespace EwoQ.Dao
                             Fecha = item.e.fecha_apertura_investigacion.Value,
                             Estado = item.e.codigo_estado.Value,
                             EstadoDesc = item.es.descripcion,
-                            NumAirsweb = item.e.numero_airsweb.HasValue ? item.e.numero_airsweb.Value : 0
+                            NumAirsweb = item.e.numero_airsweb.HasValue ? item.e.numero_airsweb.Value : 0,
+                            Consecutivo = item.e.consecutivo.ToString()
                         }) ;
                     }
                 }

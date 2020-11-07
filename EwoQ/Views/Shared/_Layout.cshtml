@@ -365,6 +365,13 @@
                     <div class="menu">
                         <ul class="list">
                             <li class="header">MENÚ PRINCIPAL (ADMINISTRADOR)</li>
+                            <li class="@IsActive("IndexAdmin","Home")">
+
+                                <a href="@Url.Action("IndexAdmin", "Home")">
+                                    <i class="material-icons">home</i>
+                                    <span>INICIO</span>
+                                </a>
+                            </li>
                             <li class="@IsActive("Index","Users")">
                                 <a href="#" class="menu-toggle">
                                     <i class="material-icons">assignment</i>
