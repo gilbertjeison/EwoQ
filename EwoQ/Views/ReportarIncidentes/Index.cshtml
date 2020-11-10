@@ -21,11 +21,10 @@
 }
 
 @functions {
-    DaoUsuarios daoUser = new DaoUsuarios();
 
     string setColor()
     {
-        var Uss = daoUser.GetUser(User.Identity.GetUserId());
+        var Uss = DaoUsuarios.DaoInstance.GetUser(User.Identity.GetUserId());
         if (Uss.IdRol.Equals(SomeHelpers.ROL_OPER))
         {
             return "bg-blue";
@@ -38,7 +37,7 @@
 
     string setColorButton()
     {
-        var Uss = daoUser.GetUser(User.Identity.GetUserId());
+        var Uss = DaoUsuarios.DaoInstance.GetUser(User.Identity.GetUserId());
         if (Uss.IdRol.Equals(SomeHelpers.ROL_OPER))
         {
             return "bg-primary";
@@ -109,7 +108,7 @@
                     <th>Línea parada (min)</th>
                     <th>Fecha</th>
                     <th>Autor</th>
-                    <th>Continuar</th>
+                    <th>Acciones</th>
                     @*<th>Edición</th>*@
                     @*<th>Eliminación</th>*@
                     @*<th>Descargar</th>*@
@@ -120,9 +119,7 @@
 </div>
 
 
-<!-- Jquery DataTable Plugin Js -->
-@*<script src="~/Scripts/Adminbsb/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>*@
-@*<script src="~/Scripts/Adminbsb/plugins/jquery/jquery-3.5.1.min.js"></script>*@
+
 <script src="~/Scripts/semantic.min.js"></script>
 <script src="~/Scripts/Adminbsb/plugins/jquery-datatable/jquery.dataTables.min.js"></script>
 <script src="~/Scripts/Adminbsb/plugins/jquery-datatable/skin/semantic/js/dataTables.semanticui.min.js"></script>
@@ -191,24 +188,17 @@
                 { "data": "AutorDesc", "name": "AutorDesc", "autoWidth": true },
                 {
                     data: null, "autoWidth": true, render: function (data, type, row) {
-                        return "<a class='btn btn-success waves-effect' style='margin-bottom:5px' onClick=proccessIncident('" +row.Id+"'); >Procesar incidente</a>";
+                        
+                        if (row.Estado == 1) {
+                            return "<a class='btn btn-success waves-effect' style='margin-bottom:5px' onClick=proccessIncident('" + row.Id + "'); >Procesar incidente</a>";
+                        }
+                        else {
+                            return "<button class='btn btn-success waves-effect' style='margin-bottom:5px' onClick=proccessIncident('" + row.Id + "'); disabled>Exportar en excel</button>";
+                        }
+                        
                     }
-                },
-                //{
-                //    data: null, "autoWidth": true, render: function (data, type, row) {
-                //        return "<a class='btn btn-info waves-effect' onClick=editEwo('" + row.Id +"');>Editar</a>";
-                //    }
-                //},
-                //{
-                //    data: null, "autoWidth": true, render: function (data, type, row) {
-                //        return "<a class='btn btn-danger waves-effect'>Eliminar</a>";
-                //    }
-                //},
-                //{
-                //    data: null, "autoWidth": true, render: function (data, type, row) {
-                //        return "<a class='btn btn-primary waves-effect'>Generar formato</a>";
-                //    }
-                //}
+                }
+                
             ],
             "responsive": {
                 details: {

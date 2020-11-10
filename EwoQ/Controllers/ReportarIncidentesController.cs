@@ -16,6 +16,7 @@ using System.Diagnostics;
 using Microsoft.AspNet.Identity;
 using System.Linq.Dynamic;
 using static EwoQ.Utils.Enums.EnListas;
+using EwoQ.Utils;
 
 namespace EwoQ.Controllers
 {
@@ -186,9 +187,16 @@ namespace EwoQ.Controllers
         {
             int code;
             string message;
-
+            
             try
-            {               
+            {
+                var userRole = DaoUsuarios.DaoInstance.GetUser(User.Identity.GetUserId()).IdRol;
+
+                if (SomeHelpers.ROL_OPER.Equals(userRole))
+                {
+                    return new HttpNotFoundResult("No tiene los permisos para procesar incidentes");
+                }
+
                 if (id.HasValue)
                 {
                     var rivm = await BuildModel(id.Value);

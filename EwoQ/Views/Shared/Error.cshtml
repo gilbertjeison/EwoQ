@@ -1,9 +1,59 @@
 ﻿@model System.Web.Mvc.HandleErrorInfo
-
 @{
-    ViewBag.Title = "Error";
+    ViewBag.Title = (!String.IsNullOrEmpty(ViewBag.StatusCode)) ? ViewBag.StatusCode : "500 Error";
 }
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">Error al procesar la solicitud.</h2>
+@{
+    Layout = null;
+}
 
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>500 | Error de aplicación</title>
+    <!-- Favicon-->
+    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+
+    <!-- Bootstrap Core Css -->
+    <link href="~/Scripts/Adminbsb/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Waves Effect Css -->
+    <link href="~/Scripts/Adminbsb/plugins/node-waves/waves.css" rel="stylesheet" />
+
+    <!-- Custom Css -->
+    <link href="~/Content/Adminbsb/style.css" rel="stylesheet">
+</head>
+
+<body class="five-zero-zero">
+    <div class="five-zero-zero-container">
+        <div class="error-code">@(!String.IsNullOrEmpty(ViewBag.StatusCode) ? ViewBag.StatusCode : "500 Error")</div>
+        <div class="error-message">Internal Server Error</div>
+
+        <div class="button-place">
+            <a href="/Account/Login/" class="btn btn-default btn-lg waves-effect">Ir a la página principal</a>
+        </div>
+    </div>
+    <hr />
+    <div class="alert alert-warning alert-dismissible" role="alert" style="width:80%; margin: 0 auto;">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Warning!</strong> @ViewBag.Detail
+    </div>
+
+    <!-- Jquery Core Js -->
+    <script src="~/Scripts/Adminbsb/plugins/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core Js -->
+    <script src="~/Scripts/Adminbsb/plugins/bootstrap/js/bootstrap.js"></script>
+
+    <!-- Waves Effect Plugin Js -->
+    <script src="~/Scripts/Adminbsb/plugins/node-waves/waves.js"></script>
+</body>
+
+</html>

@@ -1,15 +1,217 @@
-﻿@{
+﻿@using Microsoft.AspNet.Identity
+@using EwoQ.Utils
+@using EwoQ.Dao
+@model IEnumerable<EwoQ.Database.ewo>
+
+
+
+<!-- JQuery DataTable Css -->
+<link href="~/Content/semantic.min.css" rel="stylesheet" />
+<link href="~/Scripts/Adminbsb/plugins/jquery-datatable/skin/semantic/css/dataTables.semanticui.min.css" rel="stylesheet" />
+<link href="~/Scripts/Adminbsb/plugins/jquery-datatable/skin/semantic/css/responsive.semanticui.min.css" rel="stylesheet" />
+@*<link href="~/Scripts/Adminbsb/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.min.css" rel="stylesheet">*@
+<link href="~/Scripts/Adminbsb/plugins/jquery-datatable/Responsive-2.2.2/css/responsive.dataTables.min.css" rel="stylesheet">
+@*<link href="~/Scripts/Adminbsb/plugins/jquery-datatable/FixedHeader-3.1.4/css/fixedHeader.bootstrap.min.css" rel="stylesheet" />*@
+
+
+<!-- SWEETALERT Css -->
+<link href="~/Scripts/Adminbsb/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+@{
     ViewBag.Title = "Home Page";
 }
+
+@functions {
+
+    string setColor()
+    {
+        var Uss = DaoUsuarios.DaoInstance.GetUser(User.Identity.GetUserId());
+        if (Uss.IdRol.Equals(SomeHelpers.ROL_OPER))
+        {
+            return "bg-blue";
+        }
+        else
+        {
+            return "bg-green";
+        }
+    }
+
+    string setColorButton()
+    {
+        var Uss = DaoUsuarios.DaoInstance.GetUser(User.Identity.GetUserId());
+        if (Uss.IdRol.Equals(SomeHelpers.ROL_OPER))
+        {
+            return "bg-primary";
+        }
+        else
+        {
+            return "bg-success";
+        }
+    }
+}
+
 <style>
-    .panel{
-        width:70%;
-        margin: 0 auto;
+    .confirmButton {
+        margin-right: 10px;
+    }
+
+    .modal-content {
+        box-shadow: none;
+    }
+
+    .ui.form .ui.input, .ui.form input:not([type]), .ui.form input[type=text],
+    .ui.form input[type=email], .ui.form input[type=search], .ui.form input[type=password],
+    .ui.form input[type=date], .ui.form input[type=datetime-local], .ui.form input[type=tel],
+    .ui.form input[type=time], .ui.form input[type=url], .ui.form input[type=number], .ui.form textarea {
+        width: auto;
+        vertical-align: inherit;
+    }
+
+        .ui.form .ui.input > input {
+            width: 200px !important;
+        }
+
+    .ui.form {
+        position: unset;
+        /* max-width: 100%; */
+    }
+
+    .dataTables_filter.ui.form {
+        float: right;
+    }
+
+    .dataTables_paginate.paging_simple_numbers {
+        float: right;
     }
 </style>
-<div class="panel panel-default">
-    <div class="panel-heading"><h2><b>Sistema de reporte de incidentes QA</b></h2></div>
-    <div class="panel-body">
-        Seleccione una opción en el menú del lado izquierdo.
+
+<div class="card">
+    <div class="header @setColor()">
+        <h2>OPCIONES</h2>
+    </div>
+    <div class="body">
+        @Html.ActionLink("Reportar nuevo incidente", "Create", "ReportarIncidentes", new { edit = 0 }, new { @class = "btn " + @setColorButton() + " waves-effect" })
     </div>
 </div>
+<div class="card">
+    <div class="header @setColor()">
+        <h2>Detalle de Incidentes Reportados</h2>
+    </div>
+    <div class="body clearfix">
+        <table id="irTable" class="ui table table-striped table-bordered responsive nowrap table-hover">
+            <thead>
+                <tr>
+                    <th>N° Airsweb</th>
+                    <th>Estado</th>
+                    <th>Línea</th>
+                    <th>Área</th>
+                    <th>Tipo de incidente</th>
+                    <th>Descripción</th>
+                    <th>Línea parada (min)</th>
+                    <th>Fecha</th>
+                    <th>Autor</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<script src="~/Scripts/semantic.min.js"></script>
+<script src="~/Scripts/Adminbsb/plugins/jquery-datatable/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/Adminbsb/plugins/jquery-datatable/skin/semantic/js/dataTables.semanticui.min.js"></script>
+<script src="~/Scripts/Adminbsb/plugins/jquery-datatable/FixedHeader-3.1.4/js/dataTables.fixedHeader.min.js"></script>
+<script src="~/Scripts/Adminbsb/plugins/jquery-datatable/Responsive-2.2.2/js/dataTables.responsive.min.js"></script>
+<script src="~/Scripts/Adminbsb/plugins/jquery-datatable/DataTables-1.10.18/js/dataTables.semanticui.min.js"></script>
+
+
+<script src="~/Scripts/Adminbsb/plugins/jquery-datatable/Buttons-1.5.4/js/dataTables.buttons.js"></script>
+<script src="~/Scripts/Adminbsb/plugins/jquery-datatable/Buttons-1.5.4/js/buttons.semanticui.min.js"></script>
+<script src="~/Scripts/Adminbsb/plugins/jquery-datatable/JSZip-2.5.0/jszip.min.js"></script>
+<script src="~/Scripts/Adminbsb/plugins/jquery-datatable/pdfmake-0.1.36/pdfmake.min.js"></script>
+<script src="~/Scripts/Adminbsb/plugins/jquery-datatable/pdfmake-0.1.36/vfs_fonts.js"></script>
+<script src="~/Scripts/Adminbsb/plugins/jquery-datatable/Buttons-1.5.4/js/buttons.html5.min.js"></script>
+<script src="~/Scripts/Adminbsb/plugins/jquery-datatable/Buttons-1.5.4/js/buttons.print.min.js"></script>
+
+
+
+@*SWEETALERT*@
+<script src="~/Scripts/Adminbsb/plugins/sweetalert/sweetalert.min.js"></script>
+
+<script>
+    $(function () {
+        var table = $('#irTable').DataTable({
+            fixedHeader: true,
+            "processing": true,
+            "serverSide": false,
+            "filter": true,
+            "orderMulti": false,
+            "autoWidth": false,
+            "ajax": {
+                "url": '@Url.Action("LoadDataAsync", "ReportarIncidentes")',
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columns": [
+                { "data": "NumAirsweb", "name": "NumAirsweb", "autoWidth": true },
+                {
+                    "data": "EstadoDesc", "name": "EstadoDesc", "autoWidth": true,
+                    render: function (data, type, value) {
+
+                        if (value.Estado === 1) {
+                            return "<span class='label label-primary' style='font-size:14px;'>" + data + "</span>";
+                        }
+                        else if (value.Estado === 2) {
+                            return "<span class='label label-success' style='font-size:14px;'>" + data + "</span>";
+                        }
+                        else if (value.Estado === 3) {
+                            return "<span class='label label-warning' style='font-size:14px;'>" + data + "</span>";
+                        }
+                    }
+                },
+                { "data": "LineaDesc", "name": "LineaDesc", "autoWidth": true },
+                { "data": "AreaDesc", "name": "AreaDesc", "autoWidth": true },
+                { "data": "TipoIncidenteDesc", "name": "TipoIncidenteDesc", "autoWidth": true },
+                { "data": "DescripcionProblema", "name": "DescripcionProblema"},
+                { "data": "TiempoLineaParada", "name": "TiempoLineaParada", "autoWidth": true },
+
+
+                {
+                    "data": "Fecha", "name": "Fecha", "autoWidth": true,
+                    render: function (data, type, value) {
+                        return value.FormattedDate;
+                    }
+                },
+                { "data": "AutorDesc", "name": "AutorDesc", "autoWidth": true },
+                {
+                    data: null, "autoWidth": true, render: function (data, type, row) {                        
+                        return "<button class='btn btn-success waves-effect' style='margin-bottom:5px' onClick=proccessIncident('" + row.Id + "'); disabled>Exportar en excel</button>";   
+                    }
+                }
+
+            ],
+            "responsive": {
+                details: {
+                    display: $.fn.dataTable.Responsive.display.modal({
+                        header: function (row) {
+                            var data = row.data();
+                            return 'Detalles del incidente #' + data.Consecutivo;
+                        }
+                    }),
+                    renderer: $.fn.dataTable.Responsive.renderer.tableAll({
+                        tableClass: 'ui table'
+                    })
+                }
+            },
+            "dom": 'Bfrtip',
+            "lengthChange": false,
+            "buttons": ['copy', 'excel', 'pdf'],
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+            }
+        });
+    });
+
+    function proccessIncident(id) {
+        window.location.href = "/ReportarIncidentes/ProcesarIncidente?id=" + id;
+    }
+</script>
