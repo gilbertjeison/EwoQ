@@ -215,7 +215,7 @@ namespace EwoQ.Dao
                             list.Add(new DonutViewModel()
                             {
                                 label = item.descripcion + " ("+item.Count+")",
-                                value = ((double)item.Count / GetCount() * 100).ToString("F2")
+                                value = ((double)item.Count / GetCountClosed() * 100).ToString("F2")
                             });
                         }
                     }
@@ -559,10 +559,8 @@ namespace EwoQ.Dao
                             Fecha = i.e.fecha_apertura_investigacion.Value,
                             FchApertInvestigacion = i.e.fecha_apertura_investigacion.Value.ToString("dd-MM-yyyy"),
                             EstadoDesc = i.es.descripcion,
-                            HrApertInvestigacionTS = i.e.hora_apertura_investigacion.Value,
                             HrEventoTS = i.e.hora_evento.Value,
                             HrEvento = i.e.hora_evento.Value.ToString(@"hh\:mm"),
-                            HrApertInvestigacion = i.e.hora_apertura_investigacion.Value.ToString(@"hh\:mm"),
                             FchEntregaInvestigacion = i.e.fecha_entrega_investigacion.Value.ToString("dd-MM-yyyy"),
                             HrEntregaInvestigacion = i.e.hora_entrega_investigacion.Value.ToString(@"hh\:mm"),
                             HrEntregaInvestigacionTS = i.e.hora_entrega_investigacion.Value,

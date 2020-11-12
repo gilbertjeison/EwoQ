@@ -97,6 +97,7 @@ namespace EwoQ.Database
         public Nullable<System.DateTime> fecha_cierre { get; set; }
         public string usuario_procesador { get; set; }
         public Nullable<long> codigo_m { get; set; }
+        public Nullable<decimal> costo_incidente_euros { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<acciones_inmediatas> acciones_inmediatas { get; set; }

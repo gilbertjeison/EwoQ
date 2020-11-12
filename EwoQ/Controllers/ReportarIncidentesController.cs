@@ -227,7 +227,6 @@ namespace EwoQ.Controllers
 
             try
             {
-
                 rr = await CreateEwoObject(rivm, false);
             }
             catch (Exception ex)
@@ -466,18 +465,15 @@ namespace EwoQ.Controllers
             ewo.consecutivo = long.Parse(ewr.Consecutivo);            
             ewo.fecha_apertura_investigacion = ewr.FchApertInvestigacion == null ? DateTime.Now : 
                 DateTime.ParseExact(ewr.FchApertInvestigacion, "dd-MM-yyyy", CultureInfo.InvariantCulture);
-
-            ewo.hora_apertura_investigacion = TimeSpan.Parse(ewr.HrApertInvestigacion);
+                        
             ewo.hora_evento = TimeSpan.Parse(ewr.HrEvento);
             ewo.fecha_entrega_investigacion = ewr.FchEntregaInvestigacion == null ? DateTime.Now : 
                 DateTime.ParseExact(ewr.FchEntregaInvestigacion, "dd-MM-yyyy", CultureInfo.InvariantCulture);
 
-            ewo.hora_entrega_investigacion = TimeSpan.Parse(ewr.HrEntregaInvestigacion);
-            ewo.tipo_incidente = ewr.TipoIncidente;
+            ewo.hora_entrega_investigacion = TimeSpan.Parse(ewr.HrEntregaInvestigacion);            
             ewo.codigo_linea = ewr.IdLinea;
             ewo.etapa = ewr.EtapaProceso;
-            ewo.codigo_coordinador_turno = ewr.IdCoorSup;
-            ewo.recurrente = ewr.Recurrente != null ? true : false;
+            ewo.codigo_coordinador_turno = ewr.IdCoorSup;            
             ewo.codigo_responsable_area = ewr.IdRespArea;
             ewo.codigo_operario_responsable = ewr.IdOpeRes;
             ewo.codigo_lider_investigacion = ewr.IdLidInv;
@@ -509,8 +505,6 @@ namespace EwoQ.Controllers
                     }
 
                     await DaoAcciones.DaoInstance.AddAcciones(accInm);
-
-                    
                 }
             }
             else
@@ -526,10 +520,14 @@ namespace EwoQ.Controllers
                 ewo.ap_nivel_4 = ewr.ArbPerd4;
                 ewo.ap_nivel_otro = ewr.ArbPerdO;
 
+                ewo.tipo_incidente = ewr.TipoIncidente;
+                ewo.recurrente = ewr.Recurrente != null ? true : false;
+
                 ewo.numero_airsweb = ewr.NumAirsweb;
                 ewo.tiempo_ingresado_airsweb = ewr.TiempoAirsWeb;
                 ewo.tiempo_inspeccion = ewr.TiempoInpeccion;
                 ewo.costo_incidente = Convert.ToDecimal(ewr.CostoIncidente);
+                ewo.costo_incidente_euros = Convert.ToDecimal(ewr.CostoIncidenteEuros);
                 ewo.codigo_disposicion_final_prod = ewr.IdDisposicionF;
                 ewo.cantidad_toneladas = ewr.DFToneladas;
 

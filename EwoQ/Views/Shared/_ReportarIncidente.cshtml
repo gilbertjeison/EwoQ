@@ -74,18 +74,7 @@
                                 @Html.EditorFor(model => model.FchApertInvestigacion, new { htmlAttributes = new { @class = "form-control datepicker", placeholder = "Seleccione fecha...", required = "required" } })
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <b>@Html.LabelFor(model => model.HrApertInvestigacion)</b>
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                <i class="material-icons">access_time</i>
-                            </span>
-                            <div class="form-line">
-                                @Html.EditorFor(model => model.HrApertInvestigacion, new { htmlAttributes = new { @class = "form-control timepicker selectpick", placeholder = "Seleccione hora...", required = "required" } })
-                            </div>
-                        </div>
-                    </div>
+                    </div>                    
                     <div class="col-md-4">
                         <b>@Html.LabelFor(model => model.HrEvento)</b>
                         <div class="input-group">
@@ -120,39 +109,8 @@
                                 @Html.EditorFor(model => model.HrEntregaInvestigacion, new { htmlAttributes = new { @class = "form-control timepicker", placeholder = "Seleccione hora...", required = "required" } })
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <b>@Html.LabelFor(model => model.TipoIncidente)</b>
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                <i class="material-icons">report_problem</i>
-                            </span>
-                            <div class="form-line" style="border:none;">
-                                <select id="TipoIncidente" name="TipoIncidente" class="selectpicker show-tick" required>
-                                    @foreach (var item in Model.TipoIncidenteList)
-                                    {
-                                        <option value="@item.Value">@item.Text</option>
-                                    }
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <b>@Html.LabelFor(model => model.Recurrente)</b>
-                        <div class="input-group">
-                            <div class="switch">
-                                <label>
-                                    NO
-                                    <input name="Recurrente" type="checkbox">
-                                    <span class="lever"></span>
-                                    SI
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    </div>                   
+                </div>                
                 <div class="row">
                     <div class="col-md-4">
                         <b>@Html.LabelFor(model => model.IdPlanta)</b>

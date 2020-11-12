@@ -127,6 +127,7 @@
           <Property Name="tamano_formato" Type="varchar" MaxLength="50" />
           <Property Name="codigo_unidad_medida_tamfor" Type="bigint" />
           <Property Name="costo_incidente" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="costo_incidente_euros" Type="decimal" Precision="18" Scale="0" />
           <Property Name="tiempo_linea_parada" Type="int" />
           <Property Name="descripcion_general_problema" Type="text" />
           <Property Name="tiempo_inspeccion" Type="int" />
@@ -922,6 +923,7 @@
           <NavigationProperty Name="revisiones" Relationship="Self.FK_revisiones_ewo" FromRole="ewo" ToRole="revisiones" />
           <NavigationProperty Name="plan_accion" Relationship="EwoQModel.FK_plan_accion_ewo" FromRole="ewo" ToRole="plan_accion" />
           <Property Name="codigo_m" Type="Int64" />
+          <Property Name="costo_incidente_euros" Type="Decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="fiveg_resultados">
           <Key>
@@ -1574,6 +1576,7 @@
           <EntitySetMapping Name="ewo">
             <EntityTypeMapping TypeName="EwoQModel.ewo">
               <MappingFragment StoreEntitySet="ewo">
+                <ScalarProperty Name="costo_incidente_euros" ColumnName="costo_incidente_euros" />
                 <ScalarProperty Name="codigo_m" ColumnName="codigo_m" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="consecutivo" ColumnName="consecutivo" />

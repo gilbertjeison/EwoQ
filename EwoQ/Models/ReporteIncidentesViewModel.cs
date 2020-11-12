@@ -28,18 +28,17 @@ namespace EwoQ.Models
         [DisplayName("Fecha de apertura de la investigación")]
         public string FchApertInvestigacion { get; set; }
 
-        [DisplayName("Hora de apertura de la investigación")]
-        public string HrApertInvestigacion { get; set; }
+        
         public TimeSpan HrApertInvestigacionTS { get; set; }
 
         [DisplayName("Hora del evento")]
         public string HrEvento { get; set; }
         public TimeSpan HrEventoTS { get; set; }
 
-        [DisplayName("Fecha de entrega de la investigación a QA")]
+        [DisplayName("Fecha del incidente")]
         public string FchEntregaInvestigacion { get; set; }
 
-        [DisplayName("Hora de entrega de la investigación a QA")]
+        [DisplayName("Hora del incidente")]
         public string HrEntregaInvestigacion { get; set; }
         public TimeSpan HrEntregaInvestigacionTS { get; set; }
 
@@ -74,7 +73,7 @@ namespace EwoQ.Models
         [Display(Name = "Etapa del proceso")]
         public string EtapaProceso { get; set; }
 
-        [Display(Name = "Coordinador/Supervisor en turno")]
+        [Display(Name = "Supervisor de producción en turno")]
         public string IdCoorSup { get; set; }
 
 
@@ -121,8 +120,11 @@ namespace EwoQ.Models
         [Display(Name = "Tamaño / Formato")]
         public string TamanoFormato { get; set; }
 
-        [Display(Name = "Costo Incidente")]
+        [Display(Name = "Costo Incidente Pesos")]
         public double CostoIncidente { get; set; }
+
+        [Display(Name = "Costo Incidente Euros")]
+        public double CostoIncidenteEuros { get; set; }
 
         [Display(Name = "Tiempo Parada Línea (min)")]
         public int TiempoLineaParada { get; set; }
@@ -145,7 +147,7 @@ namespace EwoQ.Models
         [Display(Name = "N° Airsweb")]
         public int NumAirsweb { get; set; }
 
-        [Display(Name = "Tiempo Airsweb (min)")]
+        [Display(Name = "Tiempo Airsweb (horas)")]
         public int TiempoAirsWeb { get; set; }
 
         [Display(Name = "Tiempo inspección (min)")]
