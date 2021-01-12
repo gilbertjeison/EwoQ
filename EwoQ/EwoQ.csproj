@@ -273,6 +273,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Database.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Database\disposiciones.cs">
+      <DependentUpon>Database.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\equipo_trabajo.cs">
       <DependentUpon>Database.tt</DependentUpon>
     </Compile>

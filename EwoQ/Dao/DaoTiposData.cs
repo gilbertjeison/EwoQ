@@ -37,7 +37,7 @@ namespace EwoQ.Dao
                     var query = from td in context.tipos_data
                                 where td.codigo_tipo == type
                                 select td;
-                    tiposData = await query.ToListAsync();
+                    tiposData = await query.OrderBy(x => x.descripcion).ToListAsync();
                 }
             }
             catch (Exception e)

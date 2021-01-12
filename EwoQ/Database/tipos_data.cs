@@ -19,6 +19,8 @@ namespace EwoQ.Database
         {
             this.preguntas_4m = new HashSet<preguntas_4m>();
             this.zero_questions = new HashSet<zero_questions>();
+            this.disposiciones = new HashSet<disposiciones>();
+            this.disposiciones1 = new HashSet<disposiciones>();
         }
     
         public long id { get; set; }
@@ -30,5 +32,9 @@ namespace EwoQ.Database
         public virtual tipos tipos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<zero_questions> zero_questions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<disposiciones> disposiciones { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<disposiciones> disposiciones1 { get; set; }
     }
 }

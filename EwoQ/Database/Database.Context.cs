@@ -49,5 +49,6 @@ namespace EwoQ.Database
         public virtual DbSet<zero_responses> zero_responses { get; set; }
         public virtual DbSet<plan_accion> plan_accion { get; set; }
         public virtual DbSet<excepciones> excepciones { get; set; }
+        public virtual DbSet<disposiciones> disposiciones { get; set; }
     }
 }

@@ -29,6 +29,7 @@ namespace EwoQ.Controllers
         int LINESTYPES = 8;
         int INCIDENTSTYPES = 15;
         int FINALDISPOSITION = 9;
+        int UNIDADMEDIDA = 13;
         int TOPFIVEFORZERO = 12;
         string ADMINROLE = "d908787a-642b-480f-ba5c-f46df6fc8713";
         string OPERATINGROLE = "ad3cb589-855b-4888-b234-9333eaca85ec";
@@ -113,12 +114,48 @@ namespace EwoQ.Controllers
 
             return Json(new SelectList(List, "Value", "Text"));
         }
+
         
         [HttpPost]
         public async Task<JsonResult> GetAllUsersJsonAsync()
         {
             var users = await DaoUsuarios.DaoInstance.GetAllUsers();           
             return Json(users);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> GetAllDispoJsonAsync()
+        {
+            //DISPOSICIÓN FINAL DEL PRODUCTO
+            var listDF = await DaoTiposData.DaoInstance.GetTypesAsync(FINALDISPOSITION);
+            listDF.Insert(0, new Database.tipos_data() { id = 0, descripcion = "Seleccione disposición..." });
+            var DisposicionFList = new SelectList(listDF, "Id", "descripcion");
+
+            return Json(DisposicionFList);
+        }
+
+        public async Task<JsonResult> GetAreasJsonAsync()
+        {
+            //DISPOSICIÓN FINAL DEL PRODUCTO
+            var listA = await DaoTiposData.DaoInstance.GetTypesAsync(AREASTYPES);
+            listA.Insert(0, new Database.tipos_data() { id = 0, descripcion = "Seleccione área..." });
+            var AreasList = new SelectList(listA, "Id", "descripcion");
+
+            return Json(AreasList);
+        }
+
+        //LISTA AREAS
+        
+
+    [HttpPost]
+        public async Task<JsonResult> GetAllUniMedJsonAsync()
+        {
+            //DISPOSICIÓN FINAL DEL PRODUCTO
+            var listUM = await DaoTiposData.DaoInstance.GetTypesAsync(UNIDADMEDIDA);
+            listUM.Insert(0, new Database.tipos_data() { id = 0, descripcion = "Seleccione unidad..." });
+            var UniMedList = new SelectList(listUM, "Id", "descripcion");
+
+            return Json(UniMedList);
         }
 
         [HttpPost]

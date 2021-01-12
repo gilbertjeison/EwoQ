@@ -52,6 +52,10 @@
         <AssociationConnector Association="EwoQModel.FK_plan_accion_AspNetUsers" />
         <AssociationConnector Association="EwoQModel.FK_plan_accion_ewo" />
         <EntityTypeShape EntityType="EwoQModel.excepciones" Width="1.5" PointX="3.375" PointY="4.75" />
+        <EntityTypeShape EntityType="EwoQModel.disposiciones" Width="1.5" PointX="12.5" PointY="11.25" />
+        <AssociationConnector Association="EwoQModel.FK_disposiciones_ewo" />
+        <AssociationConnector Association="EwoQModel.FK_disposiciones_tipos_data" />
+        <AssociationConnector Association="EwoQModel.FK_disposiciones_tipos_data1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

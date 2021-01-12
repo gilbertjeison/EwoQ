@@ -88,6 +88,17 @@
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="Registrado" Type="datetime" Nullable="false" />
+          <Property Name="SingUrl" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="disposiciones">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="codigo_ewo" Type="bigint" />
+          <Property Name="codigo_disposicion" Type="bigint" />
+          <Property Name="cantidad" Type="int" />
+          <Property Name="codigo_unidad_medida" Type="bigint" />
         </EntityType>
         <EntityType Name="equipo_trabajo">
           <Key>
@@ -408,6 +419,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_disposiciones_ewo">
+          <End Role="ewo" Type="Self.ewo" Multiplicity="0..1" />
+          <End Role="disposiciones" Type="Self.disposiciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ewo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="disposiciones">
+              <PropertyRef Name="codigo_ewo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_disposiciones_tipos_data">
+          <End Role="tipos_data" Type="Self.tipos_data" Multiplicity="0..1" />
+          <End Role="disposiciones" Type="Self.disposiciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipos_data">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="disposiciones">
+              <PropertyRef Name="codigo_disposicion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_disposiciones_tipos_data1">
+          <End Role="tipos_data" Type="Self.tipos_data" Multiplicity="0..1" />
+          <End Role="disposiciones" Type="Self.disposiciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipos_data">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="disposiciones">
+              <PropertyRef Name="codigo_unidad_medida" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_equipo_trabajo_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
           <End Role="equipo_trabajo" Type="Self.equipo_trabajo" Multiplicity="*" />
@@ -621,6 +668,7 @@
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="disposiciones" EntityType="Self.disposiciones" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="equipo_trabajo" EntityType="Self.equipo_trabajo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ewo" EntityType="Self.ewo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="excepciones" EntityType="Self.excepciones" Schema="dbo" store:Type="Tables" />
@@ -665,6 +713,18 @@
           <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_disposiciones_ewo" Association="Self.FK_disposiciones_ewo">
+            <End Role="ewo" EntitySet="ewo" />
+            <End Role="disposiciones" EntitySet="disposiciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_disposiciones_tipos_data" Association="Self.FK_disposiciones_tipos_data">
+            <End Role="tipos_data" EntitySet="tipos_data" />
+            <End Role="disposiciones" EntitySet="disposiciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_disposiciones_tipos_data1" Association="Self.FK_disposiciones_tipos_data1">
+            <End Role="tipos_data" EntitySet="tipos_data" />
+            <End Role="disposiciones" EntitySet="disposiciones" />
           </AssociationSet>
           <AssociationSet Name="FK_equipo_trabajo_AspNetUsers" Association="Self.FK_equipo_trabajo_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -829,6 +889,7 @@
           <NavigationProperty Name="revisiones" Relationship="Self.FK_revisiones_AspNetUsers" FromRole="AspNetUsers" ToRole="revisiones" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
           <NavigationProperty Name="plan_accion" Relationship="EwoQModel.FK_plan_accion_AspNetUsers" FromRole="AspNetUsers" ToRole="plan_accion" />
+          <Property Name="SingUrl" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="equipo_trabajo">
           <Key>
@@ -924,6 +985,7 @@
           <NavigationProperty Name="plan_accion" Relationship="EwoQModel.FK_plan_accion_ewo" FromRole="ewo" ToRole="plan_accion" />
           <Property Name="codigo_m" Type="Int64" />
           <Property Name="costo_incidente_euros" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="disposiciones" Relationship="EwoQModel.FK_disposiciones_ewo" FromRole="ewo" ToRole="disposiciones" />
         </EntityType>
         <EntityType Name="fiveg_resultados">
           <Key>
@@ -1028,6 +1090,8 @@
           <NavigationProperty Name="preguntas_4m" Relationship="Self.FK_preguntas_4m_tipos_data" FromRole="tipos_data" ToRole="preguntas_4m" />
           <NavigationProperty Name="tipos" Relationship="Self.FK_tipos_data_tipos" FromRole="tipos_data" ToRole="tipos" />
           <NavigationProperty Name="zero_questions" Relationship="Self.FK_zero_questions_tipos_data" FromRole="tipos_data" ToRole="zero_questions" />
+          <NavigationProperty Name="disposiciones" Relationship="EwoQModel.FK_disposiciones_tipos_data" FromRole="tipos_data" ToRole="disposiciones" />
+          <NavigationProperty Name="disposiciones1" Relationship="EwoQModel.FK_disposiciones_tipos_data1" FromRole="tipos_data" ToRole="disposiciones" />
         </EntityType>
         <EntityType Name="zero_ewo">
           <Key>
@@ -1412,6 +1476,19 @@
             <End Role="plan_accion" EntitySet="plan_accion" />
           </AssociationSet>
           <EntitySet Name="excepciones" EntityType="EwoQModel.excepciones" />
+          <EntitySet Name="disposiciones" EntityType="EwoQModel.disposiciones" />
+          <AssociationSet Name="FK_disposiciones_ewo" Association="EwoQModel.FK_disposiciones_ewo">
+            <End Role="ewo" EntitySet="ewo" />
+            <End Role="disposiciones" EntitySet="disposiciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_disposiciones_tipos_data" Association="EwoQModel.FK_disposiciones_tipos_data">
+            <End Role="tipos_data" EntitySet="tipos_data" />
+            <End Role="disposiciones" EntitySet="disposiciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_disposiciones_tipos_data1" Association="EwoQModel.FK_disposiciones_tipos_data1">
+            <End Role="tipos_data" EntitySet="tipos_data" />
+            <End Role="disposiciones" EntitySet="disposiciones" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="plan_accion">
           <Key>
@@ -1478,6 +1555,55 @@
           <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="fecha" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="disposiciones">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="codigo_ewo" Type="Int64" />
+          <Property Name="codigo_disposicion" Type="Int64" />
+          <Property Name="cantidad" Type="Int32" />
+          <Property Name="codigo_unidad_medida" Type="Int64" />
+          <NavigationProperty Name="ewo" Relationship="EwoQModel.FK_disposiciones_ewo" FromRole="disposiciones" ToRole="ewo" />
+          <NavigationProperty Name="tipos_data" Relationship="EwoQModel.FK_disposiciones_tipos_data" FromRole="disposiciones" ToRole="tipos_data" />
+          <NavigationProperty Name="tipos_data1" Relationship="EwoQModel.FK_disposiciones_tipos_data1" FromRole="disposiciones" ToRole="tipos_data" />
+        </EntityType>
+        <Association Name="FK_disposiciones_ewo">
+          <End Type="EwoQModel.ewo" Role="ewo" Multiplicity="0..1" />
+          <End Type="EwoQModel.disposiciones" Role="disposiciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ewo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="disposiciones">
+              <PropertyRef Name="codigo_ewo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_disposiciones_tipos_data">
+          <End Type="EwoQModel.tipos_data" Role="tipos_data" Multiplicity="0..1" />
+          <End Type="EwoQModel.disposiciones" Role="disposiciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipos_data">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="disposiciones">
+              <PropertyRef Name="codigo_disposicion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_disposiciones_tipos_data1">
+          <End Type="EwoQModel.tipos_data" Role="tipos_data" Multiplicity="0..1" />
+          <End Type="EwoQModel.disposiciones" Role="disposiciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipos_data">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="disposiciones">
+              <PropertyRef Name="codigo_unidad_medida" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1545,6 +1671,7 @@
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="EwoQModel.AspNetUsers">
               <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="SingUrl" ColumnName="SingUrl" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Nombres" ColumnName="Nombres" />
                 <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
@@ -1812,6 +1939,17 @@
                 <ScalarProperty Name="descripcion" ColumnName="descripcion" />
                 <ScalarProperty Name="codigo_usuario" ColumnName="codigo_usuario" />
                 <ScalarProperty Name="codigo_error" ColumnName="codigo_error" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="disposiciones">
+            <EntityTypeMapping TypeName="EwoQModel.disposiciones">
+              <MappingFragment StoreEntitySet="disposiciones">
+                <ScalarProperty Name="codigo_unidad_medida" ColumnName="codigo_unidad_medida" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="codigo_disposicion" ColumnName="codigo_disposicion" />
+                <ScalarProperty Name="codigo_ewo" ColumnName="codigo_ewo" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

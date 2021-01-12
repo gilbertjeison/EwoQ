@@ -24,6 +24,7 @@ namespace EwoQ.Database
             this.respuestas4m = new HashSet<respuestas4m>();
             this.revisiones = new HashSet<revisiones>();
             this.plan_accion = new HashSet<plan_accion>();
+            this.disposiciones = new HashSet<disposiciones>();
         }
     
         public long id { get; set; }
@@ -114,5 +115,7 @@ namespace EwoQ.Database
         public virtual ICollection<revisiones> revisiones { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<plan_accion> plan_accion { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<disposiciones> disposiciones { get; set; }
     }
 }

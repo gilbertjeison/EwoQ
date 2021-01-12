@@ -20,6 +20,7 @@ namespace EwoQ.Models
         [Required]
         public string IdRol { get; set; }
         public DateTime Registrado { get; set; }
+        public string SingUrl { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

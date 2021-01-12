@@ -15,6 +15,7 @@ namespace EwoQ.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        static string sing_images = "~/Content/images/sing_images/";
 
         public ManageController()
         {
@@ -66,6 +67,7 @@ namespace EwoQ.Controllers
             var userId = User.Identity.GetUserId();
             var model = new IndexViewModel
             {
+                HasSign = HasSign(),
                 HasPassword = HasPassword(),
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
@@ -362,6 +364,16 @@ namespace EwoQ.Controllers
             }
             return false;
         }
+
+        private bool HasSign()
+        {
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            if (user != null)
+            {
+                return user.SingUrl != null;
+            }
+            return false;
+        }   
 
         private bool HasPhoneNumber()
         {

@@ -135,6 +135,9 @@ namespace EwoQ.Models
         [Display(Name = "Acciones Inmediatas una vez detectada la desviación")]
         public ArrayList AccionesList { get; set; }
 
+        [Display(Name = "Disposición final del producto")]
+        public ArrayList DisposicionesList { get; set; }
+
         public string Cmd { get; set; }
 
         [Display(Name = "Árbol de pérdidas / Loss Tree")]

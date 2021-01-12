@@ -656,7 +656,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    @*<div class="row">
                                         <div class="col-md-4">
                                             <b>@Html.LabelFor(model => model.IdDisposicionF)</b>
                                             <div class="input-group">
@@ -685,6 +685,20 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>*@
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.DisposicionesList)
+                                        <div id="gridDisposiciones" style="        width: 100%;
+        height: 300px;
+        margin: 0 auto;
+        background: white;
+        outline: 0;
+        border: 1px solid gray;
+"></div>
                                     </div>
                                 </div>
                             </div>
@@ -1537,6 +1551,7 @@
     var gridGenri;
     var gridGensoku;
     var gridPlanAccion;
+    var gridDisposiciones;
     var manos = new Array();
     var mats = new Array();
     var maqs = new Array();
@@ -2081,6 +2096,7 @@
             select.appendChild(newOption);
         });
     };
+
     //personalización de editor para el tipo de acción
     function SelectEditorTipo(args) {
         var $input;
@@ -2139,6 +2155,7 @@
         };
         this.init();
     }
+
     //formateador de el tipo de acción
     function select2FormatterTipo(row, cell, value, columnDef, dataContext) {
         return columnDef.dataSource[value] || '-';
@@ -2155,7 +2172,8 @@
             newOption = new Option(text.NombresCommpletos, text.Id);
             select.appendChild(newOption);
         });
-    };       
+    };
+
     //personalización del editor para el responsable
     function SelectEditor(args) {
         var $input;
@@ -2213,7 +2231,8 @@
             };
         };
         this.init();
-    }    
+    }
+
     //formateador de la lista de responsables
     function select2Formatter(row, cell, value, columnDef, dataContext) {
         if (value) {
@@ -2223,6 +2242,7 @@
             return '-';
         }
     }
+
     //remover la acción recién creada
     function RemoveClick(index, ind) {
         if (ind == 0) {
@@ -2270,6 +2290,7 @@
         });
     };
     //personalización del editor para el responsable
+
     function SelectEditorArea(args) {
         var $input;
         var defaultValue;
@@ -2336,10 +2357,92 @@
             return '-';
         }
     }
-    //remover la acción recién creada
 
+    //funciones para la disposición en las disposiciones de producto
+    //publicar lista de areas
+    function populateSelectDisposicion(select, dataSource, addBlank) {
+        var index, len, newOption;
+
+        if (addBlank) { select.appendChild(new Option('', '')); }
+
+        $.each(dataSource, function (value, text) {
+            newOption = new Option(text.Text, text.Value);
+            select.appendChild(newOption);
+        });
+    };
+
+    //personalización del editor para el responsable
+    function SelectEditorDisposicion(args) {
+        var $input;
+        var defaultValue;
+        this.keyCaptureList = [Slick.keyCode.UP, Slick.keyCode.DOWN, Slick.keyCode.ENTER];
+
+        this.init = function () {
+            $input = $('<select></select>');
+            $input.width(args.container.clientWidth + 3);
+            populateSelectArea($input[0], args.column.dataSource, true);
+            $input.appendTo(args.container);
+            $input.focus().select();
+
+            $input.select2({
+                placeholder: '-',
+                allowClear: true
+            });
+        };
+
+        this.destroy = function () {
+            $input.select2('destroy');
+        };
+
+        this.show = function () {
+
+        };
+        this.hide = function () {
+            $input.select('results_hide');
+        };
+        this.focus = function () {
+            $input.select2('input_focus');
+        };
+        this.loadValue = function (item) {
+            defaultValue = item[args.column.field];
+            $input.val(defaultValue);
+            $input[0].defaultValue = defaultValue;
+            $input.trigger('change.select2');
+        };
+        this.serializeValue = function () {
+            return $input.val();
+        };
+        this.applyValue = function (item, state) {
+            item[args.column.field] = state;
+        }
+        this.isValueChanged = function () {
+            return (!($input.val() == "" && defaultValue == null)) && ($input.val() != defaultValue);
+        };
+        this.validate = function () {
+            if ($input.val() == '') {
+                return { valid: false, msg: 'Debe seleccionar una disposición' };
+            }
+            return {
+                valid: true,
+                msg: null
+            };
+        };
+        this.init();
+    }
+
+    //formateador de la lista de responsables
+    function select2FormatterDisposicion(row, cell, value, columnDef, dataContext) {
+        if (value) {
+            return columnDef.dataSource.find(x => x.Value === value).Text || '-';
+        }
+        else {
+            return '-';
+        }
+    }
+
+    //remover la acción recién creada
     //Validaciones de acciones inmediatas
-    function actionValidator(newValue) { 
+    function actionValidator(newValue) {
         if (!newValue) {
             return { valid: false, msg: 'Debe agregar una acción' };
         }
@@ -2401,7 +2504,7 @@
         grid.onValidationError.subscribe(function (e, args) {
             alert(args.validationResults.msg);
         });
-                
+
         $('#gridAcciones').on('focusout', '.editor-percentcomplete', function () {
 
             window.setTimeout(function () {
@@ -2525,7 +2628,7 @@
                 { id: "pokayoke", name: "Pokayoke?", field: "pokayoke", minWidth: 150, cssClass: "cell-effort-driven", formatter: Slick.Formatters.Checkmark, editor: Slick.Editors.Checkbox },
                 //{ id: "antes", name: "Antes", field: "antes", minWidth: 100, editable: true, editor: Slick.Editors.Text },
                 //{ id: "despues", name: "Después", field: "despues", minWidth: 100, editable: true, editor: Slick.Editors.Text },
-                //{ id: "pokayoke", name: "Pokayoke", field: "pokayoke", minWidth: 150, editable: true, editor: Slick.Editors.Text },                
+                //{ id: "pokayoke", name: "Pokayoke", field: "pokayoke", minWidth: 150, editable: true, editor: Slick.Editors.Text },
                 { id: "fecha_compromiso", name: "F. compromiso", field: "fecha_compromiso", minWidth: 130, editor: Slick.Editors.Date, validator: textValidator },
                 { id: "codigo_area", name: "Área", field: "codigo_area", minWidth: 200, formatter: select2FormatterArea, editor: SelectEditorArea, dataSource: areas_data },
                 { id: "codigo_responsable", name: "Responsable", field: "codigo_responsable", minWidth: 200, formatter: select2Formatter, editor: SelectEditor, dataSource: user_data },
@@ -2540,7 +2643,7 @@
                     }
                 }
             ];
-            
+
 
         var dataPlanAccion = [];
 
@@ -2552,7 +2655,7 @@
             dataPlanAccion.push(item);
             gridPlanAccion.updateRowCount();
             gridPlanAccion.render();
-        });     
+        });
 
         gridPlanAccion.onValidationError.subscribe(function (e, args) {
             alert(args.validationResults.msg);
@@ -2565,6 +2668,43 @@
 
         //quitar primer elemento del array 'seleccione area...'
         areas_data.shift();
+    }
+
+    function initGridDisposiciones() {
+
+        var columnsDisposiciones =
+            [
+                { id: "codigo_disposicion", name: "Disposición", field: "codigo_disposicion", minWidth: 250, formatter: select2FormatterDisposicion, editor: SelectEditorDisposicion, dataSource: disp_data },
+                { id: "cantidad", name: "Cantidad", field: "cantidad", minWidth: 220, editable: true, editor: Slick.Editors.Integer, validator: textValidator },
+                { id: "codigo_unidad_medida", name: "Unidad de medida", field: "codigo_unidad_medida", minWidth: 250, formatter: select2FormatterDisposicion, editor: SelectEditorDisposicion, dataSource: unimed_data },
+                {
+                    id: 'id_accp', name: 'acciones', field: 'id', minWidth: 130, formatter: function (index, c, id, def, datactx) {
+                        return '<a id="acceptPA" class="btn btn-primary" style="padding:2px;" >Guardar</a>';
+                    }
+                },
+                {
+                    id: 'id', name: 'acciones', field: 'id', formatter: function (index, c, id, def, datactx) {
+                        return '<a id="deletePA" class="btn btn-primary" style="padding:2px;" onclick="RemoveClick(' + index + ',4)">Eliminar</a>';
+                    }
+                }
+            ];
+
+
+        var dataDisposiciones = [];
+
+        gridDisposiciones = new Slick.Grid("#gridDisposiciones", dataDisposiciones, columnsDisposiciones, options);
+        gridDisposiciones.setSelectionModel(new Slick.CellSelectionModel());
+        gridDisposiciones.onAddNewRow.subscribe(function (e, args) {
+            var item = args.item;
+            gridDisposiciones.invalidateRow(dataDisposiciones.length);
+            dataDisposiciones.push(item);
+            gridDisposiciones.updateRowCount();
+            gridDisposiciones.render();
+        });
+
+        gridDisposiciones.onValidationError.subscribe(function (e, args) {
+            alert(args.validationResults.msg);
+        });
     }
 
     function getCurrentDate() {
@@ -2586,6 +2726,9 @@
     }
 
     var user_data = {};
+    var disp_data = {};
+    var unimed_data = {};
+
     //INICIALIZAR OBJETO AJAX PARA TRAER DATOS DEL SERVIDOR
     $.ajax({
         //PARAMETRIZAR SERVICIO AJAX
@@ -2604,6 +2747,66 @@
         //EN CASO DE ERROR, IMPRIMIRLO
         error: function (request, status, error) {
             alert('Error al cargar usuarios Json: ' + request.responseText);
+        }
+    });
+
+    $.ajax({
+        //PARAMETRIZAR SERVICIO AJAX
+        url: '@Url.Action("GetAllDispoJsonAsync", "ReportarIncidentes")',
+        type: 'post',
+        //MOSTRAR LOADER ANTES DE INICIAR LA SOLICITUD
+        beforeSend: function () {
+            $('.page-loader-wrapper').fadeIn();
+        },
+        success: function (response) {
+            disp_data = response;
+
+            //OCULTAR LOADER UNA VEZ CARAGADA LA INFORMACIÓN
+            $('.page-loader-wrapper').fadeOut();
+        },
+        //EN CASO DE ERROR, IMPRIMIRLO
+        error: function (request, status, error) {
+            alert('Error al cargar disposiciones Json: ' + request.responseText);
+        }
+    });
+
+    $.ajax({
+        //PARAMETRIZAR SERVICIO AJAX
+        url: '@Url.Action("GetAllUniMedJsonAsync", "ReportarIncidentes")',
+        type: 'post',
+        //MOSTRAR LOADER ANTES DE INICIAR LA SOLICITUD
+        beforeSend: function () {
+            $('.page-loader-wrapper').fadeIn();
+        },
+        success: function (response) {
+            unimed_data = response;
+
+            //OCULTAR LOADER UNA VEZ CARAGADA LA INFORMACIÓN
+            $('.page-loader-wrapper').fadeOut();
+        },
+        //EN CASO DE ERROR, IMPRIMIRLO
+        error: function (request, status, error) {
+            alert('Error al cargar disposiciones Json: ' + request.responseText);
+        }
+    });
+
+    $.ajax({
+        //PARAMETRIZAR SERVICIO AJAX
+        url: '@Url.Action("GetAreasJsonAsync", "ReportarIncidentes")',
+        type: 'post',
+        //MOSTRAR LOADER ANTES DE INICIAR LA SOLICITUD
+        beforeSend: function () {
+            $('.page-loader-wrapper').fadeIn();
+        },
+        success: function (response) {
+            areas_data = response;
+
+            //OCULTAR LOADER UNA VEZ CARAGADA LA INFORMACIÓN
+            $('.page-loader-wrapper').fadeOut();
+        },
+        //EN CASO DE ERROR, IMPRIMIRLO
+        error: function (request, status, error) {
+            alert('Error al cargar areas Json: ' + request.responseText);
         }
     });
 </script>
@@ -2662,13 +2865,12 @@
                     var isValid = true;
                     //Verificar cada registro
 
-                    
+
                     for (var i = 0; i < listAccInm.length; i++) {
 
                         var numColsWithData = Object.keys(listAccInm[i]).length;
                         //Edición de acciones
-                        if (listAccInm[i].id)
-                        {
+                        if (listAccInm[i].id) {
                             numColsWithData = Object.keys(listAccInm[i]).length - 2;//porque es procesamiento de incidente y se quitan los id's de ewo y del registro
                         }
 
@@ -2677,7 +2879,7 @@
                             isValid = false;
                             break;
                         }
-                    }       
+                    }
 
                     //validar acciones inmediatas
                     if (listAccInm.length == 0) {
@@ -2695,7 +2897,7 @@
 
                     var listGrupoTrabajo = $("#EquipoTrabajo").siblings(".bootstrap-tagsinput").children(".tag");
                     //Validar el equipo de trabajo
-                    if (listGrupoTrabajo.length == 0 ) {
+                    if (listGrupoTrabajo.length == 0) {
                         showSweetAlert("Análisis de causas & 4M", "Debe incluir al menos un integrante en el equipo de trabajo", "error");
                         return false;
                     }
@@ -2752,16 +2954,16 @@
 
                     //validar imagenes
                     //imagen 1
-                    if (myDropzone1.files.length == 0) {
-                        showSweetAlert("Investigación en piso (5G)", "Debe cargar la imágen de la evidencia del problema", "error");
-                        return false;
-                    }
+                    //if (myDropzone1.files.length == 0) {
+                    //    showSweetAlert("Investigación en piso (5G)", "Debe cargar la imágen de la evidencia del problema", "error");
+                    //    return false; 
+                    //}
 
                     //imagen 2
-                    if (myDropzone2.files.length == 0) {
-                        showSweetAlert("5W+1H", "Debe cargar la imágen del fenómeno", "error");
-                        return false;
-                    }
+                    //if (myDropzone2.files.length == 0) {
+                    //    showSweetAlert("5W+1H", "Debe cargar la imágen del fenómeno", "error");
+                    //    return false;
+                    //}
 
                     //Validación de Análisis 4M
                     getMValues();
@@ -2779,7 +2981,7 @@
                     $("#tblTFFZ TBODY TR").each(function (i, row) {
                         var $row = $(row);
                         $checkedBoxes = $row.find('input:checked');
-                        
+
                         if ($checkedBoxes.length > 0) {
                             bTFFZSelected = true;
                             topFiveId = $checkedBoxes.attr('id');
@@ -2859,7 +3061,7 @@
                     });
 
                     if (anyZeroA) {
-                        showSweetAlert("ZERO QUESTIONS", "Debe responder todas las preguntas AFTER" , "error");
+                        showSweetAlert("ZERO QUESTIONS", "Debe responder todas las preguntas AFTER", "error");
                         return false;
                     }
                     else {
@@ -2904,7 +3106,7 @@
                             isValid = false;
                             break;
                         }
-                    }       
+                    }
 
                     //validar listas
                     if (listPlan.length == 0) {
@@ -2933,7 +3135,7 @@
                 if (currentIndex == 1) {
                     if (firstTimeOne) {
                         initGridGens();
-
+                        initGridDisposiciones();
                         firstTimeOne = false;
                     }
                 }
@@ -3126,6 +3328,12 @@
             $(event.currentTarget).find('[role="menu"] li a').removeClass('waves-effect');
             $(event.currentTarget).find('[role="menu"] li:not(.disabled) a').addClass('waves-effect');
         }
+    });
+</script>
+
+//EVENTOS PERSONALIZADOS DE CONTROLES
+<script>
+    $(function () {
 
          //CARGA NOTIFICACIÓN DE INCIDENTE
         $('.datepicker').bootstrapMaterialDatePicker({
@@ -3186,7 +3394,6 @@
             }
         });
 
-
         //INICIALIZAR DROPZONE PARA LAS IMAGENES 1
         myDropzone1 = new Dropzone("div#dropzone5G", {
             autoProcessQueue: false,
@@ -3207,25 +3414,28 @@
             url: '@Url.Content("~/")' + "Home/CreateKpi"
         });
 
-        $('#QueDesc').change(fenomenoChange);
-        $('#DondeDesc').change(fenomenoChange);
-        $('#CuandoDesc').change(fenomenoChange);
-        $('#QuienDesc').change(fenomenoChange);
-        $('#CualDesc').change(fenomenoChange);
-        $('#ComoDesc').change(fenomenoChange);
+        $('#QueDesc').keyup(fenomenoChange);
+        $('#DondeDesc').keyup(fenomenoChange);
+        $('#CuandoDesc').keyup(fenomenoChange);
+        $('#QuienDesc').keyup(fenomenoChange);
+        $('#CualDesc').keyup(fenomenoChange);
+        $('#ComoDesc').keyup(fenomenoChange);
 
         function fenomenoChange() {
-            $('#FenomenoDesc').text(
-                $('#ComoDesc').val() + " " +
+
+            var fenomeno = $('#ComoDesc').val() + " " +
                 $('#QueDesc').val() + " " +
                 $('#DondeDesc').val() + " " +
                 $('#CuandoDesc').val() + " " +
                 $('#CualDesc').val() + " " +
-                $('#QuienDesc').val());
+                $('#QuienDesc').val()
+
+            $('#FenomenoDesc').text(fenomeno);
+            $('#FenomenoDescT').text(fenomeno);
         }
 
         //TRANSCRIBIR FENOMENO ANTES DEL 5W
-        $('#FenomenoDesc').change(transFen);
+        $('#FenomenoDesc').keyup(transFen);
         function transFen() {
             $('#FenomenoDescT').text($('#FenomenoDesc').val());
         }
@@ -3318,7 +3528,6 @@
 
         $(document).on('click', '#tblZeroBefore input[type=radio]', onRadioChanged);
         $(document).on('click', '#tblZeroAfter input[type=radio]', onRadioChangedAft);
-
     });
 </script>
 <script>
@@ -3375,7 +3584,7 @@
                 data: { from: 1, id: idPlanta },
                 success: function (response) {
 
-                    areas_data = response; // Cargar areas del caso para mostrarlas en el plan de acción
+                    
                     $.each(response, function (i, area) {
 
                         $('#IdArea').append($('<option>', {
