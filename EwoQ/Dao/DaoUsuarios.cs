@@ -181,7 +181,7 @@ namespace EwoQ.Dao
         public async Task<int> ApproveUser(string id)
         {
             AspNetUsers usere;
-            Task<int> regs = Task<int>.Factory.StartNew(() => 0);
+            int regs = 0;
 
             try
             {
@@ -204,9 +204,9 @@ namespace EwoQ.Dao
                     context.Entry(usere).State = EntityState.Modified;
 
                     //4. call SaveChanges
-                    regs = context.SaveChangesAsync();
+                    regs = await context.SaveChangesAsync();
 
-                    return await regs;
+                    return regs;
                 }
             }
             catch (Exception e)
@@ -215,6 +215,41 @@ namespace EwoQ.Dao
             }
 
             return 0;
+        }
+
+        public async Task<string> SetSign(string id, string sign)
+        {
+            AspNetUsers usere;
+            int regs =  0;
+            string fileName = null;
+
+            //1. Get row from DB
+            using (var context = new EwoQEntities())
+            {
+                usere = context.AspNetUsers.Where(s => s.Id == id).FirstOrDefault();
+                if (usere != null)
+                {
+                    fileName = usere.SingUrl;
+                }                
+            }
+
+            //2. change data in disconnected mode (out of ctx scope)
+            if (usere != null)
+            {
+                usere.SingUrl = sign;
+            }
+
+            //save modified entity using new Context
+            using (var context = new EwoQEntities())
+            {
+                //3. Mark entity as modified
+                context.Entry(usere).State = EntityState.Modified;
+
+                //4. call SaveChanges
+                regs = await context.SaveChangesAsync();
+
+                return fileName;
+            }            
         }
 
         public async Task<List<UsersUI>> GetAllUsers()

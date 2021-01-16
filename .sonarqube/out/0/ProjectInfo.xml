@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProjectInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.sonarsource.com/msbuild/integration/2015/1">
+  <ProjectName>EwoQ</ProjectName>
+  <ProjectLanguage>C#</ProjectLanguage>
+  <ProjectType>Product</ProjectType>
+  <ProjectGuid>987c81b1-8fe4-44d1-86ee-2b0c51a54c2e</ProjectGuid>
+  <FullPath>D:\Dropbox\HPC\Calidad\EwoQ\EwoQ\EwoQ.csproj</FullPath>
+  <IsExcluded>false</IsExcluded>
+  <AnalysisResults>
+    <AnalysisResult Id="FilesToAnalyze" Location="D:\Dropbox\HPC\Calidad\EwoQ\.sonarqube\out\0\FilesToAnalyze.txt" />
+  </AnalysisResults>
+  <AnalysisSettings>
+    <Property Name="sonar.cs.roslyn.reportFilePaths">D:\Dropbox\HPC\Calidad\EwoQ\EwoQ\bin\EwoQ.dll.RoslynCA.json|D:\Dropbox\HPC\Calidad\EwoQ\EwoQ\bin\EwoQ.dll.RoslynCA.json</Property>
+    <Property Name="sonar.cs.analyzer.projectOutPaths">D:\Dropbox\HPC\Calidad\EwoQ\.sonarqube\out\0</Property>
+  </AnalysisSettings>
+  <Configuration>Debug</Configuration>
+  <Platform>AnyCPU</Platform>
+</ProjectInfo>

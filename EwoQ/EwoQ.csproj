@@ -163,6 +163,13 @@
     <Reference Include="System.Linq.Dynamic, Version=1.0.6132.35681, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Linq.Dynamic.1.0.8\lib\net40\System.Linq.Dynamic.dll</HintPath>
     </Reference>
+    <Reference Include="System.Linq.Dynamic.Core, Version=1.2.7.0, Culture=neutral, PublicKeyToken=0f07ec44de6ac832, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Dynamic.Core.1.2.7\lib\net46\System.Linq.Dynamic.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.1.1\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -530,9 +537,11 @@
     <Content Include="Content\Images\left-mask2_blue.png" />
     <Content Include="Content\Images\maxresdefault.jpg" />
     <Content Include="Content\Images\pexels-photo.jpg" />
+    <Content Include="Content\Images\sing_images\59194610-d888-417c-bf4d-b084053a45c2.png" />
     <Content Include="Content\Images\uniblu.jpg" />
     <Content Include="Content\Images\unilever_green.jpg" />
     <Content Include="Content\Images\unilever_green_edited.jpg" />
+    <Content Include="Content\Images\unnamed.jpg" />
     <Content Include="Content\Images\user.png" />
     <Content Include="Content\Images\wallpaper.jpg" />
     <Content Include="Content\semantic.css" />
@@ -3989,6 +3998,23 @@
     <Content Include="Scripts\Adminbsb\plugins\raphael\raphael.no-deps.js" />
     <Content Include="Scripts\Adminbsb\plugins\raphael\raphael.no-deps.min.js" />
     <Content Include="Scripts\Adminbsb\plugins\raphael\webpack.config.js" />
+    <Content Include="Scripts\Adminbsb\plugins\signature-pad-master\.gitignore" />
+    <Content Include="Scripts\Adminbsb\plugins\signature-pad-master\assets\bezier.js" />
+    <Content Include="Scripts\Adminbsb\plugins\signature-pad-master\assets\flashcanvas.js" />
+    <Content Include="Scripts\Adminbsb\plugins\signature-pad-master\assets\flashcanvas.swf" />
+    <Content Include="Scripts\Adminbsb\plugins\signature-pad-master\assets\journal.svg" />
+    <Content Include="Scripts\Adminbsb\plugins\signature-pad-master\assets\jquery.signaturepad.css" />
+    <Content Include="Scripts\Adminbsb\plugins\signature-pad-master\assets\json2.min.js" />
+    <Content Include="Scripts\Adminbsb\plugins\signature-pad-master\assets\numeric-1.2.6.min.js" />
+    <Content Include="Scripts\Adminbsb\plugins\signature-pad-master\assets\pen.cur" />
+    <Content Include="Scripts\Adminbsb\plugins\signature-pad-master\examples\accept-multiple-signatures.html" />
+    <Content Include="Scripts\Adminbsb\plugins\signature-pad-master\examples\accept-signature.html" />
+    <Content Include="Scripts\Adminbsb\plugins\signature-pad-master\examples\full-window.html" />
+    <Content Include="Scripts\Adminbsb\plugins\signature-pad-master\examples\regenerate-signature.html" />
+    <Content Include="Scripts\Adminbsb\plugins\signature-pad-master\examples\require-drawn-signature.html" />
+    <Content Include="Scripts\Adminbsb\plugins\signature-pad-master\examples\sample-signature-output.js" />
+    <Content Include="Scripts\Adminbsb\plugins\signature-pad-master\jquery.signaturepad.js" />
+    <Content Include="Scripts\Adminbsb\plugins\signature-pad-master\jquery.signaturepad.min.js" />
     <Content Include="Scripts\Adminbsb\plugins\slickgrid\css\jquery-ui-1.11.3.custom.css" />
     <Content Include="Scripts\Adminbsb\plugins\slickgrid\css\select2.css" />
     <Content Include="Scripts\Adminbsb\plugins\slickgrid\css\smoothness\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -4523,6 +4549,19 @@
     <Content Include="Scripts\bootstrap.bundle.min.js.map" />
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
+    <Content Include="Scripts\Adminbsb\plugins\signature-pad-master\.editorconfig" />
+    <Content Include="Scripts\Adminbsb\plugins\signature-pad-master\.jshintrc" />
+    <Content Include="Scripts\Adminbsb\plugins\signature-pad-master\.nojekyll" />
+    <Content Include="Scripts\Adminbsb\plugins\signature-pad-master\assets\journal.eot" />
+    <Content Include="Scripts\Adminbsb\plugins\signature-pad-master\assets\journal.ttf" />
+    <Content Include="Scripts\Adminbsb\plugins\signature-pad-master\assets\journal.woff" />
+    <Content Include="Scripts\Adminbsb\plugins\signature-pad-master\CHANGELOG.md" />
+    <Content Include="Scripts\Adminbsb\plugins\signature-pad-master\documentation.md" />
+    <Content Include="Scripts\Adminbsb\plugins\signature-pad-master\Gruntfile.coffee" />
+    <Content Include="Scripts\Adminbsb\plugins\signature-pad-master\LICENSE" />
+    <Content Include="Scripts\Adminbsb\plugins\signature-pad-master\package.json" />
+    <Content Include="Scripts\Adminbsb\plugins\signature-pad-master\pen.psd" />
+    <Content Include="Scripts\Adminbsb\plugins\signature-pad-master\README.md" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery-3.0.0.min.js" />
@@ -4677,6 +4716,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\ewo_images\" />
+    <Folder Include="Scripts\Adminbsb\bezier\" />
     <Folder Include="Views\ErrorPage\" />
   </ItemGroup>
   <ItemGroup>

@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using EwoQ.Models;
+using System.Diagnostics;
 
 namespace EwoQ.Controllers
 {
@@ -15,10 +16,12 @@ namespace EwoQ.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        static string sing_images = "~/Content/images/sing_images/";
+        static string sign_images = "~/Content/images/sing_images/";
+
 
         public ManageController()
         {
+            
         }
 
         public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -65,6 +68,7 @@ namespace EwoQ.Controllers
                 : "";
 
             var userId = User.Identity.GetUserId();
+
             var model = new IndexViewModel
             {
                 HasSign = HasSign(),
@@ -75,6 +79,61 @@ namespace EwoQ.Controllers
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
             };
             return View(model);
+        }
+
+            
+        public async Task<JsonResult> SaveDigitalSign(HttpPostedFileBase picture, int option)
+        {
+            //CAMPOS PARA ALMACENAR RESULTADO DE TRANSACCIÓN     
+            RequestResponse rr = new RequestResponse();
+
+            try
+            {
+                if (option == 1)
+                {
+                    // Guardar imagen en servidor
+                    if (picture != null)
+                    {
+                        Guid name = Guid.NewGuid();
+                        var imageName = name.ToString() + ".png";
+                        string nameAndLocation = sign_images + imageName;
+                        picture.SaveAs(Server.MapPath(nameAndLocation));
+
+                        await Dao.DaoUsuarios.DaoInstance.SetSign(User.Identity.GetUserId(), imageName);
+                        rr.Codigo = 1;
+                        rr.Message = "OK";
+                    }
+                    else
+                    {
+                        rr.Codigo = -1;
+                        rr.Message = "Archivo inválido";
+                    }
+                }
+                else if (option == 2)
+                {
+                    //Eliminar de base de datos
+                    var fileName = await Dao.DaoUsuarios.DaoInstance.SetSign(User.Identity.GetUserId(), null);
+
+                    //Eliminar de los archivos
+                    string fullPath = Request.MapPath(sign_images + fileName);
+                    if (System.IO.File.Exists(fullPath))
+                    {
+                        System.IO.File.Delete(fullPath);
+                    }
+
+                    
+                    rr.Codigo = 1;
+                    rr.Message = "OK";
+                }
+                
+
+                
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine("Error al guardar firma digital " + ex.ToString());
+            }
+            return Json(rr, JsonRequestBehavior.AllowGet);
         }
 
         //

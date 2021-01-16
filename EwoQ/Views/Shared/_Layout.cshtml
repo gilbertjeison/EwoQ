@@ -53,7 +53,8 @@
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="~/Content/Adminbsb/themes/all-themes.min.css" rel="stylesheet" />
 
-   
+    <!-- SWEETALERT Css -->
+    <link href="~/Scripts/Adminbsb/plugins/sweetalert/sweetalert.css" rel="stylesheet">
 
     <!-- Jquery Core Js -->
     <script src="../../Scripts/Adminbsb/plugins/jquery/jquery.min.js"></script>
@@ -78,6 +79,11 @@
             });
 
         });
+
+        function showSweetAlert(titulo, mensaje, tipo) {
+            swal(titulo, mensaje, tipo);
+            //$('.showSweetAlert h2').addClass('tit');
+        }
     </script>
 </head>
 <body class="@(Uss.IdRol.Equals(SomeHelpers.ROL_OPER) ? "theme-blue" : "theme-green")">
@@ -125,7 +131,7 @@
                 }
 
             </div>
-            <div class="collapse navbar-collapse" id="navbar-collapse">                
+            <div class="collapse navbar-collapse" id="navbar-collapse">
                 @Html.Partial("_LoginPartial", @Uss.Nombres)
             </div>
         </div>
@@ -248,7 +254,7 @@
                                     <span>REPORTAR INCIDENTE</span>
                                 </a>
                             </li>
-                            <li class="@IsActive("Index", "Home")">                                
+                            <li class="@IsActive("Index", "Home")">
                                 <a href="@Url.Action("Index", "Home")">
                                     <i class="material-icons">flag</i>
                                     <span>INCIDENTES REPORTADOS</span>
@@ -296,6 +302,8 @@
     <!-- Demo Js -->
     <script src="../../Scripts/Adminbsb/js/demo.js"></script>
 
-   
+    <!-- SweetAlert Plugin Js -->
+    <script src="~/Scripts/Adminbsb/plugins/sweetalert/sweetalert.min.js"></script>
+
 </body>
 </html>

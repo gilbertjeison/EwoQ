@@ -97,9 +97,8 @@ namespace EwoQ.Controllers
         
         
         // GET: ReportarIncidentes
-        public async Task<ActionResult> Index()
-        {
-            
+        public ActionResult Index()
+        {            
             return View();
         }
 

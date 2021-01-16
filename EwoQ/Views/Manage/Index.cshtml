@@ -7,9 +7,14 @@
     DaoUsuarios daoUser = new DaoUsuarios();
     var Uss = daoUser.GetUser(User.Identity.GetUserId());
     string colorTema = Uss.IdRol.Equals(SomeHelpers.ROL_OPER) ? "bg-blue" : "bg-green";
+
+    ViewBag.Title = "Administrar perfil";
 }
 
-@*<p class="text-success">@ViewBag.StatusMessage</p>*@
+
+
+<link href="~/Scripts/Adminbsb/plugins/signature-pad-master/assets/jquery.signaturepad.css" rel="stylesheet" />
+
 <div class="card">
     <div class="header @colorTema">
         <h2>
@@ -32,45 +37,255 @@
                 }
                 ]
             </dd>
-            <br />
+
+            <dt></dt>
+            <dd><br /></dd>
+
             <dt>Firma digital:</dt>
             <dd>
-                [
-                @if (Model.HasPassword)
+
+                @if (!Model.HasSign)
                 {
-                    @Html.ActionLink("Cambiar la contraseña", "ChangePassword")
+                    <a href="javascript:modalCrearFirma(1)">Crear nueva</a>
+                    @Html.Raw("   |   ")
+                    <a href="javascript:modalCrearFirma(2)">Subir de un archivo</a>
                 }
                 else
                 {
-                    @Html.ActionLink("Crear", "SetPassword")
+                    //Mostrar firma
+                    <div class="card">
+                        <div class="body">
+                            <div id="firmaCreada" style="width:400px; margin:auto;">
+                                <img src="~/Content/Images/sing_images/@Uss.SingUrl" />
+                            </div>
+                        </div>
+                        <button type="button" class="btn-primary waves-effect" style="width:100%" onclick="deleteSign()">Eliminar firma</button>
+                    </div>
+
                 }
-                ]
+
             </dd>
         </dl>
     </div>
 </div>
 
 
+
+<script src="~/Scripts/Adminbsb/plugins/signature-pad-master/assets/numeric-1.2.6.min.js"></script>
+<script src="~/Scripts/Adminbsb/plugins/signature-pad-master/assets/bezier.js"></script>
+<script src="~/Scripts/Adminbsb/plugins/signature-pad-master/jquery.signaturepad.js"></script>
+<script src="~/Scripts/Adminbsb/plugins/signature-pad-master/assets/json2.min.js"></script>
+
 <div class="modal fade" id="mdlSign" tabindex="-1" role="dialog" aria-labelledby="mdlExitoPro-label">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title_procs" id="mdlExitoPro-label">Agregar una firma digital</h4>
+                <h4 class="modal-title_procs" id="mdlExitoPro-label">Crear una firma digital</h4>
             </div>
-            <div class="modal-body">
-                <p id="modalMsg"> </p>
+            <div class="modal-body" style="height:400px; text-align: center;">
+                <div class="sigPad" id="smoothed" style="width:404px; margin:auto;">
+                    <h2>Firma digital</h2>
+                    <ul class="sigNav">
+                        <li class="drawIt"><a href="#draw-it">Dibuja aquí</a></li>
+                        <li class="clearButton"><a href="#clear">Borrar</a></li>
+                    </ul>
+                    <div class="sig sigWrapper" style="height:auto; display:block;">
+                        <div class="typed"> </div>
+                        <canvas id="canSign" class="pad" width="400" height="250"></canvas>
+                        <input type="hidden" id="signOutput" name="output" class="output" />
+                    </div>
+                </div>
             </div>
+
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" onclick="location.href='/ReportarIncidentes/Index'">Aceptar</button>
+                <button type="button" class="btn btn-primary" onclick="getDigitalSign(1)">Aceptar</button>
             </div>
         </div>
     </div>
 </div>
-    
+
+<div class="modal fade" id="mdlUploadSign" tabindex="-1" role="dialog" aria-labelledby="mdlUploadSign-label">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title_procs" id="mdlExitoPro-label">Subir una firma digital (Archivo de imagen)</h4>
+        </div>
+        <div class="modal-body" style="height:400px; text-align: center;">
+            <input type="file" id="signFile" accept="image/x-png,image/gif,image/jpeg" onchange="acceptFile()" />
+            <hr />
+            <img src="~/Content/Images/unnamed.jpg" id="signPrev" alt="Previsualización de firma" />            
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            <button type="button" class="btn btn-primary" onclick="getDigitalSign(2)">Aceptar</button>
+        </div>
+    </div>
+</div>
+</div>
+
+
 <script>
+    var signOutput;
+    var blobFileUpload;
+
     $(function () {
-        //$('#mdlSign').modal('toggle');
+        $("#smoothed").signaturePad({
+            drawOnly: true,
+            drawBezierCurves: true,
+            lineTop: 200,
+        });
+
+
     });
+
+    function modalCrearFirma(opt) {
+        if (opt == 1) {
+            $('#mdlSign').modal('toggle');
+        }
+        else {
+            $('#mdlUploadSign').modal('toggle');
+        }        
+        
+    }
+
+    function getDigitalSign(opt) {
+
+        if (opt == 1) {
+            signOutput = $("#signOutput").val();
+            if (signOutput) {
+
+                //Guardar firma en la base de datos
+                var image = new Image();
+                var canvas = document.getElementById("canSign");
+                image.src = canvas.toDataURL();
+
+                var base64ImageContent = image.src.replace(/^data:image\/(png|jpg);base64,/, "");
+                var blob = base64ToBlob(base64ImageContent, 'image/png');
+                var formData = new FormData();
+                formData.append('picture', blob);
+                formData.append('option', 1);//Guardar
+
+                sendRequest(formData);
+
+
+                $('#mdlSign').modal('toggle');
+            }
+            else {
+                showSweetAlert("Firma digital", "Por favor ingresar una firma", "error");
+            }
+        }
+        else if (opt == 2) {
+            var formData = new FormData();
+            formData.append('picture', blobFileUpload);
+            formData.append('option', 1);//Guardar
+
+            sendRequest(formData);
+
+            $('#mdlSign').modal('toggle');
+        }
+        
+
+    }
+
+    function deleteSign() {
+        var formData = new FormData();
+        formData.append('picture', null);
+        formData.append('option', 2);//Borrar
+
+        sendRequest(formData);
+    }
+
+    function acceptFile() {
+
+        var preview = document.getElementById("signPrev");
+        var file = document.getElementById("signFile").files[0];
+        blobFileUpload = file;
+        var reader = new FileReader();
+
+        reader.onloadend = function () {
+            preview.src = reader.result;
+        }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+        else {
+            preview.src = "";    
+        }
+    }
+
+    function sendRequest(formData) {
+
+         $.ajax({
+                type: "POST",
+                 url: '@Url.Action("SaveDigitalSign", "Manage")',
+                 data: formData,
+                beforeSend: function () {
+                    $('.page-loader-wrapper').fadeIn();
+                },
+                success: function (response) {
+
+                    //Crear textos por cada opcion
+                    var messageSuccess;
+                    var messageError;
+                    var messageOther;
+
+                    //MENSAJE DE CONFIRMACIÓN O ERROR
+                    if (formData.get('option') == 1) {
+                        messageSuccess = 'Firma guardada correctamente...';
+                        messageError = 'Error al guardar firma...';
+                        messageOther = 'No se pudo guardar firma, intente nuevamente...';
+                    }
+                    else {
+                        messageSuccess = 'Firma eliminada correctamente...';
+                        messageError = 'Error al eliminar firma...';
+                        messageOther = 'No se pudo eliminar firma, intente nuevamente...';
+                    }
+
+                    if (response.Codigo == 1) {
+                        showSweetAlert("Firma digital", messageSuccess + " " + response.Message, "success");
+                        setTimeout(function myfunction() {
+                            location.reload();
+                        }, 3000);
+                    }
+                    else if (response.Codigo == -1) {
+                        showSweetAlert("Firma digital", messageError + " " + response.Message, "error");
+                    }
+                    else {
+                        showSweetAlert("Firma digital", messageOther + " " + response.Message, "error");
+                    }
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+             });
+
+            $('.page-loader-wrapper').hide();
+    }
+
+    function base64ToBlob(base64, mime) {
+        mime = mime || '';
+        var sliceSize = 1024;
+        var byteChars = window.atob(base64);
+        var byteArrays = [];
+
+        for (var offset = 0, len = byteChars.length; offset < len; offset += sliceSize) {
+            var slice = byteChars.slice(offset, offset + sliceSize);
+
+            var byteNumbers = new Array(slice.length);
+            for (var i = 0; i < slice.length; i++) {
+                byteNumbers[i] = slice.charCodeAt(i);
+            }
+
+            var byteArray = new Uint8Array(byteNumbers);
+
+            byteArrays.push(byteArray);
+        }
+
+        return new Blob(byteArrays, { type: mime });
+    }
 </script>

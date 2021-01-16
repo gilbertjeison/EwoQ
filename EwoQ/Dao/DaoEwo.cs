@@ -384,7 +384,7 @@ namespace EwoQ.Dao
                                                    join td in context.tipos_data
                                                    on e.codigo_estado equals td.id
                                                    where e.codigo_estado == 1
-                                                   || e.codigo_estado == 1
+                                                   || e.codigo_estado == 3
                                                    select e).Count();
                         iavm.IncidentesCerrados = (from e in context.ewo
                                                    join td in context.tipos_data
@@ -610,19 +610,18 @@ namespace EwoQ.Dao
                 if (ed != null)
                 {
                     ed = ewo;
+
+                    //save modified entity using new Context
+                    using (var context = new EwoQEntities())
+                    {
+                        //3. Mark entity as modified
+                        context.Entry(ed).State = EntityState.Modified;
+
+                        //4. call SaveChanges
+                        await context.SaveChangesAsync();
+                        regs = ed.id;
+                    }
                 }
-
-                //save modified entity using new Context
-                using (var context = new EwoQEntities())
-                {
-                    //3. Mark entity as modified
-                    context.Entry(ed).State = EntityState.Modified;
-
-                    //4. call SaveChanges
-                    await context.SaveChangesAsync();
-                    regs = ed.id;
-                }
-
             }
             catch (Exception e)
             {
