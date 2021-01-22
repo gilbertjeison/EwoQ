@@ -49,6 +49,18 @@ namespace EwoQ.Dao
             return user;
         }
 
+        public async Task<AspNetUsers> GetUserAsync(string id)
+        {       
+            using (var context = new EwoQEntities())
+            {
+                AspNetUsers user = await (from u in context.AspNetUsers
+                                    where u.Id.Equals(id)
+                                    select u).FirstOrDefaultAsync();
+
+                return user;
+            }
+        }
+
         public AspNetUsers GetUserByMail(string email)
         {
             AspNetUsers user = new AspNetUsers();

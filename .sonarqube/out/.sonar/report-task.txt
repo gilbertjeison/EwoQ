@@ -2,5 +2,5 @@ projectKey=ewoq
 serverUrl=http://localhost:9000
 serverVersion=8.6.0.39681
 dashboardUrl=http://localhost:9000/dashboard?id=ewoq
-ceTaskId=AXcEiLoJvt-spseE14RK
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AXcEiLoJvt-spseE14RK
+ceTaskId=AXcTU6EcBZSx0JpWWGaR
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AXcTU6EcBZSx0JpWWGaR

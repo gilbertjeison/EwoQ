@@ -447,6 +447,7 @@ namespace EwoQ.Dao
                             TipoIncidente = item.e.tipo_incidente.Value,
                             TipoIncidenteDesc = item.ti.descripcion,
                             DescripcionProblema = item.e.descripcion_general_problema,
+                            DescripcionProblemax2 = item.e.descripcion_general_problema,
                             TiempoLineaParada = item.e.tiempo_linea_parada.Value,
                             Fecha = item.e.fecha_apertura_investigacion.Value,
                             Estado = item.e.codigo_estado.Value,
@@ -499,6 +500,7 @@ namespace EwoQ.Dao
                             TipoIncidente = item.e.tipo_incidente.Value,
                             TipoIncidenteDesc = item.ti.descripcion,
                             DescripcionProblema = item.e.descripcion_general_problema,
+                            DescripcionProblemax2 = item.e.descripcion_general_problema,
                             TiempoLineaParada = item.e.tiempo_linea_parada.Value,
                             Fecha = item.e.fecha_apertura_investigacion.Value,
                             Estado = item.e.codigo_estado.Value,
@@ -579,7 +581,8 @@ namespace EwoQ.Dao
                             Unidades = i.e.unidades.Value,
                             TamanoFormato = i.e.tamano_formato,
                             TiempoLineaParada = i.e.tiempo_linea_parada.Value,
-                            DescripcionProblema = i.e.descripcion_general_problema
+                            DescripcionProblema = i.e.descripcion_general_problema,
+                            DescripcionProblemax2 = i.e.descripcion_general_problema
                         };
                     }
                 }
@@ -649,7 +652,6 @@ namespace EwoQ.Dao
             {
                 using (var context = new EwoQEntities())
                 {
-                    //context.equipo_trabajo.RemoveRange(context.equipo_trabajo.Where(x => x.codigo_ewo == cod_ewo));
                     context.equipo_trabajo.AddRange(et);
                     regs = await context.SaveChangesAsync();
                 }

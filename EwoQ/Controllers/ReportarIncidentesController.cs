@@ -31,6 +31,7 @@ namespace EwoQ.Controllers
         int FINALDISPOSITION = 9;
         int UNIDADMEDIDA = 13;
         int TOPFIVEFORZERO = 12;
+        string SUPERROLE = "612d016e-8e29-4b11-9927-2f4a52495257";
         string ADMINROLE = "d908787a-642b-480f-ba5c-f46df6fc8713";
         string OPERATINGROLE = "ad3cb589-855b-4888-b234-9333eaca85ec";
         static string ewo_images = "~/Content/images/ewo_images/";
@@ -43,7 +44,7 @@ namespace EwoQ.Controllers
 
             try
             {
-                AspNetUsers aspNetUsers = DaoUsuarios.DaoInstance.GetUser(User.Identity.GetUserId());
+                AspNetUsers aspNetUsers = await DaoUsuarios.DaoInstance.GetUserAsync(User.Identity.GetUserId());
 
                 //var draw = Request.Form["draw"];
                 //var start = Request.Form["start"];
@@ -226,7 +227,7 @@ namespace EwoQ.Controllers
             
             try
             {
-                var userRole = DaoUsuarios.DaoInstance.GetUser(User.Identity.GetUserId()).IdRol;
+                var userRole = (await DaoUsuarios.DaoInstance.GetUserAsync(User.Identity.GetUserId())).IdRol;
 
                 if (SomeHelpers.ROL_OPER.Equals(userRole))
                 {
@@ -470,7 +471,9 @@ namespace EwoQ.Controllers
 
             //USUARIOS ADMINISTRADORES
             var listUA = await DaoUsuarios.DaoInstance.GetUsersByRole(ADMINROLE);
+            var listUS = await DaoUsuarios.DaoInstance.GetUsersByRole(SUPERROLE);
             listUA.Insert(0, new UsersUI() { Id = "0", NombresCommpletos = "Seleccione usuario..." });
+            listUA.AddRange(listUS);
             viewModel.AdminUsersList = new SelectList(listUA, "Id", "NombresCommpletos");
 
             //USUARIOS OPERARIOS
@@ -757,6 +760,28 @@ namespace EwoQ.Controllers
                 string nameAndLocation = ewo_images + file.FileName;
                 file.SaveAs(Server.MapPath(nameAndLocation));
             }           
+        }
+
+        public async Task<JsonResult> GetuserInfo(string userId)
+        {
+            //CAMPOS PARA ALMACENAR RESULTADO DE TRANSACCIÓN     
+            RequestResponse rr = new RequestResponse(); ;
+
+            try
+            {      
+                var user = await DaoUsuarios.DaoInstance.GetUserAsync(userId);
+                rr.Codigo = 1;
+                rr.Message = "OK";
+                rr.Resultado = user.SingUrl;
+
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine("Error al consultar información de usuario " + ex.ToString());
+                rr.Codigo = -1;
+                rr.Message = "Error "+ ex.Message;
+            }
+            return Json(rr, JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)

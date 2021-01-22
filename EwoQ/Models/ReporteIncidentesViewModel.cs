@@ -132,6 +132,8 @@ namespace EwoQ.Models
         [Display(Name = "Descripción general del problema")]
         public string DescripcionProblema { get; set; }
 
+        public string DescripcionProblemax2 { get; set; }
+
         [Display(Name = "Acciones Inmediatas una vez detectada la desviación")]
         public ArrayList AccionesList { get; set; }
 
@@ -219,17 +221,20 @@ namespace EwoQ.Models
         [Display(Name = "Comentarios / Resoluciones")]
         public string ComentariosResoluciones { get; set; }
 
+        
+
         [Display(Name = "Coordinador de Producción:")]
         public string IdCoorProd { get; set; }
 
         [Display(Name = "Gerente de Producción: :")]
         public string IdGerProd { get; set; }
 
-        [Display(Name = "Jefe inmediato Calidad:")]
+        [Display(Name = "Jefe de Calidad:")]
         public string IdJefCal { get; set; }
 
         [Display(Name = "Gerente de Calidad: ")]
         public string IdGerCal { get; set; }
+        public string UrlFirmaGerCal { get; set; }
 
         [DisplayName("Fecha de cierre de investigación")]
         public string FchCierre { get; set; }

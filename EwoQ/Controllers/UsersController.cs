@@ -92,7 +92,7 @@ namespace EwoQ.Controllers
                 if (result > 0)
                 {
                     //ENVIAR CORREO ELECTRÓNICO DE NOTIFICACIÓN
-                    var user = DaoUsuarios.DaoInstance.GetUser(id);
+                    var user = await DaoUsuarios.DaoInstance.GetUserAsync(id);
                     await Utils.SomeHelpers.SendGridAsync(2, user.Email, user.Nombres + " " + user.Apellidos);
                     return Json(data: true);
                 }

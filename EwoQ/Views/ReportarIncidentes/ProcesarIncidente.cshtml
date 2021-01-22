@@ -151,6 +151,15 @@
     .bootstrap-select .dropdown-menu {
         overflow: inherit !important;
     }
+
+    /*Estilos para las firmas*/
+    .sign_row {
+        border: solid 2px #009688;
+        border-radius: 10px;
+        margin-right: 0;
+        margin-left: 0;
+        margin-top: 3%;
+    }
 </style>
 
 <div class="card js-sweetalert">
@@ -655,37 +664,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    @*<div class="row">
-                                        <div class="col-md-4">
-                                            <b>@Html.LabelFor(model => model.IdDisposicionF)</b>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">restore</i>
-                                                </span>
-                                                <div class="form-line">
-                                                    <select id="IdDisposicionF" name="IdDisposicionF" class="selectpicker show-tick" required>
-                                                        @foreach (var item in Model.DisposicionFList)
-                                                        {
-                                                            <option value="@item.Value">@item.Text</option>
-                                                        }
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2"></div>
-                                        <div class="col-md-4">
-                                            <b>@Html.LabelFor(model => model.DFToneladas)</b>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">play_for_work</i>
-                                                </span>
-                                                <div class="form-line">
-                                                    @Html.EditorFor(model => model.DFToneladas, new { htmlAttributes = new { @class = "form-control align-center", required = "required" } })
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>*@
+                                    </div>                                    
                                 </div>
                             </div>
                             <div class="row">
@@ -693,12 +672,40 @@
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.DisposicionesList)
                                         <div id="gridDisposiciones" style="        width: 100%;
-        height: 300px;
-        margin: 0 auto;
-        background: white;
-        outline: 0;
-        border: 1px solid gray;
-"></div>
+                                                height: 300px;
+                                                margin: 0 auto;
+                                                background: white;
+                                                outline: 0;
+                                                border: 1px solid gray;"></div>
+                                    </div>
+                                    <div class="row sign_row" id="rowSignDisp" style="display:none;">
+                                        <div class="col-sm-6" style="margin-top:6%;">
+                                            <b>@Html.LabelFor(model => model.IdGerCal)</b>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="material-icons">person</i>
+                                                </span>
+                                                <div class="form-line" style="border:none;">
+                                                    <select id="IdGerCalDisp" name="IdGerCalDisp" data-size="5" data-live-search="true" class="selectpicker show-tick cboSign" required>
+                                                        @foreach (var item in Model.AdminUsersList)
+                                                        {
+                                                            <option value="@item.Value">@item.Text</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6" style="margin-top:4%">
+                                            <b style="margin-left: 50px;">Firma @Html.LabelFor(model => model.IdGerCal)</b>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="material-icons">create</i>
+                                                </span>
+                                                <div class="form-line" style="border:none;">
+                                                    <img id="imgGerQADisp" height="80" width="200" src="~/Content/Images/unnamed.jpg" />
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -858,7 +865,7 @@
                                 <div class="col-lg-12">
                                     <div class="gray_cube">
                                         <b>@Html.LabelFor(model => model.DescripcionProblema)</b>
-                                        @Html.TextAreaFor(model => model.DescripcionProblema, 2, 0, new { @class = "form-control rounded-10", placeholder = "Escriba aquí la descripción del problema...", @readonly = "readonly", style = "background-color: white;" })
+                                        @Html.TextAreaFor(model => model.DescripcionProblemax2, 2, 0, new { @class = "form-control rounded-10", placeholder = "Escriba aquí la descripción del problema...", @readonly = "readonly", style = "background-color: white;" })
                                     </div>
                                 </div>
                             </div>
@@ -962,7 +969,7 @@
                                                         <hr />
                                                         <div class="gray_cube">
                                                             <strong>
-                                                                HOW + WHAT + WHERE + WHEN + WHICH + WHO = FENOMENO
+                                                                WHAT + WHERE + WHEN + WHO + WHICH + HOW = FENOMENO
                                                             </strong>
                                                         </div>
                                                     </td>
@@ -1242,7 +1249,6 @@
 
                 <h3>Verificación y finalización</h3>
                 <section>
-
                     <div class="card">
                         <div class="body clearfix">
                             <div class="col-md-12">
@@ -1261,15 +1267,15 @@
                             </h2>
                         </div>
                         <div class="body">
-                            <div class="row">
-                                <div class="col-md-6">
+                            <div class="row sign_row" >
+                                <div class="col-md-6" style="margin-top:6%">
                                     <b>@Html.LabelFor(model => model.IdCoorProd)</b>
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="material-icons">person</i>
                                         </span>
                                         <div class="form-line" style="border:none;">
-                                            <select id="IdCoorProd" name="IdCoorProd" data-size="5" data-live-search="true" class="selectpicker show-tick" required>
+                                            <select id="IdCoorProd" name="IdCoorProd" data-size="5" data-live-search="true" class="selectpicker show-tick cboSign" required>
                                                 @foreach (var item in Model.AdminUsersList)
                                                 {
                                                     <option value="@item.Value">@item.Text</option>
@@ -1278,14 +1284,27 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-6" style="margin-top:4%">
+                                    <b>Firma @Html.LabelFor(model => model.IdCoorProd)</b>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">create</i>
+                                        </span>
+                                        <div class="form-line" style="border:none;">
+                                            <img id="imgCoorProd" height="80" width="200" src="~/Content/Images/unnamed.jpg" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row sign_row">
+                                <div class="col-md-6" style="margin-top:6%">
                                     <b>@Html.LabelFor(model => model.IdJefCal)</b>
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="material-icons">person</i>
                                         </span>
                                         <div class="form-line" style="border:none;">
-                                            <select id="IdJefCal" name="IdJefCal" data-size="5" data-live-search="true" class="selectpicker show-tick" required>
+                                            <select id="IdJefCal" name="IdJefCal" data-size="5" data-live-search="true" class="selectpicker show-tick cboSign" required>
                                                 @foreach (var item in Model.AdminUsersList)
                                                 {
                                                     <option value="@item.Value">@item.Text</option>
@@ -1293,17 +1312,28 @@
                                             </select>
                                         </div>
                                     </div>
+                                </div>     
+                                <div class="col-md-6" style="margin-top:4%">
+                                    <b>Firma @Html.LabelFor(model => model.IdJefCal)</b>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">create</i>
+                                        </span>
+                                        <div class="form-line" style="border:none;">
+                                            <img id="imgJefCal" height="80" width="200" src="~/Content/Images/unnamed.jpg" />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6">
+                            <div class="row sign_row">
+                                <div class="col-md-6" style="margin-top:6%">
                                     <b>@Html.LabelFor(model => model.IdGerProd)</b>
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="material-icons">person</i>
                                         </span>
                                         <div class="form-line" style="border:none;">
-                                            <select id="IdGerProd" name="IdGerProd" data-size="5" data-live-search="true" class="selectpicker show-tick" required>
+                                            <select id="IdGerProd" name="IdGerProd" data-size="5" data-live-search="true" class="selectpicker show-tick cboSign" required>
                                                 @foreach (var item in Model.AdminUsersList)
                                                 {
                                                     <option value="@item.Value">@item.Text</option>
@@ -1312,19 +1342,43 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-6" style="margin-top:4%">
+                                    <b>Firma @Html.LabelFor(model => model.IdGerProd)</b>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">create</i>
+                                        </span>
+                                        <div class="form-line" style="border:none;">
+                                            <img id="imgGerProd" height="80" width="200" src="~/Content/Images/unnamed.jpg" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row sign_row">
+                                <div class="col-md-6" style="margin-top:6%">
                                     <b>@Html.LabelFor(model => model.IdGerCal)</b>
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="material-icons">person</i>
                                         </span>
                                         <div class="form-line" style="border:none;">
-                                            <select id="IdGerCal" name="IdGerCal" data-size="5" data-live-search="true" class="selectpicker show-tick" required>
+                                            <select id="IdGerCal" name="IdGerCal" data-size="5" data-live-search="true" class="selectpicker show-tick cboSign" required>
                                                 @foreach (var item in Model.AdminUsersList)
                                                 {
                                                     <option value="@item.Value">@item.Text</option>
                                                 }
                                             </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" style="margin-top:4%">
+                                    <b>Firma @Html.LabelFor(model => model.IdGerCal)</b>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">create</i>
+                                        </span>
+                                        <div class="form-line" style="border:none;">
+                                            <img id="imgGerCal" height="80" width="200" src="~/Content/Images/unnamed.jpg" />
                                         </div>
                                     </div>
                                 </div>
@@ -2275,6 +2329,25 @@
             gridPlanAccion.setData(data);
             gridPlanAccion.render();
         }
+
+        if (ind == 5) {
+            var data = gridDisposiciones.getData();
+            data.splice(index, 1);
+            gridDisposiciones.setData(data);
+            gridDisposiciones.render();
+            
+            if (data.length == 0) {
+                $("#rowSignDisp").hide("slow");
+            }
+        }
+    }
+
+    function saveDisposicion(index) {
+        var data = gridDisposiciones.getData();
+
+        if (data.length > 0) {
+            $("#rowSignDisp").show("slow");
+        }
     }
 
     //funciones para area en el grid de plan de acción
@@ -2625,10 +2698,7 @@
                 { id: "codigo_tipo", name: "Tipo", field: "codigo_tipo", minWidth: 130, formatter: select2FormatterTipo, editor: SelectEditorTipo, dataSource: tiposAcciones },
                 { id: "contramedida", name: "Contramedida", field: "contramedida", minWidth: 220, editable: true, editor: Slick.Editors.LongText, validator: textValidator },
                 { id: "requiere_capex", name: "Requiere Capex?", field: "requiere_capex", minWidth: 150, cssClass: "cell-effort-driven", formatter: Slick.Formatters.Checkmark, editor: Slick.Editors.Checkbox },
-                { id: "pokayoke", name: "Pokayoke?", field: "pokayoke", minWidth: 150, cssClass: "cell-effort-driven", formatter: Slick.Formatters.Checkmark, editor: Slick.Editors.Checkbox },
-                //{ id: "antes", name: "Antes", field: "antes", minWidth: 100, editable: true, editor: Slick.Editors.Text },
-                //{ id: "despues", name: "Después", field: "despues", minWidth: 100, editable: true, editor: Slick.Editors.Text },
-                //{ id: "pokayoke", name: "Pokayoke", field: "pokayoke", minWidth: 150, editable: true, editor: Slick.Editors.Text },
+                { id: "pokayoke", name: "Pokayoke?", field: "pokayoke", minWidth: 150, cssClass: "cell-effort-driven", formatter: Slick.Formatters.Checkmark, editor: Slick.Editors.Checkbox },         
                 { id: "fecha_compromiso", name: "F. compromiso", field: "fecha_compromiso", minWidth: 130, editor: Slick.Editors.Date, validator: textValidator },
                 { id: "codigo_area", name: "Área", field: "codigo_area", minWidth: 200, formatter: select2FormatterArea, editor: SelectEditorArea, dataSource: areas_data },
                 { id: "codigo_responsable", name: "Responsable", field: "codigo_responsable", minWidth: 200, formatter: select2Formatter, editor: SelectEditor, dataSource: user_data },
@@ -2679,12 +2749,12 @@
                 { id: "codigo_unidad_medida", name: "Unidad de medida", field: "codigo_unidad_medida", minWidth: 250, formatter: select2FormatterDisposicion, editor: SelectEditorDisposicion, dataSource: unimed_data },
                 {
                     id: 'id_accp', name: 'acciones', field: 'id', minWidth: 130, formatter: function (index, c, id, def, datactx) {
-                        return '<a id="acceptPA" class="btn btn-primary" style="padding:2px;" >Guardar</a>';
+                        return '<a id="acceptPA" class="btn btn-primary" style="padding:2px;" onclick="saveDisposicion(' + index + ')">Guardar</a>';
                     }
                 },
                 {
                     id: 'id', name: 'acciones', field: 'id', formatter: function (index, c, id, def, datactx) {
-                        return '<a id="deletePA" class="btn btn-primary" style="padding:2px;" onclick="RemoveClick(' + index + ',4)">Eliminar</a>';
+                        return '<a id="deletePA" class="btn btn-primary" style="padding:2px;" onclick="RemoveClick(' + index + ',5)">Eliminar</a>';
                     }
                 }
             ];
@@ -2897,10 +2967,10 @@
 
                     var listGrupoTrabajo = $("#EquipoTrabajo").siblings(".bootstrap-tagsinput").children(".tag");
                     //Validar el equipo de trabajo
-                    if (listGrupoTrabajo.length == 0) {
-                        showSweetAlert("Análisis de causas & 4M", "Debe incluir al menos un integrante en el equipo de trabajo", "error");
-                        return false;
-                    }
+                    //if (listGrupoTrabajo.length == 0) {
+                    //    showSweetAlert("Análisis de causas & 4M", "Debe incluir al menos un integrante en el equipo de trabajo", "error");
+                    //    return false;
+                    //}
 
                     //asignar registros de la pestaña 2
                     listGenj = [];
@@ -2913,20 +2983,20 @@
                     listGens = gridGensoku.getData();
 
                     //validar listas de la pestaña 2
-                    if (listGenj.length == 0) {
-                        showSweetAlert("INVESTIGACIÓN EN PISO", "Debe cargar la información Genjitsu", "error");
-                        return false;
-                    }
+                    //if (listGenj.length == 0) {
+                    //    showSweetAlert("INVESTIGACIÓN EN PISO", "Debe cargar la información Genjitsu", "error");
+                    //    return false;
+                    //}
 
-                    if (listGenr.length == 0) {
-                        showSweetAlert("INVESTIGACIÓN EN PISO", "Debe cargar la información Genri", "error");
-                        return false;
-                    }
+                    //if (listGenr.length == 0) {
+                    //    showSweetAlert("INVESTIGACIÓN EN PISO", "Debe cargar la información Genri", "error");
+                    //    return false;
+                    //}
 
-                    if (listGens.length == 0) {
-                        showSweetAlert("INVESTIGACIÓN EN PISO", "Debe cargar la información Gensoku", "error");
-                        return false;
-                    }
+                    //if (listGens.length == 0) {
+                    //    showSweetAlert("INVESTIGACIÓN EN PISO", "Debe cargar la información Gensoku", "error");
+                    //    return false;
+                    //}
 
                     //VALIDAR QUE LOS POR QUÉ ESTÉN DILIGENCIADOS
                     //CAPTURAR RESGISTROS DE LA TABLA
@@ -2944,14 +3014,15 @@
                         listPorq.push(porque);
                     });
 
-                    if (listPorq.length == 0) {
-                        if (!$('#GembaDesc').val() || !$('#GembutsuDesc').val() || !$('#GenjitsuDesc').val()) {
-                            showSweetAlert("ANÁLISIS POR QUÉ", "Debe diligenciar los registros de por qué", "error");
-                            return false;
-                        }
-                    };
+                    //if (listPorq.length == 0) {
+                    //    if (!$('#GembaDesc').val() || !$('#GembutsuDesc').val() || !$('#GenjitsuDesc').val()) {
+                    //        showSweetAlert("ANÁLISIS POR QUÉ", "Debe diligenciar los registros de por qué", "error");
+                    //        return false;
+                    //    }
+                    //};
 
 
+                    //NO DESCOMENTAR POR FUNCIONALIDAD
                     //validar imagenes
                     //imagen 1
                     //if (myDropzone1.files.length == 0) {
@@ -2969,10 +3040,10 @@
                     getMValues();
                     var maxMs = _.max([manObra, material, maquina, metodo]);
 
-                    if (maxMs == 0) {
-                        showSweetAlert("Análisis 4M", "Debe responder las preguntas 4M", "error");
-                        return false;
-                    }
+                    //if (maxMs == 0) {
+                    //    showSweetAlert("Análisis 4M", "Debe responder las preguntas 4M", "error");
+                    //    return false;
+                    //}
 
                     //Validar top five for zero
                     var bTFFZSelected = false;
@@ -2988,10 +3059,10 @@
                         }
                     });
 
-                    if (!bTFFZSelected) {
-                        showSweetAlert("Top Five For Zero", "Debe seleccionar una opción", "error");
-                        return false;
-                    }
+                    //if (!bTFFZSelected) {
+                    //    showSweetAlert("Top Five For Zero", "Debe seleccionar una opción", "error");
+                    //    return false;
+                    //}
                 }
 
                 if (currentIndex == 2) {
@@ -3024,10 +3095,10 @@
                         }
                     });
 
-                    if (anyZeroB) {
-                        showSweetAlert("ZERO QUESTIONS", "Debe responder todas las preguntas BEFORE", "error");
-                        return false;
-                    }
+                    //if (anyZeroB) {
+                    //    showSweetAlert("ZERO QUESTIONS", "Debe responder todas las preguntas BEFORE", "error");
+                    //    return false;
+                    //}
 
 
                     //VALIDAR BEFORE
@@ -3060,17 +3131,17 @@
                         }
                     });
 
-                    if (anyZeroA) {
-                        showSweetAlert("ZERO QUESTIONS", "Debe responder todas las preguntas AFTER", "error");
-                        return false;
-                    }
-                    else {
-                        var pntAfter = parseInt(aftTotal.innerHTML.replace("%", ""));
-                        if (pntAfter < 80) {
-                            showSweetAlert("ZERO QUESTIONS", "El puntaje del resultado AFTER debe ser superior al 80%", "error");
-                            return false;
-                        }
-                    }
+                    //if (anyZeroA) {
+                    //    showSweetAlert("ZERO QUESTIONS", "Debe responder todas las preguntas AFTER", "error");
+                    //    return false;
+                    //}
+                    //else {
+                    //    var pntAfter = parseInt(aftTotal.innerHTML.replace("%", ""));
+                    //    if (pntAfter < 80) {
+                    //        showSweetAlert("ZERO QUESTIONS", "El puntaje del resultado AFTER debe ser superior al 80%", "error");
+                    //        return false;
+                    //    }
+                    //}
 
                     //validar plan de acción
                     listPlan = [];
@@ -3109,15 +3180,15 @@
                     }
 
                     //validar listas
-                    if (listPlan.length == 0) {
-                        showSweetAlert("PLAN DE ACCIÓN", "Debe cargar la información del plan de acción", "error");
-                        return false;
-                    }
+                    //if (listPlan.length == 0) {
+                    //    showSweetAlert("PLAN DE ACCIÓN", "Debe cargar la información del plan de acción", "error");
+                    //    return false;
+                    //}
 
-                    if (!isValid) {
-                        swal("Plan de acción", "Todos los campos del plan de acción deben estar diligenciados", "error");
-                        return false;
-                    }
+                    //if (!isValid) {
+                    //    swal("Plan de acción", "Todos los campos del plan de acción deben estar diligenciados", "error");
+                    //    return false;
+                    //}
                 }
 
                 form.validate().settings.ignore = ':disabled,:hidden';
@@ -3127,8 +3198,8 @@
                 if (Slick.GlobalEditorLock.isActive())
                     Slick.GlobalEditorLock.commitCurrentEdit();
 
-                return form.valid();
-                //return true;
+                //return form.valid();
+                return true;
             },
             onStepChanged: function (event, currentIndex, priorIndex) {
 
@@ -3331,7 +3402,7 @@
     });
 </script>
 
-//EVENTOS PERSONALIZADOS DE CONTROLES
+@*EVENTOS PERSONALIZADOS DE CONTROLES*@
 <script>
     $(function () {
 
@@ -3421,14 +3492,20 @@
         $('#CualDesc').keyup(fenomenoChange);
         $('#ComoDesc').keyup(fenomenoChange);
 
+        $('#DescripcionProblema').keyup(function () {
+
+            $('#DescripcionProblemax2').text($('#DescripcionProblema').val());
+        });
+
         function fenomenoChange() {
 
-            var fenomeno = $('#ComoDesc').val() + " " +
+            var fenomeno =
                 $('#QueDesc').val() + " " +
                 $('#DondeDesc').val() + " " +
                 $('#CuandoDesc').val() + " " +
+                $('#QuienDesc').val() + " " +
                 $('#CualDesc').val() + " " +
-                $('#QuienDesc').val()
+                $('#ComoDesc').val()
 
             $('#FenomenoDesc').text(fenomeno);
             $('#FenomenoDescT').text(fenomeno);
@@ -3528,8 +3605,71 @@
 
         $(document).on('click', '#tblZeroBefore input[type=radio]', onRadioChanged);
         $(document).on('click', '#tblZeroAfter input[type=radio]', onRadioChangedAft);
+
+        $(".cboSign").change(function (e) {
+
+            var name = $(e.target).attr('name');
+            var idUser = $(e.target).find("option:selected").val();
+
+            signUser(idUser, name);
+
+
+        });
+
+
     });
+
+    function signUser(idUser, dependency) {
+
+        var formData = new FormData();
+        formData.append('userId', idUser);
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetuserInfo", "ReportarIncidentes")',
+            data: formData,
+            beforeSend: function () {
+                $('.page-loader-wrapper').fadeIn();
+            },
+            success: function (response) {
+
+                if (response.Codigo == 1) {
+                    //Fijar firma del usuario
+
+                    switch (dependency) {
+                        case 'IdCoorProd':
+                            $("#imgCoorProd").attr('src', '@Url.Content("~/Content/images/sing_images/")' + response.Resultado);
+                            break;
+                        case 'IdJefCal':
+                            $("#imgJefCal").attr('src', '@Url.Content("~/Content/images/sing_images/")' + response.Resultado);
+                            break;
+                        case 'IdGerProd':
+                            $("#imgGerProd").attr('src', '@Url.Content("~/Content/images/sing_images/")' + response.Resultado);
+                            break;
+                        case 'IdGerCal':
+                            $("#imgGerCal").attr('src', '@Url.Content("~/Content/images/sing_images/")' + response.Resultado);
+                            break;
+                        case 'IdGerCalDisp':
+                            $("#imgGerQADisp").attr('src', '@Url.Content("~/Content/images/sing_images/")' + response.Resultado);
+                            break;
+                    }
+                }
+                else if (response.Codigo == -1) {
+                    showSweetAlert("Firma digital", messageError + " " + response.Message, "error");
+                }
+                else {
+                    showSweetAlert("Firma digital", messageOther + " " + response.Message, "error");
+                }
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+            });
+
+        $('.page-loader-wrapper').hide();
+    }
 </script>
+@*CARGUE DE INFO PARA LA EDICIÓN*@
 <script>
     //CARGAR DATOS DE INCIDENTES REPORTADOS
     $(function () {

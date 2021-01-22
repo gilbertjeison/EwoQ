@@ -10,6 +10,8 @@
 
 // Skipping function ApproveUser(none), it contains poisonous unsupported syntaxes
 
+// Skipping function SetSign(none, none), it contains poisonous unsupported syntaxes
+
 // Skipping function GetAllUsers(), it contains poisonous unsupported syntaxes
 
 // Skipping function GetAllUsersNames(), it contains poisonous unsupported syntaxes

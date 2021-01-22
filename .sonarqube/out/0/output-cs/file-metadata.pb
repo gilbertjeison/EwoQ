@@ -71,5 +71,5 @@ ED:\Dropbox\HPC\Calidad\EwoQ\EwoQ\Models\ReporteIncidentesViewModel.csutf-8B
 ;D:\Dropbox\HPC\Calidad\EwoQ\EwoQ\Properties\AssemblyInfo.csutf-84
 +D:\Dropbox\HPC\Calidad\EwoQ\EwoQ\Startup.csutf-8A
 8D:\Dropbox\HPC\Calidad\EwoQ\EwoQ\Utils\Enums\EnListas.csutf-8>
-5D:\Dropbox\HPC\Calidad\EwoQ\EwoQ\Utils\SomeHelpers.csutf-8h
-]D:\Dropbox\HPC\Calidad\EwoQ\EwoQ\obj\Debug\.NETFramework,Version=v4.6.2.AssemblyAttributes.csutf-8
+5D:\Dropbox\HPC\Calidad\EwoQ\EwoQ\Utils\SomeHelpers.csutf-8^
+SC:\Users\User\AppData\Local\Temp\.NETFramework,Version=v4.6.2.AssemblyAttributes.csutf-8
