@@ -243,6 +243,8 @@ namespace EwoQ.Models
         #region CAMPOS ADJUNTOS
         public string BeforePct { get; set; }
         public string AfterPct { get; set; }
+
+        public string ListDisp { get; set; }
         public string ListAccInm { get; set; }
         public string ListGenj { get; set; }
         public string ListGenr { get; set; }

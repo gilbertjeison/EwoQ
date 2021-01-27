@@ -214,7 +214,8 @@ namespace EwoQ.Controllers
                     Nombres = model.Nombres,
                     Apellidos = model.Apellidos,
                     IdRol = model.Role,
-                    Registrado = DateTime.Now
+                    Registrado = DateTime.Now,
+                    SingUrl = "unnamed.jpg"
                 };
 
                     var result = await UserManager.CreateAsync(user, model.Password);

@@ -391,7 +391,7 @@
             @if ((bool)ViewData["showButton"])
             {
                 <div class="form-group">
-                    <button type="button" class="btn btn-primary center-block" style="width:50%; margin:0 auto;" onclick="AddReporte()">Reportar</button>
+                    <button id="submitReport" type="button" class="btn btn-primary center-block" style="width:50%; margin:0 auto;" onclick="AddReporte()">Reportar</button>
                 </div>
             }
         </div>
@@ -777,6 +777,8 @@
 </script>
 <script>
     function AddReporte() {
+        
+
         var validate = $('#formReporte').validate({
             highlight: function (input) {
                 $(input).parents('.form-line').addClass('error');
@@ -845,6 +847,7 @@
             return false;
         }
 
+        document.getElementById('submitReport').disabled = true;
         //MOSTRAR LOADER
         $('.page-loader-wrapper').fadeIn();
 
@@ -853,6 +856,7 @@
 
         //ADJUNTAR LISTA DE ACCIONES
         dataString.append('Cmd', JSON.stringify(cmd));
+
 
         $.ajax({
             type: "POST",

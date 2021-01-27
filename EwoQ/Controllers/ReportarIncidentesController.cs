@@ -45,53 +45,29 @@ namespace EwoQ.Controllers
             try
             {
                 AspNetUsers aspNetUsers = await DaoUsuarios.DaoInstance.GetUserAsync(User.Identity.GetUserId());
-
-                //var draw = Request.Form["draw"];
-                //var start = Request.Form["start"];
-                //var length = Request.Form["length"];
-                //var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"] + "][name]"];
-                //var sortColumnDirection = Request.Form["order[0][dir]"];
-                //var searchValue = Request.Form["search[value]"];
-
-                //Paging Size (10,20,50,100)
-                //int pageSize = length.ToString() != null ? Convert.ToInt32(length) : 0;
-                //int skip = start.ToString() != null ? Convert.ToInt32(start) : 0;
+                                
                 int recordsTotal = 0;
 
-                if (aspNetUsers.IdRol.Equals(Utils.SomeHelpers.ROL_OPER))
+                if (aspNetUsers.IdRol.Equals(SomeHelpers.ROL_OPER))
                 {
-                    rivm = DaoEwo.DaoInstance.GetEwoList(aspNetUsers.Id);
+                    rivm = DaoEwo.DaoInstance.GetEwoListOperario(aspNetUsers.Id);
                 }
                 else
                 {
                     rivm = DaoEwo.DaoInstance.GetEwoList();
                 }
 
-                var data1 = await rivm;
-
-                //Sorting
-                //if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDirection)))
-                //{
-                //    data1 = data1.OrderBy(sortColumn + " " + sortColumnDirection).ToList();
-                //}
-
-                ////Search
-                //if (!string.IsNullOrEmpty(searchValue))
-                //{
-                //    data1 = data1.Where(m => m.DescripcionProblema.Contains(searchValue) || m.LineaDesc.Contains(searchValue)).ToList();
-                //}
+                var data1 = await rivm;                                
 
                 //total number of rows count 
                 recordsTotal = data1.Count();
-                //Paging 
-                //var data = data1.Skip(skip).Take(pageSize).ToList();
-
-                //return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
+                
                 return Json(new { recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data1 });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Trace.WriteLine("Error el cargar los incidentes reportados: "+ex.ToString());
+                return Json(new { });
             }
         }
         #endregion
@@ -446,8 +422,6 @@ namespace EwoQ.Controllers
                 viewModel.Consecutivo = "00" + await DaoEwo.DaoInstance.GetLastConsecutive();
             }
 
-
-
             //LISTA DE TIPOS DE INCIDENTE
             var listTI = await DaoTiposData.DaoInstance.GetTypesAsync(INCIDENTSTYPES);
             listTI.Insert(0, new Database.tipos_data() { id = 0, descripcion = "Seleccione tipo de incidente..." });            
@@ -650,6 +624,13 @@ namespace EwoQ.Controllers
 
                 //agregar a BD equipo de trabajo
                 await DaoEwo.DaoInstance.AddEquipoTrabjo(listET);
+
+                //Listas de disposiciones
+                List<disposiciones> listDisp = ser.Deserialize<List<disposiciones>>(ewr.ListDisp);
+                foreach (var item in listDisp)
+                {
+                    item.codigo_ewo = id;
+                }
 
                 //Listas Gs
                 List<fiveg_resultados> listGenjitsu = ser.Deserialize<List<fiveg_resultados>>(ewr.ListGenj);

@@ -465,6 +465,48 @@ namespace EwoQ.Dao
             return list;
         }
 
+        public async Task<List<ReporteIncidentesViewModel>> GetEwoListOperario(string id_autor)
+        {
+            List<ReporteIncidentesViewModel> list = new List<ReporteIncidentesViewModel>();
+
+            using (var context = new EwoQEntities())
+            {
+                var query = from e in context.ewo
+                            join l in context.lineas
+                            on e.codigo_linea equals l.id
+                            join a in context.areas_productivas
+                            on l.codigo_area equals a.id
+                            join es in context.tipos_data
+                            on e.codigo_estado equals es.id
+                            join t in context.AspNetUsers
+                            on e.autor equals t.Id
+                            where e.autor == id_autor
+                            select new { e, l, t, es, a };
+
+                var data = await query.ToListAsync();
+
+                foreach (var item in data.ToList())
+                {
+                    list.Add(new ReporteIncidentesViewModel()
+                    {
+                        Id = item.e.id,
+                        LineaDesc = item.l.descripcion,
+                        AreaDesc = item.a.descripcion,
+                        Autor = item.t.Id,
+                        AutorDesc = item.t.Nombres + " " + item.t.Apellidos,                           
+                        DescripcionProblema = item.e.descripcion_general_problema,
+                        TiempoLineaParada = item.e.tiempo_linea_parada.Value,
+                        Fecha = item.e.fecha_apertura_investigacion.Value,
+                        Estado = item.e.codigo_estado.Value,
+                        EstadoDesc = item.es.descripcion,
+                        NumAirsweb = item.e.numero_airsweb.HasValue ? item.e.numero_airsweb.Value : 0
+                    });
+                }
+            }            
+
+            return list;
+        }
+
         public async Task<List<ReporteIncidentesViewModel>> GetEwoList()
         {
             List<ReporteIncidentesViewModel> list = new List<ReporteIncidentesViewModel>();
@@ -479,36 +521,32 @@ namespace EwoQ.Dao
                                 join a in context.areas_productivas
                                 on l.codigo_area equals a.id
                                 join ti in context.tipos_data
-                                on e.tipo_incidente equals ti.id
+                                on e.tipo_incidente equals ti.id into gj
+                                from x in gj.DefaultIfEmpty()
                                 join es in context.tipos_data
                                 on e.codigo_estado equals es.id
                                 join t in context.AspNetUsers
                                 on e.autor equals t.Id
-                                select new { e, l, t, ti, es, a  };
+                                select new ReporteIncidentesViewModel()
+                                {
+                                    Id = e.id,
+                                    LineaDesc = l.descripcion,
+                                    AreaDesc = a.descripcion,
+                                    Autor = t.Id,
+                                    AutorDesc = t.Nombres + " " + t.Apellidos,
+                                    TipoIncidente = e.tipo_incidente ?? 0,
+                                    TipoIncidenteDesc =  (x == null ? String.Empty : x.descripcion),
+                                    DescripcionProblema = e.descripcion_general_problema,
+                                    DescripcionProblemax2 = e.descripcion_general_problema,
+                                    TiempoLineaParada = e.tiempo_linea_parada.Value,
+                                    Fecha = e.fecha_apertura_investigacion.Value,
+                                    Estado = e.codigo_estado ?? 0,
+                                    EstadoDesc = es.descripcion,
+                                    NumAirsweb = e.numero_airsweb ?? 0,
+                                    Consecutivo = e.consecutivo.ToString() ?? "0"
+                                } ;
 
-                    var data = await query.ToListAsync();
-
-                    foreach (var item in data.ToList())
-                    {
-                        list.Add(new ReporteIncidentesViewModel()
-                        {
-                            Id = item.e.id,
-                            LineaDesc = item.l.descripcion,
-                            AreaDesc = item.a.descripcion,
-                            Autor = item.t.Id,
-                            AutorDesc = item.t.Nombres + " " + item.t.Apellidos,
-                            TipoIncidente = item.e.tipo_incidente.Value,
-                            TipoIncidenteDesc = item.ti.descripcion,
-                            DescripcionProblema = item.e.descripcion_general_problema,
-                            DescripcionProblemax2 = item.e.descripcion_general_problema,
-                            TiempoLineaParada = item.e.tiempo_linea_parada.Value,
-                            Fecha = item.e.fecha_apertura_investigacion.Value,
-                            Estado = item.e.codigo_estado.Value,
-                            EstadoDesc = item.es.descripcion,
-                            NumAirsweb = item.e.numero_airsweb.HasValue ? item.e.numero_airsweb.Value : 0,
-                            Consecutivo = item.e.consecutivo.ToString()
-                        }) ;
-                    }
+                    list = await query.ToListAsync();
                 }
             }
             catch (Exception e)
@@ -539,9 +577,10 @@ namespace EwoQ.Dao
                                 join t in context.AspNetUsers
                                 on e.autor equals t.Id
                                 join ti in context.tipos_data
-                                on e.tipo_incidente equals ti.id
+                                on e.tipo_incidente equals ti.id into gj
+                                from x in gj.DefaultIfEmpty()
                                 where e.id == id
-                                select new { e, l, t, ti,es, a, p };
+                                select new { e, l, t, x,es, a, p };
 
                     var data = await query.ToListAsync();
 
@@ -556,7 +595,7 @@ namespace EwoQ.Dao
                             IdArea = i.a.id,
                             Autor = i.t.Nombres + " " + i.t.Apellidos,
                             TipoIncidente = i.e.tipo_incidente.Value,
-                            TipoIncidenteDesc = i.ti.descripcion,
+                            TipoIncidenteDesc = i.x != null ? i.x.descripcion : "",
                             Consecutivo = i.e.consecutivo.Value.ToString(),
                             Fecha = i.e.fecha_apertura_investigacion.Value,
                             FchApertInvestigacion = i.e.fecha_apertura_investigacion.Value.ToString("dd-MM-yyyy"),
