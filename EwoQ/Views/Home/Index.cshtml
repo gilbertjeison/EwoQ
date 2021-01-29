@@ -202,7 +202,19 @@
             },
             "dom": 'Bfrtip',
             "lengthChange": false,
-            "buttons": ['copy', 'excel', 'pdf'],
+            "buttons":
+                ['copy',
+                    'excel',
+                    {
+                        extend: 'pdf',
+                        orientation: 'landscape', 
+                        pageSize: 'TABLOID',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7],
+                            
+                        }
+                    }
+                ],
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
             }

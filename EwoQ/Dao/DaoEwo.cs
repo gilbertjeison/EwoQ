@@ -580,7 +580,7 @@ namespace EwoQ.Dao
                                 on e.tipo_incidente equals ti.id into gj
                                 from x in gj.DefaultIfEmpty()
                                 where e.id == id
-                                select new { e, l, t, x,es, a, p };
+                                select new { e, l, x,t,es, a, p };
 
                     var data = await query.ToListAsync();
 
@@ -594,7 +594,7 @@ namespace EwoQ.Dao
                             IdPlanta = i.p.id,
                             IdArea = i.a.id,
                             Autor = i.t.Nombres + " " + i.t.Apellidos,
-                            TipoIncidente = i.e.tipo_incidente.Value,
+                            TipoIncidente = i.x != null ?  i.e.tipo_incidente.Value : 0,
                             TipoIncidenteDesc = i.x != null ? i.x.descripcion : "",
                             Consecutivo = i.e.consecutivo.Value.ToString(),
                             Fecha = i.e.fecha_apertura_investigacion.Value,

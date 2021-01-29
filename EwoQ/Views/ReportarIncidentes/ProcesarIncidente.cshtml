@@ -1578,7 +1578,7 @@
 <script src="~/Scripts/Adminbsb/plugins/lodash/lodash.min.js"></script>
 @* GRIDSTACK JS *@
 <script src="~/Scripts/Adminbsb/plugins/gridstack/gridstack.min.js"></script>
-
+<script src="~/Scripts/Adminbsb/plugins/slickgrid/plugins/externalCopy.js"></script>
 <script>
      var idEdit = @Html.Raw(Json.Encode(Model.Id));
     var myDropzone1;
@@ -2555,6 +2555,20 @@
                 }
             ];
 
+        var pluginOptions = {
+            clipboardCommandHandler: function (editCommand) { undoRedoBuffer.queueAndExecuteCommand.call(undoRedoBuffer, editCommand); },
+            readOnlyMode: false,
+            includeHeaderWhenCopying: false,
+            newRowCreator: function (count) {
+                for (var i = 0; i < count; i++) {
+                    var item = {
+                        id: "newRow_" + newRowIds++
+                    }
+                    grid.getData().addItem(item);
+                }
+            }
+        };
+
         //INICIALIZACIÓN DEL GRID
         var data = [];
 
@@ -2574,11 +2588,13 @@
             data.push(item);
             grid.updateRowCount();
             grid.render();
-        });
+        });               
 
         grid.onValidationError.subscribe(function (e, args) {
             alert(args.validationResults.msg);
         });
+
+        grid.registerPlugin(new Slick.CellExternalCopyManager(pluginOptions));
 
         $('#gridAcciones').on('focusout', '.editor-percentcomplete', function () {
 

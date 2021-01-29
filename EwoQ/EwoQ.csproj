@@ -4049,6 +4049,7 @@
     <Content Include="Scripts\Adminbsb\plugins\slickgrid\css\images\ui-icons_ffffff_256x240.png" />
     <Content Include="Scripts\Adminbsb\plugins\slickgrid\css\jquery-ui.css" />
     <Content Include="Scripts\Adminbsb\plugins\slickgrid\lib\jquery-ui.min.js" />
+    <Content Include="Scripts\Adminbsb\plugins\slickgrid\plugins\externalCopy.js" />
     <Content Include="Scripts\Adminbsb\plugins\slickgrid\plugins\slick.autotooltips.js" />
     <Content Include="Scripts\Adminbsb\plugins\slickgrid\plugins\slick.cellcopymanager.js" />
     <Content Include="Scripts\Adminbsb\plugins\slickgrid\plugins\slick.cellexternalcopymanager.js" />
