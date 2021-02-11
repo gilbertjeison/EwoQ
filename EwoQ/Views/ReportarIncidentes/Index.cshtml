@@ -65,21 +65,30 @@
         vertical-align: inherit;
     }
 
-    .ui.form .ui.input > input {
-        width: 200px !important;
-    }
+        .ui.form .ui.input > input {
+            width: 200px !important;
+        }
 
     .ui.form {
-         position: unset; 
+        position: unset;
         /* max-width: 100%; */
     }
 
-    .dataTables_filter.ui.form{
-        float:right;
+    .dataTables_filter.ui.form {
+        float: right;
     }
 
-    .dataTables_paginate.paging_simple_numbers{
-        float:right;
+    .dataTables_paginate.paging_simple_numbers {
+        float: right;
+    }
+
+    table.dataTable tbody tr.selected {
+        background-color: #b0bed9;
+    }
+
+    legend {
+        font-size: 14px;
+        margin-bottom: 5px;
     }
 </style>
 
@@ -88,7 +97,24 @@
         <h2>OPCIONES</h2>
     </div>
     <div class="body">
-        @Html.ActionLink("Reportar nuevo incidente", "Create", "ReportarIncidentes", new { edit = 0 }, new { @class = "btn " + @setColorButton() + " waves-effect" })
+        <div class="row">
+            <div class="col-sm-3">
+                <fieldset>
+                    <legend>Nuevo reporte</legend>
+                    @Html.ActionLink("Reportar nuevo incidente", "Create", "ReportarIncidentes", new { edit = 0 }, new { @class = "btn " + @setColorButton() + " waves-effect" })
+                </fieldset>
+            </div>
+            <div class="col-sm-4">
+                <fieldset>
+                    <legend>Exportar en línea</legend>
+
+                    <input type="checkbox" id="chkExport" name="chkExport" value="Exportar">
+                    <label for="chkExport">Exportar</label>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a onclick="exportInLine()" class="waves-effect btn @setColorButton()" id="btnExportLine" , style="display:none">Exportar selección</a>
+                </fieldset>
+            </div>
+        </div>
     </div>
 </div>
 <div class="card">
@@ -100,6 +126,7 @@
             <thead>
                 <tr>
                     <th>N° Airsweb</th>
+                    <th>Consecutivo</th>
                     <th>Estado</th>
                     <th>Línea</th>
                     <th>Área</th>
@@ -119,6 +146,23 @@
 </div>
 
 
+@*MODAL PARA DESCARGAR FORMATO*@
+<div class="modal fade" id="downloadModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header @setColor()">
+                <h1 class="modal-title">FORMATO EWO</h1>
+            </div>
+            <div class="modal-body clearfix">
+                <p id="modalMsg" style="font-size:16px;"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link waves-effect" onclick="downloadFile()">Descargar</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="~/Scripts/semantic.min.js"></script>
 <script src="~/Scripts/Adminbsb/plugins/jquery-datatable/jquery.dataTables.min.js"></script>
@@ -142,23 +186,26 @@
 <script src="~/Scripts/Adminbsb/plugins/sweetalert/sweetalert.min.js"></script>
 
 <script>
+    var table;
     $(function () {
-        var table = $('#irTable').DataTable({
+        table = $('#irTable').DataTable({
             fixedHeader: true,
             "processing": true,
             "serverSide": false,
             "filter": true,
             "orderMulti": false,
             "autoWidth": false,
+            "pageLength": 25,
             "ajax": {
                 "url": '@Url.Action("LoadDataAsync", "ReportarIncidentes")',
                 "type": "POST",
                 "datatype": "json"
             },
             "columns": [
-                { "data": "NumAirsweb", "name": "NumAirsweb", "autoWidth": true },
+                { "data": "NumAirsweb", "name": "NumAirsweb", "autoWidth": false },
+                { "data": "Consecutivo", "name": "Consecutivo", "autoWidth": false },
                 {
-                    "data": "EstadoDesc", "name": "EstadoDesc", "autoWidth": true,
+                    "data": "EstadoDesc", "name": "EstadoDesc", "autoWidth": false,
                     render: function (data, type, value) {
 
                         if (value.Estado === 1) {
@@ -172,33 +219,33 @@
                         }
                     }
                 },
-                { "data": "LineaDesc", "name": "LineaDesc", "autoWidth": true },
-                { "data": "AreaDesc", "name": "AreaDesc", "autoWidth": true },
-                { "data": "TipoIncidenteDesc", "name": "TipoIncidenteDesc", "autoWidth": true },
+                { "data": "LineaDesc", "name": "LineaDesc", "autoWidth": false },
+                { "data": "AreaDesc", "name": "AreaDesc", "autoWidth": false },
+                { "data": "TipoIncidenteDesc", "name": "TipoIncidenteDesc", "autoWidth": false },
                 { "data": "DescripcionProblema", "name": "DescripcionProblema"},
-                { "data": "TiempoLineaParada", "name": "TiempoLineaParada", "autoWidth": true },
+                { "data": "TiempoLineaParada", "name": "TiempoLineaParada", "autoWidth": false },
 
 
                 {
-                    "data": "Fecha", "name": "Fecha", "autoWidth": true,
+                    "data": "Fecha", "name": "Fecha", "autoWidth": false,
                     render: function (data, type, value) {
                         return value.FormattedDate;
                     }
                 },
-                { "data": "AutorDesc", "name": "AutorDesc", "autoWidth": true },
+                { "data": "AutorDesc", "name": "AutorDesc", "autoWidth": false },
                 {
-                    data: null, "autoWidth": true, render: function (data, type, row) {
-                        
+                    data: null, "autoWidth": false, render: function (data, type, row) {
+
                         if (row.Estado == 1) {
                             return "<a class='btn btn-success waves-effect' style='margin-bottom:5px' onClick=proccessIncident('" + row.Id + "'); >Procesar incidente</a>";
                         }
                         else {
                             return "<button class='btn btn-success waves-effect' style='margin-bottom:5px' onClick=proccessIncident('" + row.Id + "'); disabled>Exportar en excel</button>";
                         }
-                        
+
                     }
                 }
-                
+
             ],
             "responsive": {
                 details: {
@@ -215,14 +262,95 @@
             },
             "dom": 'Bfrtip',
             "lengthChange": false,
-            "buttons": ['copy', 'excel', 'pdf'],
+            "buttons":
+                ['copy',
+                    'excel',
+                    {
+                        extend: 'pdf',
+                        orientation: 'landscape',
+                        pageSize: 'TABLOID',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7],
+
+                        }
+                    }
+                ],
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
             }
         });
+
+        $('#irTable tbody').on('click', 'tr', function () {
+
+            var isExport = $("#chkExport").is(":checked");
+
+            if (isExport) {
+                $(this).toggleClass('selected');
+            }
+        });
+
+
+        $("#chkExport").change(function () {
+            if (this.checked) {
+                $('#btnExportLine').show("slow");
+            }
+            else {
+                $('#btnExportLine').hide("slow");
+
+                //Quitar los seleccionados
+                $('#irTable tbody tr').removeClass('selected');
+            }
+        });
     });
+
+    function exportInLine() {
+        var selecteds = {};
+        selecteds = table.rows('.selected').data().toArray();
+
+        var result = {};
+        result = selecteds.map(a => a.Id);
+        console.log(result);
+
+        //Hacer petición para generar archivo
+        var dataString = new FormData();
+
+        dataString.append('ExportLineIds', JSON.stringify(result));
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GenerateExcelLine", "ReportarIncidentes")',
+            data: dataString,
+            beforeSend: function () {
+                $('.page-loader-wrapper').fadeIn();
+            },
+            success: function (response) {
+
+                $('#downloadModal').modal('toggle');
+
+                //MENSAJE DE CONFIRMACIÓN O ERROR
+                if (response.Codigo == 1) {
+                    $('#modalMsg').text("¡Formato exportado correctamente!");                  
+                }
+                else if (response.Codigo == -1) {
+                    $('#modalMsg').text("Error al exportar formato!" + response.Message);
+                }
+                else {
+                    $('#modalMsg').text("No se pudo exportar formato, intente nuevamente!");
+                }
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+        });
+
+        $('.page-loader-wrapper').hide();
+    }
 
     function proccessIncident(id) {
         window.location.href = "/ReportarIncidentes/ProcesarIncidente?id=" + id;
+    }
+
+    function downloadFile() {
+        window.location.href = '/ReportarIncidentes/DownloadEwoFile';
     }
 </script>

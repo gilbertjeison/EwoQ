@@ -2540,6 +2540,22 @@
         return { valid: true, msg: '' };
     }
 
+    var pluginOptions = {
+        clipboardCommandHandler: function (editCommand) {
+            undoRedoBuffer.queueAndExecuteCommand.call(undoRedoBuffer, editCommand);
+        },
+        readOnlyMode: false,
+        includeHeaderWhenCopying: false,
+        newRowCreator: function (count) {
+            for (var i = 0; i < count; i++) {
+                var item = {
+                    id: "newRow_" + newRowIds++
+                }
+                grid.getData().addItem(item);
+            }
+        }
+    };
+
     //inicializar grid
     function initGrid() {
         var columns =
@@ -2555,19 +2571,7 @@
                 }
             ];
 
-        var pluginOptions = {
-            clipboardCommandHandler: function (editCommand) { undoRedoBuffer.queueAndExecuteCommand.call(undoRedoBuffer, editCommand); },
-            readOnlyMode: false,
-            includeHeaderWhenCopying: false,
-            newRowCreator: function (count) {
-                for (var i = 0; i < count; i++) {
-                    var item = {
-                        id: "newRow_" + newRowIds++
-                    }
-                    grid.getData().addItem(item);
-                }
-            }
-        };
+        
 
         //INICIALIZACIÓN DEL GRID
         var data = [];
@@ -2689,6 +2693,8 @@
             gridGenjitsu.render();
         });
 
+        gridGenjitsu.registerPlugin(new Slick.CellExternalCopyManager(pluginOptions));
+
         gridGenri = new Slick.Grid("#gridGenri", dataGenri, columnsGenri, options);
         gridGenri.setSelectionModel(new Slick.CellSelectionModel());
         gridGenri.onAddNewRow.subscribe(function (e, args) {
@@ -2699,6 +2705,8 @@
             gridGenri.render();
         });
 
+        gridGenri.registerPlugin(new Slick.CellExternalCopyManager(pluginOptions));
+
         gridGensoku = new Slick.Grid("#gridGensoku", dataGensoku, columnsGensoku, options);
         gridGensoku.setSelectionModel(new Slick.CellSelectionModel());
         gridGensoku.onAddNewRow.subscribe(function (e, args) {
@@ -2708,6 +2716,8 @@
             gridGensoku.updateRowCount();
             gridGensoku.render();
         });
+
+        gridGensoku.registerPlugin(new Slick.CellExternalCopyManager(pluginOptions));
     }
 
     function initGridPlanAccion() {
@@ -2748,6 +2758,8 @@
         gridPlanAccion.onValidationError.subscribe(function (e, args) {
             alert(args.validationResults.msg);
         });
+
+        gridPlanAccion.registerPlugin(new Slick.CellExternalCopyManager(pluginOptions));
 
         //poner color al encabezado de una columna especifica
         //var headers = $('#gridPlanAccion .slick-header-columns').children();
@@ -2793,6 +2805,8 @@
         gridDisposiciones.onValidationError.subscribe(function (e, args) {
             alert(args.validationResults.msg);
         });
+
+        gridDisposiciones.registerPlugin(new Slick.CellExternalCopyManager(pluginOptions));
     }
 
     function getCurrentDate() {

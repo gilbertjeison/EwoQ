@@ -82,6 +82,7 @@ namespace EwoQ.Models
 
         [Display(Name = "Operario responsable")]
         public string IdOpeRes { get; set; }
+        public string OpeResDesc { get; set; }
 
         [Display(Name = "Líder de Investigación/Q EWO Responsable")]
         public string IdLidInv { get; set; }
@@ -102,7 +103,7 @@ namespace EwoQ.Models
         [Display(Name = "Código de SAP")]
         public string CodigoSAP { get; set; }
 
-        [Display(Name = "Lote")]
+        [Display(Name = "Lote (unidad de venta)")]
         public string Lote { get; set; }
 
         [Display(Name = "Toneladas")]
@@ -212,7 +213,10 @@ namespace EwoQ.Models
         public string Maquina4MDesc { get; set; } 
         public string Metodo4MDesc { get; set; }
 
+        public string MDesc { get; set; }
+
         public string IdTopFFZ { get; set; }
+        public string TopFFZDesc { get; set; }
         public string GrpTFFZ { get; set; }
         public List<tipos_data> TopFiveForZeroList { get; set; }
         #endregion

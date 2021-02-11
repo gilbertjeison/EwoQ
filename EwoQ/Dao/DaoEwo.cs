@@ -481,6 +481,7 @@ namespace EwoQ.Dao
                             join t in context.AspNetUsers
                             on e.autor equals t.Id
                             where e.autor == id_autor
+                            orderby e.consecutivo descending
                             select new { e, l, t, es, a };
 
                 var data = await query.ToListAsync();
@@ -527,6 +528,7 @@ namespace EwoQ.Dao
                                 on e.codigo_estado equals es.id
                                 join t in context.AspNetUsers
                                 on e.autor equals t.Id
+                                orderby e.consecutivo descending
                                 select new ReporteIncidentesViewModel()
                                 {
                                     Id = e.id,
@@ -552,6 +554,81 @@ namespace EwoQ.Dao
             catch (Exception e)
             {
                 Debug.WriteLine("Excepción al momento de consultar consildado de incidentes reportados: " + e.ToString());
+            }
+
+            return list;
+        }
+
+        public async Task<List<ReporteIncidentesViewModel>> GetEwoList(List<long> ids)
+        {
+            List<ReporteIncidentesViewModel> list = new List<ReporteIncidentesViewModel>();
+
+            try
+            {
+                using (var context = new EwoQEntities())
+                {
+                    var query = from e in context.ewo
+                                join l in context.lineas
+                                on e.codigo_linea equals l.id
+                                join a in context.areas_productivas
+                                on l.codigo_area equals a.id
+                                join ti in context.tipos_data
+                                on e.tipo_incidente equals ti.id into gj
+                                from x in gj.DefaultIfEmpty()
+                                join p in context.plantas
+                                on a.codigo_planta equals p.id
+                                join es in context.tipos_data
+                                on e.codigo_estado equals es.id
+                                join m in context.tipos_data
+                                on e.codigo_m equals m.id
+                                join tf in context.tipos_data
+                                on e.codigo_top_five_fzero equals tf.id
+                                join t in context.AspNetUsers
+                                on e.autor equals t.Id
+                                join or in context.AspNetUsers
+                                on e.codigo_operario_responsable equals or.Id
+                                where ids.Contains(e.id)
+                                && e.codigo_estado == 2//CERRADO
+                                orderby e.consecutivo descending
+                                select new ReporteIncidentesViewModel()
+                                {
+                                    Id = e.id,
+                                    LineaDesc = l.descripcion,
+                                    AreaDesc = a.descripcion,
+                                    Autor = t.Id,
+                                    AutorDesc = t.Nombres + " " + t.Apellidos,
+                                    TipoIncidente = e.tipo_incidente ?? 0,
+                                    TipoIncidenteDesc = (x == null ? String.Empty : x.descripcion),
+                                    DescripcionProblema = e.descripcion_general_problema,
+                                    DescripcionProblemax2 = e.descripcion_general_problema,
+                                    TiempoLineaParada = e.tiempo_linea_parada.Value,
+                                    Fecha = e.fecha_apertura_investigacion.Value,
+                                    Estado = e.codigo_estado ?? 0,
+                                    EstadoDesc = es.descripcion,
+                                    NumAirsweb = e.numero_airsweb ?? 0,
+                                    Consecutivo = e.consecutivo.ToString() ?? "0",
+                                    PlantaDesc = p.descripcion,
+                                    Lote = e.lote_producto,
+                                    CodigoSAP = e.codigo_sap_producto,
+                                    Toneladas = e.toneladas_producto.Value,
+                                    NumCajas = e.numero_cajas.Value,
+                                    Unidades = e.unidades.Value,
+                                    OpeResDesc = or.Nombres +" " + or.Apellidos,
+                                    MDesc = m.descripcion,
+                                    ArbPerd1 = e.ap_nivel_1,
+                                    ArbPerd2 = e.ap_nivel_2,
+                                    ArbPerd3 = e.ap_nivel_3,
+                                    ArbPerd4 = e.ap_nivel_4,
+                                    ArbPerdO = e.ap_nivel_otro,
+                                    TopFFZDesc = tf.descripcion
+                                };
+
+                    list = await query.ToListAsync();
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Excepción al momento de consultar consoldado de incidentes reportados: " + e.ToString());
             }
 
             return list;

@@ -83,7 +83,7 @@
             
             if (_options.dataItemColumnValueExtractor) {
                 var val = _options.dataItemColumnValueExtractor(item, columnDef);
-
+                                
                 if (val) { return val; }
             }
 
@@ -101,13 +101,28 @@
                 var editor = new columnDef.editor(editorArgs);
                 
                 editor.loadValue(item);
-               
+
                 retVal = editor.serializeValue();
                
                 switch (columnDef.field) {
                     case 'codigo_responsable':
-                        var obj = getValueFromArray(columnDef.dataSource, retVal);
+                        var obj = getValueFromArrayId(columnDef.dataSource, retVal);
                         retVal = obj.NombresCommpletos;
+                        break;
+                    case 'codigo_disposicion':
+                        var objDisp = getValueFromArrayVal(columnDef.dataSource, retVal);
+                        retVal = objDisp.Text;
+                        break;
+                    case 'codigo_unidad_medida':
+                        var objUni = getValueFromArrayVal(columnDef.dataSource, retVal);
+                        retVal = objUni.Text;
+                        break;
+                    case 'codigo_tipo':                        
+                        retVal = GetObjectValue(columnDef.dataSource, retVal);
+                        break;
+                    case 'codigo_area':
+                        var objAr = getValueFromArrayVal(columnDef.dataSource, retVal);
+                        retVal = objAr.Text;
                         break;
                 }
                 editor.destroy();
@@ -117,9 +132,17 @@
 
             return retVal;
         }
-
-        function getValueFromArray(array, id) {           
+        function GetObjectValue(array, id) {
+            var text = array[id];
+            return text;
+        }
+        function getValueFromArrayId(array, id) {           
             var text = array.find(x => x.Id === id);
+            return text;
+        }
+
+        function getValueFromArrayVal(array, id) {
+            var text = array.find(x => x.Value === id);
             return text;
         }
 

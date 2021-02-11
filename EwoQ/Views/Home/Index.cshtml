@@ -82,6 +82,8 @@
     .dataTables_paginate.paging_simple_numbers {
         float: right;
     }
+
+    
 </style>
 
 <div class="card">
@@ -89,7 +91,14 @@
         <h2>OPCIONES</h2>
     </div>
     <div class="body">
-        @Html.ActionLink("Reportar nuevo incidente", "Create", "ReportarIncidentes", new { edit = 0 }, new { @class = "btn " + @setColorButton() + " waves-effect" })
+        <div class="row">
+            <div class="col-sm-3">
+                @Html.ActionLink("Reportar nuevo incidente", "Create", "ReportarIncidentes", new { edit = 0 }, new { @class = "btn " + @setColorButton() + " waves-effect" })
+            </div>
+            <div class="col-sm-3">
+                <input type="checkbox" value="Hola"/>
+            </div>
+        </div>
     </div>
 </div>
 <div class="card">
@@ -97,7 +106,7 @@
         <h2>Detalle de Incidentes Reportados</h2>
     </div>
     <div class="body clearfix">
-        <table id="irTable" class="ui table table-striped table-bordered responsive nowrap table-hover">
+        <table id="irTable" class="ui table table-bordered responsive nowrap table-hover">
             <thead>
                 <tr>
                     <th>N° Airsweb</th>
@@ -204,7 +213,7 @@
             "lengthChange": false,
             "buttons":
                 ['copy',
-                    'excel',
+                'excel',
                     {
                         extend: 'pdf',
                         orientation: 'landscape', 
@@ -213,15 +222,18 @@
                             columns: [0, 1, 2, 3, 4, 5, 6, 7],
                             
                         }
-                    }
+                    }                   
                 ],
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
             }
         });
+
+        
     });
 
     function proccessIncident(id) {
         window.location.href = "/ReportarIncidentes/ProcesarIncidente?id=" + id;
     }
+
 </script>

@@ -17,6 +17,8 @@ using Microsoft.AspNet.Identity;
 using System.Linq.Dynamic;
 using static EwoQ.Utils.Enums.EnListas;
 using EwoQ.Utils;
+using OfficeOpenXml;
+using System.IO;
 
 namespace EwoQ.Controllers
 {
@@ -35,6 +37,9 @@ namespace EwoQ.Controllers
         string ADMINROLE = "d908787a-642b-480f-ba5c-f46df6fc8713";
         string OPERATINGROLE = "ad3cb589-855b-4888-b234-9333eaca85ec";
         static string ewo_images = "~/Content/images/ewo_images/";
+        string fn = "~/Content/formats/base.xlsx";
+        string fnN = "~/Content/formats/Formato EWO.xlsx";
+        JavaScriptSerializer ser = new JavaScriptSerializer();
 
         #region INDEX
         [HttpPost]
@@ -247,6 +252,113 @@ namespace EwoQ.Controllers
                 Trace.WriteLine("Error al Procesar incidente " + ex.ToString());
             }
             return Json(rr, JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpPost]
+        public async Task<JsonResult> GenerateExcelLine(string ExportLineIds)
+        {
+            //CAMPOS PARA ALMACENAR RESULTADO DE TRANSACCIÓN     
+            RequestResponse rr = new RequestResponse();
+
+            try
+            {
+                List<long> idsExport = ser.Deserialize<List<long>>(ExportLineIds);
+                var response = await GenerateExcelLine(idsExport);
+                
+
+                if (response.Length > 0)
+                {
+                    //Formato generado
+                    rr.Codigo = 1;
+                    rr.Message = response;
+                }
+                else
+                {
+                    //Formato no generado por no encontrar datos suficientes
+                    rr.Codigo = 0;
+                    rr.Message = "";
+                }                
+            }
+            catch (Exception ex)
+            {
+                rr.Codigo = -1;
+                rr.Message = "Error al Procesar incidente " + ex.ToString();
+                Trace.WriteLine(rr.Message);
+            }
+            return Json(rr, JsonRequestBehavior.AllowGet);
+        }
+                
+        private async Task<string> GenerateExcelLine(List<long> ids)
+        {
+            //Consultar información de registros seleccionados
+            var data = await DaoEwo.DaoInstance.GetEwoList(ids);
+
+            if (data.Count > 0)
+            {
+                //Especificar licencia
+                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+              
+                string filename = Server.MapPath(fn);
+                string nfilename = Server.MapPath(fnN);
+
+                //ESCRIBIR EN ARCHIVO ECXEL
+                FileInfo file = new FileInfo(filename);
+                FileInfo fileN = new FileInfo(nfilename);
+
+                if (fileN.Exists)
+                {
+                    fileN.Delete();
+                }
+
+                file.CopyTo(nfilename);
+
+                //Generar excel
+                using (var excel = new ExcelPackage(fileN))
+                {
+                    var ws = excel.Workbook.Worksheets["Datos"];
+                    CultureInfo ci = new CultureInfo("es-ES");
+
+                    for (int i = 0; i < data.Count; i++)
+                    {
+                        ws.Cells[i+2, 1].Value = data[i].Consecutivo;
+                        ws.Cells[i + 2, 2].Value = data[i].Fecha.Year;
+                        ws.Cells[i + 2, 3].Value = data[i].PlantaDesc;
+
+                        ws.Cells[i + 2, 6].Value = data[i].Fecha.ToShortDateString();
+                        ws.Cells[i + 2, 7].Value = data[i].Fecha.ToString("MMMM", ci);
+                        ws.Cells[i + 2, 8].Value = data[i].Lote;
+                        ws.Cells[i + 2, 9].Value = data[i].CodigoSAP;
+                        ws.Cells[i + 2, 11].Value = data[i].Toneladas;
+                        ws.Cells[i + 2, 12].Value = data[i].NumCajas;
+                        ws.Cells[i + 2, 13].Value = data[i].Unidades;
+                        ws.Cells[i + 2, 15].Value = data[i].LineaDesc;
+                        ws.Cells[i + 2, 17].Value = data[i].OpeResDesc;
+                        ws.Cells[i + 2, 18].Value = data[i].MDesc;
+                        ws.Cells[i + 2, 20].Value = data[i].DescripcionProblema;
+                        ws.Cells[i + 2, 21].Value = data[i].ArbPerd1;
+                        ws.Cells[i + 2, 22].Value = data[i].ArbPerd2;
+                        ws.Cells[i + 2, 23].Value = data[i].ArbPerd3;
+                        ws.Cells[i + 2, 24].Value = data[i].ArbPerd4;
+                        ws.Cells[i + 2, 25].Value = data[i].ArbPerdO;
+                        ws.Cells[i + 2, 26].Value = data[i].TopFFZDesc;
+                    }
+                    
+                    await excel.SaveAsync();
+                }
+
+                return nfilename;
+            }
+
+            return string.Empty;
+        }
+
+        public ActionResult DownloadEwoFile()
+        {
+            string nfilename = Server.MapPath(fnN);
+            var date = DateTime.Now.ToString("MM_dd_yyyy_h_mm_tt");
+
+            return File(nfilename, "application/vnd.ms-excel", "Formato EWO "+date+".xlsx");
         }
 
         // GET: ReportarIncidentes/Edit/5
@@ -472,7 +584,7 @@ namespace EwoQ.Controllers
             RequestResponse rr = new RequestResponse();
             ewo ewo = new ewo();
 
-            JavaScriptSerializer ser = new JavaScriptSerializer();
+            
             List<acciones_inmediatas> accInm = ser.Deserialize<List<acciones_inmediatas>>(ewr.Cmd);
 
             ewo.consecutivo = long.Parse(ewr.Consecutivo);            
@@ -753,7 +865,7 @@ namespace EwoQ.Controllers
                 var user = await DaoUsuarios.DaoInstance.GetUserAsync(userId);
                 rr.Codigo = 1;
                 rr.Message = "OK";
-                rr.Resultado = user.SingUrl;
+                rr.Resultado = user == null ? "" : user.SingUrl;
 
             }
             catch (Exception ex)
