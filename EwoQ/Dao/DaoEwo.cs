@@ -561,7 +561,7 @@ namespace EwoQ.Dao
 
         public async Task<List<ReporteIncidentesViewModel>> GetEwoList(List<long> ids)
         {
-            List<ReporteIncidentesViewModel> list = new List<ReporteIncidentesViewModel>();
+            List<ReporteIncidentesViewModel> list = null;
 
             try
             {
@@ -587,6 +587,12 @@ namespace EwoQ.Dao
                                 on e.autor equals t.Id
                                 join or in context.AspNetUsers
                                 on e.codigo_operario_responsable equals or.Id
+                                join cst in context.AspNetUsers
+                                on e.codigo_coordinador_turno equals cst.Id
+                                join ra in context.AspNetUsers
+                                on e.codigo_responsable_area equals ra.Id
+                                join li in context.AspNetUsers
+                                on e.codigo_lider_investigacion equals li.Id
                                 where ids.Contains(e.id)
                                 && e.codigo_estado == 2//CERRADO
                                 orderby e.consecutivo descending
@@ -600,7 +606,7 @@ namespace EwoQ.Dao
                                     TipoIncidente = e.tipo_incidente ?? 0,
                                     TipoIncidenteDesc = (x == null ? String.Empty : x.descripcion),
                                     DescripcionProblema = e.descripcion_general_problema,
-                                    DescripcionProblemax2 = e.descripcion_general_problema,
+                                    DescripcionProblemax2 = e.descripcion_general_problema,                                    
                                     TiempoLineaParada = e.tiempo_linea_parada.Value,
                                     Fecha = e.fecha_apertura_investigacion.Value,
                                     Estado = e.codigo_estado ?? 0,
@@ -613,14 +619,39 @@ namespace EwoQ.Dao
                                     Toneladas = e.toneladas_producto.Value,
                                     NumCajas = e.numero_cajas.Value,
                                     Unidades = e.unidades.Value,
-                                    OpeResDesc = or.Nombres +" " + or.Apellidos,
+                                    OpeResDesc = or.Nombres + " " + or.Apellidos,
                                     MDesc = m.descripcion,
                                     ArbPerd1 = e.ap_nivel_1,
                                     ArbPerd2 = e.ap_nivel_2,
                                     ArbPerd3 = e.ap_nivel_3,
                                     ArbPerd4 = e.ap_nivel_4,
                                     ArbPerdO = e.ap_nivel_otro,
-                                    TopFFZDesc = tf.descripcion
+                                    TopFFZDesc = tf.descripcion,
+                                    HrApertInvestigacionTS = e.hora_apertura_investigacion ?? new TimeSpan(0, 0, 0),
+                                    HrEventoTS = e.hora_evento ?? new TimeSpan(0, 0, 0),
+                                    Recurrente = e.recurrente ? "Si" : "No",
+                                    EtapaProceso = e.etapa,
+                                    CoorSupDesc = cst.Nombres + " " + cst.Apellidos,
+                                    RespAreaDesc = ra.Nombres + " " + ra.Apellidos,
+                                    LidInvDesc = li.Nombres + " " + li.Apellidos,
+                                    TiempoAirsWeb = e.tiempo_ingresado_airsweb ?? 0,
+                                    NombreProducto = e.producto,
+                                    NumPallet = e.numero_pallet,
+                                    CostoIncidente = e.costo_incidente != null ? (double)e.costo_incidente : 0,
+                                    TamanoFormato = e.tamano_formato,
+                                    TiempoInpeccion = e.tiempo_inspeccion ?? 0,
+                                    Gemba = e.gemba ?? e.gemba.Value,
+                                    Gembutsu = e.gembutsu ?? false,
+                                    Genjitsu = e.genjitsu ?? false,
+                                    PathImageGs = e.five_g_image ?? string.Empty,
+                                    QueDesc = e.que,
+                                    ComoDesc = e.como,
+                                    QuienDesc = e.quien,
+                                    CualDesc = e.cual,
+                                    DondeDesc = e.donde,
+                                    CuandoDesc = e.cuando,
+                                    FenomenoDesc = e.descripcion_fenomeno
+                                    
                                 };
 
                     list = await query.ToListAsync();
@@ -779,6 +810,34 @@ namespace EwoQ.Dao
             }
 
             return regs;
+        }
+
+        public async Task<List<AspNetUsers>> GetTeamWork(long idEwo)
+        {
+            List<AspNetUsers> listUsers = new List<AspNetUsers>();
+
+            using (var context = new EwoQEntities())
+            {
+                var query = from e in context.ewo
+                            join et in context.equipo_trabajo
+                            on e.id equals et.codigo_ewo
+                            join u in context.AspNetUsers
+                            on et.codigo_usuario equals u.Id
+                            where e.id == idEwo
+                            select u;
+
+                var data = await query.ToListAsync();
+                foreach (var u in data)
+                {
+                    listUsers.Add(new AspNetUsers
+                    {
+                        Id = u.Id,
+                        Nombres = u.Nombres + " " + u.Apellidos,
+                    });
+                }                                  
+            }
+            
+            return listUsers;
         }
     }
 }

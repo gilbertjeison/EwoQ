@@ -1,4 +1,5 @@
 ﻿using EwoQ.Database;
+using EwoQ.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -69,24 +70,30 @@ namespace EwoQ.Dao
             return regs;
         }
 
-        public async Task<List<acciones_inmediatas>> GetActionsList(long id_ewo)
+        public async Task<List<AccionesInmediatas>> GetActionsList(long id_ewo)
         {
-            List<acciones_inmediatas> list = new List<acciones_inmediatas>();
+            List<AccionesInmediatas> list = null;
 
-            try
+            using (var context = new EwoQEntities())
             {
-                using (var context = new EwoQEntities())
-                {
-                    var query = from ru in context.acciones_inmediatas
-                                where ru.codigo_ewo == id_ewo
-                                select ru;
+                var query = from ru in context.acciones_inmediatas
+                            join u in context.AspNetUsers
+                            on ru.codigo_responsable equals u.Id
+                            where ru.codigo_ewo == id_ewo
+                            select new AccionesInmediatas
+                            {
+                                accion = ru.accion,
+                                codigo_ewo = ru.codigo_ewo ?? 0,
+                                codigo_responsable = ru.codigo_responsable,
+                                evidencia_efectividad = ru.evidencia_efectividad,
+                                fecha_compromiso = ru.fecha_compromiso,
+                                Id = ru.id,
+                                Responsable = u.Nombres + " " + u.Apellidos,                               
+                            };
 
-                    list = await query.ToListAsync();
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("Excepción al momento de consultar acciones inmediatas: " + e.ToString());
+                list = await query.ToListAsync();
+                list.ForEach(x => x.FechaCompromisoS =
+                x.fecha_compromiso.Value.ToString("MM-dd-yyyy"));
             }
 
             return list;

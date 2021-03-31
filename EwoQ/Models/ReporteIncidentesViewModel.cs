@@ -75,10 +75,12 @@ namespace EwoQ.Models
 
         [Display(Name = "Supervisor de producción en turno")]
         public string IdCoorSup { get; set; }
+        public string CoorSupDesc { get; set; }
 
 
         [Display(Name = "Responsable del área")]
         public string IdRespArea { get; set; }
+        public string RespAreaDesc { get; set; }
 
         [Display(Name = "Operario responsable")]
         public string IdOpeRes { get; set; }
@@ -86,6 +88,7 @@ namespace EwoQ.Models
 
         [Display(Name = "Líder de Investigación/Q EWO Responsable")]
         public string IdLidInv { get; set; }
+        public string LidInvDesc { get; set; }
 
         public SelectList AdminUsersList { get; set; }
         public SelectList OperatingUsersList { get; set; }
@@ -179,6 +182,10 @@ namespace EwoQ.Models
         public string GembaOk { get; set; }
         public string GembutsuOk { get; set; }
         public string GenjitsuOk { get; set; }
+
+        public bool Gemba { get; set; }
+        public bool Gembutsu { get; set; }
+        public bool Genjitsu { get; set; }
 
         public string PathImageGs { get; set; }
         public string DescImgGs { get; set; }

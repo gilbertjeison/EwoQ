@@ -18,34 +18,26 @@ using System.Linq.Dynamic;
 using static EwoQ.Utils.Enums.EnListas;
 using EwoQ.Utils;
 using OfficeOpenXml;
+using OfficeOpenXml.Drawing;
+using System.Drawing;
 using System.IO;
+
 
 namespace EwoQ.Controllers
 {
     [Authorize]
     public class ReportarIncidentesController : Controller
     {
-        private EwoQEntities db = new EwoQEntities();       
+        private readonly EwoQEntities db = new EwoQEntities();
 
-        int AREASTYPES = 7;
-        int LINESTYPES = 8;
-        int INCIDENTSTYPES = 15;
-        int FINALDISPOSITION = 9;
-        int UNIDADMEDIDA = 13;
-        int TOPFIVEFORZERO = 12;
-        string SUPERROLE = "612d016e-8e29-4b11-9927-2f4a52495257";
-        string ADMINROLE = "d908787a-642b-480f-ba5c-f46df6fc8713";
-        string OPERATINGROLE = "ad3cb589-855b-4888-b234-9333eaca85ec";
-        static string ewo_images = "~/Content/images/ewo_images/";
-        string fn = "~/Content/formats/base.xlsx";
-        string fnN = "~/Content/formats/Formato EWO.xlsx";
-        JavaScriptSerializer ser = new JavaScriptSerializer();
+       
+        readonly JavaScriptSerializer ser = new JavaScriptSerializer();
 
         #region INDEX
         [HttpPost]
         public async Task<ActionResult> LoadDataAsync()
         {
-            Task<List<ReporteIncidentesViewModel>> rivm;
+            List<ReporteIncidentesViewModel> rivm;
 
             try
             {
@@ -55,17 +47,17 @@ namespace EwoQ.Controllers
 
                 if (aspNetUsers.IdRol.Equals(SomeHelpers.ROL_OPER))
                 {
-                    rivm = DaoEwo.DaoInstance.GetEwoListOperario(aspNetUsers.Id);
+                    rivm = await DaoEwo.DaoInstance.GetEwoListOperario(aspNetUsers.Id);
                 }
                 else
                 {
-                    rivm = DaoEwo.DaoInstance.GetEwoList();
+                    rivm = await DaoEwo.DaoInstance.GetEwoList();
                 }
 
-                var data1 = await rivm;                                
+                var data1 = rivm;                                
 
                 //total number of rows count 
-                recordsTotal = data1.Count();
+                recordsTotal = data1.Count;
                 
                 return Json(new { recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data1 });
             }
@@ -108,7 +100,7 @@ namespace EwoQ.Controllers
         public async Task<JsonResult> GetAllDispoJsonAsync()
         {
             //DISPOSICIÓN FINAL DEL PRODUCTO
-            var listDF = await DaoTiposData.DaoInstance.GetTypesAsync(FINALDISPOSITION);
+            var listDF = await DaoTiposData.DaoInstance.GetTypesAsync(Constantes.FINALDISPOSITION);
             listDF.Insert(0, new Database.tipos_data() { id = 0, descripcion = "Seleccione disposición..." });
             var DisposicionFList = new SelectList(listDF, "Id", "descripcion");
 
@@ -118,7 +110,7 @@ namespace EwoQ.Controllers
         public async Task<JsonResult> GetAreasJsonAsync()
         {
             //DISPOSICIÓN FINAL DEL PRODUCTO
-            var listA = await DaoTiposData.DaoInstance.GetTypesAsync(AREASTYPES);
+            var listA = await DaoTiposData.DaoInstance.GetTypesAsync(Constantes.AREASTYPES);
             listA.Insert(0, new Database.tipos_data() { id = 0, descripcion = "Seleccione área..." });
             var AreasList = new SelectList(listA, "Id", "descripcion");
 
@@ -132,7 +124,7 @@ namespace EwoQ.Controllers
         public async Task<JsonResult> GetAllUniMedJsonAsync()
         {
             //DISPOSICIÓN FINAL DEL PRODUCTO
-            var listUM = await DaoTiposData.DaoInstance.GetTypesAsync(UNIDADMEDIDA);
+            var listUM = await DaoTiposData.DaoInstance.GetTypesAsync(Constantes.UNIDADMEDIDA);
             listUM.Insert(0, new Database.tipos_data() { id = 0, descripcion = "Seleccione unidad..." });
             var UniMedList = new SelectList(listUM, "Id", "descripcion");
 
@@ -152,21 +144,6 @@ namespace EwoQ.Controllers
             var list = await DaoUsuarios.DaoInstance.GetAllUsers();
 
             return Json(list, JsonRequestBehavior.AllowGet);
-        }
-
-        // GET: ReportarIncidentes/Details/5
-        public async Task<ActionResult> Details(long? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ewo ewo = await db.ewo.FindAsync(id);
-            if (ewo == null)
-            {
-                return HttpNotFound();
-            }
-            return View(ewo);
         }
 
         // GET: ReportarIncidentes/Create
@@ -299,8 +276,8 @@ namespace EwoQ.Controllers
                 //Especificar licencia
                 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
               
-                string filename = Server.MapPath(fn);
-                string nfilename = Server.MapPath(fnN);
+                string filename = Server.MapPath(Constantes.fn);
+                string nfilename = Server.MapPath(Constantes.fnN);
 
                 //ESCRIBIR EN ARCHIVO ECXEL
                 FileInfo file = new FileInfo(filename);
@@ -353,12 +330,278 @@ namespace EwoQ.Controllers
             return string.Empty;
         }
 
+        [HttpPost]
+        public async Task<JsonResult> GenerateExcelComplete(string id)
+        {
+            //CAMPOS PARA ALMACENAR RESULTADO DE TRANSACCIÓN     
+            RequestResponse rr = new RequestResponse();
+
+            try
+            {
+                long idE =  ser.Deserialize<long>(id);
+                var response = await GenerateCompleteExcel(idE);
+
+
+                if (response.Length > 0)
+                {
+                    //Formato generado
+                    rr.Codigo = 1;
+                    rr.Message = response;
+                }
+                else
+                {
+                    //Formato no generado por no encontrar datos suficientes
+                    rr.Codigo = 0;
+                    rr.Message = "";
+                }
+            }
+            catch (Exception ex)
+            {
+                rr.Codigo = -1;
+                rr.Message = "Error al Procesar incidente " + ex.ToString();
+                Trace.WriteLine(rr.Message);
+            }
+            return Json(rr, JsonRequestBehavior.AllowGet);
+        }
+
+        private async Task<string> GenerateCompleteExcel(long id)
+        {
+            //Consultar información de registros seleccionados
+            var data = await DaoEwo.DaoInstance.GetEwoList(new List<long> { id });
+
+            if (data.Count > 0)
+            {
+                //Tomar el objeto
+                var ewo = data.FirstOrDefault();
+                //Listas de datos relacionadas al ewo
+                var equipoTrabajo = await DaoEwo.DaoInstance.GetTeamWork(id);
+                var accionesInmediatas = await DaoAcciones.DaoInstance.GetActionsList(id);
+                var disposiciones = await DaoDisposiciones.DaoInstance.GetDisposiciones(id);
+                var fivegs = await Dao5GResultados.DaoInstance.Get5GAsync(id);
+                var genjitsus = fivegs.Where(x => x.codigo_5fv_opcion == Constantes.GENJITSU).ToList();
+                var genris = fivegs.Where(x => x.codigo_5fv_opcion == Constantes.GENRI).ToList();
+                var gensokus = fivegs.Where(x => x.codigo_5fv_opcion == Constantes.GENSOKU).ToList();
+
+
+                //Especificar licencia
+                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+                string filename = Server.MapPath(Constantes.cfn);
+                string nfilename = Server.MapPath(Constantes.cfnN);
+
+                //ESCRIBIR EN ARCHIVO ECXEL
+                FileInfo file = new FileInfo(filename);
+                FileInfo fileN = new FileInfo(nfilename);
+
+                if (fileN.Exists)
+                {
+                    fileN.Delete();
+                }
+
+                file.CopyTo(nfilename);
+
+                //Generar excel
+                using (var excel = new ExcelPackage(fileN))
+                {
+                    var ws = excel.Workbook.Worksheets["1) NC"];
+                    CultureInfo ci = new CultureInfo("es-ES");
+
+                    ws.Cells["E6"].Value = ewo.Consecutivo;
+                    ws.Cells["K6"].Value = ewo.EstadoDesc;
+                    ws.Cells["E9"].Value = ewo.Fecha.ToString("dd MMMM yyyy", ci);
+                    ws.Cells["E10"].Value = ewo.HrApertInvestigacionTS;
+                    ws.Cells["E11"].Value = ewo.HrEventoTS;
+                    ws.Cells["E14"].Value = ewo.TipoIncidenteDesc;
+                    ws.Cells["E15"].Value = ewo.Recurrente;
+                    ws.Cells["K9"].Value = ewo.AreaDesc;
+                    ws.Cells["K10"].Value = ewo.LineaDesc;
+                    ws.Cells["K11"].Value = ewo.EtapaProceso;
+                    ws.Cells["K12"].Value = ewo.CoorSupDesc;
+                    ws.Cells["K13"].Value = ewo.RespAreaDesc;
+                    ws.Cells["K14"].Value = ewo.OpeResDesc;
+                    ws.Cells["K15"].Value = ewo.LidInvDesc;
+
+                    var lines = 0;
+                    while (lines < 4 && equipoTrabajo.Count - lines > 0)
+                    {
+                        ws.Cells["N" + (10 + lines)].Value = equipoTrabajo[lines].Nombres;
+                        lines++;
+                    }
+
+                    ws.Cells["Q14"].Value = ewo.NumAirsweb;
+                    ws.Cells["Q15"].Value = ewo.TiempoAirsWeb;
+                    ws.Cells["E18"].Value = ewo.ArbPerd1;
+                    ws.Cells["E19"].Value = ewo.ArbPerd2;
+                    ws.Cells["E22"].Value = ewo.ArbPerd3;
+                    ws.Cells["E23"].Value = ewo.ArbPerd4;
+                    ws.Cells["H23"].Value = ws.Cells["H23"].Value + " " + ewo.ArbPerdO;
+                    ws.Cells["K17"].Value = ewo.NombreProducto;
+                    ws.Cells["K18"].Value = ewo.CodigoSAP;
+                    ws.Cells["Q18"].Value = ewo.Lote;
+                    ws.Cells["H20"].Value = ewo.Toneladas;
+                    ws.Cells["J20"].Value = ewo.NumCajas;
+                    ws.Cells["L20"].Value = ewo.NumPallet;
+                    ws.Cells["N20"].Value = ewo.Unidades;
+                    ws.Cells["P20"].Value = ewo.TamanoFormato;
+                    ws.Cells["R20"].Value = ewo.CostoIncidente;
+                    ws.Cells["J22"].Value = ewo.TiempoInpeccion;
+                    ws.Cells["P22"].Value = ewo.TiempoLineaParada;
+                    ws.Cells["B24"].Value += ewo.DescripcionProblema;
+
+                    for (int i = 0; i < accionesInmediatas.Count; i++)
+                    {
+                        //Delimitar las filas del excel
+                        if (i >= 7)
+                        {
+                            break;
+                        }
+
+                        ws.Cells[(i) + 30, 3].Value = accionesInmediatas[i].accion;
+                        ws.Cells[(i) + 30, 7].Value = accionesInmediatas[i].Responsable;
+                        ws.Cells[(i) + 30, 11].Value = accionesInmediatas[i].fecha_compromiso.Value.
+                            ToString("dd MMMM yyyy", ci);
+                        ws.Cells[(i) + 30, 15].Value = accionesInmediatas[i].evidencia_efectividad.Value.ToString() + "%";
+                    }
+
+                    //Disposiciones finales
+                    foreach (var item in disposiciones)
+                    {
+                        switch (item.TipoDisposicion)
+                        {
+                            //Destrucción
+                            case 17:
+                                ws.Cells["E38"].Value = item.Cantidad;
+                                ws.Cells["E39"].Value = item.UnidadMedida;
+                                break;
+                            //Liberación
+                            case 18:
+                                ws.Cells["I38"].Value = item.Cantidad;
+                                ws.Cells["I39"].Value = item.UnidadMedida;
+                                break;
+                            //Reproceso
+                            case 19:
+                                ws.Cells["M38"].Value = item.Cantidad;
+                                ws.Cells["M39"].Value = item.UnidadMedida;
+                                break;
+                                //Reproceso
+                            case 20:
+                                ws.Cells["R38"].Value = item.Cantidad;
+                                ws.Cells["R39"].Value = item.UnidadMedida;
+                                break;
+                        }                       
+                        
+                    }
+
+                    //Investigación en piso
+                    if (ewo.Gemba)
+                    {
+                        ws.Cells["L43"].Value = "X";
+                    }
+
+                    if (ewo.Gembutsu)
+                    {
+                        ws.Cells["L44"].Value = "X";
+                    }
+
+                    if (ewo.Genjitsu)
+                    {
+                        ws.Cells["L45"].Value = "X";
+                    }
+
+                    if(!ewo.PathImageGs.Equals(""))
+                    {
+                        var image1 = ws.Drawings.AddPicture("image1", new FileInfo
+                            (Server.MapPath(Constantes.ewo_images + ewo.PathImageGs)));
+                        image1.From.Column = 14;
+                        image1.From.Row = 42;
+                        image1.SetSize(310, 135);
+                    }
+
+                    //Diligenciar los 5G's
+                    for (int i = 0; i < genjitsus.Count; i++)
+                    {
+                        //Delimitar las filas del excel
+                        if (i >= 6)
+                        {
+                            break;
+                        }
+
+                        ws.Cells[(i) + 49, 3].Value = genjitsus[i].condicion;
+                        ws.Cells[(i) + 49, 7].Value = genjitsus[i].condicion_ideal;
+                        ws.Cells[(i) + 49, 11].Value = genjitsus[i].checkk;
+                        ws.Cells[(i) + 49, 15].Value = genjitsus[i].como;
+                        ws.Cells[(i) + 49, 19].Value = genjitsus[i].ok.GetValueOrDefault(false) ? "OK" : "NOK";
+                    }
+
+                    for (int i = 0; i < genris.Count; i++)
+                    {
+                        //Delimitar las filas del excel
+                        if (i >= 4)
+                        {
+                            break;
+                        }
+
+                        ws.Cells[(i) + 57, 3].Value = genris[i].condicion;
+                        ws.Cells[(i) + 57, 7].Value = genris[i].condicion_ideal;
+                        ws.Cells[(i) + 57, 11].Value = genris[i].checkk;
+                        ws.Cells[(i) + 57, 15].Value = genris[i].como;
+                        ws.Cells[(i) + 57, 19].Value = genris[i].ok.GetValueOrDefault(false) ? "OK" : "NOK";
+                    }
+
+                    for (int i = 0; i < gensokus.Count; i++)
+                    {
+                        //Delimitar las filas del excel
+                        if (i >= 4)
+                        {
+                            break;
+                        }
+
+                        ws.Cells[(i) + 63, 3].Value = gensokus[i].condicion;
+                        ws.Cells[(i) + 63, 7].Value = gensokus[i].condicion_ideal;
+                        ws.Cells[(i) + 63, 11].Value = gensokus[i].checkk;
+                        ws.Cells[(i) + 63, 15].Value = gensokus[i].como;
+                        ws.Cells[(i) + 63, 19].Value = gensokus[i].ok.GetValueOrDefault(false) ? "OK" : "NOK";
+                    }
+
+                    //5W+1H
+                    ws.Cells["B69"].Value = ewo.DescripcionProblema;
+                    ws.Cells["G70"].Value = ewo.QueDesc;
+                    ws.Cells["G73"].Value = ewo.DondeDesc;
+                    ws.Cells["G76"].Value = ewo.CuandoDesc;
+                    ws.Cells["G79"].Value = ewo.QuienDesc;
+                    ws.Cells["G82"].Value = ewo.CualDesc;
+                    ws.Cells["G85"].Value = ewo.ComoDesc;
+                    ws.Cells["G89"].Value = ewo.FenomenoDesc;
+
+                    await excel.SaveAsync();
+                }
+
+                return nfilename;
+            }
+
+            return string.Empty;
+        }
+
+        public int Pixel2MTU(int pixels)
+        {
+            int mtus = pixels * 9525;
+            return mtus;
+        }
+
         public ActionResult DownloadEwoFile()
         {
-            string nfilename = Server.MapPath(fnN);
+            string nfilename = Server.MapPath(Constantes.fnN);
             var date = DateTime.Now.ToString("MM_dd_yyyy_h_mm_tt");
 
             return File(nfilename, "application/vnd.ms-excel", "Formato EWO "+date+".xlsx");
+        }
+
+        public ActionResult DownloadCompleteEwoFile()
+        {
+            string nfilename = Server.MapPath(Constantes.cfnN);
+            var date = DateTime.Now.ToString("MM_dd_yyyy_h_mm_tt");
+
+            return File(nfilename, "application/vnd.ms-excel", "Full formato EWO " + date + ".xlsx");
         }
 
         // GET: ReportarIncidentes/Edit/5
@@ -418,22 +661,7 @@ namespace EwoQ.Controllers
             
             return View(ewo);
         }
-
-        // GET: ReportarIncidentes/Delete/5
-        public async Task<ActionResult> Delete(long? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ewo ewo = await db.ewo.FindAsync(id);
-            if (ewo == null)
-            {
-                return HttpNotFound();
-            }
-            return View(ewo);
-        }
-
+              
         // POST: ReportarIncidentes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -460,21 +688,7 @@ namespace EwoQ.Controllers
         public async Task<JsonResult> GetAcionsList(long id_ewo)
         {
             var actList = await DaoAcciones.DaoInstance.GetActionsList(id_ewo);
-            List<CustomInmActions> kla = new List<CustomInmActions>();
-            actList.ForEach(x =>
-            {
-                kla.Add(new CustomInmActions()
-                {
-                    codigo_ewo = x.codigo_ewo,
-                    accion = x.accion,
-                    fecha_compromiso = x.fecha_compromiso.Value.ToString("MM-dd-yyyy"),
-                    id = x.id,
-                    codigo_responsable = x.codigo_responsable,
-                    evidencia_efectividad = x.evidencia_efectividad
-                });
-            });
-
-            return Json(kla);
+            return Json(actList);
         }
 
         [HttpPost]
@@ -535,7 +749,7 @@ namespace EwoQ.Controllers
             }
 
             //LISTA DE TIPOS DE INCIDENTE
-            var listTI = await DaoTiposData.DaoInstance.GetTypesAsync(INCIDENTSTYPES);
+            var listTI = await DaoTiposData.DaoInstance.GetTypesAsync(Constantes.INCIDENTSTYPES);
             listTI.Insert(0, new Database.tipos_data() { id = 0, descripcion = "Seleccione tipo de incidente..." });            
             viewModel.TipoIncidenteList = new SelectList(listTI, "id", "descripcion");
 
@@ -545,35 +759,35 @@ namespace EwoQ.Controllers
             viewModel.PlantasList = new SelectList(listPlantas, "Id", "descripcion");
 
             //LISTA AREAS
-            var listA = await DaoTiposData.DaoInstance.GetTypesAsync(AREASTYPES);
+            var listA = await DaoTiposData.DaoInstance.GetTypesAsync(Constantes.AREASTYPES);
             listA.Insert(0, new Database.tipos_data() { id = 0, descripcion = "Seleccione área..." });
             viewModel.AreasList = new SelectList(listA, "Id", "descripcion");
 
             //LISTA LÍNEAS
-            var listL = await DaoTiposData.DaoInstance.GetTypesAsync(LINESTYPES);
+            var listL = await DaoTiposData.DaoInstance.GetTypesAsync(Constantes.LINESTYPES);
             listL.Insert(0, new Database.tipos_data() { id = 0, descripcion = "Seleccione línea..." });
             viewModel.LineasList = new SelectList(listL, "Id", "descripcion");
 
 
             //USUARIOS ADMINISTRADORES
-            var listUA = await DaoUsuarios.DaoInstance.GetUsersByRole(ADMINROLE);
-            var listUS = await DaoUsuarios.DaoInstance.GetUsersByRole(SUPERROLE);
+            var listUA = await DaoUsuarios.DaoInstance.GetUsersByRole(Constantes.ADMINROLE);
+            var listUS = await DaoUsuarios.DaoInstance.GetUsersByRole(Constantes.SUPERROLE);
             listUA.Insert(0, new UsersUI() { Id = "0", NombresCommpletos = "Seleccione usuario..." });
             listUA.AddRange(listUS);
             viewModel.AdminUsersList = new SelectList(listUA, "Id", "NombresCommpletos");
 
             //USUARIOS OPERARIOS
-            var listUO = await DaoUsuarios.DaoInstance.GetUsersByRole(OPERATINGROLE);
+            var listUO = await DaoUsuarios.DaoInstance.GetUsersByRole(Constantes.OPERATINGROLE);
             listUO.Insert(0, new UsersUI() { Id = "0", NombresCommpletos = "Seleccione usuario..." });
             viewModel.OperatingUsersList = new SelectList(listUO, "Id", "NombresCommpletos");
 
             //DISPOSICIÓN FINAL DEL PRODUCTO
-            var listDF = await DaoTiposData.DaoInstance.GetTypesAsync(FINALDISPOSITION);
+            var listDF = await DaoTiposData.DaoInstance.GetTypesAsync(Constantes.FINALDISPOSITION);
             listDF.Insert(0, new Database.tipos_data() { id = 0, descripcion = "Seleccione disposición..." });
             viewModel.DisposicionFList = new SelectList(listDF, "Id", "descripcion");
 
             //TOP FIVE FOR ZERO
-            var listTF = await DaoTiposData.DaoInstance.GetTypesAsync(TOPFIVEFORZERO);
+            var listTF = await DaoTiposData.DaoInstance.GetTypesAsync(Constantes.TOPFIVEFORZERO);
             viewModel.TopFiveForZeroList = listTF;
 
             return viewModel;
@@ -646,7 +860,7 @@ namespace EwoQ.Controllers
                 ewo.ap_nivel_otro = ewr.ArbPerdO;
 
                 ewo.tipo_incidente = ewr.TipoIncidente;
-                ewo.recurrente = ewr.Recurrente != null ? true : false;
+                ewo.recurrente = ewr.Recurrente != null;
 
                 ewo.numero_airsweb = ewr.NumAirsweb;
                 ewo.tiempo_ingresado_airsweb = ewr.TiempoAirsWeb;
@@ -656,9 +870,9 @@ namespace EwoQ.Controllers
                 ewo.codigo_disposicion_final_prod = ewr.IdDisposicionF;
                 ewo.cantidad_toneladas = ewr.DFToneladas;
 
-                ewo.gemba = ewr.GembaOk != null ? true : false;
-                ewo.gembutsu = ewr.GembutsuOk != null ? true : false;
-                ewo.genjitsu = ewr.GenjitsuOk != null ? true : false;
+                ewo.gemba = ewr.GembaOk != null;
+                ewo.gembutsu = ewr.GembutsuOk != null;
+                ewo.genjitsu = ewr.GenjitsuOk != null;
 
 
                 //Tratamiento de imagenes
@@ -744,6 +958,8 @@ namespace EwoQ.Controllers
                     item.codigo_ewo = id;
                 }
 
+                await DaoDisposiciones.DaoInstance.AddDisposiciones(listDisp);
+
                 //Listas Gs
                 List<fiveg_resultados> listGenjitsu = ser.Deserialize<List<fiveg_resultados>>(ewr.ListGenj);
                 foreach (var item in listGenjitsu)
@@ -793,7 +1009,7 @@ namespace EwoQ.Controllers
                     {
                         codigo_ewo = id,//Poner el id real
                         codigo_pregunta = item.id,
-                        verificado = item.option == "1" ? "Yes" : (item.option == "0" ? "No" :"NA")                        
+                        verificado = item.option == "1" ? "Yes" : (item.option == "0" ? "No" : "NA")
                     });
                 }
 
@@ -820,7 +1036,7 @@ namespace EwoQ.Controllers
                 {
                     listZE.Add(new zero_ewo()
                     {
-                        codigo_ewo = 0,
+                        codigo_ewo = id,
                         after = item.Puntaje,
                         codigo_response = item.Puntaje == 0 ? 1 : (await DaoZero.DaoInstance.GetZeroResponse(item.Id, item.Puntaje)).Id
                     });
@@ -838,7 +1054,6 @@ namespace EwoQ.Controllers
 
                 //Agregar lista a DB
                 await DaoPlanAccion.DaoInstance.AddPlanAccionAsync(listPA);
-
             }
 
             rr.Codigo = 1;
@@ -850,7 +1065,7 @@ namespace EwoQ.Controllers
         {
             if (file != null)
             {
-                string nameAndLocation = ewo_images + file.FileName;
+                string nameAndLocation = Constantes.ewo_images + file.FileName;
                 file.SaveAs(Server.MapPath(nameAndLocation));
             }           
         }
@@ -858,7 +1073,7 @@ namespace EwoQ.Controllers
         public async Task<JsonResult> GetuserInfo(string userId)
         {
             //CAMPOS PARA ALMACENAR RESULTADO DE TRANSACCIÓN     
-            RequestResponse rr = new RequestResponse(); ;
+            RequestResponse rr = new RequestResponse();
 
             try
             {      

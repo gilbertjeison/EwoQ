@@ -186,6 +186,7 @@
 <script src="~/Scripts/Adminbsb/plugins/sweetalert/sweetalert.min.js"></script>
 
 <script>
+    var fileExport = 1;
     var table;
     $(function () {
         table = $('#irTable').DataTable({
@@ -240,7 +241,7 @@
                             return "<a class='btn btn-success waves-effect' style='margin-bottom:5px' onClick=proccessIncident('" + row.Id + "'); >Procesar incidente</a>";
                         }
                         else {
-                            return "<button class='btn btn-success waves-effect' style='margin-bottom:5px' onClick=proccessIncident('" + row.Id + "'); disabled>Exportar en excel</button>";
+                            return "<button class='btn btn-success waves-effect' style='margin-bottom:5px' onClick=exportComplete('" + row.Id + "'); >Exportar en excel</button>";
                         }
 
                     }
@@ -309,7 +310,6 @@
 
         var result = {};
         result = selecteds.map(a => a.Id);
-        console.log(result);
 
         //Hacer petición para generar archivo
         var dataString = new FormData();
@@ -325,11 +325,49 @@
             },
             success: function (response) {
 
+                fileExport = 1;
                 $('#downloadModal').modal('toggle');
 
                 //MENSAJE DE CONFIRMACIÓN O ERROR
                 if (response.Codigo == 1) {
-                    $('#modalMsg').text("¡Formato exportado correctamente!");                  
+                    $('#modalMsg').text("¡Formato exportado correctamente!");
+                }
+                else if (response.Codigo == -1) {
+                    $('#modalMsg').text("Error al exportar formato!" + response.Message);
+                }
+                else {
+                    $('#modalMsg').text("No se pudo exportar formato, intente nuevamente!");
+                }
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+        });
+
+        $('.page-loader-wrapper').hide();
+    }
+
+    function exportComplete(id) {
+        //Hacer petición para generar archivo
+        var dataString = new FormData();
+
+        dataString.append('id', JSON.stringify(id));
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GenerateExcelComplete", "ReportarIncidentes")',
+            data: dataString,
+            beforeSend: function () {
+                $('.page-loader-wrapper').fadeIn();
+            },
+            success: function (response) {
+
+                fileExport = 2;
+                $('#downloadModal').modal('toggle');
+
+                //MENSAJE DE CONFIRMACIÓN O ERROR
+                if (response.Codigo == 1) {
+                    $('#modalMsg').text("¡Formato exportado correctamente!");
                 }
                 else if (response.Codigo == -1) {
                     $('#modalMsg').text("Error al exportar formato!" + response.Message);
@@ -351,6 +389,12 @@
     }
 
     function downloadFile() {
-        window.location.href = '/ReportarIncidentes/DownloadEwoFile';
+        if (fileExport == 1) {
+            window.location.href = '/ReportarIncidentes/DownloadEwoFile';
+        }
+        else {
+            window.location.href = '/ReportarIncidentes/DownloadCompleteEwoFile';
+        }
+        
     }
 </script>

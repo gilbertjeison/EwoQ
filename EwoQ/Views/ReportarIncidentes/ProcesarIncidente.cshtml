@@ -2562,7 +2562,7 @@
             [
                 { id: "titulo", name: "Acción", field: "accion", minWidth: 300, editable: true, editor: Slick.Editors.Text, validator: actionValidator },
                 { id: "id_responsable", name: "Responsable", field: "codigo_responsable", minWidth: 200, formatter: select2Formatter, editor: SelectEditor, dataSource: user_data },
-                { id: "fecha_compromiso", name: "Fecha de compromiso", field: "fecha_compromiso", minWidth: 130, editor: Slick.Editors.Date, validator: dateValidator },
+                { id: "fecha_compromiso", name: "Fecha de compromiso", field: "FechaCompromisoS", minWidth: 130, editor: Slick.Editors.Date, validator: dateValidator },
                 { id: "evi_efe", name: "Evidencia/Efectividad", field: "evidencia_efectividad", minWidth: 120, resizable: false, formatter: Slick.Formatters.PercentCompleteBar, editor: Slick.Editors.PercentComplete },
                 {
                     id: 'id', name: '#', field: 'id', formatter: function (index, c, id, def, datactx) {
@@ -2631,6 +2631,7 @@
                 //EN CASO DE ERROR, IMPRIMIRLO
                 error: function (request, status, error) {
                     alert('Error al consultar acciones inmediatas: ' + request.responseText);
+                    console.log(request.responseText);
                 }
             });
         }
@@ -2966,18 +2967,12 @@
                     //Campo que indica si es válido el registro
                     var isValid = true;
                     //Verificar cada registro
-
-
+                                        
                     for (var i = 0; i < listAccInm.length; i++) {
-
-                        var numColsWithData = Object.keys(listAccInm[i]).length;
-                        //Edición de acciones
-                        if (listAccInm[i].id) {
-                            numColsWithData = Object.keys(listAccInm[i]).length - 2;//porque es procesamiento de incidente y se quitan los id's de ewo y del registro
-                        }
-
+                                                
                         //Numero de columnas diligenciadas por el usuario   
-                        if (numCols != numColsWithData) {
+                        //4: Columnas que deben estar diligenciadas en el grid de acciones inmediatas
+                        if (numCols != 4) {
                             isValid = false;
                             break;
                         }
