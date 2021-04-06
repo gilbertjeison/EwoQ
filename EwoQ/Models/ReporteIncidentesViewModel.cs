@@ -214,6 +214,11 @@ namespace EwoQ.Models
         public string Maquina4MTotal { get; set; } = "% 0";
         public string Metodo4MTotal { get; set; } = "% 0";
 
+        public decimal ManoObra { get; set; } 
+        public decimal Material { get; set; }
+        public decimal Maquina { get; set; }
+        public decimal Metodo { get; set; }
+
 
         public string ManoObra4MDesc { get; set; }
         public string Material4MDesc { get; set; }
@@ -223,6 +228,7 @@ namespace EwoQ.Models
         public string MDesc { get; set; }
 
         public string IdTopFFZ { get; set; }
+        public long TopFiveForZero { get; set; }
         public string TopFFZDesc { get; set; }
         public string GrpTFFZ { get; set; }
         public List<tipos_data> TopFiveForZeroList { get; set; }

@@ -39,8 +39,7 @@ namespace EwoQ.Dao
                         .Where(z=>z.codigo_tipom == tipo_m)
                             .Include(z => z.zero_responses).ToListAsync();
 
-                    var i = query.Count;
-
+                   
                     foreach (var item in query.ToList())
                     {
                         list.Add(new ZeroViewModel()

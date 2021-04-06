@@ -381,6 +381,10 @@ namespace EwoQ.Controllers
                 var genjitsus = fivegs.Where(x => x.codigo_5fv_opcion == Constantes.GENJITSU).ToList();
                 var genris = fivegs.Where(x => x.codigo_5fv_opcion == Constantes.GENRI).ToList();
                 var gensokus = fivegs.Where(x => x.codigo_5fv_opcion == Constantes.GENSOKU).ToList();
+                var porques = await DaoPorque.DaoInstance.GetPorQueAsync(id);
+                var respuestas = await Dao4M.DaoInstance.Complete4MResponses(id);
+
+
 
 
                 //Especificar licencia
@@ -572,6 +576,63 @@ namespace EwoQ.Controllers
                     ws.Cells["G82"].Value = ewo.CualDesc;
                     ws.Cells["G85"].Value = ewo.ComoDesc;
                     ws.Cells["G89"].Value = ewo.FenomenoDesc;
+
+                    int rowCounterPQs = 0;
+                    //Por Que's
+                    for (int i = 0; i < porques.Count; i++)
+                    {
+                        //Delimitar las filas del excel
+                        if (i >= 5)
+                        {
+                            break;
+                        }
+
+                        if (i >= 1)
+                        {
+                            rowCounterPQs += 1;
+                        }
+
+                        ws.Cells[(i + rowCounterPQs) + 95, 2].Value = porques[i].porque1;
+                        ws.Cells[(i + rowCounterPQs) + 95, 5].Value = porques[i].porque2;
+                        ws.Cells[(i + rowCounterPQs) + 95, 8].Value = porques[i].porque3;
+                        ws.Cells[(i + rowCounterPQs) + 95, 11].Value = porques[i].porque4;
+                        ws.Cells[(i + rowCounterPQs) + 95, 14].Value = porques[i].porque5;
+                        ws.Cells[(i + rowCounterPQs) + 95, 17].Value = porques[i].contramedidas;
+                    }
+
+                    //4M
+                    ws.Cells["G107"].Value = ewo.ManoObra;
+                    ws.Cells["K107"].Value = ewo.Material;
+                    ws.Cells["O107"].Value = ewo.Maquina;
+                    ws.Cells["S107"].Value = ewo.Metodo;
+
+                    //Top five for zero
+                    if (ewo.TopFiveForZero == Constantes.CONTAMINACION_CRUZADA)
+                    {
+                        ws.Cells["G109"].Value = "X";
+                    }
+                    if (ewo.TopFiveForZero == Constantes.ERROR_ARTE)
+                    {
+                        ws.Cells["G110"].Value = "X";
+                    }
+                    if (ewo.TopFiveForZero == Constantes.CONTAMINACION_PRODUCTO)
+                    {
+                        ws.Cells["G111"].Value = "X";
+                    }
+                    if (ewo.TopFiveForZero == Constantes.ERROR_ADICION_INGREDIENTES)
+                    {
+                        ws.Cells["G112"].Value = "X";
+                    }
+                    if (ewo.TopFiveForZero == Constantes.LIBERACION_INCORRECTA)
+                    {
+                        ws.Cells["G113"].Value = "X";
+                    }
+                    if (ewo.TopFiveForZero == Constantes.OTRO)
+                    {
+                        ws.Cells["G114"].Value = "X";
+                    }
+
+
 
                     await excel.SaveAsync();
                 }
@@ -826,8 +887,7 @@ namespace EwoQ.Controllers
             ewo.tamano_formato = ewr.TamanoFormato;
             ewo.tiempo_linea_parada = ewr.TiempoLineaParada;
             ewo.descripcion_general_problema = ewr.DescripcionProblema;
-
-            
+                        
 
             if (bReporte)
             {

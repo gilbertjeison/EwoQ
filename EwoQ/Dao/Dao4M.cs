@@ -1,4 +1,6 @@
 ﻿using EwoQ.Database;
+using EwoQ.Models;
+using EwoQ.Utils;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -78,6 +80,82 @@ namespace EwoQ.Dao
             }
 
             return regs;
+        }
+
+        public async Task<List<Respuestas4MModel>> Get4MResponses(long id_ewo)
+        {
+            List<Respuestas4MModel> list = null;
+
+            using (var context = new EwoQEntities())
+            {
+                var query = (from r in context.respuestas4m
+                            join p in context.preguntas_4m
+                            on r.codigo_pregunta equals p.id
+                            where r.codigo_ewo == id_ewo
+                            select new Respuestas4MModel
+                            {
+                                idTipoM = p.codigo_tipo4m ?? 0,
+                                Pregunta = p.descripcion,
+                                Respuesta = r.verificado
+                            }).Distinct();                               
+
+                list = await query.ToListAsync();
+            }
+
+            return list;
+        }
+
+
+        public async Task<List<Respuestas4MModel>> Complete4MResponses(long id_ewo)
+        {
+            List<Respuestas4MModel> list = await Get4MResponses(id_ewo);
+
+            //Revisar que preguntas faltan en la lista y completarlas con respuesta en NO
+            var arrTipos = list.Select(x => x.idTipoM).Distinct().ToArray();
+
+            if (!arrTipos.Contains(Constantes.MAQUINA))
+            {
+                //Agregar preguntas de máquinas
+                list = await AgregarPreguntas(Constantes.MAQUINA, list);
+                
+            }
+
+            if (!arrTipos.Contains(Constantes.METODO))
+            {
+                //Agregar preguntas de métodos
+                list = await AgregarPreguntas(Constantes.METODO, list);
+            }
+
+            if (!arrTipos.Contains(Constantes.MATERIALES))
+            {
+                //Agregar preguntas de materiales
+                list = await AgregarPreguntas(Constantes.MATERIALES, list);
+            }
+
+            if (!arrTipos.Contains(Constantes.MAN))
+            {
+                //Agregar preguntas de man
+                list = await AgregarPreguntas(Constantes.MAN, list);
+            }        
+
+            return list;
+        }
+
+        private async Task<List<Respuestas4MModel>> AgregarPreguntas(long tipo, List<Respuestas4MModel> lista) 
+        {
+            var preguntas = await Get4mQuestionsByType(tipo);
+
+            preguntas.ForEach((a) =>
+            {
+                lista.Add(new Respuestas4MModel
+                {
+                    idTipoM = a.codigo_tipo4m ?? 0,
+                    Pregunta = a.descripcion,
+                    Respuesta = "No"
+                });
+            });
+
+            return lista;
         }
     }
 }

@@ -650,8 +650,12 @@ namespace EwoQ.Dao
                                     CualDesc = e.cual,
                                     DondeDesc = e.donde,
                                     CuandoDesc = e.cuando,
-                                    FenomenoDesc = e.descripcion_fenomeno
-                                    
+                                    FenomenoDesc = e.descripcion_fenomeno,
+                                    ManoObra = e.manoobra4m ?? decimal.Zero,
+                                    Maquina = e.maquina4m ?? decimal.Zero,
+                                    Material = e.material4m ?? decimal.Zero,
+                                    Metodo = e.metodo4m ?? decimal.Zero,
+                                    TopFiveForZero = e.codigo_top_five_fzero ?? 0
                                 };
 
                     list = await query.ToListAsync();
