@@ -383,9 +383,10 @@ namespace EwoQ.Controllers
                 var gensokus = fivegs.Where(x => x.codigo_5fv_opcion == Constantes.GENSOKU).ToList();
                 var porques = await DaoPorque.DaoInstance.GetPorQueAsync(id);
                 var respuestas = await Dao4M.DaoInstance.Complete4MResponses(id);
-
-
-
+                var respuestasMaquina = respuestas.Where(x => x.idTipoM == Constantes.MAQUINA).ToList();
+                var respuestasMetodos = respuestas.Where(x => x.idTipoM == Constantes.METODO).ToList();
+                var respuestasMateriales = respuestas.Where(x => x.idTipoM == Constantes.MATERIALES).ToList();
+                var respuestasMan = respuestas.Where(x => x.idTipoM == Constantes.MAN).ToList();
 
                 //Especificar licencia
                 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
@@ -632,7 +633,32 @@ namespace EwoQ.Controllers
                         ws.Cells["G114"].Value = "X";
                     }
 
+                    //*******SEGUNDA HOJA
+                    var ws2 = excel.Workbook.Worksheets["2) Preguntas 4M"];
 
+                    for (int i = 0; i < respuestasMaquina.Count; i++)
+                    {
+                        ws2.Cells[i  + 2, 2].Value = respuestasMaquina[i].Pregunta;
+                        ws2.Cells[i + 2, 3].Value = respuestasMaquina[i].Respuesta;
+                    }
+
+                    for (int i = 0; i < respuestasMetodos.Count; i++)
+                    {
+                        ws2.Cells[i + 16, 2].Value = respuestasMetodos[i].Pregunta;
+                        ws2.Cells[i + 16, 3].Value = respuestasMetodos[i].Respuesta;
+                    }
+
+                    for (int i = 0; i < respuestasMateriales.Count; i++)
+                    {
+                        ws2.Cells[i + 40, 2].Value = respuestasMateriales[i].Pregunta;
+                        ws2.Cells[i + 40, 3].Value = respuestasMateriales[i].Respuesta;
+                    }
+
+                    for (int i = 0; i < respuestasMan.Count; i++)
+                    {
+                        ws2.Cells[i + 53, 2].Value = respuestasMan[i].Pregunta;
+                        ws2.Cells[i + 53, 3].Value = respuestasMan[i].Respuesta;
+                    }
 
                     await excel.SaveAsync();
                 }
@@ -1069,8 +1095,8 @@ namespace EwoQ.Controllers
                     {
                         codigo_ewo = id,//Poner el id real
                         codigo_pregunta = item.id,
-                        verificado = item.option == "1" ? "Yes" : (item.option == "0" ? "No" : "NA")
-                    });
+                        verificado = item.option == "1" ? "Yes" : "No"
+                    }) ;
                 }
 
                 //Agregar lista a DB

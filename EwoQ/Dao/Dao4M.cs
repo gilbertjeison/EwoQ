@@ -116,8 +116,7 @@ namespace EwoQ.Dao
             if (!arrTipos.Contains(Constantes.MAQUINA))
             {
                 //Agregar preguntas de máquinas
-                list = await AgregarPreguntas(Constantes.MAQUINA, list);
-                
+                list = await AgregarPreguntas(Constantes.MAQUINA, list);                
             }
 
             if (!arrTipos.Contains(Constantes.METODO))
