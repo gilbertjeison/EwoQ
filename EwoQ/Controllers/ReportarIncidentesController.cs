@@ -387,6 +387,7 @@ namespace EwoQ.Controllers
                 var respuestasMetodos = respuestas.Where(x => x.idTipoM == Constantes.METODO).ToList();
                 var respuestasMateriales = respuestas.Where(x => x.idTipoM == Constantes.MATERIALES).ToList();
                 var respuestasMan = respuestas.Where(x => x.idTipoM == Constantes.MAN).ToList();
+                var planesAccion = await DaoPlanAccion.DaoInstance.GetPlanAccionAsync(id);
 
                 //Especificar licencia
                 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
@@ -658,6 +659,30 @@ namespace EwoQ.Controllers
                     {
                         ws2.Cells[i + 53, 2].Value = respuestasMan[i].Pregunta;
                         ws2.Cells[i + 53, 3].Value = respuestasMan[i].Respuesta;
+                    }
+
+
+
+                    //*******SEGUNDA HOJA
+                    var ws3 = excel.Workbook.Worksheets["4) Plan de Acción"];
+                    for (int i = 0; i < planesAccion.Count; i++)
+                    {
+                        //Delimitar las filas del excel
+                        if (i >= 6)
+                        {
+                            break;
+                        }
+
+                        ws3.Cells[i + 8, 2].Value = i+1;
+                        ws3.Cells[i + 8, 3].Value = planesAccion[i].Tipo.Trim();
+                        ws3.Cells[i + 8, 4].Value = planesAccion[i].Contramedida;
+                        ws3.Cells[i + 8, 5].Value = planesAccion[i].RequiereCapex ? "SI" : "NO";
+                        ws3.Cells[i + 8, 8].Value = planesAccion[i].Pokayoke ? "SI": "NO";
+                        ws3.Cells[i + 8, 9].Value = planesAccion[i].Responsable;
+                        ws3.Cells[i + 8, 10].Value = planesAccion[i].Area;
+                        ws3.Cells[i + 8, 11].Value = planesAccion[i].FechaCompromiso.ToString("dd MMMM yyyy", ci);
+                        ws3.Cells[i + 8, 12].Value = planesAccion[i].Before.ToString()+"%";
+                        ws3.Cells[i + 8, 13].Value = planesAccion[i].After.ToString() + "%";
                     }
 
                     await excel.SaveAsync();

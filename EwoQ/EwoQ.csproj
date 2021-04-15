@@ -368,6 +368,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Disposiciones.cs" />
     <Compile Include="Models\DonutViewModel.cs" />
+    <Compile Include="Models\PlanAccionModel.cs" />
     <Compile Include="Models\Preguntas4MModel.cs" />
     <Compile Include="Models\ReporteIncidentesViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />

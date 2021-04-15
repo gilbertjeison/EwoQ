@@ -31,8 +31,6 @@ namespace EwoQ.Dao
         {
             List<preguntas_4m> p4m = new List<preguntas_4m>();
 
-            try
-            {
                 using (var context = new EwoQEntities())
                 {
                     var query = from p in context.preguntas_4m                                
@@ -51,12 +49,7 @@ namespace EwoQ.Dao
                         });
                     }
                     
-                }
-            }
-            catch (Exception e)
-            {
-                Trace.WriteLine("Error al obtener preguntas 4M : " + e.ToString());
-            }
+                }         
 
             return p4m;
         }
