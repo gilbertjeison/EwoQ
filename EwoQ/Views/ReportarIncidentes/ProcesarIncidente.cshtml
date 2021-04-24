@@ -2557,7 +2557,7 @@
     };
 
     //inicializar grid
-    function initGrid() {
+    function initGrid() { 
         var columns =
             [
                 { id: "titulo", name: "Acción", field: "accion", minWidth: 300, editable: true, editor: Slick.Editors.Text, validator: actionValidator },
@@ -3276,6 +3276,12 @@
                 var dataString = new FormData(form);
 
                 //espacio para adjuntar listas y campos especiales
+                
+                console.log(listAccInm);
+                //Quitar fechas corruptas
+                listAccInm.forEach(function (v) { delete v.fecha_compromiso });
+                console.log(listAccInm);
+
                 dataString.append('Cmd', JSON.stringify(listAccInm));
                 dataString.append('ListDisp', JSON.stringify(listDisp));
                 dataString.append('ListGenj', JSON.stringify(listGenj));

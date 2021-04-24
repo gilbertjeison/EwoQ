@@ -111,7 +111,7 @@ namespace EwoQ.Controllers
         {
             //DISPOSICIÓN FINAL DEL PRODUCTO
             var listA = await DaoTiposData.DaoInstance.GetTypesAsync(Constantes.AREASTYPES);
-            listA.Insert(0, new Database.tipos_data() { id = 0, descripcion = "Seleccione área..." });
+            listA.Insert(0, new tipos_data() { id = 0, descripcion = "Seleccione área..." });
             var AreasList = new SelectList(listA, "Id", "descripcion");
 
             return Json(AreasList);
@@ -910,8 +910,8 @@ namespace EwoQ.Controllers
             RequestResponse rr = new RequestResponse();
             ewo ewo = new ewo();
 
-            
-            List<acciones_inmediatas> accInm = ser.Deserialize<List<acciones_inmediatas>>(ewr.Cmd);
+            List<acciones_inmediatas> accs = new List<acciones_inmediatas>();
+            List<AccionesInmediatas> accInm = ser.Deserialize<List<AccionesInmediatas>>(ewr.Cmd);
 
             ewo.consecutivo = long.Parse(ewr.Consecutivo);            
             ewo.fecha_apertura_investigacion = ewr.FchApertInvestigacion == null ? DateTime.Now : 
@@ -951,10 +951,19 @@ namespace EwoQ.Controllers
                 {
                     foreach (var item in accInm)
                     {
-                        item.codigo_ewo = reg;
+                        accs.Add(new acciones_inmediatas
+                        {
+                            codigo_ewo = reg,
+                            accion = item.accion,
+                            codigo_responsable = item.codigo_responsable,
+                            evidencia_efectividad = item.evidencia_efectividad,
+                            fecha_compromiso = item.fecha_compromiso,
+                            id = item.Id
+                        });
+
                     }
 
-                    await DaoAcciones.DaoInstance.AddAcciones(accInm);
+                    await DaoAcciones.DaoInstance.AddAcciones(accs);
                 }
             }
             else
@@ -1040,10 +1049,20 @@ namespace EwoQ.Controllers
                 //acciones inmediatas
                 foreach (var item in accInm)
                 {
-                    item.codigo_ewo = id;
+                    accs.Add(new acciones_inmediatas
+                    {
+                        codigo_ewo = id,
+                        accion = item.accion,
+                        codigo_responsable = item.codigo_responsable,
+                        evidencia_efectividad = item.evidencia_efectividad,
+                        fecha_compromiso = DateTime.ParseExact(item.FechaCompromisoS, "MM/dd/yyyy", CultureInfo.InvariantCulture),
+                        id = item.Id
+                    });                    
                 }
+                
+
                 //Agregar a BD acciones
-                await DaoAcciones.DaoInstance.AddAccionesProcess(accInm,id);
+                await DaoAcciones.DaoInstance.AddAccionesProcess(accs,id);
 
                 //Equipo de trabajo - dividir y asignar id ewo
                 var eqTrab = ewr.EquipoTrabajo;

@@ -93,7 +93,7 @@ namespace EwoQ.Dao
 
                 list = await query.ToListAsync();
                 list.ForEach(x => x.FechaCompromisoS =
-                x.fecha_compromiso.Value.ToString("MM-dd-yyyy"));
+                x.fecha_compromiso.Value.ToString("MM/dd/yyyy"));
             }
 
             return list;
