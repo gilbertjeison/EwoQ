@@ -655,7 +655,8 @@ namespace EwoQ.Dao
                                     Maquina = e.maquina4m ?? decimal.Zero,
                                     Material = e.material4m ?? decimal.Zero,
                                     Metodo = e.metodo4m ?? decimal.Zero,
-                                    TopFiveForZero = e.codigo_top_five_fzero ?? 0
+                                    TopFiveForZero = e.codigo_top_five_fzero ?? 0,
+                                    MaxMId = e.codigo_m ?? 0
                                 };
 
                     list = await query.ToListAsync();

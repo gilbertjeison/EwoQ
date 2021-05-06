@@ -5,16 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="EwoQModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="__MigrationHistory">
-          <Key>
-            <PropertyRef Name="MigrationId" />
-            <PropertyRef Name="ContextKey" />
-          </Key>
-          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
-          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
-          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
-          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
-        </EntityType>
         <EntityType Name="acciones_inmediatas">
           <Key>
             <PropertyRef Name="id" />
@@ -515,18 +505,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_plan_accion_areas_productivas">
-          <End Role="areas_productivas" Type="Self.areas_productivas" Multiplicity="0..1" />
-          <End Role="plan_accion" Type="Self.plan_accion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="areas_productivas">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan_accion">
-              <PropertyRef Name="codigo_area" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_plan_accion_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
           <End Role="plan_accion" Type="Self.plan_accion" Multiplicity="*" />
@@ -659,8 +637,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="sp_zero_response_ewo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id_ewo" Type="bigint" Mode="In" />
+        </Function>
         <EntityContainer Name="EwoQModelStoreContainer">
-          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="acciones_inmediatas" EntityType="Self.acciones_inmediatas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="areas_productivas" EntityType="Self.areas_productivas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
@@ -746,10 +726,6 @@
             <End Role="areas_productivas" EntitySet="areas_productivas" />
             <End Role="lineas" EntitySet="lineas" />
           </AssociationSet>
-          <AssociationSet Name="FK_plan_accion_areas_productivas" Association="Self.FK_plan_accion_areas_productivas">
-            <End Role="areas_productivas" EntitySet="areas_productivas" />
-            <End Role="plan_accion" EntitySet="plan_accion" />
-          </AssociationSet>
           <AssociationSet Name="FK_plan_accion_AspNetUsers" Association="Self.FK_plan_accion_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="plan_accion" EntitySet="plan_accion" />
@@ -799,16 +775,6 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EwoQModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="C__MigrationHistory">
-          <Key>
-            <PropertyRef Name="MigrationId" />
-            <PropertyRef Name="ContextKey" />
-          </Key>
-          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
-          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
-        </EntityType>
         <EntityType Name="acciones_inmediatas">
           <Key>
             <PropertyRef Name="id" />
@@ -1360,7 +1326,6 @@
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
         </Association>
         <EntityContainer Name="EwoQEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
           <EntitySet Name="acciones_inmediatas" EntityType="Self.acciones_inmediatas" />
           <EntitySet Name="areas_productivas" EntityType="Self.areas_productivas" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" />
@@ -1489,6 +1454,9 @@
             <End Role="tipos_data" EntitySet="tipos_data" />
             <End Role="disposiciones" EntitySet="disposiciones" />
           </AssociationSet>
+          <FunctionImport Name="sp_zero_response_ewo" ReturnType="Collection(EwoQModel.sp_zero_response_ewo_Result)">
+            <Parameter Name="id_ewo" Mode="In" Type="Int64" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="plan_accion">
           <Key>
@@ -1604,22 +1572,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="sp_zero_response_ewo_Result">
+          <Property Type="String" Name="pregunta" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="p1" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="p3" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="p5" Nullable="true" MaxLength="300" />
+          <Property Type="Int32" Name="resp_before" Nullable="true" />
+          <Property Type="Int32" Name="resp_after" Nullable="true" />
+          <Property Type="Decimal" Name="before" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="after" Nullable="true" Precision="18" Scale="0" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="EwoQModelStoreContainer" CdmEntityContainer="EwoQEntities">
-          <EntitySetMapping Name="C__MigrationHistory">
-            <EntityTypeMapping TypeName="EwoQModel.C__MigrationHistory">
-              <MappingFragment StoreEntitySet="__MigrationHistory">
-                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
-                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
-                <ScalarProperty Name="Model" ColumnName="Model" />
-                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="acciones_inmediatas">
             <EntityTypeMapping TypeName="EwoQModel.acciones_inmediatas">
               <MappingFragment StoreEntitySet="acciones_inmediatas">
@@ -1954,6 +1922,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_zero_response_ewo" FunctionName="EwoQModel.Store.sp_zero_response_ewo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EwoQModel.sp_zero_response_ewo_Result">
+                <ScalarProperty Name="pregunta" ColumnName="pregunta" />
+                <ScalarProperty Name="p1" ColumnName="p1" />
+                <ScalarProperty Name="p3" ColumnName="p3" />
+                <ScalarProperty Name="p5" ColumnName="p5" />
+                <ScalarProperty Name="resp_before" ColumnName="resp_before" />
+                <ScalarProperty Name="resp_after" ColumnName="resp_after" />
+                <ScalarProperty Name="before" ColumnName="before" />
+                <ScalarProperty Name="after" ColumnName="after" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

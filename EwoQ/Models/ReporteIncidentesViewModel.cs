@@ -271,7 +271,7 @@ namespace EwoQ.Models
         public string ListAfte { get; set; }
         public string ListPlan { get; set; }
         public string List4M { get; set; }
-        public int MaxMId { get; set; }
+        public long MaxMId { get; set; }
 
         #endregion
     }

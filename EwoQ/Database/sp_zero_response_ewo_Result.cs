@@ -10,16 +10,16 @@
 namespace EwoQ.Database
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class respuestas4m
+    public partial class sp_zero_response_ewo_Result
     {
-        public long id { get; set; }
-        public Nullable<long> codigo_pregunta { get; set; }
-        public Nullable<long> codigo_ewo { get; set; }
-        public string verificado { get; set; }
-    
-        public virtual ewo ewo { get; set; }
-        public virtual preguntas_4m preguntas_4m { get; set; }
+        public string pregunta { get; set; }
+        public string p1 { get; set; }
+        public string p3 { get; set; }
+        public string p5 { get; set; }
+        public Nullable<int> resp_before { get; set; }
+        public Nullable<int> resp_after { get; set; }
+        public Nullable<decimal> before { get; set; }
+        public Nullable<decimal> after { get; set; }
     }
 }

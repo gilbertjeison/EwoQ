@@ -388,6 +388,7 @@ namespace EwoQ.Controllers
                 var respuestasMateriales = respuestas.Where(x => x.idTipoM == Constantes.MATERIALES).ToList();
                 var respuestasMan = respuestas.Where(x => x.idTipoM == Constantes.MAN).ToList();
                 var planesAccion = await DaoPlanAccion.DaoInstance.GetPlanAccionAsync(id);
+                var preguntasZero = await DaoZero.DaoInstance.GetZeroResponseEwo(id);
 
                 //Especificar licencia
                 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
@@ -663,7 +664,7 @@ namespace EwoQ.Controllers
 
 
 
-                    //*******SEGUNDA HOJA
+                    //*******CUARTA HOJA
                     var ws3 = excel.Workbook.Worksheets["4) Plan de Acción"];
                     for (int i = 0; i < planesAccion.Count; i++)
                     {
@@ -683,6 +684,48 @@ namespace EwoQ.Controllers
                         ws3.Cells[i + 8, 11].Value = planesAccion[i].FechaCompromiso.ToString("dd MMMM yyyy", ci);
                         ws3.Cells[i + 8, 12].Value = planesAccion[i].Before.ToString()+"%";
                         ws3.Cells[i + 8, 13].Value = planesAccion[i].After.ToString() + "%";
+                    }
+
+                    //*******QUINTA HOJA
+                    var ws4 = excel.Workbook.Worksheets["5) Zero Questions"];
+                    for (int i = 0; i < preguntasZero.Count; i++)
+                    {
+                        //Variable que indica el inicio de la fila
+                        int tipoM = 0;
+
+                        //Evaluar tipo M
+                        switch (ewo.MaxMId)
+                        {
+                            //Maquina
+                            case 24:
+                                tipoM = 8;//TODO: Poner valores en clase constante
+                                break;
+                            //Metodo
+                            case 25:
+                                tipoM = 20;
+                                break;
+                            //Materiales
+                            case 26:
+                                tipoM = 32;
+                                break;
+                            //Man
+                            case 27:
+                                tipoM = 44;
+                                break;
+                        }
+
+                        //Escribir valores
+                        if (tipoM > 0)
+                        {
+                            var pregunta = ws4.Cells[i + 8, 3].Value;
+                            Debug.WriteLine(pregunta);
+
+                            if (pregunta.Equals(preguntasZero[i].pregunta))
+                            {
+                                ws4.Cells[i + 8, 7].Value = "si";
+                            }
+                        }
+                        
                     }
 
                     await excel.SaveAsync();
@@ -1156,7 +1199,7 @@ namespace EwoQ.Controllers
                 {
                     listZE.Add(new zero_ewo()
                     {
-                        codigo_ewo = 0,
+                        codigo_ewo = id,
                         before = item.Puntaje,
                         codigo_response = item.Puntaje == 0 ? 1 : (await DaoZero.DaoInstance.GetZeroResponse(item.Id, item.Puntaje)).Id 
                     });

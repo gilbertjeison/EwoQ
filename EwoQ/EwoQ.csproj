@@ -283,9 +283,6 @@
     <Compile Include="Database\AspNetUsers.cs">
       <DependentUpon>Database.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\C__MigrationHistory.cs">
-      <DependentUpon>Database.tt</DependentUpon>
-    </Compile>
     <Compile Include="Database\Database.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -338,6 +335,9 @@
       <DependentUpon>Database.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\revisiones.cs">
+      <DependentUpon>Database.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\sp_zero_response_ewo_Result.cs">
       <DependentUpon>Database.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\tipos.cs">

@@ -22,4 +22,16 @@ namespace EwoQ.Models
         public string Respuesta { get; set; }
         public int Puntaje { get; set; }
     }
+
+    public class SPZeroResponseEwoModel
+    {
+        public string pregunta { get; set; }
+        public string p1 { get; set; }
+        public string p3 { get; set; }
+        public string p5 { get; set; }
+        public Nullable<int> resp_before { get; set; }
+        public Nullable<int> resp_after { get; set; }
+        public Nullable<decimal> before { get; set; }
+        public Nullable<decimal> after { get; set; }
+    }
 }
